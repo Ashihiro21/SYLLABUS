@@ -1,6 +1,6 @@
 <?php
 
-include('connection.php');
+include('../Database/connection.php');
 
 $category=$_POST['category'];
 
