@@ -23,19 +23,20 @@
         </select><br><br>
 
         <label for="department">Department:</label><br>
-        <select id="SelectA" onchange="my_fun(this.value);" name="department" required>
-            <option value="cbaa">College of Business Administration and Accountancy</option>
-            <option value="ccje">College of Criminal Justice Education</option>
-            <option value="ce">College of Education</option>
-            <option value="ceat">College of Engineering, Architecture and Technology</option>
-            <option value="clac">College of Liberal Arts and Communication</option>
-            <option value="cscs">College of Science and Computer Studies</option>
-            <option value="cthm">College of Tourism and Hospitality Management</option>
+        <select id="department" onchange="getCourses(this.value);" name="department" required>
+            <option value="CBAA">College of Business Administration and Accountancy</option>
+            <option value="CCJE">College of Criminal Justice Education</option>
+            <option value="CE">College of Education</option>
+            <option value="CEAT">College of Engineering, Architecture and Technology</option>
+            <option value="CLAC">College of Liberal Arts and Communication</option>
+            <option value="CSCS">College of Science and Computer Studies</option>
+            <option value="CTHM">College of Tourism and Hospitality Management</option>
         </select><br><br>
 
-
-        <label for="courses">Courses:</label><br>
-        <input type="text" id="courses" name="courses"><br><br>
+        <label for="course">Course:</label><br>
+        <select name="course" id="course">
+            <option value="">Select Courses</option>
+        </select><br><br>
 
         <label for="phone_number">Phone Number:</label><br>
         <input type="tel" id="phone_number" name="phone_number"><br><br>
@@ -49,16 +50,23 @@
 
         <input type="submit" value="Register">
     </form>
+
+   <script>
+    function getCourses(department){
+        if(window.XMLHttpRequest){
+            xmlhttp = new XMLHttpRequest();
+        }else{
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        xmlhttp.onreadystatechange = function(){
+            if(this.readyState==4 && this.status==200){
+                document.getElementById('course').innerHTML = this.responseText;
+            }
+        }
+        xmlhttp.open("GET","helper.php?department="+department, true);
+        xmlhttp.send();
+    }
+   </script> 
 </body>
 </html>
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    position ENUM('faculty', 'curriculum_committee', 'department_chair', 'dean') NOT NULL,
-    department VARCHAR(50) NOT NULL,
-    courses VARCHAR(255),
-    phone_number VARCHAR(15),
-    email VARCHAR(100) NOT NULL,
-    password VARCHAR(255) NOT NULL
-);
