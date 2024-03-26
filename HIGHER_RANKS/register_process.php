@@ -23,6 +23,20 @@ if (!is_valid_email($email)) {
     exit; // Stop execution if email is invalid
 }
 
+// Check if email already exists in the database
+$sql_check_email = "SELECT COUNT(*) FROM users WHERE email = ?";
+$stmt_check_email = $conn->prepare($sql_check_email);
+$stmt_check_email->bind_param("s", $email);
+$stmt_check_email->execute();
+$stmt_check_email->bind_result($email_count);
+$stmt_check_email->fetch();
+$stmt_check_email->close();
+
+if ($email_count > 0) {
+    echo "Email already exists!";
+    exit; // Stop execution if email already exists
+}
+
 // Hash password
 $password_hashed = password_hash($password, PASSWORD_DEFAULT);
 
@@ -34,5 +48,6 @@ $stmt->bind_param("ssssssss", $first_name, $last_name, $department, $courses, $p
 $stmt->execute();
 
 echo "Registration successful!";
+
 
 ?>
