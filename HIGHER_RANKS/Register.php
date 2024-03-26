@@ -21,9 +21,9 @@
             <option value="department_chair">Department Chair</option>
             <option value="dean">Dean</option>
         </select><br><br>
-        
+
         <label for="department">Department:</label><br>
-        <select id="department" name="department" required>
+        <select id="SelectA" onchange="my_fun(this.value);" name="department" required>
             <option value="cbaa">College of Business Administration and Accountancy</option>
             <option value="ccje">College of Criminal Justice Education</option>
             <option value="ce">College of Education</option>
