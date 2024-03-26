@@ -1,72 +1,57 @@
+<?php 
+include('connection.php');
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Registration</title>
+
+
 </head>
 <body>
-    <h2>User Registration</h2>
-    <form action="register_process.php" method="POST">
-        <label for="first_name">First Name:</label><br>
-        <input type="text" id="first_name" name="first_name" required><br><br>
 
-        <label for="last_name">Last Name:</label><br>
-        <input type="text" id="last_name" name="last_name" required><br><br>
-        
-        <label for="position">Position:</label><br>
-        <select id="position" name="position" required>
-            <option value="faculty">Faculty</option>
-            <option value="curriculum_committee">Curriculum Committee</option>
-            <option value="department_chair">Department Chair</option>
-            <option value="dean">Dean</option>
-        </select><br><br>
+<select id="parentbox">
+<option>Select Category</option>
 
-        <label for="department">Department:</label><br>
-        <select id="department" onchange="getCourses(this.value);" name="department" required>
-            <option value="CBAA">College of Business Administration and Accountancy</option>
-            <option value="CCJE">College of Criminal Justice Education</option>
-            <option value="CE">College of Education</option>
-            <option value="CEAT">College of Engineering, Architecture and Technology</option>
-            <option value="CLAC">College of Liberal Arts and Communication</option>
-            <option value="CSCS">College of Science and Computer Studies</option>
-            <option value="CTHM">College of Tourism and Hospitality Management</option>
-        </select><br><br>
+<?php
+$sql="select * from category";
+$result=mysqli_query($conn,$sql);
 
-        <label for="course">Course:</label><br>
-        <select name="course" id="course">
-            <option value="">Select Courses</option>
-        </select><br><br>
+while($data=mysqli_fetch_array($result))
+{?>
+<option value="<?php echo $data['id']?>"><?php echo $data['name'];?></option>
+<?php } ?>
 
-        <label for="phone_number">Phone Number:</label><br>
-        <input type="tel" id="phone_number" name="phone_number"><br><br>
+</select>
 
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" required><br><br>
-
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password" required><br><br>
+<select id="childbox">
+<option>Select Course</option>
+</select>
 
 
-        <input type="submit" value="Register">
-    </form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
-   <script>
-    function getCourses(department){
-        if(window.XMLHttpRequest){
-            xmlhttp = new XMLHttpRequest();
-        }else{
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
+<script>
 
-        xmlhttp.onreadystatechange = function(){
-            if(this.readyState==4 && this.status==200){
-                document.getElementById('course').innerHTML = this.responseText;
-            }
-        }
-        xmlhttp.open("GET","helper.php?department="+department, true);
-        xmlhttp.send();
-    }
-   </script> 
+$("#parentbox").change(function()
+{
+	$category=$("#parentbox").val();
+	
+	$.ajax({
+		
+		url:'data.php',
+		method:'POST',
+		data:{'category':$category},
+		success:function(response)
+		{
+			$("#childbox").html(response);
+		}
+		
+	});
+	
+});
+
+</script>
+
 </body>
 </html>
