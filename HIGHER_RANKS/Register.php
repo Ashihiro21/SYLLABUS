@@ -25,7 +25,7 @@ while($data=mysqli_fetch_array($result))
 </select>
 
 <select id="childbox">
-<option>Select Course</option>
+<option>Select Courses</option>
 </select>
 
 
