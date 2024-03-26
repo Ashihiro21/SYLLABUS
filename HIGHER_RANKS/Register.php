@@ -48,12 +48,19 @@ include('../Database/connection.php');
         <label for="password">Password:</label><br>
         <input type="password" id="password" name="password" required><br><br>
 
-        <label for="position">Position:</label><br>
-        <select id="position" name="position" required>
-            <option value="faculty">Faculty</option>
-            <option value="curriculum_committee">Curriculum Committee</option>
-            <option value="department_chair">Department Chair</option>
-            <option value="dean">Dean</option>
+        <label for="department">Department</label><br><br>
+        <select name="department" id="parentbox">
+        <option>Select Category</option><br><br>
+
+        <?php
+        $sql="select * from position";
+        $result=mysqli_query($conn,$sql);
+
+        while($data=mysqli_fetch_array($result))
+        {?>
+        <option value="<?php echo $data['id']?>"><?php echo $data['name'];?></option>
+        <?php } ?>
+
         </select><br><br>
 
         <input type="submit" value="Register">
