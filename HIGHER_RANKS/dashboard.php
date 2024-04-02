@@ -461,33 +461,42 @@ $conn->close();
     
 
     <script>
-        $(document).ready(function () {
+    $(document).ready(function () {
 
-            $('.editbtn').on('click', function () {
+        $('.editbtn').on('click', function () {
 
-                $('#editmodal').modal('show');
+            $('#editmodal').modal('show');
 
-                $tr = $(this).closest('tr');
+            $tr = $(this).closest('tr');
 
-                var data = $tr.children("td").map(function () {
-                    return $(this).text();
-                }).get();
+            var data = $tr.children("td").map(function () {
+                return $(this).text();
+            }).get();
 
-                console.log(data);
+            console.log(data);
 
-                $('#update_id').val(data[0]);
-                $('#course_code').val(data[1]);
-                $('#course_tittle').val(data[2]);
-                $('#course_Type').val(data[3]);
-                $('#course_credit').val(data[4]);
-                $('#learning_modality').val(data[5]);
-                $('#pre_requisit').val(data[6]);
-                $('#co_pre_requisit').val(data[7]);
-                $('#professor').val(data[8]);
-                $('#consultation_hours').val(data[9]);
-                $('#course_description').val(data[10]);
-            });
+            $('#update_id').val(data[0]);
+            $('#course_code').val(data[1]);
+            $('#course_tittle').val(data[2]);
+
+            // Auto check radio for course_Type
+            var courseType = data[3];
+            $('input[name="course_Type"][value="' + courseType + '"]').prop('checked', true);
+
+            $('#course_credit').val(data[4]);
+
+            // Auto check radio for learning_modality
+            var learningModality = data[5];
+            $('input[name="learning_modality"][value="' + learningModality + '"]').prop('checked', true);
+
+            $('#pre_requisit').val(data[6]);
+            $('#co_pre_requisit').val(data[7]);
+            $('#professor').val(data[8]);
+            $('#consultation_hours').val(data[9]);
+            $('#course_description').val(data[10]);
         });
-    </script>
+    });
+</script>
+
 </body>
 </html>
