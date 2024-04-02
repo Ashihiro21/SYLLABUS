@@ -67,7 +67,7 @@ h2 {
 #formContent {
   -webkit-border-radius: 10px 10px 10px 10px;
   border-radius: 10px 10px 10px 10px;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.8); /* Adjusted background color with transparency */
   padding: 30px;
   width: 90%;
   max-width: 450px;
@@ -79,7 +79,7 @@ h2 {
 }
 
 #formFooter {
-  background-color: #f6f6f6;
+    background: rgba(255, 255, 255, 0.8); /* Adjusted background color with transparency */
   border-top: 1px solid #dce8f1;
   padding: 25px;
   text-align: center;
