@@ -2,11 +2,6 @@
 session_start();
 require_once '../Database/connection.php';
 
-// Function to validate email format
-function is_valid_email($email) {
-    return filter_var($email, FILTER_VALIDATE_EMAIL);
-}
-
 // Fetch data from the registration form
 $first_name = $_POST['first_name'];
 $last_name = $_POST['last_name'];
@@ -17,10 +12,10 @@ $email = $_POST['email'];
 $password = $_POST['password'];
 $position = $_POST['position'];
 
-// Check if email is valid
-if (!is_valid_email($email)) {
+// Validate email format
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     echo "Invalid email format!";
-    exit; // Stop execution if email is invalid
+    exit;
 }
 
 // Check if email already exists in the database
@@ -34,7 +29,7 @@ $stmt_check_email->close();
 
 if ($email_count > 0) {
     echo "Email already exists!";
-    exit; // Stop execution if email already exists
+    exit;
 }
 
 // Hash password
@@ -48,6 +43,4 @@ $stmt->bind_param("ssssssss", $first_name, $last_name, $department, $courses, $p
 $stmt->execute();
 
 echo "Registration successful!";
-
-
 ?>
