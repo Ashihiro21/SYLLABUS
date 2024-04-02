@@ -206,16 +206,6 @@ $positions = mysqli_fetch_all($result, MYSQLI_ASSOC);
   -moz-animation-delay: 1.2s;
   animation-delay: 1.2s;
 }
-.fadeIn.sixth {
-  -webkit-animation-delay: 1.4s;
-  -moz-animation-delay: 1.4s;
-  animation-delay: 1.4s;
-}
-.fadeIn.seventh {
-  -webkit-animation-delay: 1.6s;
-  -moz-animation-delay: 1.6s;
-  animation-delay: 1.6s;
-}
 
 /* Simple CSS3 Fade-in Animation */
 .underlineHover:after {
@@ -281,7 +271,7 @@ $positions = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <!-- Dropdown for Department -->
     <div class="form-group">
     <div class="dropdown">
-        <select id="parentbox" name="department" class="custom-select fadeIn fourth"  required>
+        <select id="parentbox" name="department" class="custom-select"  required>
             <option value="" selected disabled>Select Department</option>
             <?php
             $sql = "SELECT * FROM category";
@@ -299,7 +289,7 @@ $positions = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <!-- Dropdown for Courses -->
     <div class="form-group">
         <div class="dropdown">
-            <select class="custom-select fadeIn fifth" name="courses"  id="childbox">
+            <select class="custom-select" name="courses"  id="childbox">
                 <option>Select Courses</option>
                 <!-- Add more options as needed -->
             </select>
@@ -309,7 +299,7 @@ $positions = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <!-- Dropdown for Position -->
     <div class="form-group">
     <div class="dropdown">
-        <select id="position" class="custom-select fadeIn sixth" name="position" required>
+        <select id="position" class="custom-select" name="position" required>
             <option value="" selected disabled>Select Position</option>
             <?php foreach ($positions as $position) { ?>
                 <option value="<?php echo $position['id']; ?>"><?php echo $position['name']; ?></option>
@@ -323,7 +313,7 @@ $positions = mysqli_fetch_all($result, MYSQLI_ASSOC);
 </form>
 
         <!-- Remind Passowrd -->
-        <div id="formFooter" class="fadeIn seventh">
+        <div id="formFooter" class="fadeIn fifth">
             <p>Already have an account? Login <a href="login.php">here</a>.</p>
         </div>
     </div>
