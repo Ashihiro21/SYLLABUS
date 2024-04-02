@@ -95,46 +95,7 @@ $conn->close();
 <span><p><?php echo $position; ?><a href="logout.php">Logout</a></p></span>
 
 
- <!-- Modal -->
- <div class="modal fade" id="studentaddmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Student Data </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <form action="insertcode_deduction.php" method="POST">
-
-                    <div class="modal-body">
-                    <div class="form-group">
-                            <label> Computer Laboratory </label>
-                            <input type="text" name="comlab" id="comlab" class="form-control"
-                                placeholder="Enter Computer Laborator">
-                        </div>
-
-                        <div class="form-group">
-                            <label> Course Learning Outcomes  </label>
-                            <input type="text" name="learn_out" id="learing Outcome" class="form-control"
-                                placeholder="Enter Learning Outcome">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" name="insertdata" class="btn btn-primary">Save Data</button>
-                    </div>
-                </form>
-
-            </div>
-        </div>
-    </div>
-
-
-
-
+ 
 
 
 
@@ -229,8 +190,20 @@ $conn->close();
                         </div>
 
                         <div class="form-group">
-                            <label for="consultation_hours">Consultation Hours</label>
-                            <textarea id="consultation_hours" name="consultation_hours" id="consultation_hours" class="form-control" rows="5" cols="50" style="width: 300px;" placeholder="Enter consultation hours"></textarea>
+                            <label for="consultation_hours_date">Consultation Hours</label>
+                            <input id="consultation_hours_date" name="consultation_hours_date" id="consultation_hours_date" class="form-control" rows="5" cols="50" style="width: 300px;" placeholder="Enter consultation Day and Hours"></input>
+                        </div>
+
+                        <div class="form-group">
+                            <input id="consultation_hours_room" name="consultation_hours_room" id="consultation_hours_room" class="form-control" rows="5" cols="50" style="width: 300px;" placeholder="Enter consultation Room"></input>
+                        </div>
+
+                        <div class="form-group">
+                            <input id="consultation_hours_email" name="consultation_hours_email" id="consultation_hours_email" class="form-control" rows="5" cols="50" style="width: 300px;" placeholder="Enter consultation Email"></input>
+                        </div>
+
+                        <div class="form-group">
+                            <input id="consultation_hours_number" name="consultation_hours_number" id="consultation_hours_number" class="form-control" rows="5" cols="50" style="width: 300px;" placeholder="Enter consultation Contact"></input>
                         </div>
 
                         <div class="form-group">
@@ -300,7 +273,13 @@ $conn->close();
 
                             <td class="hide-id" style="border: 1px solid white;"><?php echo $row['professor']; ?></td>
 
-                            <td class="hide-id" style="border: 1px solid white;"><?php echo $row['consultation_hours']; ?></td>
+                            <td class="hide-id" style="border: 1px solid white;"><?php echo $row['consultation_hours_date']; ?></td>
+                            
+                            <td class="hide-id" style="border: 1px solid white;"><?php echo $row['consultation_hours_room']; ?></td>
+                            
+                            <td class="hide-id" style="border: 1px solid white;"><?php echo $row['consultation_hours_number']; ?></td>
+                            
+                            <td class="hide-id" style="border: 1px solid white;"><?php echo $row['consultation_hours_email']; ?></td>
                             
                             <td class="hide-id" style="border: 1px solid white;"><?php echo $row['course_description']; ?></td>
                                 
@@ -357,8 +336,12 @@ $conn->close();
     <div class="grid-item"><?php echo $row['professor']; ?></div>
 
     <div class="grid-item header">CONSULTATION HOURS</div>
-    <div class="grid-item ">:</div>
-    <div class="grid-item consultation_hours"><?php echo $row['consultation_hours']; ?></div>
+    <div class="grid-item">:</div>
+    <div class="grid-item"><?php echo $row['consultation_hours_date']; ?></div>
+    <div class="grid-item"><?php echo $row['consultation_hours_room']; ?></div>
+    <div class="grid-item"><?php echo $row['consultation_hours_email']; ?></div>
+    <div class="grid-item"><?php echo $row['consultation_hours_number']; ?></div>
+
     <div class="header grid-item mt-4">COURSE DESCRIPTION:</div>
     
 </div>
@@ -391,6 +374,47 @@ $conn->close();
                     <button type="button" class="btn btn-primary float-left add_databtn" data-toggle="modal" data-target="#studentaddmodal">
                         ADD DATA
                     </button>
+
+                    <!-- Modal -->
+ <div class="modal fade" id="studentaddmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Student Data </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="insertcode_deduction.php" method="POST">
+
+                    <div class="modal-body">
+                    <div class="form-group">
+                            <label> Computer Laboratory </label>
+                            <input type="text" name="comlab" id="comlab" class="form-control"
+                                placeholder="Enter Computer Laborator">
+                        </div>
+
+                        <div class="form-group">
+                            <label> Course Learning Outcomes  </label>
+                            <input type="text" name="learn_out" id="learing Outcome" class="form-control"
+                                placeholder="Enter Learning Outcome">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="insertdata" class="btn btn-primary">Save Data</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
 
 
 
@@ -492,8 +516,11 @@ $conn->close();
             $('#pre_requisit').val(data[6]);
             $('#co_pre_requisit').val(data[7]);
             $('#professor').val(data[8]);
-            $('#consultation_hours').val(data[9]);
-            $('#course_description').val(data[10]);
+            $('#consultation_hours_date').val(data[9]);
+            $('#consultation_hours_room').val(data[10]);
+            $('#consultation_hours_email').val(data[11]);
+            $('#consultation_hours_number').val(data[12]);
+            $('#course_description').val(data[13]);
         });
     });
 </script>
