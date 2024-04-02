@@ -1,8 +1,8 @@
 <?php
 $connection = mysqli_connect("localhost", "root", "", "syllabus");
 
-if(isset($_POST['updatedata'])) {   
-    $id = $_POST['update_id'];
+if(isset($_POST['updatedatatable'])) {   
+    $id = $_POST['update_id1'];
     
     $topic_learn_out = $_POST['topic_learn_out'];
     

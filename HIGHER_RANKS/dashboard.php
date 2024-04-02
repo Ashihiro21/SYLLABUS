@@ -47,7 +47,55 @@ $conn->close();
 
 
  
+ <!-- EDIT POP UP FORM (Bootstrap MODAL) -->
+ <div class="modal fade" id="editmodal_learn_out" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> COURSE LEARNING OUTCOMES </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
 
+                <form action="Course_Syllabus/update_course_learning_outcome.php" method="POST">
+
+                    <div class="modal-body">
+
+                        <input type="text" name="update_id" id="update_id">
+
+                        <div class="form-group">
+                            <label> Computer Laboratory </label>
+                            <input type="text" name="comlab" id="comlab" class="form-control"
+                                placeholder="Enter Computer Laboratory">
+                        </div>
+
+                        <div class="form-group">
+                            <label> Course Learning Outcome </label>
+                            <input type="text" name="learn_out" id="learn_out" class="form-control"
+                                placeholder="Enter Course Learning Outcome">
+                        </div>
+
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="updatedata" class="btn btn-primary">Update Data</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+ 
+
+
+    
+
+
+    
 
 
 
@@ -175,85 +223,7 @@ $conn->close();
         </div>
     </div>
 
-    <!-- EDIT POP UP FORM FOR LEARNING OUTCOME (Bootstrap MODAL) -->
-    <div class="modal fade" id="editmodal_learn_out" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"> Edit Employee Data </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
 
-                <form action="Course_Syllabus/update_course_learning_outcome.php" method="POST">
-
-                    <div class="modal-body">
-
-                        <input type="hidden" name="update_id" id="update_id">
-
-                        <div class="form-group">
-                            <label> Computer Laboratory </label>
-                            <input type="text" name="comlab" id="comlab" class="form-control"
-                                placeholder="Enter Computer Laboratory">
-                        </div>
-
-                        <div class="form-group">
-                            <label> Learning Outcome </label>
-                            <input type="text" name="learn_out" id="learn_out" class="form-control"
-                                placeholder="Enter Learning Outcome">
-                        </div>
-
-                        
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" name="updatedata" class="btn btn-primary">Update Data</button>
-                    </div>
-                </form>
-
-            </div>
-        </div>
-    </div>
-
-
-    <!-- EDIT POP UP FORM FOR LEARNING OUTCOME TABLE (Bootstrap MODAL)
-    <div class="modal fade" id="editmodal_learn_out_table" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"> Edit Employee Data </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <form action="Course_Syllabus/update_course_learning_outcome_table.php" method="POST">
-
-                    <div class="modal-body">
-
-                        <input type="hidden" name="update_id" id="update_id">
-
-                        <div class="form-group">
-                            <label> Topic Learning Outcome </label>
-                            <textarea id="topic_learn_out" name="topic_learn_out" class="form-control" cols="40" rows="5" placeholder="Enter Topic Learning Outcome"></textarea>
-                        </div>
-
-                    
-
-                        
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" name="updatedata" class="btn btn-primary">Update Data</button>
-                    </div>
-                </form>
-
-            </div>
-        </div>
-    </div> -->
 
     <!-- DELETE POP UP FORM  FOR LEARNING OUTCOME (Bootstrap MODAL) -->
     <div class="modal fade" id="deletemodal_learning_out" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -278,6 +248,74 @@ $conn->close();
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"> NO </button>
                         <button type="submit" name="deletedata" class="btn btn-primary"> Yes !! Delete it. </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- DELETE POP UP FORM  FOR LEARNING MODULE(Bootstrap MODAL) -->
+    <div class="modal fade" id="deletemodal_module_learning" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> Delete Student Data </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/delete_course_module_learning.php" method="POST">
+
+                    <div class="modal-body">
+
+                        <input type="hidden" name="delete_id3" id="delete_id3">
+
+                        <h4> Do you want to Delete this Data ??</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"> NO </button>
+                        <button type="submit" name="deletedata3" class="btn btn-primary"> Yes !! Delete it. </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+    
+ <!-- EDIT POP UP FORM TABLE (Bootstrap MODAL) -->
+ <div class="modal fade" id="editmodal_learn_out_table" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel1"> Topic Learning Outcomes  </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/update_course_learning_outcome_table.php" method="POST">
+
+                    <div class="modal-body">
+
+                        <input type="hidden" name="update_id1" id="update_id1">
+
+                        <div class="form-group">
+                            <label> Course Learning Outcome </label>
+                            <textarea name="topic_learn_out" id="topic_learn_out" class="form-control" placeholder="Enter Course Learning Outcome" cols="90" rows="5"></textarea>
+                        </div>
+
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="updatedatatable" class="btn btn-primary">Update Data</button>
                     </div>
                 </form>
 
@@ -480,7 +518,10 @@ $conn->close();
 
 
 
+
                     <div class="container mt-5">
+
+                    
                     <?php
                      
            
@@ -519,7 +560,7 @@ $conn->close();
                             <td><?php echo $row['comlab']; ?></td>
                             <td><?php echo "."; ?></td>
                             <td><?php echo $row['learn_out']; ?></td>
-                            <td class="hide-id"> <?php echo $row['topic_learn_out']; ?> </td>
+                            <td class="hide-id"><?php echo $row['topic_learn_out']; ?></td>
                             <td class="table-button">
                             <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
 
@@ -541,9 +582,402 @@ $conn->close();
            
 
                     </div>
-                 
-                    
 
+
+        
+                    <div class="container mt-5">
+
+                    
+                    <?php
+                     
+           
+                     // Database connection
+                     
+                     
+                     $connection = mysqli_connect("localhost","root","","syllabus");
+                     if (mysqli_connect_errno()){
+                         echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                         die();
+                         }
+                 
+                
+
+                     $query = "SELECT * FROM course_leaning";
+                     $query_run = mysqli_query($connection, $query);
+        ?>  
+                <table id="datatableid" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Course Learning Outcomes</th>
+                            <th scope="col">Topic Learning Outcomes</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <?php
+            if($query_run)
+            {
+                foreach($query_run as $row)
+                {
+        ?>
+                    <tbody>
+                      
+                    <tr>
+                            <td class="hide-id"> <?php echo $row['id']; ?> </td>
+                            <td class=""><?php echo $row['comlab']; ?><?php echo "."; ?><?php echo $row['learn_out']; ?></td>
+                            <td class=""><?php echo $row['topic_learn_out']; ?></td>
+                            <td class="table-button">
+                            <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
+
+                            <button type="button" class="btn btn-success editbtn_learning_out_table"><i class="lni lni-pencil"></i>EDIT</button>
+
+                            <!-- <button type="button" class="btn btn-danger deletebtn_learning_out_table"><i class="lni lni-trash-can">DELETE</i></button> -->
+                            </td>
+                        </tr>
+                    </tbody>
+                    <?php           
+                }
+            }
+            else 
+            {
+                echo "No Record Found";
+            }
+        ?>
+                </table>
+
+           
+
+                    </div>
+
+
+
+                    <button type="button" class="btn btn-primary float-left add_databtn" data-toggle="modal" data-target="#addmodal_module_learning">
+                        ADD DATA
+                    </button>
+
+                    <!-- Modal module_learning-->
+ <div class="modal fade" id="addmodal_module_learning" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Course Learning Outcome </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/insert_course_module_learning.php" method="POST">
+
+                    <div class="modal-body">
+                    <div class="form-group">
+                            <label> Module No and Learning  Outcomes</label>
+                            <input type="text" name="module_no" id="module_no1" class="form-control"
+                                placeholder="Enter Module No and Learning  Outcomes">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Week No</label>
+                            <input type="text" name="week" id="week1" class="form-control"
+                                placeholder="Enter Week No">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Week No</label>
+                            <input type="text" name="date" id="date1" class="form-control"
+                                placeholder="Enter Date">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Teaching-Learning Activities / Assessment Strategy</label>
+                            <input type="text" name="teaching_activities" id="teaching_activities1" class="form-control"
+                                placeholder="Enter Teaching-Learning Activities / Assessment Strategy">
+                        </div>
+
+                        
+                        
+                        <div class="form-group">
+                            <label>Technology Enabler</label>
+                            <input type="text" name="technology" id="technology1" class="form-control"
+                            placeholder="Enter Technology Enabler">
+                        </div>
+                        
+                        <div class="form-group">
+                    <label>
+                        <input type="radio" name="onsite" value="/" id="onsite1">
+                        Onsite / F2F
+                    </label><br>
+                    <label>
+                        <input type="radio" name="asy" value="/" id="asynchronous1">
+                        Asynchronous
+                    </label>
+                </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="insertdata" class="btn btn-primary">Save Data</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+<!-- EDIT POP UP FORM LEARNING MODULE TABLE (Bootstrap MODAL) -->
+ <div class="modal fade" id="editmodal_module_learning" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel1"> Topic Learning Outcomes  </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/update_course_module_learning.php" method="POST">
+
+                    <div class="modal-body">
+                        
+                    <input type="text" name="update_id3" id="update_id3">
+
+                    <div class="form-group">
+                            <label> Module No and Learning  Outcomes</label>
+                            <input type="text" name="module_no" id="module_no" class="form-control"
+                                placeholder="Enter Module No and Learning  Outcomes">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Week No</label>
+                            <input type="text" name="week" id="week" class="form-control"
+                                placeholder="Enter Week No">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Week No</label>
+                            <input type="text" name="date" id="date" class="form-control"
+                                placeholder="Enter Date">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Teaching-Learning Activities / Assessment Strategy</label>
+                            <input type="text" name="teaching_activities" id="teaching_activities" class="form-control"
+                                placeholder="Enter Teaching-Learning Activities / Assessment Strategy">
+                        </div>
+
+                        
+                        
+                        <div class="form-group">
+                            <label>Technology Enabler</label>
+                            <input type="text" name="technology" id="technology" class="form-control"
+                            placeholder="Enter Technology Enabler">
+                        </div>
+                        
+                        <div class="form-group">
+                    <label>
+                        <input type="radio" name="onsite" value="/" id="onsite">
+                        Onsite / F2F
+                    </label><br>
+                    <label>
+                        <input type="radio" name="asy" value="/" id="asynchronous">
+                        Asynchronous
+                    </label>
+                </div>
+
+
+                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="updatedata3" class="btn btn-primary">Update Data</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    
+
+    
+
+
+
+
+
+    <!-- EDIT POP UP FORM TABLE (Bootstrap MODAL)
+ <div class="modal fade" id="editmodal_module_learning" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel1"> Topic Learning Outcomes  </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/update_course_learning_outcome_table.php" method="POST">
+
+                    <div class="modal-body">
+
+                        <input type="text" name="update_id3" id="update_id3">
+
+                        <div class="form-group">
+                            <label> Course Learning Outcome </label>
+                            <textarea name="module_no" id="module_no" class="form-control" placeholder="Enter Course Learning Outcome" cols="90" rows="5"></textarea>
+                        </div>
+
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="updatedatatable" class="btn btn-primary">Update Data</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div> -->
+
+    <div class="container mt-5">
+
+                    
+<?php
+ 
+
+ // Database connection
+ 
+ 
+ $connection = mysqli_connect("localhost","root","","syllabus");
+ if (mysqli_connect_errno()){
+     echo "Failed to connect to MySQL: " . mysqli_connect_error();
+     die();
+     }
+
+
+
+ $query = "SELECT * FROM course_leaning";
+ $query_run = mysqli_query($connection, $query);
+?>  
+<table id="datatableid">
+<thead>
+    <!-- <tr>
+        <th scope="col">description</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Action</th>
+    </tr> -->
+</thead>
+<?php
+if($query_run)
+{
+foreach($query_run as $row)
+{
+?>
+<tbody>
+  
+    <tr>
+        <td class="hide-id"> <?php echo $row['id']; ?> </td>
+        <td><?php echo $row['comlab']; ?></td>
+        <td><?php echo "."; ?></td>
+        <td><?php echo $row['learn_out']; ?></td>
+        <td class="hide-id"><?php echo $row['topic_learn_out']; ?></td>
+        <td class="table-button">
+        <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
+
+        <button type="button" class="btn btn-success editbtn_learning_out"><i class="lni lni-pencil"></i>EDIT</button>
+
+        <button type="button" class="btn btn-danger deletebtn_learning_out"><i class="lni lni-trash-can">DELETE</i></button>
+        </td>
+    </tr>
+</tbody>
+<?php           
+}
+}
+else 
+{
+echo "No Record Found";
+}
+?>
+</table>
+
+
+</div>
+
+
+
+<div class="container mt-5">
+
+
+<?php
+ 
+
+ // Database connection
+ 
+ 
+ $connection = mysqli_connect("localhost","root","","syllabus");
+ if (mysqli_connect_errno()){
+     echo "Failed to connect to MySQL: " . mysqli_connect_error();
+     die();
+     }
+
+
+
+ $query = "SELECT * FROM module_learning";
+ $query_run = mysqli_query($connection, $query);
+?>  
+<table id="datatableid" class="table table-bordered">
+<thead>
+    <tr>
+        <th scope="col">Module No and Learning Outcomes</th>
+        <th scope="col">Week No</th>
+        <th scope="col">Week No</th>
+        <th scope="col">Teaching-Learning Activities / Assessment Strategy</th>
+        <th scope="col">Technology Enabler</th>
+        <th scope="col">Onsite / F2F</th>
+        <th scope="col">Asynchronous</th>
+    </tr>
+</thead>
+<?php
+if($query_run)
+{
+foreach($query_run as $row)
+{
+?>
+<tbody>
+  
+<tr>
+        <td class="hide-id"> <?php echo $row['id']; ?> </td>
+        <td class=""><?php echo $row['module_no']; ?></td>
+        <td class=""><?php echo $row['week']; ?></td>
+        <td class=""><?php echo $row['date']; ?></td>
+        <td class=""><?php echo $row['teaching_activities']; ?></td>
+        <td class=""><?php echo $row['technology']; ?></td>
+        <td class=""><?php echo $row['onsite']; ?></td>
+        <td class=""><?php echo $row['asy']; ?></td>
+        <td class="table-button">
+        <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
+
+        <button type="button" class="btn btn-success editbtn_module_learning"><i class="lni lni-pencil"></i>EDIT</button>
+
+        <button type="button" class="btn btn-danger deletebtn_module_learning"><i class="lni lni-trash-can">DELETE</i></button>
+        </td>
+    </tr>
+</tbody>
+<?php           
+}
+}
+else 
+{
+echo "No Record Found";
+}
+?>
+</table>
+
+
+
+</div>
+                 
+               
                 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
@@ -593,6 +1027,8 @@ $conn->close();
     });
 
 </script>
+
+
     <script>
     $(document).ready(function () {
 
@@ -615,8 +1051,7 @@ $conn->close();
     });
 </script>
 
-</script>
-    <!-- <script>
+<script>
     $(document).ready(function () {
 
         $('.editbtn_learning_out_table').on('click', function () {
@@ -631,11 +1066,15 @@ $conn->close();
 
             console.log(data);
 
-            $('#update_id').val(data[0]);
-            $('#topic_learn_out').val(data[4]);
+            $('#update_id1').val(data[0]);
+            $('#topic_learn_out').val(data[2]);
         });
     });
-</script> -->
+</script>
+
+
+
+
 
 <script>
         $(document).ready(function () {
@@ -657,6 +1096,65 @@ $conn->close();
             });
         });
     </script>
+
+
+<script>
+        $(document).ready(function () {
+
+            $('.deletebtn_module_learning').on('click', function () {
+
+                $('#deletemodal_module_learning').modal('show');
+
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                console.log(data);
+
+                $('#delete_id3').val(data[0]);
+
+            });
+        });
+    </script>
+
+
+
+<script>
+    $(document).ready(function () {
+
+        $('.editbtn_module_learning').on('click', function () {
+
+            $('#editmodal_module_learning').modal('show');
+
+            $tr = $(this).closest('tr');
+
+            var data = $tr.children("td").map(function () {
+                return $(this).text();
+            }).get();
+
+            console.log(data);
+
+            $('#update_id3').val(data[0]);
+            $('#module_no').val(data[1]);
+            $('#week').val(data[2]);
+
+            // Auto check radio for course_Type
+            
+            $('#date').val(data[3]);
+            $('#teaching_activities').val(data[4]);
+            $('#technology').val(data[5]);
+            var onsite = data[6];
+            $('input[name="onsite"][value="' + onsite + '"]').prop('checked', true);
+
+            // Auto check radio for learning_modality
+            var asy = data[7];
+            $('input[name="asy"][value="' + asy + '"]').prop('checked', true);
+        });
+    });
+
+</script>
 
 </body>
 </html>
