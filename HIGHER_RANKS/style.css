@@ -68,3 +68,14 @@ margin-left: 15px;
 .total{
     width: 5rem;
 }
+
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+    .grid-item {
+        border: 1px solid #ccc;
+        padding: 10px;
+    }
