@@ -72,10 +72,10 @@ $conn->close();
                         </div>
 
                         <div class="form-group">
-                            <label> Course Learning Outcome </label>
-                            <input type="text" name="learn_out" id="learn_out" class="form-control"
-                                placeholder="Enter Course Learning Outcome">
-                        </div>
+                        <label for="learn_out">Course Learning Outcome</label>
+                        <textarea  name="learn_out" id="learn_out" class="form-control" placeholder="Enter Course Learning Outcome" cols="50" rows="5"></textarea>
+                    </div>
+
 
                         
                     </div>
@@ -497,10 +497,10 @@ $conn->close();
                         </div>
 
                         <div class="form-group">
-                            <label> Course Learning Outcomes  </label>
-                            <input type="text" name="learn_out" id="learn_out" class="form-control"
-                                placeholder="Enter Learning Outcome">
-                        </div>
+                        <label for="learn_out">Course Learning Outcomes</label>
+                        <textarea name="learn_out" id="learn_out" class="form-control" placeholder="Enter Learning Outcome" cols="50" rows="5"></textarea>
+                    </div>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -670,10 +670,9 @@ $conn->close();
 
                     <div class="modal-body">
                     <div class="form-group">
-                            <label> Module No and Learning  Outcomes</label>
-                            <input type="text" name="module_no" id="module_no1" class="form-control"
-                                placeholder="Enter Module No and Learning  Outcomes">
-                        </div>
+                        <label for="module_no1">Module No and Learning Outcomes</label>
+                        <textarea name="module_no" id="module_no1" class="form-control" placeholder="Enter Module No and Learning Outcomes" cols="50" rows="5"></textarea>
+                    </div>
 
                         <div class="form-group">
                             <label>Week No</label>
@@ -688,10 +687,10 @@ $conn->close();
                         </div>
 
                         <div class="form-group">
-                            <label>Teaching-Learning Activities / Assessment Strategy</label>
-                            <input type="text" name="teaching_activities" id="teaching_activities1" class="form-control"
-                                placeholder="Enter Teaching-Learning Activities / Assessment Strategy">
-                        </div>
+                        <label for="teaching_activities1">Teaching-Learning Activities / Assessment Strategy</label>
+                        <textarea name="teaching_activities" id="teaching_activities1" class="form-control" placeholder="Enter Teaching-Learning Activities / Assessment Strategy" cols="50" rows="5"></textarea>
+                    </div>
+
 
                         
                         
@@ -703,14 +702,17 @@ $conn->close();
                         
                         <div class="form-group">
                     <label>
-                        <input type="radio" name="onsite" value="/" id="onsite1">
+                        <input type="radio" name="onsite" value="1" id="onsite1">
                         Onsite / F2F
                     </label><br>
                     <label>
-                        <input type="radio" name="asy" value="/" id="asynchronous1">
+                        <input type="radio" name="asy" value="1" id="asynchronous1">
                         Asynchronous
                     </label>
                 </div>
+                <label>Alloted Hours</label>
+                        <input type="text" name="hours" id="hours1" class="form-control"
+                            placeholder="Enter Alloted Hours">
 
 
                     </div>
@@ -718,6 +720,7 @@ $conn->close();
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" name="insertdata" class="btn btn-primary">Save Data</button>
                     </div>
+
                 </form>
 
             </div>
@@ -743,10 +746,9 @@ $conn->close();
                     <input type="text" name="update_id3" id="update_id3">
 
                     <div class="form-group">
-                            <label> Module No and Learning  Outcomes</label>
-                            <input type="text" name="module_no" id="module_no" class="form-control"
-                                placeholder="Enter Module No and Learning  Outcomes">
-                        </div>
+                    <label for="module_no">Module No and Learning Outcomes</label>
+                    <textarea name="module_no" id="module_no" class="form-control" placeholder="Enter Module No and Learning Outcomes" cols="50" rows="5"></textarea>
+                </div>
 
                         <div class="form-group">
                             <label>Week No</label>
@@ -761,10 +763,10 @@ $conn->close();
                         </div>
 
                         <div class="form-group">
-                            <label>Teaching-Learning Activities / Assessment Strategy</label>
-                            <input type="text" name="teaching_activities" id="teaching_activities" class="form-control"
-                                placeholder="Enter Teaching-Learning Activities / Assessment Strategy">
-                        </div>
+                    <label for="teaching_activities">Teaching-Learning Activities / Assessment Strategy</label>
+                    <textarea name="teaching_activities" id="teaching_activities" class="form-control" placeholder="Enter Teaching-Learning Activities / Assessment Strategy" cols="50" rows="5"></textarea>
+                </div>
+
 
                         
                         
@@ -776,11 +778,11 @@ $conn->close();
                         
                         <div class="form-group">
                     <label>
-                        <input type="radio" name="onsite" value="/" id="onsite">
+                        <input type="radio" name="onsite" value="1" id="onsite">
                         Onsite / F2F
                     </label><br>
                     <label>
-                        <input type="radio" name="asy" value="/" id="asynchronous">
+                        <input type="radio" name="asy" value="1" id="asynchronous">
                         Asynchronous
                     </label>
                 </div>
@@ -839,71 +841,225 @@ $conn->close();
         </div>
     </div> -->
 
+   
+
+
+
     <div class="container mt-5">
+    <table id="datatableid" class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Module No and Learning Outcomes</th>
+                <th scope="col">Week No</th>
+                <th scope="col">Date</th>
+                <th scope="col">Teaching-Learning Activities / Assessment Strategy</th>
+                <th scope="col">Technology Enabler</th>
+                <th scope="col">Onsite / F2F</th>
+                <th scope="col">Asynchronous</th>
+                <th scope="col">Alloted Hours</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            // Database connection
+            $connection = mysqli_connect("localhost", "root", "", "syllabus");
+            if (mysqli_connect_errno()) {
+                echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                die();
+            }
 
-                    
-<?php
- 
+            // Calculate total hours
+            $total_hour_query = "SELECT `hours`,`asy`,`onsite`,
+            SUM(hours) as total_hours, 
+            SUM(asy) as total_asy_hours,
+            SUM(onsite) as total_onsite_hours 
+        FROM 
+            module_learning";
+            $total_hour_result = mysqli_query($connection, $total_hour_query);
+            $total_hour_row = mysqli_fetch_assoc($total_hour_result);
 
- // Database connection
- 
- 
- $connection = mysqli_connect("localhost","root","","syllabus");
- if (mysqli_connect_errno()){
-     echo "Failed to connect to MySQL: " . mysqli_connect_error();
-     die();
-     }
+            $hours = $total_hour_row['hours'];
+            $onsite = $total_hour_row['onsite'];
+            $asy = $total_hour_row['asy'];
+            $total_hour = $total_hour_row['total_hours'];
+            $total_asy_hours = $total_hour_row['total_asy_hours'];
+            $total_onsite_hours = $total_hour_row['total_onsite_hours'];
 
+            // Fetch module learning records
+            $query = "SELECT 
+                        `id`, 
+                        `module_no`, 
+                        `week`, 
+                        `date`, 
+                        `teaching_activities`, 
+                        `technology`, 
+                        `onsite`, 
+                        `asy`, 
+                        `hours`
+                    FROM 
+                        `module_learning`";
 
+            $query_run = mysqli_query($connection, $query);
 
- $query = "SELECT * FROM course_leaning";
- $query_run = mysqli_query($connection, $query);
-?>  
-<table id="datatableid">
-<thead>
-    <!-- <tr>
-        <th scope="col">description</th>
-        <th scope="col">Amount</th>
-        <th scope="col">Action</th>
-    </tr> -->
-</thead>
-<?php
-if($query_run)
-{
-foreach($query_run as $row)
-{
-?>
-<tbody>
-  
-    <tr>
-        <td class="hide-id"> <?php echo $row['id']; ?> </td>
-        <td><?php echo $row['comlab']; ?></td>
-        <td><?php echo "."; ?></td>
-        <td><?php echo $row['learn_out']; ?></td>
-        <td class="hide-id"><?php echo $row['topic_learn_out']; ?></td>
-        <td class="table-button">
-        <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
+            if ($query_run) {
+                while ($row = mysqli_fetch_assoc($query_run)) {
+            ?>
+                    <tr>
+                        <td class="hide-id"><?php echo $row['id']; ?></td>
+                        <td><?php echo $row['module_no']; ?></td>
+                        <td><?php echo $row['week']; ?></td>
+                        <td><?php echo $row['date']; ?></td>
+                        <td><?php echo $row['teaching_activities']; ?></td>
+                        <td><?php echo $row['technology']; ?></td>
+                        <td><?php echo $row['onsite'] == 1 ? '/' : ''; ?></td>
+                        <td><?php echo $row['asy'] == 1 ? '/' : ''; ?></td>
 
-        <button type="button" class="btn btn-success editbtn_learning_out"><i class="lni lni-pencil"></i>EDIT</button>
-
-        <button type="button" class="btn btn-danger deletebtn_learning_out"><i class="lni lni-trash-can">DELETE</i></button>
-        </td>
-    </tr>
-</tbody>
-<?php           
-}
-}
-else 
-{
-echo "No Record Found";
-}
-?>
-</table>
-
-
+                        <td><?php echo $row['hours']; ?></td>
+                        <td class="table-button">
+                            <button type="button" class="btn btn-success editbtn_module_learning"><i class="lni lni-pencil"></i>EDIT</button>
+                            <button type="button" class="btn btn-danger deletebtn_module_learning"><i class="lni lni-trash-can"></i>DELETE</button>
+                        </td>
+                    </tr>
+            <?php
+                }
+            } else {
+                echo "No Record Found";
+            }
+            ?>
+            <tr>
+                <td colspan="5">TOTAL</td>
+                <td><?php echo $total_onsite_hours * $hours; ?></td>
+                <td><?php echo $total_asy_hours * $hours; ?></td>
+                <td><?php echo $total_hour; ?></td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
+<!-- Learning Outcomes for Final Period Table -->
 
+  <!-- DELETE POP UP FORM  for Final Period Table (Bootstrap MODAL) -->
+  <div class="modal fade" id="deletemodal_learn_out__final_period_table" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel5"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel5"> Delete Student Data </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/delete_course_module_learning_final_period.php" method="POST">
+
+                    <div class="modal-body">
+
+                        <input type="text" name="delete_id6" id="delete_id6">
+
+                        <h4> Do you want to Delete this Data ??</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"> NO </button>
+                        <button type="submit" name="deletedata" class="btn btn-primary"> Yes !! Delete it. </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+ <!-- EDIT POP UP for Final Period Table (Bootstrap MODAL) -->
+ <div class="modal fade" id="editmodal_learn_out__final_period_table" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel6"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel6"> Topic Learning Outcomes  </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/update_course_learning_outcome_final_period_table.php" method="POST">
+
+                    <div class="modal-body">
+
+                        <input type="text" name="update_id5" id="update_id5">
+
+                        <div class="form-group">
+                            <label> Course Learning Outcomes  </label>
+                            <input type="text" name="final_learning_out" id="final_learning_out" class="form-control"
+                                placeholder="Enter Course Learning Outcomes">
+                        </div>
+
+                        <div class="form-group">
+                        <label>Topic Learning Outcomes</label>
+                        <textarea name="final_topic_leaning_out" id="final_topic_leaning_out" class="form-control" placeholder="Enter Learning Outcome" cols="50" rows="5"></textarea>
+                    </div>
+
+
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="updatedatatable" class="btn btn-primary">Update Data</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+  <!--Add Modal Final Period Table -->
+<button type="button" class="btn btn-primary float-left add_databtn_final" data-toggle="modal" data-target="#studentaddmodal15">
+                        ADD DATA
+                    </button>
+
+                    <!-- Modal -->
+ <div class="modal fade" id="studentaddmodal15" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Learning Outcomes for Final Period </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/insert_course_learning_outcome_final.php" method="POST">
+
+                    <div class="modal-body">
+                    <div class="form-group">
+                            <label> Course Learning Outcomes  </label>
+                            <input type="text" name="final_learning_out" id="final_learning_out6" class="form-control"
+                                placeholder="Enter Course Learning Outcomes">
+                        </div>
+
+                        <div class="form-group">
+                        <label>Topic Learning Outcomes</label>
+                        <textarea name="final_topic_leaning_out" id="final_topic_leaning_out6" class="form-control" placeholder="Enter Learning Outcome" cols="50" rows="5"></textarea>
+                    </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="insertdata" class="btn btn-primary">Save Data</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+<br>
+
+<a>Learning Outcomes for Final Period</a>
 
 <div class="container mt-5">
 
@@ -922,19 +1078,15 @@ echo "No Record Found";
 
 
 
- $query = "SELECT * FROM module_learning";
+ $query = "SELECT * FROM  laerning_final";
  $query_run = mysqli_query($connection, $query);
 ?>  
 <table id="datatableid" class="table table-bordered">
 <thead>
     <tr>
-        <th scope="col">Module No and Learning Outcomes</th>
-        <th scope="col">Week No</th>
-        <th scope="col">Week No</th>
-        <th scope="col">Teaching-Learning Activities / Assessment Strategy</th>
-        <th scope="col">Technology Enabler</th>
-        <th scope="col">Onsite / F2F</th>
-        <th scope="col">Asynchronous</th>
+        <th scope="col">Course Learning Outcomes</th>
+        <th scope="col">Topic Learning Outcomes</th>
+        <th scope="col">Action</th>
     </tr>
 </thead>
 <?php
@@ -947,21 +1099,19 @@ foreach($query_run as $row)
   
 <tr>
         <td class="hide-id"> <?php echo $row['id']; ?> </td>
-        <td class=""><?php echo $row['module_no']; ?></td>
-        <td class=""><?php echo $row['week']; ?></td>
-        <td class=""><?php echo $row['date']; ?></td>
-        <td class=""><?php echo $row['teaching_activities']; ?></td>
-        <td class=""><?php echo $row['technology']; ?></td>
-        <td class=""><?php echo $row['onsite']; ?></td>
-        <td class=""><?php echo $row['asy']; ?></td>
+        <td class=""><?php echo $row['final_learning_out']; ?></td>
+        <td class=""><?php echo $row['final_topic_leaning_out']; ?></td>
         <td class="table-button">
         <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
 
-        <button type="button" class="btn btn-success editbtn_module_learning"><i class="lni lni-pencil"></i>EDIT</button>
+        <button type="button" class="btn btn-success editbtn_learning_out_final_period_table"><i class="lni lni-pencil"></i>EDIT</button>
 
-        <button type="button" class="btn btn-danger deletebtn_module_learning"><i class="lni lni-trash-can">DELETE</i></button>
+        <button type="button" class="btn btn-danger deletebtn_learning_out_final_period_table"><i class="lni lni-trash-can">DELETE</i></button>
         </td>
     </tr>
+
+
+
 </tbody>
 <?php           
 }
@@ -974,6 +1124,110 @@ echo "No Record Found";
 </table>
 
 
+
+</div>
+
+
+
+
+
+
+<div class="container mt-5">
+    <table id="datatableid" class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Module No and Learning Outcomes</th>
+                <th scope="col">Week No</th>
+                <th scope="col">Date</th>
+                <th scope="col">Teaching-Learning Activities / Assessment Strategy</th>
+                <th scope="col">Technology Enabler</th>
+                <th scope="col">Onsite / F2F</th>
+                <th scope="col">Asynchronous</th>
+                <th scope="col">Alloted Hours</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            // Database connection
+            $connection = mysqli_connect("localhost", "root", "", "syllabus");
+            if (mysqli_connect_errno()) {
+                echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                die();
+            }
+
+            // Calculate total hours
+            $total_hour_query = "SELECT `hours`,`asy`,`onsite`,
+            SUM(hours) as total_hours, 
+            SUM(asy) as total_asy_hours,
+            SUM(onsite) as total_onsite_hours 
+        FROM 
+        module_learning_final";
+            $total_hour_result = mysqli_query($connection, $total_hour_query);
+            $total_hour_row = mysqli_fetch_assoc($total_hour_result);
+
+            $hours = $total_hour_row['hours'];
+            $onsite = $total_hour_row['onsite'];
+            $asy = $total_hour_row['asy'];
+            $total_hour = $total_hour_row['total_hours'];
+            $total_asy_hours = $total_hour_row['total_asy_hours'];
+            $total_onsite_hours = $total_hour_row['total_onsite_hours'];
+
+            // Fetch module learning records
+            $query = "SELECT 
+                        `id`, 
+                        `module_no`, 
+                        `week`, 
+                        `date`, 
+                        `teaching_activities`, 
+                        `technology`, 
+                        `onsite`, 
+                        `asy`, 
+                        `hours`
+                    FROM 
+                        `module_learning_final`";
+
+            $query_run = mysqli_query($connection, $query);
+
+            if ($query_run) {
+                while ($row = mysqli_fetch_assoc($query_run)) {
+            ?>
+                    <tr>
+                        <td class="hide-id"><?php echo $row['id']; ?></td>
+                        <td><?php echo $row['module_no']; ?></td>
+                        <td><?php echo $row['week']; ?></td>
+                        <td><?php echo $row['date']; ?></td>
+                        <td><?php echo $row['teaching_activities']; ?></td>
+                        <td><?php echo $row['technology']; ?></td>
+                        <td><?php echo $row['onsite'] == 1 ? '/' : ''; ?></td>
+                        <td><?php echo $row['asy'] == 1 ? '/' : ''; ?></td>
+
+                        <td><?php echo $row['hours']; ?></td>
+                        <td class="table-button">
+                            <button type="button" class="btn btn-success editbtn_module_learning"><i class="lni lni-pencil"></i>EDIT</button>
+                            <button type="button" class="btn btn-danger deletebtn_module_learning"><i class="lni lni-trash-can"></i>DELETE</button>
+                        </td>
+                    </tr>
+            <?php
+                }
+            } else {
+                echo "No Record Found";
+            }
+            ?>
+            <tr>
+                <td colspan="5">TOTAL</td>
+                <td><?php echo $total_onsite_hours * $hours; ?></td>
+                <td><?php echo $total_asy_hours * $hours; ?></td>
+                <td><?php echo $total_hour; ?></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="container float-left mt-5">
+    <div class="cards">
+    <h5>GRADING SYSTEM</h5>
+    </div>
 
 </div>
                  
@@ -1076,6 +1330,9 @@ echo "No Record Found";
 
 
 
+
+
+
 <script>
         $(document).ready(function () {
 
@@ -1151,10 +1408,62 @@ echo "No Record Found";
             // Auto check radio for learning_modality
             var asy = data[7];
             $('input[name="asy"][value="' + asy + '"]').prop('checked', true);
+
+
         });
     });
 
 </script>
+
+<!-- EDIT BTN FOR FINAL PERIOD TABLE -->
+
+<script>
+    $(document).ready(function () {
+
+        $('.editbtn_learning_out_final_period_table').on('click', function () {
+
+            $('#editmodal_learn_out__final_period_table').modal('show');
+
+            $tr = $(this).closest('tr');
+
+            var data = $tr.children("td").map(function () {
+                return $(this).text();
+            }).get();
+
+            console.log(data);
+
+            $('#update_id5').val(data[0]);
+            $('#final_learning_out').val(data[1]);
+            $('#final_topic_leaning_out').val(data[2]);
+        });
+    });
+</script>
+
+<!-- DELETE BTN FOR FINAL PERIOD TABLE -->
+
+<script>
+        $(document).ready(function () {
+
+            $('.deletebtn_learning_out_final_period_table').on('click', function () {
+
+                $('#deletemodal_learn_out__final_period_table').modal('show');
+
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                console.log(data);
+
+                $('#delete_id6').val(data[0]);
+
+            });
+        });
+    </script>
+
+
+
 
 </body>
 </html>
