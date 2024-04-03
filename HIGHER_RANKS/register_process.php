@@ -42,5 +42,24 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("ssssssss", $first_name, $last_name, $department, $courses, $phone_number, $email, $password_hashed, $position);
 $stmt->execute();
 
-echo "Registration successful!";
+// Check if registration was successful
+if ($stmt->affected_rows > 0) {
+    // Registration successful, redirect to registration form
+    echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>';
+    header("Location: Register.php");
+    exit;
+} else {
+    // Registration failed, trigger error alert
+   
+    echo '<script>
+            $(document).ready(function() {
+                $(".fancy-alert").addClass("fancy-alert__active");
+                $(".fancy-alert").addClass("error");
+                $(".fancy-alert--words").html("Registration failed!");
+            });
+          </script>';
+}
+
+$stmt->close();
+$conn->close();
 ?>

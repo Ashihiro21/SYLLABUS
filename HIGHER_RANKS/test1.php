@@ -1,4 +1,63 @@
 <?php 
+session_start();
+require_once '../Database/connection.php';
+
+// Fetch positions from the database
+$sql = "SELECT * FROM position";
+$result = mysqli_query($conn, $sql);
+$positions = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+// Process registration form submission
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Fetch data from the registration form
+    $first_name = $_POST['first_name'];
+    $last_name = $_POST['last_name'];
+    $department = $_POST['department'];
+    $courses = $_POST['courses'];
+    $phone_number = $_POST['phone_number'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $position = $_POST['position'];
+
+    // Validate email format
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error_message = "Invalid email format!";
+    } else {
+        // Check if email already exists in the database
+        $sql_check_email = "SELECT COUNT(*) FROM users WHERE email = ?";
+        $stmt_check_email = $conn->prepare($sql_check_email);
+        $stmt_check_email->bind_param("s", $email);
+        $stmt_check_email->execute();
+        $stmt_check_email->bind_result($email_count);
+        $stmt_check_email->fetch();
+        $stmt_check_email->close();
+
+        if ($email_count > 0) {
+            $error_message = "Email already exists!";
+        } else {
+            // Hash password
+            $password_hashed = password_hash($password, PASSWORD_DEFAULT);
+
+            // Insert data into the database
+            $sql = "INSERT INTO users (first_name, last_name, department, courses, phone_number, email, password, position) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ssssssss", $first_name, $last_name, $department, $courses, $phone_number, $email, $password_hashed, $position);
+            $stmt->execute();
+
+            // Check if registration was successful
+            if ($stmt->affected_rows > 0) {
+                // Registration successful
+                $success_message = "Registration successful!";
+            } else {
+                // Registration failed
+                $error_message = "Registration failed!";
+            }
+        }
+    }
+}
+?>
+<?php 
 include('../Database/connection.php');
 
 // Fetch positions from the database
@@ -206,6 +265,16 @@ $positions = mysqli_fetch_all($result, MYSQLI_ASSOC);
   -moz-animation-delay: 1.2s;
   animation-delay: 1.2s;
 }
+.fadeIn.sixth {
+  -webkit-animation-delay: 1.4s;
+  -moz-animation-delay: 1.4s;
+  animation-delay: 1.4s;
+}
+.fadeIn.seventh {
+  -webkit-animation-delay: 1.6s;
+  -moz-animation-delay: 1.6s;
+  animation-delay: 1.6s;
+}
 
 /* Simple CSS3 Fade-in Animation */
 .underlineHover:after {
@@ -236,19 +305,154 @@ $positions = mysqli_fetch_all($result, MYSQLI_ASSOC);
 } 
 
 
+        body {}
+
+.fancy-alert {
+    font-family: sans-serif;
+    color: white;
+    width: 78px;
+    z-index: 1020;
+    top: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    position: fixed;
+    overflow: hidden;
+    box-shadow: 0 4px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    height: 78px;
+    background-color: gray;
+    transform: scale(0);
+    transition: all 0.5s;
+
+}
+
+.fancy-alert.fancy-alert__active {
+    opacity: 1;
+    top: 20px;
+    transform: scale(1);
+}
+
+.fancy-alert.fancy-alert__extended {
+    width: 800px;
+}
+
+.fancy-alert.fancy-alert__extended .fancy-alert--content {
+    opacity: 1;
+    transition: all 0.5s;
+}
+
+.fancy-alert.fancy-alert__extended .fancy-alert--words {
+    top: 18px;
+    opacity: 1;
+}
+
+.fancy-alert.error {
+    background-color: #D64646;
+}
+
+.fancy-alert.success {
+    background-color: #3CB971;
+}
+
+.fancy-alert.info {
+    background-color: #E8C22C;
+}
+
+.fancy-alert a {
+    color: white;
+    text-decoration: underline;
+}
+
+.fancy-alert--content {
+    padding: 10px;
+    opacity: 0;
+}
+
+.fancy-alert--words {
+    font-size: 18px;
+    font-weight: bold;
+    padding: 0 18px 0 90px;
+    max-width: 80%;
+    position: relative;
+    top: -50px;
+    opacity: 0;
+    height: 60px;
+    transition: all 0.3s;
+    transition-delay: 0.5s;
+}
+
+.fancy-alert--icon {
+    padding: 26px;
+    float: left;
+    font-size: 26px;
+    background-color: rgba(3, 3, 3, 0.15);
+}
+
+.fancy-alert--close {
+    position: absolute;
+    text-decoration: none;
+    right: 10px;
+    top: 10px;
+    font-size: 15px;
+    padding: 6px 9px;
+    background: rgba(0, 0, 0, 0.12);
+}
+
+.container {
+    text-align: center;
+    margin: 200px 0;
+}
+
+.show-alert {
+    border: 0;
+    background: #F2F2F2;
+    padding: 15px 70px;
+    font-weight: bold;
+    border-radius: 5px;
+    border-bottom: 3px solid #C8C8C8;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.23), inset 0 -53px 20px -30px rgba(59, 65, 74, 0.06);
+    margin: 0 10px;
+    font-size: 16px;
+    cursor: pointer;
+    color: #808080;
+    text-shadow: 0 1px #FFF;
+    outline: 0;
+    position: relative;
+}
+
+.show-alert:active {
+    border: 0;
+    box-shadow: none;
+    top: 2px;
+}
+
+.show-alert__info {
+    color: #E8C22C;
+}
+
+.show-alert__success {
+    color: #3CB971;
+}
+
+.show-alert__error {
+    color: #D64646;
+}
+
     </style>
 </head>
 <body aria-label="Background image, DLSUD-rotonda">
 <div class="overlay"></div>
 
-<div class="wrapper">
+<div class="wrapper  fadeInDown">
     <div id="formContent">
         <div class="fadeIn first">
             <img src="../img/DLSU-D.png" id="icon" alt="User Icon"/>
             <h6>Register for DLSUD.Syllabus</h6>
         </div>
 
-        <form action="register_process.php" method="POST">
+        <form action=" " method="POST">
     <div class="form-column">
         <div class="form-group">
             <input type="text" id="first_name" name="first_name" class="fadeIn first"  placeholder="First name" required>
@@ -271,7 +475,7 @@ $positions = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <!-- Dropdown for Department -->
     <div class="form-group">
     <div class="dropdown">
-        <select id="parentbox" name="department" class="custom-select"  required>
+        <select id="parentbox" name="department" class="custom-select fadeIn fourth"  required>
             <option value="" selected disabled>Select Department</option>
             <?php
             $sql = "SELECT * FROM category";
@@ -289,7 +493,7 @@ $positions = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <!-- Dropdown for Courses -->
     <div class="form-group">
         <div class="dropdown">
-            <select class="custom-select" name="courses"  id="childbox">
+            <select class="custom-select fadeIn fifth" name="courses"  id="childbox">
                 <option>Select Courses</option>
                 <!-- Add more options as needed -->
             </select>
@@ -299,7 +503,7 @@ $positions = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <!-- Dropdown for Position -->
     <div class="form-group">
     <div class="dropdown">
-        <select id="position" class="custom-select" name="position" required>
+        <select id="position" class="custom-select fadeIn sixth" name="position" required>
             <option value="" selected disabled>Select Position</option>
             <?php foreach ($positions as $position) { ?>
                 <option value="<?php echo $position['id']; ?>"><?php echo $position['name']; ?></option>
@@ -313,7 +517,7 @@ $positions = mysqli_fetch_all($result, MYSQLI_ASSOC);
 </form>
 
         <!-- Remind Passowrd -->
-        <div id="formFooter" class="fadeIn fifth">
+        <div id="formFooter" class="fadeIn seventh">
             <p>Already have an account? Login <a href="login.php">here</a>.</p>
         </div>
     </div>
@@ -331,6 +535,98 @@ $("#parentbox").change(function() {
         }
     });
 });
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(function() {
+    $('.show-alert__error').click(function() {
+        FancyAlerts.show({msg: 'Uh oh something went wrong!',type: 'error'})
+    })
+    $('.show-alert__success').click(function() {
+        FancyAlerts.show({msg: 'successfully registered!'})
+    })
+    $('.show-alert__info').click(function() {
+        FancyAlerts.show({msg: 'So long and thanks for all the shoes.',type: 'info'})
+    });
+})
+
+
+var FancyAlerts = (function() {
+    
+    var self = this;
+    
+    self.show = function(options) {
+            if($('.fancy-alert').length > -1) {
+                FancyAlerts.hide();
+            }
+            var defaults = {
+                type: 'success',
+                msg: 'Success',
+                timeout: 5000,
+                icon: 'fa fa-check',
+                onClose: function() {}
+            };
+
+            if(options.type === 'error' && !options.icon) options.icon = 'fa fa-exclamation-triangle';
+            if(options.type === 'info' && !options.icon) options.icon = 'fa fa-cog';
+
+            var options = $.extend(defaults, options);
+
+            var $alert = $('<div class="fancy-alert '+ options.type +' ">' +
+                                '<div class="">' +
+                                    '<i class="fancy-alert--icon ' + options.icon + '"></i>' +
+                                    '<div class="fancy-alert--content">' +
+                                        '<div class="fancy-alert--words">' +options.msg + '</div>' +
+                                        '<a class="fancy-alert--close" href="#"><i class="fa fa-times"></i></a>' +
+                                    '</div>' +
+                                '</div>' +
+                            '</div>');
+            
+            $('body').prepend($alert);
+            setTimeout(function() {
+                $alert.addClass('fancy-alert__active');
+            }, 10);
+
+            setTimeout(function() {
+                $alert.addClass('fancy-alert__extended');
+            }, 500);
+
+            if(options.timeout) {
+                self.hide(options.timeout);    
+            }
+            $('.fancy-alert--close').on('click', function(e) {
+                e.preventDefault();
+                self.hide();
+            });
+
+            $alert.on('fancyAlertClosed', function() {
+                options.onClose();
+            });
+        };
+    
+    
+        self.hide = function(_delay) {
+            var delay = _delay || 0;
+
+            var $alert = $('.fancy-alert');
+            setTimeout(function() {
+                setTimeout(function() {
+                    $alert.removeClass("fancy-alert__extended");
+                }, 10);
+
+                setTimeout(function() {
+                    $alert.removeClass('fancy-alert__active');
+                }, 500);
+                setTimeout(function() {
+                    $alert.trigger('fancyAlertClosed');
+                    $alert.remove();
+                }, 1000);
+            }, delay);
+        }
+    
+    return self;
+    
+})();
 </script>
 
 </body>
