@@ -400,7 +400,7 @@ $positions = mysqli_fetch_all($result, MYSQLI_ASSOC);
     background: rgba(0, 0, 0, 0.12);
 }
 
-.container {
+.container {0
     text-align: center;
     margin: 200px 0;
 }
