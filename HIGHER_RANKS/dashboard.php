@@ -10,13 +10,43 @@ if (!isset($_SESSION['email'])) {
 include('../Database/connection.php');
 
 $email = $_SESSION['email'];
-$sql = "SELECT position FROM users WHERE email = '$email'";
+$sql = "SELECT 
+            u.`first_name`, 
+            u.`last_name`, 
+            u.`department`, 
+            u.`courses`, 
+            u.`phone_number`, 
+            u.`email`, 
+            u.`password`, 
+            p.`name` AS `position`,
+            c.`id` AS `id`,
+            c.`name` AS `category_name`
+        FROM 
+            `users` AS u 
+        INNER JOIN 
+            `position` AS p ON u.`position` = p.`id`
+        INNER JOIN 
+            `category` AS c ON u.`id` = c.`id`
+        WHERE 
+            u.email = '$email'";
+
+
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     // Output data of each row
     while ($row = $result->fetch_assoc()) {
-        $position = $row["position"];
+        $first_name = $row['first_name'];
+        $last_name = $row['last_name'];
+        $department = $row['department'];
+        $courses = $row['courses'];
+        $phone_number = $row['phone_number'];
+        $email = $row['email'];
+        $password = $row['password'];
+        $position = $row['position'];
+        $id = $row['id'];
+        $category_name = $row['category_name'];
+        
     }
 } else {
     $position = "Position not found";
@@ -31,6 +61,7 @@ $conn->close();
     <title>Dashboard</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="nav.css">
 </head>
 <style>
  
@@ -38,12 +69,52 @@ $conn->close();
     display: none;
 }
 
+
+.container-fluid {
+    display: flex;
+    flex-direction: column; /* Align items vertically */
+    align-items: left; /* left items horizontally */
+}
+
+.container-fluid > * {
+    margin-bottom: 10px; /* Add space between each child element */
+}
+
+.container-fluid span, .container-fluid p {
+    text-align: left; /* left text */
+}
+
+.container-fluid a {
+    text-decoration: none; /* Remove underline from links */
+}
+
+  
+
 </style>
 <body>
-    <div class="container-fluid">
-    <h2>Welcome to Dashboard</h2>
+
+
+    <nav>
+    <span><p><?php echo $position; ?><a href="logout.php">Logout</a></p></span>
+    </nav>
    
-<span><p><?php echo $position; ?><a href="logout.php">Logout</a></p></span>
+    <div class="container pt-5 pb-4">
+        <img src="../img/logos.png" alt="">
+        
+   
+    </div>
+    <div class="text-center">
+    <h4>DE LA SALLE UNIVERSITY-DASMARINAS</h4>
+    <h4>COLLEGE OF SCIENCE AND COMPUTER STUDIES </h4>
+    <h4>INFORMATION TECHNOLOGY DEPARTMENT </h4>
+    <p class="pb-3"></p>
+    <h4>COURSE SYLLABUS</h4>
+    </div>
+    
+    <div class="container-fluid">
+
+
+   
 
 
  
@@ -63,7 +134,7 @@ $conn->close();
 
                     <div class="modal-body">
 
-                        <input type="text" name="update_id" id="update_id">
+                        <input type="hidden" name="update_id" id="update_id">
 
                         <div class="form-group">
                             <label> Computer Laboratory </label>
@@ -402,49 +473,52 @@ $conn->close();
             ?>
                     </table>
            
-                    <div class="container">
-    <div class="grid-item header">COURSE CODE</div>
-    <div class="grid-item ">:</div>
-    <div class="grid-item "><?php echo $row['course_code']; ?></div>
+                    <div class="container text-left">
+    <div class=" header text-left">COURSE CODE</div>
+    <div class="">:</div>
+    <div class=""><?php echo $row['course_code']; ?></div>
   
-    <div class="grid-item header">COURSE TITLE</div>
-    <div class="grid-item ">:</div>
-    <div class="grid-item"><?php echo $row['course_tittle']; ?></div>
+    <div class=" header text-left">COURSE TITLE</div>
+    <div class="">:</div>
+    <div class=""><?php echo $row['course_tittle']; ?></div>
 
-    <div class="grid-item header">COURSE TYPE</div>
-    <div class="grid-item ">:</div>
-    <div class="grid-item"><?php echo $row['course_Type']; ?></div>
+    <div class=" header text-left">COURSE TYPE</div>
+    <div class="">:</div>
+    <div class=""><?php echo $row['course_Type']; ?></div>
    
-    <div class="grid-item header">COURSE CREDIT</div>
-    <div class="grid-item ">:</div>
-    <div class="grid-item"><?php echo $row['course_credit']; ?></div>
+    <div class=" header text-left">COURSE CREDIT</div>
+    <div class="">:</div>
+    <div class=""><?php echo $row['course_credit']; ?></div>
 
-    <div class="grid-item header">LEARNING MODALITY</div>
-    <div class="grid-item ">:</div>
-    <div class="grid-item"><?php echo $row['learning_modality']; ?></div>
+    <div class=" header text-left">LEARNING MODALITY</div>
+    <div class="">:</div>
+    <div class=""><?php echo $row['learning_modality']; ?></div>
 
-    <div class="grid-item header">PRE-REQUISITES</div>
-    <div class="grid-item ">:</div>
-    <div class="grid-item"><?php echo $row['pre_requisit']; ?></div>
+    <div class=" header text-left">PRE-REQUISITES</div>
+    <div class="">:</div>
+    <div class=""><?php echo $row['pre_requisit']; ?></div>
 
-    <div class="grid-item header">CO-REQUISITES</div>
-    <div class="grid-item ">:</div>
-    <div class="grid-item"><?php echo $row['co_pre_requisit']; ?></div>
+    <div class=" header text-left">CO-REQUISITES</div>
+    <div class="">:</div>
+    <div class=""><?php echo $row['co_pre_requisit']; ?></div>
  
-    <div class="grid-item header">PROFESSOR</div>
-    <div class="grid-item ">:</div>
-    <div class="grid-item"><?php echo $row['professor']; ?></div>
+    <div class=" header text-left">PROFESSOR</div>
+    <div class="">:</div>
+    <div class=""><?php echo $row['professor']; ?></div>
 
-    <div class="grid-item header">CONSULTATION HOURS</div>
-    <div class="grid-item">:</div>
-    <div class="grid-item"><?php echo $row['consultation_hours_date']; ?></div>
-    <div class="grid-item"><?php echo $row['consultation_hours_room']; ?></div>
-    <div class="grid-item"><?php echo $row['consultation_hours_email']; ?></div>
-    <div class="grid-item"><?php echo $row['consultation_hours_number']; ?></div>
-
-    <div class="header grid-item mt-4">COURSE DESCRIPTION:</div>
-    
+    <div class=" header text-left">CONSULTATION HOURS</div>
+    <div class="">:</div>
+    <div class="">
+    <?php echo $row['consultation_hours_date']; ?><br>
+    <?php echo $row['consultation_hours_room']; ?><br>
+    <?php echo $row['consultation_hours_email']; ?><br>
+    <?php echo $row['consultation_hours_number']; ?>
 </div>
+
+<div class="header  mt-4">COURSE DESCRIPTION:</div>
+
+</div>
+
 
 <div class="container course_description">
 <?php echo $row['course_description']; ?>
@@ -743,7 +817,7 @@ $conn->close();
 
                     <div class="modal-body">
                         
-                    <input type="text" name="update_id3" id="update_id3">
+                    <input type="hidden" name="update_id3" id="update_id3">
 
                     <div class="form-group">
                     <label for="module_no">Module No and Learning Outcomes</label>
@@ -955,7 +1029,7 @@ $conn->close();
 
                     <div class="modal-body">
 
-                        <input type="text" name="delete_id6" id="delete_id6">
+                        <input type="hidden" name="delete_id6" id="delete_id6">
 
                         <h4> Do you want to Delete this Data ??</h4>
                     </div>
@@ -986,7 +1060,7 @@ $conn->close();
 
                     <div class="modal-body">
 
-                        <input type="text" name="update_id5" id="update_id5">
+                        <input type="hidden" name="update_id5" id="update_id5">
 
                         <div class="form-group">
                             <label> Course Learning Outcomes  </label>
@@ -1223,6 +1297,168 @@ echo "No Record Found";
         </tbody>
     </table>
 </div>
+</div>
+</div>
+
+
+
+<div class="card">
+<a><b>GRADING SYSTEM</b></a>
+<span><a>Class Participation</a><a style="margin-left:6rem;"><b>20%</b></a></span>
+<span><a>Enabling Assessment</a><a style="margin-left:5rem;"><b>50%</b></a></span>
+<span><a>Summative Assessment</a><a style="margin-left:4rem;"><b>30%</b></a></span>
+______________________________ <br>
+
+<span><a><b>TOTAL</b></a><a style="margin-left:10rem;"><b>100%</b></a></span><br><br>
+
+
+
+<span><b>Overall Final Grade</b><a> = Midterm + Final</a></span>
+<a>2</a>
+
+
+<a><b>COURSE POLICIES AND REQUIREMENTS </b></a><br>
+
+<b>1. Office365 Activation.</b><a>Please ensure that your Office365 account is working. Your Office365 
+    account is needed to access both Schoolbook and MS Teams where your asynchronous and 
+    synchronous classes will be held.</a><br><br>
+<b>2. Enrollment in an E-Class.</b><a>You will automatically be enrolled in your e-class which is based on 
+    your enrollment data.</a><br><br>
+<b>3. Traditional Blended Learning Model</b><a>This course adopts the traditional blended learning model. 
+    This means that there will be a mix of face-to-face and asynchronous classes. Majority of teaching-learning activities and assessments are undertaken onsite. The total number of onsite classes shall 
+    be 50% of the number of hours allotted for the whole semester.</a><br><br>
+<b>4. Online Asynchronous Sessions. </b><br>
+<br>
+<b>a. Schoolbook (SB)</b>
+<a>Schoolbook shall be the only platform for asynchronous sessions.</a><br>
+
+<b>b. Modules</b>
+<a>Modules are self-paced learning resources for asynchronous sessions. These can be accessed in Schoolbook.</a><br>
+
+<b>c. References</b>
+<a>Each page section may contain uploaded references. These learning resources may be downloaded.</a><br>
+
+<b>d. Asynchronous Activities</b>
+<a>You are expected to read the modules as soon as they are uploaded. The learning content of the modules complements the online synchronous and face-to-face sessions.</a><br>
+
+<b>e. Asynchronous Engagement</b>
+<a>Your activities in the course can be tracked by your professor. This includes the time you spend in reading the lessons and answering the assessments.</a><br>
+
+<b>f. Schoolbook Forum</b>
+<a>All general concerns about the lessons and assessments in asynchronous sessions must be posted in the Schoolbook Forum. Response shall be made by your teacher within 48 hours.</a><br>
+
+<b>g. Schoolbook Messaging</b>
+<a>This shall be the mode of communication for private and/or confidential communications. Response shall be made by your teacher within 48 hours upon receipt of the same unless it falls on weekends or holidays, which shall be handled promptly the following working day.</a><br>
+<br>
+<b>5. Onsite / Face-to-face (F2F) Sessions. </b><br><br>
+
+<b>a. Face-to-face engagement.</b>
+<a>Your engagement in face-to-face classes is graded based on your class participation.</a><br>
+
+<b>b. Classroom.</b>
+<a>F2F classes shall be held at the classroom indicated in your Certificate of Registration. Should there be changes in the classroom venue, information will be given in advance.</a><br>
+
+<b>c. Gospel Reading and Prayer.</b>
+<a>Each F2F session shall start with a Gospel reading and prayer. Your teacher may assign you, in advance, to do this.</a><br>
+
+<b>d. F2F Meeting Schedule.</b>
+<a>The meeting schedule shall follow the time indicated in your official registration. The dates of F2F meetings are identified in the learning plan.</a><br>
+
+<b>e. Attendance.</b>
+<a>Attendance in F2F meetings is required. Absence beyond 20% of the total number of F2F meetings will automatically be given a 0.0 grade in the subject.</a><br>
+
+<b>f. Tardiness.</b>
+<a>A student who comes in 1-30 minutes after the start of the face-to-face meeting is considered late. Three tardy attendances are equivalent to 1 absence.</a><br>
+
+<b>g. Absence.</b>
+<a>A student is considered absent 30 minutes after the official class schedule.</a><br>
+
+<b>h. Excuse from F2F classes.</b>
+<a>Students are excused from F2F classes based on the provisions in the latest version of the Student Handbook.</a><br>
+
+<b>i. Uniform.</b>
+<a>Wearing of prescribed uniform could be worn on Mondays, Thursdays, and Fridays, while Wednesdays and Saturdays are designated as wash days. Wearing of corporate attire could be worn every Tuesdays. Civilian attire should follow the policy on dress code as stipulated in the latest version of the Student Handbook.</a><br><br>
+
+<b>6. Assessment and Grading System.</b><br><br>
+
+<b>a. Formative assessments.</b>
+<a>These are ungraded assessments. These may be considered as practice assessments that lead towards achieving outcomes without fear of receiving a failing grade.</a><br>
+
+<b>b. Enabling assessments.</b>
+<a>These will comprise most of your graded assessments. These are designed to achieve topic learning outcomes that lead towards achieving the course learning outcomes. A maximum of two enabling assessments shall be allowed during the week. Please pay attention to the duration and number of attempts. As a general rule, quiz-type enabling assessments shall be open for only a minimum of 24 hours, while output-based enabling assessments shall be open for at least 6 days.</a><br>
+
+<b>c. No. of Attempts.</b>
+<a>All enabling assessments, if given onsite, shall have 1 attempt only. For online enabling assessments, there shall be a maximum of 2 attempts. Summative assessments shall be given onsite and shall have 1 attempt only.</a><br>
+
+<b>d. Summative assessments.</b>
+<ol class="c">
+    <li>There shall be two summative assessments (midterm and final exams) for the entire semester. These are designed to achieve the course learning outcomes.</li>
+    <li>Summative assessment shall be given onsite.</li>
+    <li>Output-based summative assessment shall be given to students at least fifteen days prior to scheduled Summative Exam Week.</li>
+</ol>
+
+<b>e. Lifeline.</b>
+<a>Only students with (1) valid reasons as stated in the Student Handbook and IRR, and (2) given their proof of excuse on or before the next synchronous/F2F session, shall be given a lifeline on the enabling and summative assessments.</a><br>
+
+<b>f. Rubric.</b>
+<a>All online non-quiz or non-discrete types of assessments (essay, drop box, output-based, etc.) shall have a rubric or criteria for rating the students’ tasks. A student may refuse to answer these types of assessments in the absence of a rubric or criteria for grading, and the assessment shall be deemed invalid and shall not be part of the student’s grades.</a><br>
+
+<b>g. Grading.</b>
+<a>All online assessments should be checked and graded by the teacher before the submission of midterm and final grades.</a><br>
+
+<b>h. Grading system.</b>
+<ol class="c">
+    <li>Enabling Assessments: 50%</li>
+    <li>Class Participation: 20%</li>
+    <li>Summative Assessments: 30%</li>
+</ol>
+
+<b>i. Gradebook.</b>
+<a>Students can see the breakdown of grades in their Assessment tab.</a><br><br>
+
+<b>7. Self-Care</b><br><br>
+
+<b>a. Schedule.</b>
+<a>The schedule of self-care week for the second semester 2022-2023 is on April 24 to April 29. During this week, there shall be no asynchronous/synchronous meetings, F2F classes, new modules, new assessments, and deadlines.</a><br>
+
+<b>b. Prerogative.</b>
+<a>Students may avail of the self-care program, whether online or onsite, provided by the different units of the University.</a><br><br>
+
+<b>8. Data Privacy. </b><br><br>
+
+<b>a. Access to the MS Teams.</b>
+    <a>Only students who are officially enrolled shall be part of the MS Teams and have access to all the resources including the recording. Students are not allowed to download the recordings. Screen recording is not allowed.</a><br>
+    
+    <b>b. Guests.</b>
+    <a>Inviting people that are not part of the class in synchronous meetings is strictly prohibited, unless approved by the subject teacher.</a><br><br>
+
+<b>9.  Copyright and Plagiarism. </b><br><br>
+
+<a>a. Using of any illegally obtained software and other technology tools is strictly prohibited.</a><br>
+<a>b. Students are encouraged to use their original photos, videos, and other resources. 
+    Otherwise, students can use royalty-free resources or embed the sources in their 
+    submissions to avoid copyright infringement and/or plagiarism. 
+    </a><br>
+<a>c. Giving of password to Schoolbook and Office 365 is strictly prohibited. Likewise, 
+    accessing Schoolbook and Office 365 account other than the students’ personal account 
+    is also strictly prohibited. Violating students will be reported to the Student Welfare and 
+    Formation Office (SWAFO). 
+    </a><br>
+<a>d. This subject shall abide by the policies pertaining to intellectual property, copyright, 
+    and plagiarism as stipulated in the latest edition of the Student Handbook. 
+    </a><br>
+<a>e. Any plagiarized work, whether in part or full, shall mean a grade of 0.0 for the 
+    assessment.</a><br><br>
+
+
+<a>10. This course shall abide by any institutional policies that may be released after the approval of this 
+    syllabus. Any such policy shall be posted within the e-class at the forums section, news feed. It 
+    will also be briefly discussed during the soonest synchronous meeting. </a><br><br>
+</div>
+
+
+
+<!-- GRADING SYSTEM -->
 
 
 
@@ -1232,25 +1468,425 @@ echo "No Record Found";
 
 
 
+<!-- END OF GRADING SYSTEM -->
 
 
 
+<!-- COURSE POLICIES AND REQUIREMENTS -->
 
 
 
+<!-- ONSITE REFFERENCE -->
 
+<!-- ADD ONSITE REFFERENCE -->
 
+<!--Add Modal Final Period Table -->
+<button type="button" class="btn btn-primary float-left onsite_reffence" data-toggle="modal" data-target="#onsite_reffence">
+                        ADD DATA
+                    </button>
 
+                    <!-- Modal -->
+ <div class="modal fade" id="onsite_reffence" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Learning Outcomes for Final Period </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
 
+                <form action="Course_Syllabus/insert_Reference Material.php" method="POST">
 
-<div class="container float-left mt-5">
-        
-        </div>
-          
-         
-         
+                    <div class="modal-body">
+                    <div class="form-group">
+                            <label> Provider  </label>
+                            <input type="text" name="Provider" id="Provider6" class="form-control"
+                                placeholder="Enter Provider">
+                        </div>
+
+                        <div class="form-group">
+                        <label>Reference Material</label>
+                        <textarea name="Reference_Material" id="Reference_Material6" class="form-control" placeholder="Enter Learning Outcome" cols="50" rows="5"></textarea>
+                    </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="insertdata" class="btn btn-primary">Save Data</button>
+                    </div>
+                </form>
+
+            </div>
         </div>
     </div>
+
+
+<!-- EDIT ONSITE REFFERENCE -->
+
+<!-- EDIT POP UP FORM (Bootstrap MODAL) -->
+<div class="modal fade" id="editmodal_onsite_reffence" tabindex="-1" role="dialog" aria-labelledby="editonsite_reffence"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editonsite_reffence"> COURSE LEARNING OUTCOMES </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/update_onsite_refference.php" method="POST">
+
+                    <div class="modal-body">
+
+                        <input type="text" name="update_id6" id="update_id6">
+
+                        <div class="form-group">
+                            <label> Provider </label>
+                            <input type="text" name="Provider" id="Provider" class="form-control"
+                                placeholder="Enter Computer Provider">
+                        </div>
+
+                        <div class="form-group">
+                        <label for="Reference_Material">Reference Material</label>
+                        <textarea  name="Reference_Material" id="Reference_Material" class="form-control" placeholder="Enter Reference Material" cols="50" rows="5"></textarea>
+                    </div>
+
+
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="updatedata" class="btn btn-primary">Update Data</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- DELETE ONSITE REFFERENCE --> 
+
+     <div class="modal fade" id="deletemodal_onsite_refference" tabindex="-1" role="dialog" aria-labelledby="onsite_reffence"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="onsite_reffence"> Delete On-Site References </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/delete_onsite_reffence.php" method="POST">
+
+                    <div class="modal-body">
+
+                        <input type="hidden" name="delete_id7" id="delete_id7">
+
+                        <h4> Do you want to Delete this Data ??</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"> NO </button>
+                        <button type="submit" name="deletedata" class="btn btn-primary"> Yes !! Delete it. </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+<a><b>REFERENCES</b></a><br>
+<a><b>On-Site References</b></a>
+
+<div class="container mt-5">
+
+
+<?php
+ 
+
+ // Database connection
+ 
+ 
+ $connection = mysqli_connect("localhost","root","","syllabus");
+ if (mysqli_connect_errno()){
+     echo "Failed to connect to MySQL: " . mysqli_connect_error();
+     die();
+     }
+
+
+
+ $query = "SELECT * FROM  onsite_reffence";
+ $query_run = mysqli_query($connection, $query);
+?>  
+<table id="datatableid" class="table table-bordered">
+<thead>
+    <tr>
+        <th scope="col">Provider</th>
+        <th scope="col">Reference Material</th>
+        <th scope="col">Action</th>
+    </tr>
+</thead>
+<?php
+if($query_run)
+{
+foreach($query_run as $row)
+{
+?>
+<tbody>
+  
+<tr>
+        <td class="hide-id"> <?php echo $row['id']; ?> </td>
+        <td class=""><?php echo $row['Provider']; ?></td>
+        <td class=""><?php echo $row['Reference_Material']; ?></td>
+        <td class="table-button">
+        <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
+
+        <button type="button" class="btn btn-success editbtn_onsite_reffence"><i class="lni lni-pencil"></i>EDIT</button>
+
+        <button type="button" class="btn btn-danger deletebtn_onsite_refference"><i class="lni lni-trash-can">DELETE</i></button>
+        </td>
+    </tr>
+
+
+
+</tbody>
+<?php           
+}
+}
+else 
+{
+echo "No Record Found";
+}
+?>
+</table>
+
+
+
+</div>
+
+
+<!-- online REFFERENCE -->
+
+<!-- ADD online REFFERENCE -->
+
+<!--Add Modal Final Period Table -->
+<button type="button" class="btn btn-primary float-left online_reffence" data-toggle="modal" data-target="#online_reffence">
+                        ADD DATA
+                    </button>
+
+                    <!-- Modal -->
+ <div class="modal fade" id="online_reffence" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Online References</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/insert_Online_Reference_Material.php" method="POST">
+
+                    <div class="modal-body">
+                    <div class="form-group">
+                            <label> Call Number / E-provider  </label>
+                            <input type="text" name="e_provider" id="e_provider6" class="form-control"
+                                placeholder="Enter Provider">
+                        </div>
+
+                        <div class="form-group">
+                        <label>Reference Material</label>
+                        <textarea name="refference_material" id="refference_material6" class="form-control" placeholder="Enter Reference Material" cols="50" rows="5"></textarea>
+                    </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="insertdata" class="btn btn-primary">Save Data</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+<!-- EDIT online REFFERENCE -->
+
+<!-- EDIT POP UP FORM (Bootstrap MODAL) -->
+<div class="modal fade" id="editmodal_online_refference" tabindex="-1" role="dialog" aria-labelledby="editonline_reffence"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editonline_reffence"> COURSE LEARNING OUTCOMES </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/update_online_refference.php" method="POST">
+
+                    <div class="modal-body">
+
+                        <input type="text" name="update_id8" id="update_id8">
+
+                        <div class="form-group">
+                            <label> Call Number / E-provider </label>
+                            <input type="text" name="e_provider" id="e_provider" class="form-control"
+                                placeholder="Enter Computer Provider">
+                        </div>
+
+                        <div class="form-group">
+                        <label for="refference_material">Reference Material</label>
+                        <textarea  name="refference_material" id="refference_material" class="form-control" placeholder="Enter Reference Material" cols="50" rows="5"></textarea>
+                    </div>
+
+
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="updatedata" class="btn btn-primary">Update Data</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- DELETE online REFFERENCE --> 
+
+     <div class="modal fade" id="deletemodal_online_refference" tabindex="-1" role="dialog" aria-labelledby="online_reffence"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="online_reffence"> Delete On-Site References </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/delete_online_refference.php" method="POST">
+
+                    <div class="modal-body">
+
+                        <input type="hidden" name="delete_id8" id="delete_id8">
+
+                        <h4> Do you want to Delete this Data ??</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"> NO </button>
+                        <button type="submit" name="deletedata" class="btn btn-primary"> Yes !! Delete it. </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+<a><b>Online References</b></a>
+
+<div class="container mt-5">
+
+
+<?php
+ 
+
+ // Database connection
+ 
+ 
+ $connection = mysqli_connect("localhost","root","","syllabus");
+ if (mysqli_connect_errno()){
+     echo "Failed to connect to MySQL: " . mysqli_connect_error();
+     die();
+     }
+
+
+
+ $query = "SELECT * FROM  online_refference";
+ $query_run = mysqli_query($connection, $query);
+?>  
+<table id="datatableid" class="table table-bordered">
+<thead>
+    <tr>
+        <th scope="col">Provider</th>
+        <th scope="col">Reference Material</th>
+        <th scope="col">Action</th>
+    </tr>
+</thead>
+<?php
+if($query_run)
+{
+foreach($query_run as $row)
+{
+?>
+<tbody>
+  
+<tr>
+        <td class="hide-id"> <?php echo $row['id']; ?> </td>
+        <td class=""><?php echo $row['e_provider']; ?></td>
+        <td class=""><?php echo $row['refference_material']; ?></td>
+        <td class="table-button">
+        <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
+
+        <button type="button" class="btn btn-success editbtn_online_refference"><i class="lni lni-pencil"></i>EDIT</button>
+
+        <button type="button" class="btn btn-danger deletebtn_online_refference"><i class="lni lni-trash-can">DELETE</i></button>
+        </td>
+    </tr>
+
+
+
+</tbody>
+<?php           
+}
+}
+else 
+{
+echo "No Record Found";
+}
+?>
+</table>
+
+
+
+</div>
+
+
+
+
+
+
+<div class="container-fluid mt-5">
+<span><b>Prepared:</b><b><a><?php echo $category_name; ?></a></b></span>
+<p>2nd Semester 2022-2023</p><br><br>
+<span><b>Approved:</b><b><a><?php echo $first_name ." ".$last_name; ?></a></b></span>
+<span><b><a><?php echo $position; ?></a></b></span>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1501,6 +2137,102 @@ echo "No Record Found";
         });
     </script>
 
+
+<!-- EDIT BTN FOR ONSITE REFFERENCE -->
+
+<script>
+    $(document).ready(function () {
+
+        $('.editbtn_onsite_reffence').on('click', function () {
+
+            $('#editmodal_onsite_reffence').modal('show');
+
+            $tr = $(this).closest('tr');
+
+            var data = $tr.children("td").map(function () {
+                return $(this).text();
+            }).get();
+
+            console.log(data);
+
+            $('#update_id6').val(data[0]);
+            $('#Provider').val(data[1]);
+            $('#Reference_Material').val(data[2]);
+        });
+    });
+</script>
+
+<!-- DELETE BTN FOR ONSITE REFFERENCE -->
+
+<script>
+        $(document).ready(function () {
+
+            $('.deletebtn_onsite_refference').on('click', function () {
+
+                $('#deletemodal_onsite_refference').modal('show');
+
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                console.log(data);
+
+                $('#delete_id7').val(data[0]);
+
+            });
+        });
+    </script>
+
+
+
+<!-- EDIT BTN FOR ONSITE REFFERENCE -->
+
+<script>
+    $(document).ready(function () {
+
+        $('.editbtn_online_refference').on('click', function () {
+
+            $('#editmodal_online_refference').modal('show');
+
+            $tr = $(this).closest('tr');
+
+            var data = $tr.children("td").map(function () {
+                return $(this).text();
+            }).get();
+
+            console.log(data);
+
+            $('#update_id8').val(data[0]);
+            $('#e_provider').val(data[1]);
+            $('#refference_material').val(data[2]);
+        });
+    });
+</script>
+
+<!-- DELETE BTN FOR ONSITE REFFERENCE -->
+
+<script>
+        $(document).ready(function () {
+
+            $('.deletebtn_online_refference').on('click', function () {
+
+                $('#deletemodal_online_refference').modal('show');
+
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                console.log(data);
+
+                $('#delete_id8').val(data[0]);
+
+            });
+        });
+    </script>
 
 
 

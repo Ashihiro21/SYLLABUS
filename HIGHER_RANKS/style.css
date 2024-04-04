@@ -3,7 +3,7 @@ body{
     font-size: 18px;
 }
 h2{
-    text-align: center;
+    text-align: left;
 }
 p {
 margin-right: 1rem;
@@ -19,8 +19,8 @@ display: grid;
 grid-template-columns: repeat(3, auto); /* Two columns */
 grid-auto-rows: min-content; /* Automatically adjust row height based on content */
 gap: 10px; /* Gap between grid items */
-justify-content: center; /* Center content horizontally */
-align-items: center; /* Center content vertically */
+justify-content: left; /* left content horizontally */
+align-items: left; /* Center content vertically */
 }
 
 .grid-item {
@@ -62,20 +62,24 @@ margin-left: 15px;
 }
 
 .header{
-    text-align: center;
+    text-align: left;
 }
 
 .total{
     width: 5rem;
 }
+/* 
+.card{
+    position: absolute;
+    float: left;
+} */
+
+
 
 
     .grid-container {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 2fr 2fr;
         gap: 10px;
     }
-    .grid-item {
-        border: 1px solid #ccc;
-        padding: 10px;
-    }
+    

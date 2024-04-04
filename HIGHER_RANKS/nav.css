@@ -1,0 +1,39 @@
+/* Styling the navigation bar */
+nav {
+    background-color: #333; /* Background color */
+    padding: 10px 0; /* Padding */
+    text-align: center; /* Center-align the content */
+}
+
+nav span {
+    display: inline-block; /* Make the span element inline-block */
+    color: #fff; /* Text color */
+    font-size: 18px; /* Font size */
+}
+
+nav a {
+    color: #fff; /* Link color */
+    text-decoration: none; /* Remove underline */
+    margin-left: 20px; /* Add space between links */
+}
+
+nav a:hover {
+    text-decoration: underline; /* Add underline on hover */
+}
+
+nav p {
+    margin: 0; /* Remove margin */
+}
+
+h4{
+    font-weight: bold;
+}
+
+
+a .percent{
+    margin-left: 20rem;
+}
+
+.description{
+    margin: 5rem;
+}
