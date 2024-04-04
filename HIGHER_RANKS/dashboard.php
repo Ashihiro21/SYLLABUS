@@ -23,9 +23,9 @@ $sql = "SELECT
             c.`name` AS `category_name`
         FROM 
             `users` AS u 
-        INNER JOIN 
+        LEFT JOIN 
             `position` AS p ON u.`position` = p.`id`
-        INNER JOIN 
+        LEFT JOIN 
             `category` AS c ON u.`id` = c.`id`
         WHERE 
             u.email = '$email'";
@@ -44,7 +44,6 @@ if ($result->num_rows > 0) {
         $email = $row['email'];
         $password = $row['password'];
         $position = $row['position'];
-        $id = $row['id'];
         $category_name = $row['category_name'];
         
     }
