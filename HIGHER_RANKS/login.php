@@ -505,6 +505,7 @@ $(document).ready(function() {
 });
 
 
+
 var FancyAlerts = (function() {
     
     var self = this;
