@@ -7,8 +7,6 @@
     <script src="https://kit.fontawesome.com/yourkit.js" crossorigin="anonymous"></script>
     <title>Document</title>
     <style>
-        
-        body {}
 
         body {}
 

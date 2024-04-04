@@ -492,19 +492,40 @@ $("#parentbox").change(function() {
     });
 });
 </script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <script>
-    $(function() {
-    $('.show-alert__error').click(function() {
-        FancyAlerts.show({msg: 'Uh oh something went wrong!',type: 'error'})
-    })
-    $('.show-alert__success').click(function() {
-        FancyAlerts.show({msg: 'Nailed it! This totally worked.'})
-    })
-    $('.show-alert__info').click(function() {
-        FancyAlerts.show({msg: 'So long and thanks for all the shoes.',type: 'info'})
+    $(document).ready(function() {
+    $('form').submit(function(e) {
+        e.preventDefault(); // Prevent form submission
+        
+        // Submit form via AJAX
+        $.ajax({
+            url: $(this).attr('action'),
+            method: $(this).attr('method'),
+            data: $(this).serialize(),
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    // Show success message using FancyAlerts
+                    FancyAlerts.show({msg: response.message, type: 'success'});
+                    // Optional: Clear form fields or do other actions
+                    setTimeout(function() {
+                            $('form')[0].reset(); // Clear form fields
+                        }, 2000);
+                } else {
+                    // Show error message using FancyAlerts
+                    FancyAlerts.show({msg: response.message, type: 'error'});
+                }
+            },
+            error: function(xhr, status, error) {
+                // Show error message if AJAX request fails
+                FancyAlerts.show({msg: 'An error occurred while processing your request.', type: 'error'});
+            }
+        });
     });
-})
+
+   
+});
 
 
 var FancyAlerts = (function() {

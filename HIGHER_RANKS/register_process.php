@@ -14,7 +14,8 @@ $position = $_POST['position'];
 
 // Validate email format
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    echo "Invalid email format!";
+    $response = array("success" => false, "message" => "Invalid email format!");
+    echo json_encode($response);
     exit;
 }
 
@@ -28,7 +29,8 @@ $stmt_check_email->fetch();
 $stmt_check_email->close();
 
 if ($email_count > 0) {
-    echo "Email already exists!";
+    $response = array("success" => false, "message" => "Email already exists!");
+    echo json_encode($response);
     exit;
 }
 
@@ -44,20 +46,15 @@ $stmt->execute();
 
 // Check if registration was successful
 if ($stmt->affected_rows > 0) {
-    // Registration successful, redirect to registration form
-    echo '<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>';
-    header("Location: Register.php");
+    // Registration successful
+    $response = array("success" => true, "message" => "Registration successful!");
+    echo json_encode($response);
     exit;
 } else {
-    // Registration failed, trigger error alert
-   
-    echo '<script>
-            $(document).ready(function() {
-                $(".fancy-alert").addClass("fancy-alert__active");
-                $(".fancy-alert").addClass("error");
-                $(".fancy-alert--words").html("Registration failed!");
-            });
-          </script>';
+    // Registration failed
+    $response = array("success" => false, "message" => "Registration failed!");
+    echo json_encode($response);
+    exit;
 }
 
 $stmt->close();
