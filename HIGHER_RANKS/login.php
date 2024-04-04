@@ -484,10 +484,13 @@ $(document).ready(function() {
                 if (response.success) {
                     // Show success message using FancyAlerts
                     FancyAlerts.show({msg: response.message, type: 'success'});
-                    // Redirect to dashboard after a short delay
-                    setTimeout(function() {
-                        window.location.href = 'dashboard.php';
-                    }, 2000); // 2000 milliseconds = 2 seconds
+                    // Optional: Add transition effect
+                    $('body').fadeOut(4500, function() {
+                        // Redirect to dashboard page after a delay
+                        setTimeout(function() {
+                            window.location.href = response.redirect;
+                        }, 500); // 1000 milliseconds = 1 second
+                    });
                 } else {
                     // Show error message using FancyAlerts
                     FancyAlerts.show({msg: response.message, type: 'error'});

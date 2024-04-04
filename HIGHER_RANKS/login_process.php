@@ -42,6 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     $response["success"] = true;
                     $response["message"] = "Login successful.";
+                    $response["redirect"] = "dashboard.php"; // Set the redirect URL
                 } else {
                     // Password is incorrect
                     $response["success"] = false;
