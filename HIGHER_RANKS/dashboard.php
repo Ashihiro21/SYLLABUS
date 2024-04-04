@@ -1870,9 +1870,13 @@ echo "No Record Found";
 
 <div class="container-fluid mt-5">
 <span><b>Prepared:</b><b><a><?php echo $category_name; ?></a></b></span>
-<p>2nd Semester 2022-2023</p><br><br>
+
+
+
 <span><b>Approved:</b><b><a><?php echo $first_name ." ".$last_name; ?></a></b></span>
 <span><b><a><?php echo $position; ?></a></b></span>
+
+
 
 
 </div>
