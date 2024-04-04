@@ -489,7 +489,7 @@ $(document).ready(function() {
                         // Redirect to dashboard page after a delay
                         setTimeout(function() {
                             window.location.href = response.redirect;
-                        }, 500); // 1000 milliseconds = 1 second
+                        }, 1000); // 1000 milliseconds = 1 second
                     });
                 } else {
                     // Show error message using FancyAlerts
