@@ -2208,7 +2208,7 @@ echo "No Record Found";
         </div>
     </div>
 
-<!-- EDIT ONSITE REFFERENCE -->
+<!-- EDIT MAPPING TABLE REFFERENCE -->
 
 <!-- EDIT POP UP FORM (Bootstrap MODAL) -->
 <div class="modal fade" id="editmodal_mapping_tablespls" tabindex="-1" role="dialog" aria-labelledby="editmapping_tablespls"
@@ -2296,6 +2296,37 @@ echo "No Record Found";
         </div>
     </div>
 
+
+    <!-- DELETE MAPPING TABLE PLS --> 
+
+    <div class="modal fade" id="deletemodal_mapping_tablepls" tabindex="-1" role="dialog" aria-labelledby="online_reffence"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="online_reffence"> Delete On-Site References </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/delete_mapping_tablepls.php" method="POST">
+
+                    <div class="modal-body">
+
+                        <input type="hidden" name="delete_id10" id="delete_id10">
+
+                        <h4> Do you want to Delete this Data ??</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"> NO </button>
+                        <button type="submit" name="deletedata" class="btn btn-primary"> Yes !! Delete it. </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
 
 <div class="container mt-5">
 
@@ -2796,10 +2827,6 @@ echo "No Record Found";
 
             $('input[name="onsite"][value="' + onsite + '"]').prop('checked', true);
             
-            
-            // Function to enable toggle behavior for checkbox buttons
-// Function to enable toggle behavior for checkbox buttons
-
 
 
           
@@ -2807,25 +2834,28 @@ echo "No Record Found";
     });
 </script>
 
-<!-- <script>
-    function enableToggleBehavior(checkboxName) {
-        $('input[name="' + checkboxName + '"]').on('click', function() {
-            // Toggle the checked state
-            $(this).prop('checked', !$(this).prop('checked'));
-        });
-    }
 
-    // Enable toggle behavior for each checkbox
-    enableToggleBehavior("pl1");
-    enableToggleBehavior("pl2");
-    enableToggleBehavior("pl3");
-    enableToggleBehavior("pl4");
-    enableToggleBehavior("pl5");
-    enableToggleBehavior("pl6");
-    enableToggleBehavior("pl7");
-    enableToggleBehavior("pl8");
-    enableToggleBehavior("pl9");
-</script> -->
+
+<script>
+        $(document).ready(function () {
+
+            $('.deletebtn_mapping_tablepls').on('click', function () {
+
+                $('#deletemodal_mapping_tablepls').modal('show');
+
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                console.log(data);
+
+                $('#delete_id10').val(data[0]);
+
+            });
+        });
+    </script>
 
 
 
