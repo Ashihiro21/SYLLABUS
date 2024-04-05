@@ -188,7 +188,7 @@ $conn->close();
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"> Edit Employee Data </h5>
+                    <h5 class="modal-title" id="exampleModalLabel"> EDIT COURSE SYLLABUS </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -287,7 +287,7 @@ $conn->close();
 
                         <div class="form-group">
                             <label for="course_description">Course Description</label>
-                            <textarea id="course_description" name="course_description" id="course_description" class="form-control" rows="5" cols="50" style="width: 300px;" placeholder="Enter Course Description"></textarea>
+                            <textarea id="course_description" name="course_description" id="course_description" class="form-control" rows="7" cols="70" style="width: 450px;" placeholder="Enter Course Description"></textarea>
                         </div>
 
                         
@@ -1549,7 +1549,7 @@ ______________________________ <br>
 
                     <div class="modal-body">
 
-                        <input type="text" name="update_id6" id="update_id6">
+                        <input type="hidden" name="update_id6" id="update_id6">
 
                         <div class="form-group">
                             <label> Provider </label>
@@ -1744,7 +1744,7 @@ echo "No Record Found";
 
                     <div class="modal-body">
 
-                        <input type="text" name="update_id8" id="update_id8">
+                        <input type="hidden" name="update_id8" id="update_id8">
 
                         <div class="form-group">
                             <label> Call Number / E-provider </label>
