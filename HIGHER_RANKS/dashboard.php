@@ -1861,7 +1861,119 @@ echo "No Record Found";
 
 
 
+
 </div>
+
+<!-- EDIT SEMESTRAL -->
+
+<!-- EDIT POP UP FORM (Bootstrap MODAL) -->
+<div class="modal fade" id="editmodal_semestral" tabindex="-1" role="dialog" aria-labelledby="edit_semestral"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="edit_semestral"> COURSE LEARNING OUTCOMES </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/update_semestral.php" method="POST">
+
+                    <div class="modal-body">
+
+                        <input type="hidden" name="update_id9" id="update_id9">
+                        
+                        <div class="form-group">
+                        <label for="term">term</label>
+                        <select name="term" id="term" class="form-control">
+                            <option value="1st Semester">1st Semester</option>
+                            <option value="2nd Semester">2nd Semester</option>
+                            <option value="Special Term">Special Term</option>
+                        </select>
+                    </div>
+
+                        <div class="form-group">
+                            <label>Year</label>
+                            <input type="text" name="year" id="year" class="form-control"
+                                placeholder="Enter Year">
+                        </div>
+
+
+
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="updatedata" class="btn btn-primary">Update Data</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+
+<!-- SEMESTRAL -->
+<?php
+ 
+
+ // Database connection
+ 
+ 
+ $connection = mysqli_connect("localhost","root","","syllabus");
+ if (mysqli_connect_errno()){
+     echo "Failed to connect to MySQL: " . mysqli_connect_error();
+     die();
+     }
+
+
+
+ $query = "SELECT * FROM  semestral";
+ $query_run = mysqli_query($connection, $query);
+?>  
+<table id="datatableid">
+<thead>
+    <tr>
+        <!-- <th scope="col">Provider</th>
+        <th scope="col">Reference Material</th>
+        <th scope="col">Action</th> -->
+    </tr>
+</thead>
+<?php
+if($query_run)
+{
+foreach($query_run as $row)
+{
+?>
+<tbody>
+  
+<tr>
+        <td class="hide-id"> <?php echo $row['id']; ?> </td>
+        <td class="hide-id"><?php echo $row['term']; ?></td>
+        <td class="hide-id"><?php echo $row['year']; ?></td>
+        <td class="table-button">
+        <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
+
+        <button type="button" class="btn btn-success editbtn_semestral"><i class="lni lni-pencil"></i>EDIT</button>
+
+        <!-- <button type="button" class="btn btn-danger deletebtn_online_refference"><i class="lni lni-trash-can">DELETE</i></button> -->
+        </td>
+    </tr>
+
+
+
+</tbody>
+<?php           
+}
+}
+else 
+{
+echo "No Record Found";
+}
+?>
+</table>
 
 
 
@@ -1873,6 +1985,9 @@ echo "No Record Found";
 
 
 
+
+
+<td><?php echo $row['term']; ?><?php echo $row['year']; ?></td>
 <span><b>Approved:</b><b><a><?php echo $first_name ." ".$last_name; ?></a></b></span>
 <span><b><a><?php echo $position; ?></a></b></span>
 
@@ -1881,6 +1996,21 @@ echo "No Record Found";
 
 </div>
 
+
+<!-- MAPPING -->
+
+<div class="container pt-5 pb-4">
+        <img src="../img/logos.png" alt="">
+        
+   
+    </div>
+    <div class="text-center">
+    <h4>DE LA SALLE UNIVERSITY-DASMARINAS</h4>
+    <h4>COLLEGE OF SCIENCE AND COMPUTER STUDIES </h4>
+    <h4>INFORMATION TECHNOLOGY DEPARTMENT </h4>
+    <p class="pb-3"></p>
+    <h4>COURSE SYLLABUS</h4>
+    </div>
 
 
 
@@ -2236,6 +2366,32 @@ echo "No Record Found";
             });
         });
     </script>
+
+
+
+<!-- EDIT BTN FOR SEMESTRAL -->
+
+<script>
+    $(document).ready(function () {
+
+        $('.editbtn_semestral').on('click', function () {
+
+            $('#editmodal_semestral').modal('show');
+
+            $tr = $(this).closest('tr');
+
+            var data = $tr.children("td").map(function () {
+                return $(this).text();
+            }).get();
+
+            console.log(data);
+
+            $('#update_id9').val(data[0]);
+            $('#term').val(data[1]);
+            $('#year').val(data[2]);
+        });
+    });
+</script>
 
 
 
