@@ -14,21 +14,27 @@ $sql = "SELECT
             u.`first_name`, 
             u.`last_name`, 
             u.`department`, 
-            u.`courses`, 
+            u.`catid`, 
             u.`phone_number`, 
             u.`email`, 
             u.`password`, 
             p.`name` AS `position`,
             c.`id` AS `id`,
-            c.`name` AS `category_name`
+            c.`name` AS `category_name`,
+            c.`initial` AS `category_initial`,
+            co.`cname`,
+            co.`initial` AS `course_initial`
         FROM 
             `users` AS u 
         LEFT JOIN 
             `position` AS p ON u.`position` = p.`id`
         LEFT JOIN 
             `category` AS c ON u.`id` = c.`id`
+        INNER JOIN
+            `course` AS co ON u.`catid` = co.`id`
         WHERE 
             u.email = '$email'";
+
 
 
 $result = $conn->query($sql);
@@ -39,12 +45,15 @@ if ($result->num_rows > 0) {
         $first_name = $row['first_name'];
         $last_name = $row['last_name'];
         $department = $row['department'];
-        $courses = $row['courses'];
+        $courses = $row['catid'];
         $phone_number = $row['phone_number'];
         $email = $row['email'];
         $password = $row['password'];
         $position = $row['position'];
         $category_name = $row['category_name'];
+        $category_initial = $row['category_initial'];
+        $cname = $row['cname'];
+        $course_initial = $row['course_initial'];
         
     }
 } else {
@@ -1981,7 +1990,7 @@ echo "No Record Found";
 
 
 <div class="container-fluid mt-5">
-<span><b>Prepared:</b><b><a><?php echo $category_name; ?></a></b></span>
+<span><b>Prepared:</b><b><a><?php echo $cname; ?></a></b></span>
 
 
 
@@ -1989,7 +1998,7 @@ echo "No Record Found";
 
 <td><?php echo $row['term']; ?><?php echo $row['year']; ?></td>
 <span><b>Approved:</b><b><a><?php echo $first_name ." ".$last_name; ?></a></b></span>
-<span><b><a><?php echo $position; ?></a></b></span>
+<span><b><a><?php echo $position ." , ". $course_initial; ?></a></b></span>
 
 
 
@@ -2905,7 +2914,7 @@ echo "No Record Found";
 
 <div class="container mt-5 font-italic">
 
-<a>Approved in </a><?php echo date("F") ." ".date("Y");; ?>  <a>during a multi-sectoral committee specifically convened for the purpose of coming up with 
+<a>Approved in </a><?php echo date("F") ." ".date("Y"); ?>  <a>during a multi-sectoral committee specifically convened for the purpose of coming up with 
 descriptions for the graduate attributes.</a>
 </div>
 

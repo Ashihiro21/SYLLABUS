@@ -38,7 +38,7 @@ if ($email_count > 0) {
 $password_hashed = password_hash($password, PASSWORD_DEFAULT);
 
 // Insert data into the database
-$sql = "INSERT INTO users (first_name, last_name, department, courses, phone_number, email, password, position) 
+$sql = "INSERT INTO users (first_name, last_name, department, catid, phone_number, email, password, position) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("ssssssss", $first_name, $last_name, $department, $courses, $phone_number, $email, $password_hashed, $position);
