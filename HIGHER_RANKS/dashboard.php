@@ -2478,23 +2478,23 @@ echo "No Record Found";
                         
                     </div>
                     
-                    <div class="form-group" Style="Display:flex;">
+                    <div class="form-group">
                         
                         
-                        <input type="checkbox" name="rate1" id="rate1s" value="/" class="form-control">
-                        <label style="margin-left: 5px;">1</label>
+                        <input type="checkbox" name="rate1" id="rate1s" value="/">
+                        <label style="margin-left: 5px;">1</label><br>
                         
 
-                        <input type="checkbox" name="rate2" id="rate2s" value="/" class="form-control">
-                        <label style="margin-left: 5px;">2</label>
+                        <input type="checkbox" name="rate2" id="rate2s" value="/">
+                        <label style="margin-left: 5px;">2</label><br>
 
-                        <input type="checkbox" name="rate3" id="rate3s" value="/" class="form-control">
-                        <label style="margin-left: 5px;">3</label>
+                        <input type="checkbox" name="rate3" id="rate3s" value="/">
+                        <label style="margin-left: 5px;">3</label><br>
 
-                        <input type="checkbox" name="rate4" id="rate4s" value="/" class="form-control">
-                        <label style="margin-left: 5px;">4</label>
+                        <input type="checkbox" name="rate4" id="rate4s" value="/">
+                        <label style="margin-left: 5px;">4</label><br>
 
-                        <input type="checkbox" name="rate5" id="rate5s" value="/" class="form-control">
+                        <input type="checkbox" name="rate5" id="rate5s" value="/">
                         <label style="margin-left: 5px;">5</label>
                       
                        
