@@ -2466,7 +2466,7 @@ echo "No Record Found";
                         <div class="form-group">
 
                         <label>Program Learning Outcomes</label><br>
-                        <textarea type="text" name="program_learn" col="40" cols="50" rows="5" id="program_learns" class="form-control"
+                        <textarea type="text" name="program_learn" col="40" cols="50" rows="5" class="form-control"
                                 placeholder="Enter Computer Laborator"></textarea>
                         
 
@@ -2481,20 +2481,20 @@ echo "No Record Found";
                     <div class="form-group">
                         
                         
-                        <input type="checkbox" name="rate1" id="rate1s" value="/">
+                        <input type="checkbox" name="rate1"value="/">
                         <label style="margin-left: 5px;">1</label><br>
                         
 
-                        <input type="checkbox" name="rate2" id="rate2s" value="/">
+                        <input type="checkbox" name="rate2" value="/">
                         <label style="margin-left: 5px;">2</label><br>
 
-                        <input type="checkbox" name="rate3" id="rate3s" value="/">
+                        <input type="checkbox" name="rate3" value="/">
                         <label style="margin-left: 5px;">3</label><br>
 
-                        <input type="checkbox" name="rate4" id="rate4s" value="/">
+                        <input type="checkbox" name="rate4" value="/">
                         <label style="margin-left: 5px;">4</label><br>
 
-                        <input type="checkbox" name="rate5" id="rate5s" value="/">
+                        <input type="checkbox" name="rate5" value="/">
                         <label style="margin-left: 5px;">5</label>
                       
                        
@@ -2513,6 +2513,107 @@ echo "No Record Found";
 
 
 
+
+<!-- EDIT POP UP FORM (Bootstrap MODAL) -->
+<div class="modal fade" id="editmodal_decriptors" tabindex="-1" role="dialog" aria-labelledby="editdecriptors"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editdecriptors"> COURSE LEARNING OUTCOMES </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/update_decriptors.php" method="POST">
+
+                    <div class="modal-body">
+
+                        <input type="hidden" name="update_id11" id="update_id11">
+
+                        <div class="form-group">
+                            <label> Computer Laboratory </label>
+                            <textarea type="text" name="program_learn" col="40" cols="50" rows="5" id="program_learn" class="form-control"
+                                placeholder="Enter Computer Laborator"></textarea>
+                        </div>
+
+                      
+                        <div class="form-group">
+
+                        
+                        <input type="checkbox" name="rate1" id="rate1" value="/">
+                        <label for="">1</label>
+                        
+
+                        <input type="checkbox" name="rate2" id="rate2" value="/">
+                        <label for="">2</label>
+
+                        <input type="checkbox" name="rate3" id="rate3" value="/">
+                        <label for="">3</label>
+
+                        <input type="checkbox" name="rate4" id="rate4" value="/">
+                        <label for="">4</label>
+
+                        <input type="checkbox" name="rate5" id="rate5" value="/">
+                        <label for="">5</label>
+                
+                       
+                    </div>
+
+
+
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="updatedata" class="btn btn-primary">Update Data</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- DELETE MAPPING TABLE PLS --> 
+
+    <div class="modal fade" id="deletemodal_decriptors" tabindex="-1" role="dialog" aria-labelledby="decriptors"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="decriptors"> Delete On-Site References </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/delete_decriptors.php" method="POST">
+
+                    <div class="modal-body">
+
+                        <input type="hidden" name="delete_id11" id="delete_id11">
+
+                        <h4> Do you want to Delete this Data ??</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"> NO </button>
+                        <button type="submit" name="deletedata" class="btn btn-primary"> Yes !! Delete it. </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+<!-- GRADUATES ATTRIBUTES -->
+
+
+    
 
 
 <div class="container mt-5">
@@ -2568,9 +2669,9 @@ foreach($query_run as $row)
         <td class="table-button">
         <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
 
-        <button type="button" class="btn btn-success editbtn_mapping_tablepls"><i class="lni lni-pencil"></i>EDIT</button>
+        <button type="button" class="btn btn-success editbtn_decriptors"><i class="lni lni-pencil"></i>EDIT</button>
 
-        <button type="button" class="btn btn-danger deletebtn_mapping_tablepls"><i class="lni lni-trash-can">DELETE</i></button>
+        <button type="button" class="btn btn-danger deletebtn_decriptors"><i class="lni lni-trash-can">DELETE</i></button>
         </td>
     </tr>
 
@@ -2594,6 +2695,211 @@ echo "No Record Found";
 
 
 
+
+<!-- GRADUATE ATTRIBUTE -->
+
+<div class="container pt-5 pb-4">
+        <img src="../img/logos.png" alt="">
+        
+   
+    </div>
+    <div class="text-center">
+    <h4>DE LA SALLE UNIVERSITY-DASMARINAS</h4>
+    <h4>COLLEGE OF SCIENCE AND COMPUTER STUDIES</h4>
+    <h4>INFORMATION TECHNOLOGY DEPARTMENT </h4>
+    <p class="pb-3"></p>
+    <h4>GRADUATES ATTRIBUTES AND INSTITUTIONAL LEARNING OUTCOMES (ILOs)</h4>
+    </div>
+
+
+
+
+<!-- ADD online REFFERENCE -->
+
+<!--Add Modal Final Period Table -->
+<button type="button" class="btn btn-primary float-left graduate_attribute" data-toggle="modal" data-target="#graduate_attribute">
+                        ADD DATA
+                    </button>
+
+                    <!-- Modal -->
+ <div class="modal fade" id="graduate_attribute" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Online References</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/insert_graduate_attribute.php" method="POST">
+
+                    <div class="modal-body">
+                    <div class="form-group">
+                            <label> Graduate Attribute (GA)  </label>
+                            <input type="text" name="graduate_att" id="graduate_att6" class="form-control"
+                                placeholder="Enter Graduate Attribute (GA)">
+                        </div>
+
+                        <div class="form-group">
+                        <label>Descriptors (Institutional Learning Outcome)</label>
+                        <textarea name="descriptors_learn_out" id="descriptors_learn_out6" class="form-control" placeholder="Enter Descriptors (Institutional Learning Outcome)" cols="50" rows="5"></textarea>
+                    </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="insertdata" class="btn btn-primary">Save Data</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- EDIT POP UP FORM (Bootstrap MODAL) -->
+<div class="modal fade" id="editmodal_graduate_attributes" tabindex="-1" role="dialog" aria-labelledby="editgraduate_attributes"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editgraduate_attributes"> COURSE LEARNING OUTCOMES </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/update_graduate_attributes.php" method="POST">
+
+                    <div class="modal-body">
+
+                        <input type="hidden" name="update_id12" id="update_id12">
+
+                        <div class="form-group">
+                            <label> Graduate Attribute (GA) </label>
+                            <input type="text" name="graduate_att" id="graduate_att" class="form-control"
+                                placeholder="Enter Graduate Attribute (GA)">
+                        </div>
+
+                        <div class="form-group">
+                        <label for="descriptors_learn_out">Descriptors (Institutional Learning Outcome)</label>
+                        <textarea  name="descriptors_learn_out" id="descriptors_learn_out" class="form-control" placeholder="Enter Descriptors (Institutional Learning Outcome)" cols="50" rows="5"></textarea>
+                    </div>
+
+
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="updatedata" class="btn btn-primary">Update Data</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+      <!-- DELETE GRADUATE ATTRIBUTES --> 
+
+      <div class="modal fade" id="deletemodal_graduate_attributes" tabindex="-1" role="dialog" aria-labelledby="gradute_attributes"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="gradute_attributes"> Delete On-Site References </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/delete_graduate_attributes.php" method="POST">
+
+                    <div class="modal-body">
+
+                        <input type="hidden" name="delete_id12" id="delete_id12">
+
+                        <h4> Do you want to Delete this Data ??</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"> NO </button>
+                        <button type="submit" name="deletedata" class="btn btn-primary"> Yes !! Delete it. </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+<div class="container mt-5">
+
+
+
+
+<?php
+ 
+
+ // Database connection
+ 
+ 
+ $connection = mysqli_connect("localhost","root","","syllabus");
+ if (mysqli_connect_errno()){
+     echo "Failed to connect to MySQL: " . mysqli_connect_error();
+     die();
+     }
+
+
+
+ $query = "SELECT * FROM  graduates_attributes";
+ $query_run = mysqli_query($connection, $query);
+?>  
+<table id="datatableid" class="table table-bordered">
+<thead>
+    <tr>
+        <th scope="col">Graduate Attribute (GA)</th>
+        <th scope="col">Descriptors (Institutional Learning Outcome)</th>
+        <th scope="col">Action</th>
+    </tr>
+</thead>
+<?php
+if($query_run)
+{
+foreach($query_run as $row)
+{
+?>
+<tbody>
+  
+<tr>
+        <td class="hide-id"> <?php echo $row['id']; ?> </td>
+        <td class=""><?php echo $row['graduate_att']; ?></td>
+        <td class=""><?php echo $row['descriptors_learn_out']; ?></td>
+        <td class="table-button">
+        <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
+
+        <button type="button" class="btn btn-success editbtn_graduate_attributes"><i class="lni lni-pencil"></i>EDIT</button>
+
+        <button type="button" class="btn btn-danger deletebtn_graduate_attributes"><i class="lni lni-trash-can">DELETE</i></button>
+        </td>
+    </tr>
+
+
+
+</tbody>
+<?php           
+}
+}
+else 
+{
+echo "No Record Found";
+}
+?>
+</table>
+
+
+</div>
 
 
 
@@ -3029,6 +3335,109 @@ echo "No Record Found";
     </script>
 
 
+
+<script>
+    $(document).ready(function () {
+
+        $('.editbtn_decriptors').on('click', function () {
+
+            $('#editmodal_decriptors').modal('show');
+
+            $tr = $(this).closest('tr');
+
+            var data = $tr.children("td").map(function () {
+                return $(this).text();
+            }).get();
+
+            console.log(data);
+
+            $('#update_id11').val(data[0]);
+            $('#program_learn').val(data[1]);
+            var rate1 = data[2];
+            $('input[name="rate1"][value="' + rate1 + '"]').prop('checked', true);
+            var rate2 = data[3];
+            $('input[name="rate2"][value="' + rate2 + '"]').prop('checked', true);
+            var rate3 = data[4];
+            $('input[name="rate3"][value="' + rate3 + '"]').prop('checked', true);
+            var rate4 = data[5];
+            $('input[name="rate4"][value="' + rate4 + '"]').prop('checked', true);
+            var rate5 = data[6];
+            $('input[name="rate5"][value="' + rate5 + '"]').prop('checked', true);
+            
+
+
+          
+        });
+    });
+</script>
+
+
+<script>
+        $(document).ready(function () {
+
+            $('.deletebtn_decriptors').on('click', function () {
+
+                $('#deletemodal_decriptors').modal('show');
+
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                console.log(data);
+
+                $('#delete_id11').val(data[0]);
+
+            });
+        });
+    </script>
+
+
+<script>
+    $(document).ready(function () {
+
+        $('.editbtn_graduate_attributes').on('click', function () {
+
+            $('#editmodal_graduate_attributes').modal('show');
+
+            $tr = $(this).closest('tr');
+
+            var data = $tr.children("td").map(function () {
+                return $(this).text();
+            }).get();
+
+            console.log(data);
+
+            $('#update_id12').val(data[0]);
+            $('#graduate_att').val(data[1]);
+            $('#descriptors_learn_out').val(data[2]);
+        });
+    });
+</script>
+
+
+
+<script>
+        $(document).ready(function () {
+
+            $('.deletebtn_graduate_attributes').on('click', function () {
+
+                $('#deletemodal_graduate_attributes').modal('show');
+
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                console.log(data);
+
+                $('#delete_id12').val(data[0]);
+
+            });
+        });
+    </script>
 
 
 </body>
