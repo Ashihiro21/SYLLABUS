@@ -2415,7 +2415,12 @@ echo "No Record Found";
 
 
 
+
+
+
+
 </div>
+
 
 
 <!-- GRADUATE ATTRIBUTES -->
@@ -2434,6 +2439,81 @@ echo "No Record Found";
     <h4>PROGRAM LEARNING OUTCOME MAPPING TABLE FOR BS INFORMATION </h4>
     <h4>TECHNOLOGY</h4>
     </div>
+
+
+<!-- ADD MODAL GRADUATE ATTRIBUTES -->
+<button type="button" class="btn btn-primary float-left add_databtn_decriptors" data-toggle="modal" data-target="#decriptors">
+                        ADD DATA
+                    </button>
+
+                    <!-- Modal -->
+ <div class="modal fade" id="decriptors" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Course Learning Outcome </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/insert_decriptors.php" method="POST">
+
+                    <div class="modal-body">
+                   
+
+                        <div class="form-group">
+
+                        <label>Program Learning Outcomes</label><br>
+                        <textarea type="text" name="program_learn" col="40" cols="50" rows="5" id="program_learns" class="form-control"
+                                placeholder="Enter Computer Laborator"></textarea>
+                        
+
+                        </div>
+
+
+                        <div class="form-group">
+                     
+                        
+                    </div>
+                    
+                    <div class="form-group" Style="Display:flex;">
+                        
+                        
+                        <input type="checkbox" name="rate1" id="rate1s" value="/" class="form-control">
+                        <label style="margin-left: 5px;">1</label>
+                        
+
+                        <input type="checkbox" name="rate2" id="rate2s" value="/" class="form-control">
+                        <label style="margin-left: 5px;">2</label>
+
+                        <input type="checkbox" name="rate3" id="rate3s" value="/" class="form-control">
+                        <label style="margin-left: 5px;">3</label>
+
+                        <input type="checkbox" name="rate4" id="rate4s" value="/" class="form-control">
+                        <label style="margin-left: 5px;">4</label>
+
+                        <input type="checkbox" name="rate5" id="rate5s" value="/" class="form-control">
+                        <label style="margin-left: 5px;">5</label>
+                      
+                       
+                    </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="insertdata" class="btn btn-primary">Save Data</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
 
 <div class="container mt-5">
 
