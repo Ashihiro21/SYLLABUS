@@ -2903,8 +2903,11 @@ echo "No Record Found";
 
 
 
+<div class="container mt-5 font-italic">
 
-
+<a>Approved in </a><?php echo date("F") ." ".date("Y");; ?>  <a>during a multi-sectoral committee specifically convened for the purpose of coming up with 
+descriptions for the graduate attributes.</a>
+</div>
 
 
 
