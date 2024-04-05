@@ -2415,8 +2415,99 @@ echo "No Record Found";
 
 
 
+</div>
 
 
+<!-- GRADUATE ATTRIBUTES -->
+
+<div class="container pt-5 pb-4">
+        <img src="../img/logos.png" alt="">
+        
+   
+    </div>
+    <div class="text-center">
+    <h4>DE LA SALLE UNIVERSITY-DASMARINAS</h4>
+    <h4>COLLEGE OF SCIENCE AND COMPUTER STUDIES </h4>
+    <h4>INFORMATION TECHNOLOGY DEPARTMENT </h4>
+    <p class="pb-3"></p>
+    <h4>GRADUATE ATTRIBUTES (DESCRIPTORS/INSTITUTIONAL LEARNING OUTCOMES) – </h4>
+    <h4>PROGRAM LEARNING OUTCOME MAPPING TABLE FOR BS INFORMATION </h4>
+    <h4>TECHNOLOGY</h4>
+    </div>
+
+<div class="container mt-5">
+
+
+
+<?php
+ 
+
+ // Database connection
+ 
+ 
+ $connection = mysqli_connect("localhost","root","","syllabus");
+ if (mysqli_connect_errno()){
+     echo "Failed to connect to MySQL: " . mysqli_connect_error();
+     die();
+     }
+
+
+
+ $query = "SELECT * FROM decriptors";
+ $query_run = mysqli_query($connection, $query);
+?>  
+<table id="datatableid" class="table table-bordered b-5">
+<thead>
+    <tr>
+        <th class="text-center" scope="col">Program Learning Outcomes</th>
+        <th class="text-center"  scope="col">1</th>
+        <th class="text-center"  scope="col">2</th>
+        <th class="text-center"  scope="col">3</th>
+        <th class="text-center"  scope="col">4</th>
+        <th class="text-center"  scope="col">5</th>
+        <th class="text-center"  scope="col">ACTION</th>
+    </tr>
+</thead>
+<?php
+if($query_run)
+{
+foreach($query_run as $row)
+{
+?>
+<tbody>
+  
+<tr>
+        <td class="hide-id"> <?php echo $row['id']; ?> </td>
+        <td class=""><?php echo $row['program_learn']; ?></td>
+        <td class=""><?php echo $row['rate1']; ?></td>
+        <td class=""><?php echo $row['rate2']; ?></td>
+        <td class=""><?php echo $row['rate3']; ?></td>
+        <td class=""><?php echo $row['rate4']; ?></td>
+        <td class=""><?php echo $row['rate5']; ?></td>
+
+        <td class="table-button">
+        <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
+
+        <button type="button" class="btn btn-success editbtn_mapping_tablepls"><i class="lni lni-pencil"></i>EDIT</button>
+
+        <button type="button" class="btn btn-danger deletebtn_mapping_tablepls"><i class="lni lni-trash-can">DELETE</i></button>
+        </td>
+    </tr>
+
+
+
+</tbody>
+<?php           
+}
+}
+else 
+{
+echo "No Record Found";
+}
+?>
+</table>
+
+</div>
 
 
 

@@ -15,7 +15,7 @@ if ($connection->connect_error) {
 
 if(isset($_POST['insertdata']))
 {
-    $learn_out = $_POST['learn_out'];
+    $learn_out_mapping = $_POST['learn_out_mapping'];
     $pl1 = $_POST['pl1'];
     $pl2 = $_POST['pl2'];
     $pl3 = $_POST['pl3'];
@@ -26,8 +26,8 @@ if(isset($_POST['insertdata']))
     $pl8 = $_POST['pl8'];
     $pl9 = $_POST['pl9'];
 
-    $sql = "INSERT INTO mapping_table (`learn_out`, `pl1` , `pl2` , `pl3` , `pl4` , `pl5` , `pl6` , `pl7` , `pl8` , `pl9`)
-    VALUES ('$learn_out', '$pl1' , '$pl2' , '$pl3' , '$pl4' , '$pl5' , '$pl6' , '$pl7' , '$pl8' , '$pl9')";
+    $sql = "INSERT INTO mapping_table (`learn_out_mapping`, `pl1` , `pl2` , `pl3` , `pl4` , `pl5` , `pl6` , `pl7` , `pl8` , `pl9`)
+    VALUES ('$learn_out_mapping', '$pl1' , '$pl2' , '$pl3' , '$pl4' , '$pl5' , '$pl6' , '$pl7' , '$pl8' , '$pl9')";
 
     if ($connection->query($sql) === TRUE) {
         echo '<script> alert("Data Saved"); </script>';
