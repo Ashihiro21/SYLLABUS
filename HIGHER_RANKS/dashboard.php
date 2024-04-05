@@ -1997,7 +1997,7 @@ echo "No Record Found";
 </div>
 
 
-<!-- MAPPING -->
+<!-- MAPPING HEADER -->
 
 <div class="container pt-5 pb-4">
         <img src="../img/logos.png" alt="">
@@ -2013,11 +2013,371 @@ echo "No Record Found";
     </div>
 
 
+    <!-- MAPPING TABLE -->
+
+
+    <?php
+                     
+           
+                     // Database connection
+                     
+                     $connection = mysqli_connect("localhost","root","","syllabus");
+                         if (mysqli_connect_errno()){
+                             echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                             die();
+                             }
+                     
+
+                         $query = "SELECT * FROM course_syllabus";
+                         $query_run = mysqli_query($connection, $query);
+            ?>  
+                    <table id="datatableid">
+                        <thead>
+                        </thead>
+                        <?php
+                if($query_run)
+                {
+                    foreach($query_run as $row)
+                    {
+            ?>
+                        <tbody>
+                            <tr>
+                                <td class="hide-id"> <?php echo $row['id']; ?> </td>
+                                <td class="hide-id" style="border: 1px solid white;"><?php echo $row['course_code']; ?></td>
+
+                            <td class="hide-id"  style="border: 1px solid white;"><?php echo $row['course_tittle']; ?></td>
+
+                            <td class="hide-id" style="border: 1px solid white;"><?php echo $row['course_Type']; ?></td>
+
+                            <td class="hide-id" style="border: 1px solid white;"><?php echo $row['course_credit']; ?></td>
+
+                            <td class="hide-id" style="border: 1px solid white;"><?php echo $row['learning_modality']; ?></td>
+
+                            <td class="hide-id" style="border: 1px solid white;"><?php echo $row['pre_requisit']; ?></td>
+
+                            <td class="hide-id" style="border: 1px solid white;"><?php echo $row['co_pre_requisit']; ?></td>
+
+                            <td class="hide-id" style="border: 1px solid white;"><?php echo $row['professor']; ?></td>
+
+                            <td class="hide-id" style="border: 1px solid white;"><?php echo $row['consultation_hours_date']; ?></td>
+                            
+                            <td class="hide-id" style="border: 1px solid white;"><?php echo $row['consultation_hours_room']; ?></td>
+                            
+                            <td class="hide-id" style="border: 1px solid white;"><?php echo $row['consultation_hours_number']; ?></td>
+                            
+                            <td class="hide-id" style="border: 1px solid white;"><?php echo $row['consultation_hours_email']; ?></td>
+                            
+                            <td class="hide-id" style="border: 1px solid white;"><?php echo $row['course_description']; ?></td>
+                                
+                            <!-- <td>
+                                <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button>
+
+                                <button type="button" class="btn btn-success editbtn"><i class="lni lni-pencil"></i>EDIT</button>
+
+                                <button type="button" class="btn btn-danger deletebtn"><i class="lni lni-trash-can"></i>DELETE</button>
+                                </td> -->
+                            </tr>
+                        </tbody>
+                        <?php           
+                    }
+                }
+                else 
+                {
+                    echo "No Record Found";
+                }
+            ?>
+                    </table>
+           
+                    <div class="container text-left">
+    <div class=" header text-left">COURSE CODE</div>
+    <div class="">:</div>
+    <div class=""><?php echo $row['course_code']; ?></div>
+  
+    <div class=" header text-left">COURSE TITLE</div>
+    <div class="">:</div>
+    <div class=""><?php echo $row['course_tittle']; ?></div>
+
+    <div class=" header text-left">COURSE TYPE</div>
+    <div class="">:</div>
+    <div class=""><?php echo $row['course_Type']; ?></div>
+   
+    <div class=" header text-left">COURSE CREDIT</div>
+    <div class="">:</div>
+    <div class=""><?php echo $row['course_credit']; ?></div>
+
+    <div class=" header text-left">LEARNING MODALITY</div>
+    <div class="">:</div>
+    <div class=""><?php echo $row['learning_modality']; ?></div>
+
+    <div class=" header text-left">PRE-REQUISITES</div>
+    <div class="">:</div>
+    <div class=""><?php echo $row['pre_requisit']; ?></div>
+
+    <div class=" header text-left">CO-REQUISITES</div>
+    <div class="">:</div>
+    <div class=""><?php echo $row['co_pre_requisit']; ?></div>
+
+
+</div>
+
+
+<button type="button" class="btn btn-primary float-left add_databtn_mapping_table" data-toggle="modal" data-target="#mapping_table">
+                        ADD DATA
+                    </button>
+
+                    <!-- Modal -->
+ <div class="modal fade" id="mapping_table" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Course Learning Outcome </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/insert_mapping_table.php" method="POST">
+
+                    <div class="modal-body">
+                   
+
+                        <div class="form-group">
+
+                        <textarea type="text" name="learn_out_mapping" col="40" cols="50" rows="5" id="learn_out_mappings" class="form-control"
+                                placeholder="Enter Computer Laborator"></textarea>
+                        
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                        <label>Course Learning Outcomes</label><br>
+                        <label for="pl1">PLO1</label>
+                        <label style="margin-left: 5px;" for="pl2">PLO2</label>
+                        <label style="margin-left: 5px;" for="pl3">PLO3</label>
+                        <label style="margin-left: 5px;" for="pl4">PLO4</label>
+                        <label style="margin-left: 5px;" for="pl5">PLO5</label>
+                        <label style="margin-left: 5px;" for="pl6">PLO6</label>
+                        <label style="margin-left: 5px;" for="pl7">PLO7</label>
+                        <label style="margin-left: 5px;" for="pl8">PLO8</label>
+                        <label style="margin-left: 5px;" for="pl9">PLO9</label>
+
+                        </div>
+
+                        <div class="form-group" Style="Display:flex;">
+
+                        
+                        <input type="radio" name="pl1" id="pl1s" value="/" class="form-control">
+                        
+
+                        <input type="radio" name="pl2" id="pl2s" value="/" class="form-control">
+                        
+
+                        <input type="radio" name="pl3" id="pl3s" value="/" class="form-control">
+                    
+
+                        <input type="radio" name="pl4" id="pl4s" value="/" class="form-control">
+                     
+
+                        <input type="radio" name="pl5" id="pl5s" value="/" class="form-control">
+                    
+
+                        <input type="radio" name="pl6" id="pl6s" value="/" class="form-control">
+                      
+
+                        <input type="radio" name="pl7" id="pl7s" value="/" class="form-control">
+                    
+
+                        <input type="radio" name="pl8" id="pl8s" value="/" class="form-control">
+                  
+
+                        <input type="radio" name="pl9" id="pl9s" value="/" class="form-control">
+                       
+                    </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="insertdata" class="btn btn-primary">Save Data</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+<!-- EDIT ONSITE REFFERENCE -->
+
+<!-- EDIT POP UP FORM (Bootstrap MODAL) -->
+<div class="modal fade" id="editmodal_mapping_tablespls" tabindex="-1" role="dialog" aria-labelledby="editmapping_tablespls"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editmapping_tablespls"> COURSE LEARNING OUTCOMES </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/update_mapping_tablespls.php" method="POST">
+
+                    <div class="modal-body">
+
+                        <input type="hidden" name="update_id10" id="update_id10">
+
+                        <div class="form-group">
+                            <label> Computer Laboratory </label>
+                            <textarea type="text" name="learn_out_mapping" col="40" cols="50" rows="5" id="learn_out_mapping" class="form-control"
+                                placeholder="Enter Computer Laborator"></textarea>
+                        </div>
+
+                        <div class="form-group">
+
+                        <label>Course Learning Outcomes</label><br>
+                        <label for="pl1">PLO1</label>
+                        <label style="margin-left: 5px;" for="pl2">PLO2</label>
+                        <label style="margin-left: 5px;" for="pl3">PLO3</label>
+                        <label style="margin-left: 5px;" for="pl4">PLO4</label>
+                        <label style="margin-left: 5px;" for="pl5">PLO5</label>
+                        <label style="margin-left: 5px;" for="pl6">PLO6</label>
+                        <label style="margin-left: 5px;" for="pl7">PLO7</label>
+                        <label style="margin-left: 5px;" for="pl8">PLO8</label>
+                        <label style="margin-left: 5px;" for="pl9">PLO9</label>
+
+                        </div>
+
+                        <div class="form-group" Style="Display:flex;">
+
+                        
+                        <input type="radio" name="pl1" id="pl1" value="/" class="form-control">
+                        
+
+                        <input type="radio" name="pl2" id="pl2" value="/" class="form-control">
+                        
+
+                        <input type="radio" name="pl3" id="pl3" value="/" class="form-control">
+                    
+
+                        <input type="radio" name="pl4" id="pl4" value="/" class="form-control">
+                     
+
+                        <input type="radio" name="pl5" id="pl5" value="/" class="form-control">
+                    
+
+                        <input type="radio" name="pl6" id="pl6" value="/" class="form-control">
+                      
+
+                        <input type="radio" name="pl7" id="pl7" value="/" class="form-control">
+                    
+
+                        <input type="radio" name="pl8" id="pl8" value="/" class="form-control">
+                  
+
+                        <input type="radio" name="pl9" id="pl9" value="/" class="form-control">
+                       
+                    </div>
 
 
 
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="updatedata" class="btn btn-primary">Update Data</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
 
 
+<div class="container mt-5">
+
+
+
+<?php
+ 
+
+ // Database connection
+ 
+ 
+ $connection = mysqli_connect("localhost","root","","syllabus");
+ if (mysqli_connect_errno()){
+     echo "Failed to connect to MySQL: " . mysqli_connect_error();
+     die();
+     }
+
+
+
+ $query = "SELECT * FROM  mapping_table";
+ $query_run = mysqli_query($connection, $query);
+?>  
+<table id="datatableid" class="table table-bordered b-5">
+<thead>
+    <tr>
+        <th rowspan="2" scope="col">Course Learning Outcome</th>
+        <th class="text-center" colspan="9" scope="col">Program Learning Outcomes</th>
+    </tr>
+        <tr>
+        <th scope="col">PLO1</th>
+        <th scope="col">PLO2</th>
+        <th scope="col">PLO3</th>
+        <th scope="col">PLO4</th>
+        <th scope="col">PLO5</th>
+        <th scope="col">PLO6</th>
+        <th scope="col">PLO7</th>
+        <th scope="col">PLO8</th>
+        <th scope="col">PLO9</th>
+        <th scope="col">ACTION</th>
+        </tr>
+       
+    </tr>
+</thead>
+<?php
+if($query_run)
+{
+foreach($query_run as $row)
+{
+?>
+<tbody>
+  
+<tr>
+        <td class="hide-id"> <?php echo $row['id']; ?> </td>
+        <td class=""><?php echo $row['learn_out_mapping']; ?></td>
+        <td class=""><?php echo $row['pl1']; ?></td>
+        <td class=""><?php echo $row['pl2']; ?></td>
+        <td class=""><?php echo $row['pl3']; ?></td>
+        <td class=""><?php echo $row['pl4']; ?></td>
+        <td class=""><?php echo $row['pl5']; ?></td>
+        <td class=""><?php echo $row['pl6']; ?></td>
+        <td class=""><?php echo $row['pl7']; ?></td>
+        <td class=""><?php echo $row['pl8']; ?></td>
+        <td class=""><?php echo $row['pl9']; ?></td>
+        <td class="table-button">
+        <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
+
+        <button type="button" class="btn btn-success editbtn_mapping_tablepls"><i class="lni lni-pencil"></i>EDIT</button>
+
+        <button type="button" class="btn btn-danger deletebtn_mapping_tablepls"><i class="lni lni-trash-can">DELETE</i></button>
+        </td>
+    </tr>
+
+
+
+</tbody>
+<?php           
+}
+}
+else 
+{
+echo "No Record Found";
+}
+?>
+</table>
 
 
 
@@ -2389,6 +2749,59 @@ echo "No Record Found";
             $('#update_id9').val(data[0]);
             $('#term').val(data[1]);
             $('#year').val(data[2]);
+        });
+    });
+</script>
+
+
+<!-- EDIT BTN FOR MAPPING TABLE PLS -->
+
+<script>
+    $(document).ready(function () {
+
+        $('.editbtn_mapping_tablepls').on('click', function () {
+
+            $('#editmodal_mapping_tablespls').modal('show');
+
+            $tr = $(this).closest('tr');
+
+            var data = $tr.children("td").map(function () {
+                return $(this).text();
+            }).get();
+
+            console.log(data);
+
+            $('#update_id10').val(data[0]);
+            $('#learn_out_mapping').val(data[1]);
+
+            var pl1 = data[2];
+            $('input[name="pl1"][value="' + pl1 + '"]').prop('checked', true);
+
+            var pl2 = data[3];
+            $('input[name="pl2"][value="' + pl2 + '"]').prop('checked', true);
+
+
+            // Auto check radio for course_Type
+            var pl3 = data[4];
+            $('input[name="pl3"][value="' + pl3 + '"]').prop('checked', true);
+
+           
+
+            // Auto check radio for learning_modality
+            var pl4 = data[5];
+            $('input[name="pl4"][value="' + pl4 + '"]').prop('checked', true);
+            var pl5 = data[6];
+            $('input[name="pl5"][value="' + pl5 + '"]').prop('checked', true);
+            var pl6 = data[7];
+            $('input[name="pl6"][value="' + pl6 + '"]').prop('checked', true);
+            var pl7 = data[8];
+            $('input[name="pl7"][value="' + pl7 + '"]').prop('checked', true);
+            var pl8 = data[9];
+            $('input[name="pl8"][value="' + pl8 + '"]').prop('checked', true);
+            var pl9 = data[10];
+            $('input[name="pl9"][value="' + pl9 + '"]').prop('checked', true);
+
+          
         });
     });
 </script>
