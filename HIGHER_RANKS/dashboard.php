@@ -1990,7 +1990,7 @@ echo "No Record Found";
 
 
 <div class="container-fluid mt-5">
-<span><b>Prepared:</b><b><a><?php echo $cname; ?></a></b></span>
+<span><b>Prepared:</b><b><a><?php echo strtoupper($cname); ?></a></b></span>
 
 
 
