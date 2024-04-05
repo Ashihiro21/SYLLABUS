@@ -205,11 +205,11 @@ $conn->close();
                         <fieldset>
                             <label>Course Type</label>
                             <div>
-                                <input type="radio" id="Lecture" name="course_Type" id="course_Type" value="Lecture">
+                                <input type="checkbox" id="Lecture" name="course_Type" id="course_Type" value="Lecture">
                                 <label for="Lecture">Lecture</label>
                             </div>
                             <div>
-                                <input type="radio" id="Laboratory" name="course_Type" id="course_Type" value="Laboratory">
+                                <input type="checkbox" id="Laboratory" name="course_Type" id="course_Type" value="Laboratory">
                                 <label for="Laboratory">Laboratory</label>
                             </div>
                         
@@ -227,15 +227,15 @@ $conn->close();
                         <fieldset>
                             <label>Learning Modality</label>
                             <div>
-                                <input type="radio" id="traditional" name="learning_modality" value="Traditional">
+                                <input type="checkbox" id="traditional" name="learning_modality" value="Traditional">
                                 <label for="traditional">Traditional</label>
                             </div>
                             <div>
-                                <input type="radio" id="flex_blended" name="learning_modality" value="Flex Blended">
+                                <input type="checkbox" id="flex_blended" name="learning_modality" value="Flex Blended">
                                 <label for="flex_blended">Flex Blended</label>
                             </div>
                             <div>
-                                <input type="radio" id="fully_onsite" name="learning_modality" value="Fully Onsite">
+                                <input type="checkbox" id="fully_onsite" name="learning_modality" value="Fully Onsite">
                                 <label for="fully_onsite">Fully Onsite</label>
                             </div>
                         </fieldset>
@@ -775,11 +775,11 @@ $conn->close();
                         
                         <div class="form-group">
                     <label>
-                        <input type="radio" name="onsite" value="1" id="onsite1">
+                        <input type="checkbox" name="onsite" value="1" id="onsite1">
                         Onsite / F2F
                     </label><br>
                     <label>
-                        <input type="radio" name="asy" value="1" id="asynchronous1">
+                        <input type="checkbox" name="asy" value="1" id="asynchronous1">
                         Asynchronous
                     </label>
                 </div>
@@ -851,11 +851,11 @@ $conn->close();
                         
                         <div class="form-group">
                     <label>
-                        <input type="radio" name="onsite" value="1" id="onsite">
+                        <input type="checkbox" name="onsite" value="1" id="onsite">
                         Onsite / F2F
                     </label><br>
                     <label>
-                        <input type="radio" name="asy" value="1" id="asynchronous">
+                        <input type="checkbox" name="asy" value="1" id="asynchronous">
                         Asynchronous
                     </label>
                 </div>
@@ -2169,31 +2169,31 @@ echo "No Record Found";
                         <div class="form-group" Style="Display:flex;">
 
                         
-                        <input type="radio" name="pl1" id="pl1s" value="/" class="form-control">
+                        <input type="checkbox" name="pl1" id="pl1s" value="/" class="form-control">
                         
 
-                        <input type="radio" name="pl2" id="pl2s" value="/" class="form-control">
+                        <input type="checkbox" name="pl2" id="pl2s" value="/" class="form-control">
                         
 
-                        <input type="radio" name="pl3" id="pl3s" value="/" class="form-control">
+                        <input type="checkbox" name="pl3" id="pl3s" value="/" class="form-control">
                     
 
-                        <input type="radio" name="pl4" id="pl4s" value="/" class="form-control">
+                        <input type="checkbox" name="pl4" id="pl4s" value="/" class="form-control">
                      
 
-                        <input type="radio" name="pl5" id="pl5s" value="/" class="form-control">
+                        <input type="checkbox" name="pl5" id="pl5s" value="/" class="form-control">
                     
 
-                        <input type="radio" name="pl6" id="pl6s" value="/" class="form-control">
+                        <input type="checkbox" name="pl6" id="pl6s" value="/" class="form-control">
                       
 
-                        <input type="radio" name="pl7" id="pl7s" value="/" class="form-control">
+                        <input type="checkbox" name="pl7" id="pl7s" value="/" class="form-control">
                     
 
-                        <input type="radio" name="pl8" id="pl8s" value="/" class="form-control">
+                        <input type="checkbox" name="pl8" id="pl8s" value="/" class="form-control">
                   
 
-                        <input type="radio" name="pl9" id="pl9s" value="/" class="form-control">
+                        <input type="checkbox" name="pl9" id="pl9s" value="/" class="form-control">
                        
                     </div>
 
@@ -2252,31 +2252,33 @@ echo "No Record Found";
                         <div class="form-group" Style="Display:flex;">
 
                         
-                        <input type="radio" name="pl1" id="pl1" value="/" class="form-control">
+                        <input type="checkbox" name="pl1" id="pl1" value="/" class="form-control">
                         
 
-                        <input type="radio" name="pl2" id="pl2" value="/" class="form-control">
+                        <input type="checkbox" name="pl2" id="pl2" value="/" class="form-control">
                         
 
-                        <input type="radio" name="pl3" id="pl3" value="/" class="form-control">
+                        <input type="checkbox" name="pl3" id="pl3" value="/" class="form-control">
                     
 
-                        <input type="radio" name="pl4" id="pl4" value="/" class="form-control">
+                        <input type="checkbox" name="pl4" id="pl4" value="/" class="form-control">
                      
 
-                        <input type="radio" name="pl5" id="pl5" value="/" class="form-control">
+                        <input type="checkbox" name="pl5" id="pl5" value="/" class="form-control">
                     
 
-                        <input type="radio" name="pl6" id="pl6" value="/" class="form-control">
+                        <input type="checkbox" name="pl6" id="pl6" value="/" class="form-control">
                       
 
-                        <input type="radio" name="pl7" id="pl7" value="/" class="form-control">
+                        <input type="checkbox" name="pl7" id="pl7" value="/" class="form-control">
                     
 
-                        <input type="radio" name="pl8" id="pl8" value="/" class="form-control">
+                        <input type="checkbox" name="pl8" id="pl8" value="/" class="form-control">
                   
 
-                        <input type="radio" name="pl9" id="pl9" value="/" class="form-control">
+                        <input type="checkbox" name="pl9" id="pl9" value="/" class="form-control">
+
+                
                        
                     </div>
 
@@ -2427,13 +2429,13 @@ echo "No Record Found";
             $('#course_code').val(data[1]);
             $('#course_tittle').val(data[2]);
 
-            // Auto check radio for course_Type
+            // Auto check checkbox for course_Type
             var courseType = data[3];
             $('input[name="course_Type"][value="' + courseType + '"]').prop('checked', true);
 
             $('#course_credit').val(data[4]);
 
-            // Auto check radio for learning_modality
+            // Auto check checkbox for learning_modality
             var learningModality = data[5];
             $('input[name="learning_modality"][value="' + learningModality + '"]').prop('checked', true);
 
@@ -2565,7 +2567,7 @@ echo "No Record Found";
             $('#module_no').val(data[1]);
             $('#week').val(data[2]);
 
-            // Auto check radio for course_Type
+            // Auto check checkbox for course_Type
             
             $('#date').val(data[3]);
             $('#teaching_activities').val(data[4]);
@@ -2573,7 +2575,7 @@ echo "No Record Found";
             var onsite = data[6];
             $('input[name="onsite"][value="' + onsite + '"]').prop('checked', true);
 
-            // Auto check radio for learning_modality
+            // Auto check checkbox for learning_modality
             var asy = data[7];
             $('input[name="asy"][value="' + asy + '"]').prop('checked', true);
 
@@ -2773,21 +2775,12 @@ echo "No Record Found";
 
             $('#update_id10').val(data[0]);
             $('#learn_out_mapping').val(data[1]);
-
             var pl1 = data[2];
             $('input[name="pl1"][value="' + pl1 + '"]').prop('checked', true);
-
             var pl2 = data[3];
             $('input[name="pl2"][value="' + pl2 + '"]').prop('checked', true);
-
-
-            // Auto check radio for course_Type
             var pl3 = data[4];
             $('input[name="pl3"][value="' + pl3 + '"]').prop('checked', true);
-
-           
-
-            // Auto check radio for learning_modality
             var pl4 = data[5];
             $('input[name="pl4"][value="' + pl4 + '"]').prop('checked', true);
             var pl5 = data[6];
@@ -2801,10 +2794,39 @@ echo "No Record Found";
             var pl9 = data[10];
             $('input[name="pl9"][value="' + pl9 + '"]').prop('checked', true);
 
+            $('input[name="onsite"][value="' + onsite + '"]').prop('checked', true);
+            
+            
+            // Function to enable toggle behavior for checkbox buttons
+// Function to enable toggle behavior for checkbox buttons
+
+
+
           
         });
     });
 </script>
+
+<!-- <script>
+    function enableToggleBehavior(checkboxName) {
+        $('input[name="' + checkboxName + '"]').on('click', function() {
+            // Toggle the checked state
+            $(this).prop('checked', !$(this).prop('checked'));
+        });
+    }
+
+    // Enable toggle behavior for each checkbox
+    enableToggleBehavior("pl1");
+    enableToggleBehavior("pl2");
+    enableToggleBehavior("pl3");
+    enableToggleBehavior("pl4");
+    enableToggleBehavior("pl5");
+    enableToggleBehavior("pl6");
+    enableToggleBehavior("pl7");
+    enableToggleBehavior("pl8");
+    enableToggleBehavior("pl9");
+</script> -->
+
 
 
 
