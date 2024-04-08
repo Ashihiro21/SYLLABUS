@@ -182,8 +182,8 @@ $conn->close();
 
 
 
-     <!-- EDIT POP UP FORM FOR COURSE SYLLABUS (Bootstrap MODAL) -->
-     <div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <!-- EDIT POP UP FORM FOR COURSE SYLLABUS (Bootstrap MODAL) -->
+<div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -198,7 +198,7 @@ $conn->close();
 
                     <div class="modal-body">
 
-                        <input type="hidden" name="update_id" id="update_id">
+                        <input type="hidden" name="update_idsyslabus" id="update_idsyslabus">
 
                         <div class="form-group">
                             <label> Course Code </label>
@@ -214,11 +214,11 @@ $conn->close();
                         <fieldset>
                             <label>Course Type</label>
                             <div>
-                                <input type="checkbox" id="Lecture" name="course_Type" id="course_Type" value="Lecture">
+                                <input type="radio" id="Lecture" name="course_Type" id="course_Type" value="Lecture">
                                 <label for="Lecture">Lecture</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="Laboratory" name="course_Type" id="course_Type" value="Laboratory">
+                                <input type="radio" id="Laboratory" name="course_Type" id="course_Type" value="Laboratory">
                                 <label for="Laboratory">Laboratory</label>
                             </div>
                         
@@ -236,15 +236,15 @@ $conn->close();
                         <fieldset>
                             <label>Learning Modality</label>
                             <div>
-                                <input type="checkbox" id="traditional" name="learning_modality" value="Traditional">
+                                <input type="radio" id="traditional" name="learning_modality" value="Traditional">
                                 <label for="traditional">Traditional</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="flex_blended" name="learning_modality" value="Flex Blended">
+                                <input type="radio" id="flex_blended" name="learning_modality" value="Flex Blended">
                                 <label for="flex_blended">Flex Blended</label>
                             </div>
                             <div>
-                                <input type="checkbox" id="fully_onsite" name="learning_modality" value="Fully Onsite">
+                                <input type="radio" id="fully_onsite" name="learning_modality" value="Fully Onsite">
                                 <label for="fully_onsite">Fully Onsite</label>
                             </div>
                         </fieldset>
@@ -528,6 +528,7 @@ $conn->close();
 </div>
 
 
+
 <div class="container course_description">
 <?php echo $row['course_description']; ?>
 
@@ -597,13 +598,14 @@ $conn->close();
 
 
 
+<br>
 
 
 
-
+                    <b><a>LEARNING PLAN</a></b><br>
+                    <b><a>Learning Outcomes for Midterm Period </a></b>
                     <div class="container mt-5">
 
-                    
                     <?php
                      
            
@@ -881,48 +883,6 @@ $conn->close();
         </div>
     </div>
     
-
-    
-
-
-
-
-
-    <!-- EDIT POP UP FORM TABLE (Bootstrap MODAL)
- <div class="modal fade" id="editmodal_module_learning" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel1"> Topic Learning Outcomes  </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <form action="Course_Syllabus/update_course_learning_outcome_table.php" method="POST">
-
-                    <div class="modal-body">
-
-                        <input type="text" name="update_id3" id="update_id3">
-
-                        <div class="form-group">
-                            <label> Course Learning Outcome </label>
-                            <textarea name="module_no" id="module_no" class="form-control" placeholder="Enter Course Learning Outcome" cols="90" rows="5"></textarea>
-                        </div>
-
-                        
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" name="updatedatatable" class="btn btn-primary">Update Data</button>
-                    </div>
-                </form>
-
-            </div>
-        </div>
-    </div> -->
-
    
 
 
@@ -994,8 +954,8 @@ $conn->close();
                         <td><?php echo $row['date']; ?></td>
                         <td><?php echo $row['teaching_activities']; ?></td>
                         <td><?php echo $row['technology']; ?></td>
-                        <td><?php echo $row['onsite'] == 1 ? '/' : ''; ?></td>
-                        <td><?php echo $row['asy'] == 1 ? '/' : ''; ?></td>
+                        <td><?php echo $row['onsite']; ?></td>
+                        <td><?php echo $row['asy']; ?></td>
 
                         <td><?php echo $row['hours']; ?></td>
                         <td class="table-button">
@@ -1139,6 +1099,8 @@ $conn->close();
         </div>
     </div>
 
+    
+
 <br>
 
 <a>Learning Outcomes for Final Period</a>
@@ -1209,8 +1171,187 @@ echo "No Record Found";
 
 </div>
 
+<button type="button" class="btn btn-primary float-left add_databtn_final" data-toggle="modal" data-target="#addmodal_module_learning_final">
+                        ADD DATA
+                    </button>
+
+                    <!-- Modal module_learning-->
+ <div class="modal fade" id="addmodal_module_learning_final" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Course Learning Outcome </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/insert_course_module_learning_final.php" method="POST">
+
+                    <div class="modal-body">
+                    <div class="form-group">
+                        <label for="module_no1">Module No and Learning Outcomes</label>
+                        <textarea name="module_no" id="module_no1" class="form-control" placeholder="Enter Module No and Learning Outcomes" cols="50" rows="5"></textarea>
+                    </div>
+
+                        <div class="form-group">
+                            <label>Week No</label>
+                            <input type="text" name="week" id="week1" class="form-control"
+                                placeholder="Enter Week No">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Week No</label>
+                            <input type="text" name="date" id="date1" class="form-control"
+                                placeholder="Enter Date">
+                        </div>
+
+                        <div class="form-group">
+                        <label for="teaching_activities1">Teaching-Learning Activities / Assessment Strategy</label>
+                        <textarea name="teaching_activities" id="teaching_activities1" class="form-control" placeholder="Enter Teaching-Learning Activities / Assessment Strategy" cols="50" rows="5"></textarea>
+                    </div>
 
 
+                        
+                        
+                        <div class="form-group">
+                            <label>Technology Enabler</label>
+                            <input type="text" name="technology" id="technology1" class="form-control"
+                            placeholder="Enter Technology Enabler">
+                        </div>
+                        
+                        <div class="form-group">
+                    <label>
+                        <input type="checkbox" name="onsite" value="1" id="onsite1">
+                        Onsite / F2F
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="asy" value="1" id="asynchronous1">
+                        Asynchronous
+                    </label>
+                </div>
+                <label>Alloted Hours</label>
+                        <input type="text" name="hours" id="hours1" class="form-control"
+                            placeholder="Enter Alloted Hours">
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="insertdata" class="btn btn-primary">Save Data</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- EDIT POP UP FORM LEARNING MODULE TABLE (Bootstrap MODAL) -->
+ <div class="modal fade" id="editmodal_module_learning_final" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel1"> Topic Learning Outcomes  </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/update_course_module_learning_final.php" method="POST">
+
+                    <div class="modal-body">
+                        
+                    <input type="hidden" name="update_id15" id="update_id15">
+
+                    <div class="form-group">
+                    <label for="module_no">Module No and Learning Outcomes</label>
+                    <textarea name="module_no" id="1module_no" class="form-control" placeholder="Enter Module No and Learning Outcomes" cols="50" rows="5"></textarea>
+                </div>
+
+                        <div class="form-group">
+                            <label>Week No</label>
+                            <input type="text" name="week" id="1week" class="form-control"
+                                placeholder="Enter Week No">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Week No</label>
+                            <input type="text" name="date" id="1date" class="form-control"
+                                placeholder="Enter Date">
+                        </div>
+
+                        <div class="form-group">
+                    <label for="teaching_activities">Teaching-Learning Activities / Assessment Strategy</label>
+                    <textarea name="teaching_activities" id="1teaching_activities" class="form-control" placeholder="Enter Teaching-Learning Activities / Assessment Strategy" cols="50" rows="5"></textarea>
+                </div>
+
+
+                        
+                        
+                        <div class="form-group">
+                            <label>Technology Enabler</label>
+                            <input type="text" name="technology" id="1technology" class="form-control"
+                            placeholder="Enter Technology Enabler">
+                        </div>
+                        
+                        <div class="form-group">
+                    <label>
+                        <input type="checkbox" name="onsite" value="1" id="1onsite">
+                        Onsite / F2F
+                    </label><br>
+                    <label>
+                        <input type="checkbox" name="asy" value="1" id="1asynchronous">
+                        Asynchronous
+                    </label>
+                </div>
+
+
+                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="updatedata15" class="btn btn-primary">Update Data</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    
+
+ <!-- DELETE POP UP FORM  FOR LEARNING MODULE(Bootstrap MODAL) -->
+ <div class="modal fade" id="deletemodal_module_learning_final" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> Delete Student Data </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/delete_course_module_learning_final.php" method="POST">
+
+                    <div class="modal-body">
+
+                        <input type="hidden" name="delete_id15" id="delete_id15">
+
+                        <h4> Do you want to Delete this Data ??</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"> NO </button>
+                        <button type="submit" name="deletedata15" class="btn btn-primary"> Yes !! Delete it. </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
 
 
 
@@ -1281,13 +1422,13 @@ echo "No Record Found";
                         <td><?php echo $row['date']; ?></td>
                         <td><?php echo $row['teaching_activities']; ?></td>
                         <td><?php echo $row['technology']; ?></td>
-                        <td><?php echo $row['onsite'] == 1 ? '/' : ''; ?></td>
-                        <td><?php echo $row['asy'] == 1 ? '/' : ''; ?></td>
+                        <td><?php echo $row['onsite']; ?></td>
+                        <td><?php echo $row['asy']; ?></td>
 
                         <td><?php echo $row['hours']; ?></td>
                         <td class="table-button">
-                            <button type="button" class="btn btn-success editbtn_module_learning"><i class="lni lni-pencil"></i>EDIT</button>
-                            <button type="button" class="btn btn-danger deletebtn_module_learning"><i class="lni lni-trash-can"></i>DELETE</button>
+                            <button type="button" class="btn btn-success editbtn_module_learning_final"><i class="lni lni-pencil"></i>EDIT</button>
+                            <button type="button" class="btn btn-danger deletebtn_module_learning_final"><i class="lni lni-trash-can"></i>DELETE</button>
                         </td>
                     </tr>
             <?php
@@ -2296,7 +2437,7 @@ echo "No Record Found";
                         
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="goback()">Close</button>
                         <button type="submit" name="updatedata" class="btn btn-primary">Update Data</button>
                     </div>
                 </form>
@@ -2524,36 +2665,31 @@ echo "No Record Found";
 
 
 <!-- EDIT POP UP FORM (Bootstrap MODAL) -->
-<div class="modal fade" id="editmodal_decriptors" tabindex="-1" role="dialog" aria-labelledby="editdecriptors"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editdecriptors"> COURSE LEARNING OUTCOMES </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+<div class="modal fade" id="editmodal_decriptors" tabindex="-1" role="dialog" aria-labelledby="editdecriptors" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editdecriptors"> COURSE LEARNING OUTCOMES </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
 
-                <form action="Course_Syllabus/update_decriptors.php" method="POST">
+            <form action="Course_Syllabus/update_decriptors.php" method="POST">
 
-                    <div class="modal-body">
+                <div class="modal-body">
 
-                        <input type="hidden" name="update_id11" id="update_id11">
+                    <input type="hidden" name="update_id11" id="update_id11">
 
-                        <div class="form-group">
-                            <label> Computer Laboratory </label>
-                            <textarea type="text" name="program_learn" col="40" cols="50" rows="5" id="program_learn" class="form-control"
-                                placeholder="Enter Computer Laborator"></textarea>
-                        </div>
+                    <div class="form-group">
+                        <label> Computer Laboratory </label>
+                        <textarea type="text" name="program_learn" col="40" cols="50" rows="5" id="program_learn" class="form-control"
+                            placeholder="Enter Computer Laborator"></textarea>
+                    </div>
 
-                      
-                        <div class="form-group">
-
-                        
+                    <div class="form-group">
                         <input type="checkbox" name="rate1" id="rate1" value="/">
                         <label for="">1</label>
-                        
 
                         <input type="checkbox" name="rate2" id="rate2" value="/">
                         <label for="">2</label>
@@ -2566,24 +2702,17 @@ echo "No Record Found";
 
                         <input type="checkbox" name="rate5" id="rate5" value="/">
                         <label for="">5</label>
-                
-                       
                     </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" name="updatedata" class="btn btn-primary">Update Data</button>
+                </div>
+            </form>
 
-
-
-                        
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" name="updatedata" class="btn btn-primary">Update Data</button>
-                    </div>
-                </form>
-
-            </div>
         </div>
     </div>
-
+</div>
 
     <!-- DELETE MAPPING TABLE PLS --> 
 
@@ -2945,7 +3074,7 @@ descriptions for the graduate attributes.</a>
 
             console.log(data);
 
-            $('#update_id').val(data[0]);
+            $('#update_idsyslabus').val(data[0]);
             $('#course_code').val(data[1]);
             $('#course_tittle').val(data[2]);
 
@@ -3085,7 +3214,7 @@ descriptions for the graduate attributes.</a>
 
             $('#update_id3').val(data[0]);
             $('#module_no').val(data[1]);
-            $('#week').val(data[2]);
+            $('#week').val(data[2]);    
 
             // Auto check checkbox for course_Type
             
@@ -3104,6 +3233,66 @@ descriptions for the graduate attributes.</a>
     });
 
 </script>
+
+
+
+<script>
+    $(document).ready(function () {
+
+        $('.editbtn_module_learning_final').on('click', function () {
+
+            $('#editmodal_module_learning_final').modal('show');
+
+            $tr = $(this).closest('tr');
+
+            var data = $tr.children("td").map(function () {
+                return $(this).text();
+            }).get();
+
+            console.log(data);
+
+            $('#update_id15').val(data[0]);
+            $('#1module_no').val(data[1]);
+            $('#1week').val(data[2]);    
+
+            // Auto check checkbox for course_Type
+            
+            $('#1date').val(data[3]);
+            $('#1teaching_activities').val(data[4]);
+            $('#1technology').val(data[5]);
+            var onsite = data[6];
+            $('input[name="onsite"][value="' + onsite + '"]').prop('checked', true);
+
+            // Auto check checkbox for learning_modality
+            var asy = data[7];
+            $('input[name="asy"][value="' + asy + '"]').prop('checked', true);
+
+
+        });
+    });
+
+</script>
+
+<script>
+        $(document).ready(function () {
+
+            $('.deletebtn_module_learning_final').on('click', function () {
+
+                $('#deletemodal_module_learning_final').modal('show');
+
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                console.log(data);
+
+                $('#delete_id15').val(data[0]);
+
+            });
+        });
+    </script>
 
 <!-- EDIT BTN FOR FINAL PERIOD TABLE -->
 
@@ -3314,7 +3503,8 @@ descriptions for the graduate attributes.</a>
             var pl9 = data[10];
             $('input[name="pl9"][value="' + pl9 + '"]').prop('checked', true);
 
-            $('input[name="onsite"][value="' + onsite + '"]').prop('checked', true);
+            
+            
             
 
 
@@ -3450,6 +3640,13 @@ descriptions for the graduate attributes.</a>
             });
         });
     </script>
+
+<script>
+    function goback() {
+        window.history.back();
+    }
+</script>
+
 
 
 </body>

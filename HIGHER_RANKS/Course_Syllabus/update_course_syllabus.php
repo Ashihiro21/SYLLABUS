@@ -2,7 +2,7 @@
 $connection = mysqli_connect("localhost", "root", "", "syllabus");
 
 if(isset($_POST['updatedata'])) {   
-    $id = $_POST['update_id'];
+    $id = $_POST['update_idsyslabus'];
     
     $course_code = $_POST['course_code'];
     $course_tittle = $_POST['course_tittle'];
