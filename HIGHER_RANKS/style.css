@@ -9,14 +9,36 @@ h2{
 
 
 
-.container {
-display: grid;
-grid-template-columns: repeat(3, auto);
-grid-auto-rows: min-content;
-gap: 10px;
-justify-content: left; 
-align-items: left;
+.container-box {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    grid-auto-rows: min-content;
+    gap: 10px;
+    justify-content: left; 
+    align-items: left;
 }
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    grid-auto-rows: min-content;
+    gap: 10px;
+    justify-content: left; 
+    align-items: left;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.mt-4 {
+    margin-top: 1.5rem; /* Adjust as needed */
+}
+
+.header {
+    font-weight: bold;
+}
+
 
 .grid-item {
 padding: 5px;

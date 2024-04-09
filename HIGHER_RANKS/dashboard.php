@@ -82,10 +82,11 @@ $conn->close();
 }
 
 
-.container-fluid {
+.container-box {
     display: flex;
     flex-direction: column;
     align-items: left;
+    margin-left: 15rem;
 }
 
 .container-fluid > * {
@@ -106,9 +107,54 @@ $conn->close();
     margin-right: 44rem;
 }
 
-
 .header-title{
-    margin-left: 16rem;
+    margin-left: 15rem;
+}
+
+.desc{
+    text-indent: 20px;
+}
+
+.descriptions{
+    margin-left: 30px;
+}
+
+
+
+
+
+
+
+.text-wrap {
+    /* Set maximum width for text */
+    max-width: 1200px;
+    /* Allow wrapping */
+    /* Ensure long words break and wrap to fit */
+    overflow-wrap: break-word;
+    /* Prevent overflow */
+    overflow: hidden;
+    word-spacing: 2px;
+}
+
+.text-indent{
+    margin-left: 5rem;
+}
+
+.c{
+    list-style-type: lower-roman;
+}
+
+.account-header{
+    padding-top: 20px;
+    padding-bottom: 5px;
+}
+
+
+.btn-primary{
+    margin-left: 5rem;
+}
+.sysllabus_button{
+    margin-left: 5rem;
 }
 
   
@@ -118,7 +164,7 @@ $conn->close();
 
 
     <nav>
-    <span><p><?php echo $position; ?><a href="logout.php">Logout</a></p></span>
+    <span class="account-header"><p><?php echo $position; ?><a href="logout.php">Logout</a></p></span>
     </nav>
    
     <div class="pt-5 pb-4">
@@ -416,9 +462,7 @@ $conn->close();
         </div>
     </div>
 
-    <!-- <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#studentaddmodal">
-                        ADD DATA
-                    </button> -->
+  
 
 
 
@@ -479,7 +523,7 @@ $conn->close();
                             <td>
                                 <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
 
-                                <button type="button" class="btn btn-success editbtn"><i class="lni lni-pencil"></i></button>
+                                <button type="button" class="btn sysllabus_button btn-success editbtn"><i class="lni lni-pencil"></i></button>
 
                                 <!-- <button type="button" class="btn btn-danger deletebtn"><i class="lni lni-trash-can"></i></button> -->
                                 </td>
@@ -496,62 +540,60 @@ $conn->close();
                     </table>
            
                     <div class="container text-left">
-    <div class=" header text-left">COURSE CODE</div>
-    <div class="">:</div>
-    <div class=""><?php echo $row['course_code']; ?></div>
+    <div class="header">COURSE CODE</div>
+    <div>:</div>
+    <div><?php echo $row['course_code']; ?></div>
   
-    <div class=" header text-left">COURSE TITLE</div>
-    <div class="">:</div>
-    <div class=""><?php echo $row['course_tittle']; ?></div>
+    <div class="header">COURSE TITLE</div>
+    <div>:</div>
+    <div><?php echo $row['course_tittle']; ?></div>
 
-    <div class=" header text-left">COURSE TYPE</div>
-    <div class="">:</div>
-    <div class=""><?php echo $row['course_Type']; ?></div>
+    <div class="header">COURSE TYPE</div>
+    <div>:</div>
+    <div><?php echo $row['course_Type']; ?></div>
    
-    <div class=" header text-left">COURSE CREDIT</div>
-    <div class="">:</div>
-    <div class=""><?php echo $row['course_credit']; ?></div>
+    <div class="header">COURSE CREDIT</div>
+    <div>:</div>
+    <div><?php echo $row['course_credit']; ?></div>
 
-    <div class=" header text-left">LEARNING MODALITY</div>
-    <div class="">:</div>
-    <div class=""><?php echo $row['learning_modality']; ?></div>
+    <div class="header">LEARNING MODALITY</div>
+    <div>:</div>
+    <div><?php echo $row['learning_modality']; ?></div>
 
-    <div class=" header text-left">PRE-REQUISITES</div>
-    <div class="">:</div>
-    <div class=""><?php echo $row['pre_requisit']; ?></div>
+    <div class="header">PRE-REQUISITES</div>
+    <div>:</div>
+    <div><?php echo $row['pre_requisit']; ?></div>
 
-    <div class=" header text-left">CO-REQUISITES</div>
-    <div class="">:</div>
-    <div class=""><?php echo $row['co_pre_requisit']; ?></div>
+    <div class="header">CO-REQUISITES</div>
+    <div>:</div>
+    <div><?php echo $row['co_pre_requisit']; ?></div>
  
-    <div class=" header text-left">PROFESSOR</div>
-    <div class="">:</div>
-    <div class=""><?php echo $row['professor']; ?></div>
+    <div class="header">PROFESSOR</div>
+    <div>:</div>
+    <div><?php echo $row['professor']; ?></div>
 
-    <div class=" header text-left">CONSULTATION HOURS</div>
-    <div class="">:</div>
-    <div class="">
-    <?php echo $row['consultation_hours_date']; ?><br>
-    <?php echo $row['consultation_hours_room']; ?><br>
-    <?php echo $row['consultation_hours_email']; ?><br>
-    <?php echo $row['consultation_hours_number']; ?>
+    <div class="header">CONSULTATION HOURS</div>
+    <div>:</div>
+    <div>
+        <?php echo $row['consultation_hours_date']; ?><br>
+        <?php echo $row['consultation_hours_room']; ?><br>
+        <?php echo $row['consultation_hours_email']; ?><br>
+        <?php echo $row['consultation_hours_number']; ?>
+    </div>
+
+    
 </div>
 
-<div class="header  mt-4">COURSE DESCRIPTION:</div>
-
+<div class="container-box course_description">
+    </div>
+    
+    <div class="container-box desc">
+        <div class="header mt-4">COURSE DESCRIPTION:</div>
+    <div class="text-wrap descriptions"><?php echo $row['course_description']; ?></div>
+    <div class="header mt-4">COURSE LEARNING OUTCOMES:</div>
+    <p> By the end of this course, students are expected to: </p>
 </div>
 
-
-
-<div class="container course_description">
-<?php echo $row['course_description']; ?>
-
-</div>
-
-<div class="container-fluid course_description1 mt-5">
-<div class="header">COURSE DESCRIPTION:</div>
-<a>By the end of this course, students are expected to: </a>
-</div>
 
 
 
@@ -1121,7 +1163,7 @@ $conn->close();
 <br>
 
 <div class="container-fluid mt-5 header-title">
-<b><a>Learning Outcomes for Final Period</a></b>
+<a>Learning Outcomes for Final Period</a>
 </div>
 
 
@@ -1472,7 +1514,7 @@ echo "No Record Found";
 
 
 
-<div class="container-fluid mt-5 header-title me-5">
+<div class="text-wrap container-box mt-5">
 <a><b>GRADING SYSTEM</b></a>
 <span><a>Class Participation</a><a style="margin-left:6rem;"><b>20%</b></a></span>
 <span><a>Enabling Assessment</a><a style="margin-left:5rem;"><b>50%</b></a></span>
@@ -1487,78 +1529,93 @@ ______________________________ <br>
 <a>2</a>
 
 
+<div class="mt-5 text-wrap container-fluid">
 <a><b>COURSE POLICIES AND REQUIREMENTS </b></a><br>
 
-<b>1. Office365 Activation.</b><a>Please ensure that your Office365 account is working. Your Office365 
+<b>1. Office365 Activation.</b> <a>Please ensure that your Office365 account is working. Your Office365 
     account is needed to access both Schoolbook and MS Teams where your asynchronous and 
     synchronous classes will be held.</a><br><br>
-<b>2. Enrollment in an E-Class.</b><a>You will automatically be enrolled in your e-class which is based on 
+<b>2. Enrollment in an E-Class.</b> <a>You will automatically be enrolled in your e-class which is based on 
     your enrollment data.</a><br><br>
-<b>3. Traditional Blended Learning Model</b><a>This course adopts the traditional blended learning model. 
+<b>3. Traditional Blended Learning Model</b>    <a>This course adopts the traditional blended learning model. 
     This means that there will be a mix of face-to-face and asynchronous classes. Majority of teaching-learning activities and assessments are undertaken onsite. The total number of onsite classes shall 
     be 50% of the number of hours allotted for the whole semester.</a><br><br>
 <b>4. Online Asynchronous Sessions. </b><br>
 <br>
+
+<div class="text-indent">
+  
 <b>a. Schoolbook (SB)</b>
-<a>Schoolbook shall be the only platform for asynchronous sessions.</a><br>
+    <a>Schoolbook shall be the only platform for asynchronous sessions.</a><br>
 
 <b>b. Modules</b>
-<a>Modules are self-paced learning resources for asynchronous sessions. These can be accessed in Schoolbook.</a><br>
+    <a>Modules are self-paced learning resources for asynchronous sessions. These can be accessed in Schoolbook.</a><br>
 
 <b>c. References</b>
-<a>Each page section may contain uploaded references. These learning resources may be downloaded.</a><br>
+    <a>Each page section may contain uploaded references. These learning resources may be downloaded.</a><br>
 
 <b>d. Asynchronous Activities</b>
-<a>You are expected to read the modules as soon as they are uploaded. The learning content of the modules complements the online synchronous and face-to-face sessions.</a><br>
+    <a>You are expected to read the modules as soon as they are uploaded. The learning content of the modules complements the online synchronous and face-to-face sessions.</a><br>
 
 <b>e. Asynchronous Engagement</b>
-<a>Your activities in the course can be tracked by your professor. This includes the time you spend in reading the lessons and answering the assessments.</a><br>
+    <a>Your activities in the course can be tracked by your professor. This includes the time you spend in reading the lessons and answering the assessments.</a><br>
 
 <b>f. Schoolbook Forum</b>
-<a>All general concerns about the lessons and assessments in asynchronous sessions must be posted in the Schoolbook Forum. Response shall be made by your teacher within 48 hours.</a><br>
+    <a>All general concerns about the lessons and assessments in asynchronous sessions must be posted in the Schoolbook Forum. Response shall be made by your teacher within 48 hours.</a><br>
 
 <b>g. Schoolbook Messaging</b>
-<a>This shall be the mode of communication for private and/or confidential communications. Response shall be made by your teacher within 48 hours upon receipt of the same unless it falls on weekends or holidays, which shall be handled promptly the following working day.</a><br>
+    <a>This shall be the mode of communication for private and/or confidential communications. Response shall be made by your teacher within 48 hours upon receipt of the same unless it falls on weekends or holidays, which shall be handled promptly the following working day.</a><br>
+
+
+</div>
+
 <br>
+    
 <b>5. Onsite / Face-to-face (F2F) Sessions. </b><br><br>
 
+<div class="text-indent">
+
 <b>a. Face-to-face engagement.</b>
-<a>Your engagement in face-to-face classes is graded based on your class participation.</a><br>
+    <a>Your engagement in face-to-face classes is graded based on your class participation.</a><br>
 
 <b>b. Classroom.</b>
-<a>F2F classes shall be held at the classroom indicated in your Certificate of Registration. Should there be changes in the classroom venue, information will be given in advance.</a><br>
+    <a>F2F classes shall be held at the classroom indicated in your Certificate of Registration. Should there be changes in the classroom venue, information will be given in advance.</a><br>
 
 <b>c. Gospel Reading and Prayer.</b>
-<a>Each F2F session shall start with a Gospel reading and prayer. Your teacher may assign you, in advance, to do this.</a><br>
+    <a>Each F2F session shall start with a Gospel reading and prayer. Your teacher may assign you, in advance, to do this.</a><br>
 
 <b>d. F2F Meeting Schedule.</b>
-<a>The meeting schedule shall follow the time indicated in your official registration. The dates of F2F meetings are identified in the learning plan.</a><br>
+    <a>The meeting schedule shall follow the time indicated in your official registration. The dates of F2F meetings are identified in the learning plan.</a><br>
 
 <b>e. Attendance.</b>
-<a>Attendance in F2F meetings is required. Absence beyond 20% of the total number of F2F meetings will automatically be given a 0.0 grade in the subject.</a><br>
+    <a>Attendance in F2F meetings is required. Absence beyond 20% of the total number of F2F meetings will automatically be given a 0.0 grade in the subject.</a><br>
 
 <b>f. Tardiness.</b>
-<a>A student who comes in 1-30 minutes after the start of the face-to-face meeting is considered late. Three tardy attendances are equivalent to 1 absence.</a><br>
+    <a>A student who comes in 1-30 minutes after the start of the face-to-face meeting is considered late. Three tardy attendances are equivalent to 1 absence.</a><br>
 
 <b>g. Absence.</b>
-<a>A student is considered absent 30 minutes after the official class schedule.</a><br>
+    <a>A student is considered absent 30 minutes after the official class schedule.</a><br>
 
 <b>h. Excuse from F2F classes.</b>
-<a>Students are excused from F2F classes based on the provisions in the latest version of the Student Handbook.</a><br>
+    <a>Students are excused from F2F classes based on the provisions in the latest version of the Student Handbook.</a><br>
 
 <b>i. Uniform.</b>
-<a>Wearing of prescribed uniform could be worn on Mondays, Thursdays, and Fridays, while Wednesdays and Saturdays are designated as wash days. Wearing of corporate attire could be worn every Tuesdays. Civilian attire should follow the policy on dress code as stipulated in the latest version of the Student Handbook.</a><br><br>
+    <a>Wearing of prescribed uniform could be worn on Mondays, Thursdays, and Fridays, while Wednesdays and Saturdays are designated as wash days. Wearing of corporate attire could be worn every Tuesdays. Civilian attire should follow the policy on dress code as stipulated in the latest version of the Student Handbook.</a><br><br>
+
+</div>
 
 <b>6. Assessment and Grading System.</b><br><br>
 
+<div class="text-indent">
+
 <b>a. Formative assessments.</b>
-<a>These are ungraded assessments. These may be considered as practice assessments that lead towards achieving outcomes without fear of receiving a failing grade.</a><br>
+    <a>These are ungraded assessments. These may be considered as practice assessments that lead towards achieving outcomes without fear of receiving a failing grade.</a><br>
 
 <b>b. Enabling assessments.</b>
-<a>These will comprise most of your graded assessments. These are designed to achieve topic learning outcomes that lead towards achieving the course learning outcomes. A maximum of two enabling assessments shall be allowed during the week. Please pay attention to the duration and number of attempts. As a general rule, quiz-type enabling assessments shall be open for only a minimum of 24 hours, while output-based enabling assessments shall be open for at least 6 days.</a><br>
+    <a>These will comprise most of your graded assessments. These are designed to achieve topic learning outcomes that lead towards achieving the course learning outcomes. A maximum of two enabling assessments shall be allowed during the week. Please pay attention to the duration and number of attempts. As a general rule, quiz-type enabling assessments shall be open for only a minimum of 24 hours, while output-based enabling assessments shall be open for at least 6 days.</a><br>
 
 <b>c. No. of Attempts.</b>
-<a>All enabling assessments, if given onsite, shall have 1 attempt only. For online enabling assessments, there shall be a maximum of 2 attempts. Summative assessments shall be given onsite and shall have 1 attempt only.</a><br>
+    <a>All enabling assessments, if given onsite, shall have 1 attempt only. For online enabling assessments, there shall be a maximum of 2 attempts. Summative assessments shall be given onsite and shall have 1 attempt only.</a><br>
 
 <b>d. Summative assessments.</b>
 <ol class="c">
@@ -1568,13 +1625,13 @@ ______________________________ <br>
 </ol>
 
 <b>e. Lifeline.</b>
-<a>Only students with (1) valid reasons as stated in the Student Handbook and IRR, and (2) given their proof of excuse on or before the next synchronous/F2F session, shall be given a lifeline on the enabling and summative assessments.</a><br>
+    <a>Only students with (1) valid reasons as stated in the Student Handbook and IRR, and (2) given their proof of excuse on or before the next synchronous/F2F session, shall be given a lifeline on the enabling and summative assessments.</a><br>
 
 <b>f. Rubric.</b>
-<a>All online non-quiz or non-discrete types of assessments (essay, drop box, output-based, etc.) shall have a rubric or criteria for rating the students’ tasks. A student may refuse to answer these types of assessments in the absence of a rubric or criteria for grading, and the assessment shall be deemed invalid and shall not be part of the student’s grades.</a><br>
+    <a>All online non-quiz or non-discrete types of assessments (essay, drop box, output-based, etc.) shall have a rubric or criteria for rating the students’ tasks. A student may refuse to answer these types of assessments in the absence of a rubric or criteria for grading, and the assessment shall be deemed invalid and shall not be part of the student’s grades.</a><br>
 
 <b>g. Grading.</b>
-<a>All online assessments should be checked and graded by the teacher before the submission of midterm and final grades.</a><br>
+    <a>All online assessments should be checked and graded by the teacher before the submission of midterm and final grades.</a><br>
 
 <b>h. Grading system.</b>
 <ol class="c">
@@ -1584,48 +1641,61 @@ ______________________________ <br>
 </ol>
 
 <b>i. Gradebook.</b>
-<a>Students can see the breakdown of grades in their Assessment tab.</a><br><br>
+    <a>Students can see the breakdown of grades in their Assessment tab.</a><br><br>
+
+    </div>
 
 <b>7. Self-Care</b><br><br>
 
+<div class="text-indent">
+
 <b>a. Schedule.</b>
-<a>The schedule of self-care week for the second semester 2022-2023 is on April 24 to April 29. During this week, there shall be no asynchronous/synchronous meetings, F2F classes, new modules, new assessments, and deadlines.</a><br>
+    <a>The schedule of self-care week for the second semester 2022-2023 is on April 24 to April 29. During this week, there shall be no asynchronous/synchronous meetings, F2F classes, new modules, new assessments, and deadlines.</a><br>
 
 <b>b. Prerogative.</b>
-<a>Students may avail of the self-care program, whether online or onsite, provided by the different units of the University.</a><br><br>
+    <a>Students may avail of the self-care program, whether online or onsite, provided by the different units of the University.</a><br><br>
+
+    </div>
 
 <b>8. Data Privacy. </b><br><br>
 
+<div class="text-indent">
+
 <b>a. Access to the MS Teams.</b>
-    <a>Only students who are officially enrolled shall be part of the MS Teams and have access to all the resources including the recording. Students are not allowed to download the recordings. Screen recording is not allowed.</a><br>
+        <a>Only students who are officially enrolled shall be part of the MS Teams and have access to all the resources including the recording. Students are not allowed to download the recordings. Screen recording is not allowed.</a><br>
     
     <b>b. Guests.</b>
-    <a>Inviting people that are not part of the class in synchronous meetings is strictly prohibited, unless approved by the subject teacher.</a><br><br>
+        <a>Inviting people that are not part of the class in synchronous meetings is strictly prohibited, unless approved by the subject teacher.</a><br><br>
+
+        </div>
 
 <b>9.  Copyright and Plagiarism. </b><br><br>
 
-<a>a. Using of any illegally obtained software and other technology tools is strictly prohibited.</a><br>
-<a>b. Students are encouraged to use their original photos, videos, and other resources. 
+<div class="text-indent">
+
+    <a>a. Using of any illegally obtained software and other technology tools is strictly prohibited.</a><br>
+    <a>b. Students are encouraged to use their original photos, videos, and other resources. 
     Otherwise, students can use royalty-free resources or embed the sources in their 
     submissions to avoid copyright infringement and/or plagiarism. 
     </a><br>
-<a>c. Giving of password to Schoolbook and Office 365 is strictly prohibited. Likewise, 
+    <a>c. Giving of password to Schoolbook and Office 365 is strictly prohibited. Likewise, 
     accessing Schoolbook and Office 365 account other than the students’ personal account 
     is also strictly prohibited. Violating students will be reported to the Student Welfare and 
     Formation Office (SWAFO). 
     </a><br>
-<a>d. This subject shall abide by the policies pertaining to intellectual property, copyright, 
+    <a>d. This subject shall abide by the policies pertaining to intellectual property, copyright, 
     and plagiarism as stipulated in the latest edition of the Student Handbook. 
     </a><br>
-<a>e. Any plagiarized work, whether in part or full, shall mean a grade of 0.0 for the 
+    <a>e. Any plagiarized work, whether in part or full, shall mean a grade of 0.0 for the 
     assessment.</a><br><br>
 
+    </div>
 
-<a>10. This course shall abide by any institutional policies that may be released after the approval of this 
+    <a>10. This course shall abide by any institutional policies that may be released after the approval of this 
     syllabus. Any such policy shall be posted within the e-class at the forums section, news feed. It 
     will also be briefly discussed during the soonest synchronous meeting. </a><br><br>
 </div>
-
+</div>
 
 
 <!-- GRADING SYSTEM -->
@@ -2131,7 +2201,7 @@ foreach($query_run as $row)
         <td class="table-button">
         <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
 
-        <button type="button" class="btn btn-success editbtn_semestral"><i class="lni lni-pencil"></i></button>
+        <button type="button" class="btn btn-success editbtn_semestral sysllabus_button"><i class="lni lni-pencil"></i></button>
 
         <!-- <button type="button" class="btn btn-danger deletebtn_online_refference"><i class="lni lni-trash-can"></i></button> -->
         </td>
@@ -2155,14 +2225,14 @@ echo "No Record Found";
 
 
 
-<div class="container-fluid mt-5 header-title">
-<span><b>Prepared:</b><b><a><?php echo strtoupper($cname); ?></a></b></span>
+<div class="container-box mt-5 header-title mb-5">
+<span><b>Prepared:</b><b> <a><?php echo ($course_departments); ?></a></b></span>
 
 
 
 
 
-<td><?php echo $row['term']; ?><?php echo $row['year']; ?></td>
+<td><?php echo $row['term']; ?> <?php echo $row['year']; ?></td><br><br>
 <span><b>Approved:</b><b><a><?php echo $first_name ." ".$last_name; ?></a></b></span>
 <span><b><a><?php echo $position ." , ". $course_initial; ?></a></b></span>
 
