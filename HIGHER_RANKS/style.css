@@ -5,41 +5,34 @@ body{
 h2{
     text-align: left;
 }
-p {
-margin-right: 1rem;
-text-align: right;
-margin-bottom: 1rem; /* Add space between paragraphs */
-}
 
 
 
 
 .container {
 display: grid;
-grid-template-columns: repeat(3, auto); /* Two columns */
-grid-auto-rows: min-content; /* Automatically adjust row height based on content */
-gap: 10px; /* Gap between grid items */
-justify-content: left; /* left content horizontally */
-align-items: left; /* Center content vertically */
+grid-template-columns: repeat(3, auto);
+grid-auto-rows: min-content;
+gap: 10px;
+justify-content: left; 
+align-items: left;
 }
 
 .grid-item {
 padding: 5px;
 
-word-wrap: break-word; /* Allow text to wrap */
-text-align: left; /* Center text horizontally */
+word-wrap: break-word;
+text-align: left;/
 }
 
 .header {
-font-weight: bold; /* Bold font for headers */
+font-weight: bold;
 }
 .course_description{
-/* margin-left: 20.5rem; */
 word-wrap: break-word;
 padding-left: 6rem;
 }
 .course_description1{
-/* margin-left: 20.5rem; */
 word-wrap: break-word;
 padding-left: 19.7rem;
 }
@@ -68,11 +61,6 @@ margin-left: 15px;
 .total{
     width: 5rem;
 }
-/* 
-.card{
-    position: absolute;
-    float: left;
-} */
 
 
 

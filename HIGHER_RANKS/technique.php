@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor5/41.2.1/ckeditor.min.js"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="nav.css">
     <title>Document</title>
@@ -12,9 +13,15 @@
     .hide-id{
         display: none;
     }
+
+    .editor{
+        text-align: left;
+    }
 </style>
 <body>
     
+
+<div class="editor"></div>
     
 <!-- EDIT POP UP FORM LEARNING MODULE TABLE (Bootstrap MODAL) -->
 <div class="modal fade" id="editmodal_module_learning" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1"
@@ -36,7 +43,7 @@
 
                     <div class="form-group">
                     <label for="module_no">Module No and Learning Outcomes</label>
-                    <textarea name="module_no" id="module_no" class="form-control" placeholder="Enter Module No and Learning Outcomes" cols="50" rows="5"></textarea>
+                    <div name="module_no" id="module_no" class="editor"></div>
                 </div>
 
                         <div class="form-group">
@@ -226,6 +233,18 @@
     });
 
 </script>
+
+
+<script>
+                        ClassicEditor
+                                .create( document.querySelector( '.editor' ) )
+                                .then( editor => {
+                                        console.log( editor );
+                                } )
+                                .catch( error => {
+                                        console.error( error );
+                                } );
+                </script>
 
 
 </body>

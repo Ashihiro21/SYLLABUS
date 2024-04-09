@@ -23,14 +23,15 @@ $sql = "SELECT
             c.`name` AS `category_name`,
             c.`initial` AS `category_initial`,
             co.`cname`,
+            co.`course_department` AS `course_departments`,
             co.`initial` AS `course_initial`
         FROM 
             `users` AS u 
         LEFT JOIN 
             `position` AS p ON u.`position` = p.`id`
         LEFT JOIN 
-            `category` AS c ON u.`id` = c.`id`
-        INNER JOIN
+            `category` AS c ON u.`department` = c.`id`
+        LEFT JOIN
             `course` AS co ON u.`catid` = co.`id`
         WHERE 
             u.email = '$email'";
@@ -54,6 +55,7 @@ if ($result->num_rows > 0) {
         $category_initial = $row['category_initial'];
         $cname = $row['cname'];
         $course_initial = $row['course_initial'];
+        $course_departments = $row['course_departments'];
         
     }
 } else {
@@ -70,6 +72,7 @@ $conn->close();
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="nav.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor5/41.2.1/ckeditor.min.js"></script>
 </head>
 <style>
  
@@ -113,8 +116,8 @@ $conn->close();
     </div>
     <div class="text-center">
     <h4>DE LA SALLE UNIVERSITY-DASMARINAS</h4>
-    <h4>COLLEGE OF SCIENCE AND COMPUTER STUDIES </h4>
-    <h4>INFORMATION TECHNOLOGY DEPARTMENT </h4>
+    <h4><?php echo strtoupper($category_name);?> </h4>
+    <h4><?php echo strtoupper($course_departments);?> </h4>
     <p class="pb-3"></p>
     <h4>COURSE SYLLABUS</h4>
     </div>
@@ -152,7 +155,7 @@ $conn->close();
 
                         <div class="form-group">
                         <label for="learn_out">Course Learning Outcome</label>
-                        <textarea  name="learn_out" id="learn_out" class="form-control" placeholder="Enter Course Learning Outcome" cols="50" rows="5"></textarea>
+                        <textarea name="learn_out" id="learn_out" placeholder="Enter Course Learning Outcome" cols="50" rows="5"></textarea>
                     </div>
 
 
@@ -554,7 +557,7 @@ $conn->close();
                     </div> 
 
 
-                    <button type="button" class="btn btn-primary float-left add_databtn" data-toggle="modal" data-target="#studentaddmodal">
+                    <button type="button" class="btn btn-primary add_databtn" data-toggle="modal" data-target="#studentaddmodal">
                         ADD DATA
                     </button>
 
@@ -579,10 +582,10 @@ $conn->close();
                                 placeholder="Enter Computer Laborator">
                         </div>
 
-                        <div class="form-group">
+                    
                         <label for="learn_out">Course Learning Outcomes</label>
-                        <textarea name="learn_out" id="learn_out" class="form-control" placeholder="Enter Learning Outcome" cols="50" rows="5"></textarea>
-                    </div>
+                        <textarea name="learn_out" id="learn_out" row="50" class="editor6" placeholder="Course Learning Outcomes"></textarea>
+                
 
                     </div>
                     <div class="modal-footer">
@@ -598,7 +601,6 @@ $conn->close();
 
 
 
-<br>
 
 
 
@@ -755,7 +757,7 @@ $conn->close();
                     <div class="modal-body">
                     <div class="form-group">
                         <label for="module_no1">Module No and Learning Outcomes</label>
-                        <textarea name="module_no" id="module_no1" class="form-control" placeholder="Enter Module No and Learning Outcomes" cols="50" rows="5"></textarea>
+                        <textarea name="module_no" id="module_no1" class="editor1" placeholder="Module No and Learning Outcomes" cols="50" rows="5"></textarea>
                     </div>
 
                         <div class="form-group">
@@ -772,7 +774,7 @@ $conn->close();
 
                         <div class="form-group">
                         <label for="teaching_activities1">Teaching-Learning Activities / Assessment Strategy</label>
-                        <textarea name="teaching_activities" id="teaching_activities1" class="form-control" placeholder="Enter Teaching-Learning Activities / Assessment Strategy" cols="50" rows="5"></textarea>
+                        <textarea name="teaching_activities" id="teaching_activities1" class="editor2" placeholder="Enter Teaching-Learning Activities / Assessment Strategy" cols="50" rows="5"></textarea>
                     </div>
 
 
@@ -786,11 +788,11 @@ $conn->close();
                         
                         <div class="form-group">
                     <label>
-                        <input type="checkbox" name="onsite" value="1" id="onsite1">
+                        <input type="checkbox" name="onsite1" value="1" id="onsite1">
                         Onsite / F2F
                     </label><br>
                     <label>
-                        <input type="checkbox" name="asy" value="1" id="asynchronous1">
+                        <input type="checkbox" name="asy1" value="1" id="asynchronous1">
                         Asynchronous
                     </label>
                 </div>
@@ -1085,7 +1087,7 @@ $conn->close();
 
                         <div class="form-group">
                         <label>Topic Learning Outcomes</label>
-                        <textarea name="final_topic_leaning_out" id="final_topic_leaning_out6" class="form-control" placeholder="Enter Learning Outcome" cols="50" rows="5"></textarea>
+                        <textarea name="final_topic_leaning_out" id="final_topic_leaning_out6" class="editor3" placeholder="Enter Learning Outcome" cols="50" rows="5"></textarea>
                     </div>
 
                     </div>
@@ -1192,7 +1194,7 @@ echo "No Record Found";
                     <div class="modal-body">
                     <div class="form-group">
                         <label for="module_no1">Module No and Learning Outcomes</label>
-                        <textarea name="module_no" id="module_no1" class="form-control" placeholder="Enter Module No and Learning Outcomes" cols="50" rows="5"></textarea>
+                        <textarea name="module_no" id="module_no1" class="editor4" placeholder="Enter Module No and Learning Outcomes" cols="50" rows="5"></textarea>
                     </div>
 
                         <div class="form-group">
@@ -1209,7 +1211,7 @@ echo "No Record Found";
 
                         <div class="form-group">
                         <label for="teaching_activities1">Teaching-Learning Activities / Assessment Strategy</label>
-                        <textarea name="teaching_activities" id="teaching_activities1" class="form-control" placeholder="Enter Teaching-Learning Activities / Assessment Strategy" cols="50" rows="5"></textarea>
+                        <textarea name="teaching_activities" id="teaching_activities1" class="editor5" placeholder="Enter Teaching-Learning Activities / Assessment Strategy" cols="50" rows="5"></textarea>
                     </div>
 
 
@@ -1223,11 +1225,11 @@ echo "No Record Found";
                         
                         <div class="form-group">
                     <label>
-                        <input type="checkbox" name="onsite" value="1" id="onsite1">
+                        <input type="checkbox" name="onsite2" value="1" id="onsite1">
                         Onsite / F2F
                     </label><br>
                     <label>
-                        <input type="checkbox" name="asy" value="1" id="asynchronous1">
+                        <input type="checkbox" name="asy2" value="1" id="asynchronous1">
                         Asynchronous
                     </label>
                 </div>
@@ -1657,7 +1659,7 @@ ______________________________ <br>
 
                         <div class="form-group">
                         <label>Reference Material</label>
-                        <textarea name="Reference_Material" id="Reference_Material6" class="form-control" placeholder="Enter Learning Outcome" cols="50" rows="5"></textarea>
+                        <textarea name="Reference_Material" id="Reference_Material6" class="editor7" placeholder="Enter Learning Outcome" cols="50" rows="5"></textarea>
                     </div>
 
                     </div>
@@ -1852,7 +1854,7 @@ echo "No Record Found";
 
                         <div class="form-group">
                         <label>Reference Material</label>
-                        <textarea name="refference_material" id="refference_material6" class="form-control" placeholder="Enter Reference Material" cols="50" rows="5"></textarea>
+                        <textarea name="refference_material" id="refference_material6" class="Editor8" placeholder="Enter Reference Material" cols="50" rows="5"></textarea>
                     </div>
 
                     </div>
@@ -2156,8 +2158,8 @@ echo "No Record Found";
     </div>
     <div class="text-center">
     <h4>DE LA SALLE UNIVERSITY-DASMARINAS</h4>
-    <h4>COLLEGE OF SCIENCE AND COMPUTER STUDIES </h4>
-    <h4>INFORMATION TECHNOLOGY DEPARTMENT </h4>
+    <h4><?php echo strtoupper($category_name);?> </h4>
+    <h4><?php echo strtoupper($course_departments);?> </h4>
     <p class="pb-3"></p>
     <h4>COURSE SYLLABUS</h4>
     </div>
@@ -2294,7 +2296,7 @@ echo "No Record Found";
 
                         <div class="form-group">
 
-                        <textarea type="text" name="learn_out_mapping" col="40" cols="50" rows="5" id="learn_out_mappings" class="form-control"
+                        <textarea type="text" name="learn_out_mapping" col="40" cols="50" rows="5" id="learn_out_mappings" class="Editor9"
                                 placeholder="Enter Computer Laborator"></textarea>
                         
 
@@ -2319,31 +2321,31 @@ echo "No Record Found";
                         <div class="form-group" Style="Display:flex;">
 
                         
-                        <input type="checkbox" name="pl1" id="pl1s" value="/" class="form-control">
+                        <input type="checkbox" name="pl1_s" id="pl1s" value="/" class="form-control">
                         
 
-                        <input type="checkbox" name="pl2" id="pl2s" value="/" class="form-control">
+                        <input type="checkbox" name="pl2_s" id="pl2s" value="/" class="form-control">
                         
 
-                        <input type="checkbox" name="pl3" id="pl3s" value="/" class="form-control">
+                        <input type="checkbox" name="pl3_s" id="pl3s" value="/" class="form-control">
                     
 
-                        <input type="checkbox" name="pl4" id="pl4s" value="/" class="form-control">
+                        <input type="checkbox" name="pl4_s" id="pl4s" value="/" class="form-control">
                      
 
-                        <input type="checkbox" name="pl5" id="pl5s" value="/" class="form-control">
+                        <input type="checkbox" name="pl5_s" id="pl5s" value="/" class="form-control">
                     
 
-                        <input type="checkbox" name="pl6" id="pl6s" value="/" class="form-control">
+                        <input type="checkbox" name="pl6_s" id="pl6s" value="/" class="form-control">
                       
 
-                        <input type="checkbox" name="pl7" id="pl7s" value="/" class="form-control">
+                        <input type="checkbox" name="pl7_s" id="pl7s" value="/" class="form-control">
                     
 
-                        <input type="checkbox" name="pl8" id="pl8s" value="/" class="form-control">
+                        <input type="checkbox" name="pl8_s" id="pl8s" value="/" class="form-control">
                   
 
-                        <input type="checkbox" name="pl9" id="pl9s" value="/" class="form-control">
+                        <input type="checkbox" name="pl9_s" id="pl9s" value="/" class="form-control">
                        
                     </div>
 
@@ -2582,8 +2584,8 @@ echo "No Record Found";
     </div>
     <div class="text-center">
     <h4>DE LA SALLE UNIVERSITY-DASMARINAS</h4>
-    <h4>COLLEGE OF SCIENCE AND COMPUTER STUDIES </h4>
-    <h4>INFORMATION TECHNOLOGY DEPARTMENT </h4>
+    <h4><?php echo strtoupper($category_name);?> </h4>
+    <h4><?php echo strtoupper($course_departments);?> </h4>
     <p class="pb-3"></p>
     <h4>GRADUATE ATTRIBUTES (DESCRIPTORS/INSTITUTIONAL LEARNING OUTCOMES) – </h4>
     <h4>PROGRAM LEARNING OUTCOME MAPPING TABLE FOR BS INFORMATION </h4>
@@ -2616,7 +2618,7 @@ echo "No Record Found";
                         <div class="form-group">
 
                         <label>Program Learning Outcomes</label><br>
-                        <textarea type="text" name="program_learn" col="40" cols="50" rows="5" class="form-control"
+                        <textarea type="text" name="program_learn" col="40" cols="50" rows="5" class="Editor10"
                                 placeholder="Enter Computer Laborator"></textarea>
                         
 
@@ -2631,20 +2633,20 @@ echo "No Record Found";
                     <div class="form-group">
                         
                         
-                        <input type="checkbox" name="rate1"value="/">
+                        <input type="checkbox" name="rate1_s"value="/">
                         <label style="margin-left: 5px;">1</label><br>
                         
 
-                        <input type="checkbox" name="rate2" value="/">
+                        <input type="checkbox" name="rate2_s" value="/">
                         <label style="margin-left: 5px;">2</label><br>
 
-                        <input type="checkbox" name="rate3" value="/">
+                        <input type="checkbox" name="rate3_s" value="/">
                         <label style="margin-left: 5px;">3</label><br>
 
-                        <input type="checkbox" name="rate4" value="/">
+                        <input type="checkbox" name="rate4_s" value="/">
                         <label style="margin-left: 5px;">4</label><br>
 
-                        <input type="checkbox" name="rate5" value="/">
+                        <input type="checkbox" name="rate5_s" value="/">
                         <label style="margin-left: 5px;">5</label>
                       
                        
@@ -2843,8 +2845,8 @@ echo "No Record Found";
     </div>
     <div class="text-center">
     <h4>DE LA SALLE UNIVERSITY-DASMARINAS</h4>
-    <h4>COLLEGE OF SCIENCE AND COMPUTER STUDIES</h4>
-    <h4>INFORMATION TECHNOLOGY DEPARTMENT </h4>
+    <h4><?php echo strtoupper($category_name);?> </h4>
+    <h4><?php echo strtoupper($course_departments);?> </h4>
     <p class="pb-3"></p>
     <h4>GRADUATES ATTRIBUTES AND INSTITUTIONAL LEARNING OUTCOMES (ILOs)</h4>
     </div>
@@ -2882,7 +2884,7 @@ echo "No Record Found";
 
                         <div class="form-group">
                         <label>Descriptors (Institutional Learning Outcome)</label>
-                        <textarea name="descriptors_learn_out" id="descriptors_learn_out6" class="form-control" placeholder="Enter Descriptors (Institutional Learning Outcome)" cols="50" rows="5"></textarea>
+                        <textarea name="descriptors_learn_out" id="descriptors_learn_out6" class="Editor11" placeholder="Enter Descriptors (Institutional Learning Outcome)" cols="50" rows="5"></textarea>
                     </div>
 
                     </div>
@@ -3051,7 +3053,7 @@ descriptions for the graduate attributes.</a>
 
                  
                
-                
+            
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
 
@@ -3648,6 +3650,140 @@ descriptions for the graduate attributes.</a>
 </script>
 
 
+<script>
+                    ClassicEditor
+    .create( document.querySelector( '.editor' ) ) // Change from querySelector to querySelectorAll
+    .then( editor => {
+        console.log( editor );
+    } )
+    .catch( error => {
+        console.error( error );
+    } );
+
+    </script>
+
+
+<script>
+                    ClassicEditor
+    .create( document.querySelector( '.editor1' ) ) // Change from querySelector to querySelectorAll
+    .then( editor => {
+        console.log( editor );
+    } )
+    .catch( error => {
+        console.error( error );
+    } );
+
+    </script>
+<script>
+                    ClassicEditor
+    .create( document.querySelector( '.editor2' ) ) // Change from querySelector to querySelectorAll
+    .then( editor => {
+        console.log( editor );
+    } )
+    .catch( error => {
+        console.error( error );
+    } );
+
+    </script>
+<script>
+                    ClassicEditor
+    .create( document.querySelector( '.editor3' ) ) // Change from querySelector to querySelectorAll
+    .then( editor => {
+        console.log( editor );
+    } )
+    .catch( error => {
+        console.error( error );
+    } );
+
+    </script>
+<script>
+                    ClassicEditor
+    .create( document.querySelector( '.editor4' ) ) // Change from querySelector to querySelectorAll
+    .then( editor => {
+        console.log( editor );
+    } )
+    .catch( error => {
+        console.error( error );
+    } );
+
+    </script>
+<script>
+                    ClassicEditor
+    .create( document.querySelector( '.editor5' ) ) // Change from querySelector to querySelectorAll
+    .then( editor => {
+        console.log( editor );
+    } )
+    .catch( error => {
+        console.error( error );
+    } );
+
+    </script>
+<script>
+                    ClassicEditor
+    .create( document.querySelector( '.editor6' ) ) // Change from querySelector to querySelectorAll
+    .then( editor => {
+        console.log( editor );
+    } )
+    .catch( error => {
+        console.error( error );
+    } );
+
+    </script>
+<script>
+                    ClassicEditor
+    .create( document.querySelector( '.editor7' ) ) // Change from querySelector to querySelectorAll
+    .then( editor => {
+        console.log( editor );
+    } )
+    .catch( error => {
+        console.error( error );
+    } );
+
+    </script>
+<script>
+                    ClassicEditor
+    .create( document.querySelector( '.Editor8' ) ) // Change from querySelector to querySelectorAll
+    .then( editor => {
+        console.log( editor );
+    } )
+    .catch( error => {
+        console.error( error );
+    } );
+
+    </script>
+<script>
+                    ClassicEditor
+    .create( document.querySelector( '.Editor9' ) ) // Change from querySelector to querySelectorAll
+    .then( editor => {
+        console.log( editor );
+    } )
+    .catch( error => {
+        console.error( error );
+    } );
+
+    </script>
+<script>
+                    ClassicEditor
+    .create( document.querySelector( '.Editor10' ) ) // Change from querySelector to querySelectorAll
+    .then( editor => {
+        console.log( editor );
+    } )
+    .catch( error => {
+        console.error( error );
+    } );
+
+    </script>
+<script>
+                    ClassicEditor
+    .create( document.querySelector( '.Editor11' ) ) // Change from querySelector to querySelectorAll
+    .then( editor => {
+        console.log( editor );
+    } )
+    .catch( error => {
+        console.error( error );
+    } );
+
+    </script>
 
 </body>
 </html>

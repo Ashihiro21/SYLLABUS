@@ -16,11 +16,11 @@ if ($connection->connect_error) {
 if(isset($_POST['insertdata']))
 {
     $program_learn = $_POST['program_learn'];
-    $rate1 = $_POST['rate1'];
-    $rate2 = $_POST['rate2'];
-    $rate3 = $_POST['rate3'];
-    $rate4 = $_POST['rate4'];
-    $rate5 = $_POST['rate5'];
+    $rate1 = $_POST['rate1_s'];
+    $rate2 = $_POST['rate2_s'];
+    $rate3 = $_POST['rate3_s'];
+    $rate4 = $_POST['rate4_s'];
+    $rate5 = $_POST['rate5_s'];
     
 
     $sql = "INSERT INTO decriptors (`program_learn`, `rate1` , `rate2` , `rate3` , `rate4` , `rate5`)
