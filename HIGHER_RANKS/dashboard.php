@@ -120,6 +120,10 @@ $conn->close();
 }
 
 
+td{
+    padding: 5px;
+}
+
 
 
 
@@ -133,7 +137,7 @@ $conn->close();
     overflow-wrap: break-word;
     /* Prevent overflow */
     overflow: hidden;
-    word-spacing: 2px;
+    word-spacing: 12px;
 }
 
 .text-indent{
@@ -950,15 +954,15 @@ $conn->close();
             
             <tr>
             
-                <th scope="col">Module No and Learning Outcomes</th>
-                <th scope="col">Week No</th>
-                <th scope="col">Date</th>
-                <th scope="col">Teaching-Learning Activities / Assessment Strategy</th>
-                <th scope="col">Technology Enabler</th>
-                <th scope="col">Onsite / F2F</th>
-                <th scope="col">Asynchronous</th>
-                <th scope="col">Alloted Hours</th>
-                <th scope="col">Actions</th>
+                <th class="" scope="col">Module No and Learning Outcomes</th>
+                <th class="" class="" scope="col">Week No</th>
+                <th class="" scope="col">Date</th>
+                <th class="" scope="col">Teaching-Learning Activities / Assessment Strategy</th>
+                <th class="" scope="col">Technology Enabler</th>
+                <th class="" scope="col">Onsite / F2F</th>
+                <th class="" scope="col">Asynchronous</th>
+                <th class="" scope="col">Alloted Hours</th>
+                <th class="" scope="col">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -2226,14 +2230,14 @@ echo "No Record Found";
 
 
 <div class="container-box mt-5 header-title mb-5">
-<span><b>Prepared:</b><b> <a><?php echo ($course_departments); ?></a></b></span>
+<span><b>Prepared:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><a>  <?php echo ($course_departments); ?></a></b></span>
 
 
 
 
 
 <td><?php echo $row['term']; ?> <?php echo $row['year']; ?></td><br><br>
-<span><b>Approved:</b><b><a><?php echo $first_name ." ".$last_name; ?></a></b></span>
+<span><b>Approved:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><a><?php echo $first_name ." ".$last_name; ?></a></b></span>
 <span><b><a><?php echo $position ." , ". $course_initial; ?></a></b></span>
 
 
@@ -2681,8 +2685,8 @@ echo "No Record Found";
     <h4><?php echo strtoupper($course_departments);?> </h4>
     <p class="pb-3"></p>
     <h4>GRADUATE ATTRIBUTES (DESCRIPTORS/INSTITUTIONAL LEARNING OUTCOMES) – </h4>
-    <h4>PROGRAM LEARNING OUTCOME MAPPING TABLE FOR BS INFORMATION </h4>
-    <h4>TECHNOLOGY</h4>
+    <h4>PROGRAM LEARNING OUTCOME MAPPING TABLE FOR </h4>
+    <h4><?php echo strtoupper($cname);?></h4>
     </div>
 
 
