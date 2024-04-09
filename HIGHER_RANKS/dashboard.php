@@ -99,6 +99,12 @@ $conn->close();
     text-decoration: none; /* Remove underline from links */
 }
 
+
+.logos{
+    margin-left: 44rem;
+    margin-right: 44rem;
+}
+
   
 
 </style>
@@ -109,11 +115,10 @@ $conn->close();
     <span><p><?php echo $position; ?><a href="logout.php">Logout</a></p></span>
     </nav>
    
-    <div class="container pt-5 pb-4">
-        <img src="../img/logos.png" alt="">
-        
-   
+    <div class="pt-5 pb-4">
+        <img src="../img/logos.png" class="logos" alt="">
     </div>
+    
     <div class="text-center">
     <h4>DE LA SALLE UNIVERSITY-DASMARINAS</h4>
     <h4><?php echo strtoupper($category_name);?> </h4>
@@ -2151,8 +2156,8 @@ echo "No Record Found";
 
 <!-- MAPPING HEADER -->
 
-<div class="container pt-5 pb-4">
-        <img src="../img/logos.png" alt="">
+<div class="pt-5 pb-4">
+        <img src="../img/logos.png" class="logos" alt="">
         
    
     </div>
@@ -2577,8 +2582,8 @@ echo "No Record Found";
 
 <!-- GRADUATE ATTRIBUTES -->
 
-<div class="container pt-5 pb-4">
-        <img src="../img/logos.png" alt="">
+<div class="pt-5 pb-4">
+        <img src="../img/logos.png" class="logos" alt="">
         
    
     </div>
@@ -2838,8 +2843,8 @@ echo "No Record Found";
 
 <!-- GRADUATE ATTRIBUTE -->
 
-<div class="container pt-5 pb-4">
-        <img src="../img/logos.png" alt="">
+<div class="pt-5 pb-4">
+        <img src="../img/logos.png" class="logos" alt="">
         
    
     </div>
