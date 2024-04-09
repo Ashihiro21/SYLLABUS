@@ -72,6 +72,7 @@ $conn->close();
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="nav.css">
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor5/41.2.1/ckeditor.min.js"></script>
 </head>
 <style>
@@ -83,26 +84,31 @@ $conn->close();
 
 .container-fluid {
     display: flex;
-    flex-direction: column; /* Align items vertically */
-    align-items: left; /* left items horizontally */
+    flex-direction: column;
+    align-items: left;
 }
 
 .container-fluid > * {
-    margin-bottom: 10px; /* Add space between each child element */
+    margin-bottom: 10px;
 }
 
 .container-fluid span, .container-fluid p {
-    text-align: left; /* left text */
+    text-align: left; 
 }
 
 .container-fluid a {
-    text-decoration: none; /* Remove underline from links */
+    text-decoration: none; 
 }
 
 
 .logos{
     margin-left: 44rem;
     margin-right: 44rem;
+}
+
+
+.header-title{
+    margin-left: 16rem;
 }
 
   
@@ -473,9 +479,9 @@ $conn->close();
                             <td>
                                 <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
 
-                                <button type="button" class="btn btn-success editbtn"><i class="lni lni-pencil"></i>EDIT</button>
+                                <button type="button" class="btn btn-success editbtn"><i class="lni lni-pencil"></i></button>
 
-                                <!-- <button type="button" class="btn btn-danger deletebtn"><i class="lni lni-trash-can"></i>DELETE</button> -->
+                                <!-- <button type="button" class="btn btn-danger deletebtn"><i class="lni lni-trash-can"></i></button> -->
                                 </td>
                             </tr>
                         </tbody>
@@ -607,10 +613,8 @@ $conn->close();
 
 
 
-
-
-                    <b><a>LEARNING PLAN</a></b><br>
-                    <b><a>Learning Outcomes for Midterm Period </a></b>
+                    
+                 
                     <div class="container mt-5">
 
                     <?php
@@ -655,9 +659,9 @@ $conn->close();
                             <td class="table-button">
                             <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
 
-                            <button type="button" class="btn btn-success editbtn_learning_out"><i class="lni lni-pencil"></i>EDIT</button>
+                            <button type="button" class="btn btn-success editbtn_learning_out"><i class="lni lni-pencil"></i></button>
 
-                            <button type="button" class="btn btn-danger deletebtn_learning_out"><i class="lni lni-trash-can">DELETE</i></button>
+                            <button type="button" class="btn btn-danger deletebtn_learning_out"><i class="lni lni-trash-can"></i></button>
                             </td>
                         </tr>
                     </tbody>
@@ -674,6 +678,10 @@ $conn->close();
 
                     </div>
 
+                    <div class="container-fluid mt-5 header-title"><br>
+                    <b><a>LEARNING PLAN</a></b><br>
+                    <b><a>Learning Outcomes for Midterm Period </a></b>
+                    </div>
 
         
                     <div class="container mt-5">
@@ -719,9 +727,9 @@ $conn->close();
                             <td class="table-button">
                             <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
 
-                            <button type="button" class="btn btn-success editbtn_learning_out_table"><i class="lni lni-pencil"></i>EDIT</button>
+                            <button type="button" class="btn btn-success editbtn_learning_out_table"><i class="lni lni-pencil"></i></button>
 
-                            <!-- <button type="button" class="btn btn-danger deletebtn_learning_out_table"><i class="lni lni-trash-can">DELETE</i></button> -->
+                            <!-- <button type="button" class="btn btn-danger deletebtn_learning_out_table"><i class="lni lni-trash-can"></i></button> -->
                             </td>
                         </tr>
                     </tbody>
@@ -741,7 +749,7 @@ $conn->close();
 
 
 
-                    <button type="button" class="btn btn-primary float-left add_databtn" data-toggle="modal" data-target="#addmodal_module_learning">
+                    <button type="button" class="btn btn-primary add_databtn" data-toggle="modal" data-target="#addmodal_module_learning">
                         ADD DATA
                     </button>
 
@@ -897,7 +905,9 @@ $conn->close();
     <div class="container mt-5">
     <table id="datatableid" class="table table-bordered">
         <thead>
+            
             <tr>
+            
                 <th scope="col">Module No and Learning Outcomes</th>
                 <th scope="col">Week No</th>
                 <th scope="col">Date</th>
@@ -966,8 +976,8 @@ $conn->close();
 
                         <td><?php echo $row['hours']; ?></td>
                         <td class="table-button">
-                            <button type="button" class="btn btn-success editbtn_module_learning"><i class="lni lni-pencil"></i>EDIT</button>
-                            <button type="button" class="btn btn-danger deletebtn_module_learning"><i class="lni lni-trash-can"></i>DELETE</button>
+                            <button type="button" class="btn btn-success editbtn_module_learning"><i class="lni lni-pencil"></i></button>
+                            <button type="button" class="btn btn-danger deletebtn_module_learning"><i class="lni lni-trash-can"></i></button>
                         </td>
                     </tr>
             <?php
@@ -1065,7 +1075,7 @@ $conn->close();
 
 
   <!--Add Modal Final Period Table -->
-<button type="button" class="btn btn-primary float-left add_databtn_final" data-toggle="modal" data-target="#studentaddmodal15">
+<button type="button" class="btn btn-primary add_databtn_final" data-toggle="modal" data-target="#studentaddmodal15">
                         ADD DATA
                     </button>
 
@@ -1110,7 +1120,11 @@ $conn->close();
 
 <br>
 
-<a>Learning Outcomes for Final Period</a>
+<div class="container-fluid mt-5 header-title">
+<b><a>Learning Outcomes for Final Period</a></b>
+</div>
+
+
 
 <div class="container mt-5">
 
@@ -1155,9 +1169,9 @@ foreach($query_run as $row)
         <td class="table-button">
         <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
 
-        <button type="button" class="btn btn-success editbtn_learning_out_final_period_table"><i class="lni lni-pencil"></i>EDIT</button>
+        <button type="button" class="btn btn-success editbtn_learning_out_final_period_table"><i class="lni lni-pencil"></i></button>
 
-        <button type="button" class="btn btn-danger deletebtn_learning_out_final_period_table"><i class="lni lni-trash-can">DELETE</i></button>
+        <button type="button" class="btn btn-danger deletebtn_learning_out_final_period_table"><i class="lni lni-trash-can"></i></button>
         </td>
     </tr>
 
@@ -1178,7 +1192,7 @@ echo "No Record Found";
 
 </div>
 
-<button type="button" class="btn btn-primary float-left add_databtn_final" data-toggle="modal" data-target="#addmodal_module_learning_final">
+<button type="button" class="btn btn-primary add_databtn_final" data-toggle="modal" data-target="#addmodal_module_learning_final">
                         ADD DATA
                     </button>
 
@@ -1362,7 +1376,7 @@ echo "No Record Found";
 
 
 
-<div class="container mt-5">
+<div class="container mt-5 me-5">
     <table id="datatableid" class="table table-bordered">
         <thead>
             <tr>
@@ -1434,8 +1448,8 @@ echo "No Record Found";
 
                         <td><?php echo $row['hours']; ?></td>
                         <td class="table-button">
-                            <button type="button" class="btn btn-success editbtn_module_learning_final"><i class="lni lni-pencil"></i>EDIT</button>
-                            <button type="button" class="btn btn-danger deletebtn_module_learning_final"><i class="lni lni-trash-can"></i>DELETE</button>
+                            <button type="button" class="btn btn-success editbtn_module_learning_final"><i class="lni lni-pencil"></i></button>
+                            <button type="button" class="btn btn-danger deletebtn_module_learning_final"><i class="lni lni-trash-can"></i></button>
                         </td>
                     </tr>
             <?php
@@ -1458,7 +1472,7 @@ echo "No Record Found";
 
 
 
-<div class="card">
+<div class="container-fluid mt-5 header-title me-5">
 <a><b>GRADING SYSTEM</b></a>
 <span><a>Class Participation</a><a style="margin-left:6rem;"><b>20%</b></a></span>
 <span><a>Enabling Assessment</a><a style="margin-left:5rem;"><b>50%</b></a></span>
@@ -1637,7 +1651,7 @@ ______________________________ <br>
 <!-- ADD ONSITE REFFERENCE -->
 
 <!--Add Modal Final Period Table -->
-<button type="button" class="btn btn-primary float-left onsite_reffence" data-toggle="modal" data-target="#onsite_reffence">
+<button type="button" class="btn btn-primary onsite_reffence" data-toggle="modal" data-target="#onsite_reffence">
                         ADD DATA
                     </button>
 
@@ -1756,9 +1770,11 @@ ______________________________ <br>
 
 
 
-
+<div class="container-fluid mt-5 header-title ms-5">
 <a><b>REFERENCES</b></a><br>
 <a><b>On-Site References</b></a>
+</div>
+
 
 <div class="container mt-5">
 
@@ -1803,9 +1819,9 @@ foreach($query_run as $row)
         <td class="table-button">
         <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
 
-        <button type="button" class="btn btn-success editbtn_onsite_reffence"><i class="lni lni-pencil"></i>EDIT</button>
+        <button type="button" class="btn btn-success editbtn_onsite_reffence"><i class="lni lni-pencil"></i></button>
 
-        <button type="button" class="btn btn-danger deletebtn_onsite_refference"><i class="lni lni-trash-can">DELETE</i></button>
+        <button type="button" class="btn btn-danger deletebtn_onsite_refference"><i class="lni lni-trash-can"></i></button>
         </td>
     </tr>
 
@@ -1832,7 +1848,7 @@ echo "No Record Found";
 <!-- ADD online REFFERENCE -->
 
 <!--Add Modal Final Period Table -->
-<button type="button" class="btn btn-primary float-left online_reffence" data-toggle="modal" data-target="#online_reffence">
+<button type="button" class="btn btn-primary online_reffence" data-toggle="modal" data-target="#online_reffence">
                         ADD DATA
                     </button>
 
@@ -1951,8 +1967,10 @@ echo "No Record Found";
 
 
 
-
+<div class="container-fluid mt-5 header-title ms-5">
 <a><b>Online References</b></a>
+</div>
+
 
 <div class="container mt-5">
 
@@ -1997,9 +2015,9 @@ foreach($query_run as $row)
         <td class="table-button">
         <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
 
-        <button type="button" class="btn btn-success editbtn_online_refference"><i class="lni lni-pencil"></i>EDIT</button>
+        <button type="button" class="btn btn-success editbtn_online_refference"><i class="lni lni-pencil"></i></button>
 
-        <button type="button" class="btn btn-danger deletebtn_online_refference"><i class="lni lni-trash-can">DELETE</i></button>
+        <button type="button" class="btn btn-danger deletebtn_online_refference"><i class="lni lni-trash-can"></i></button>
         </td>
     </tr>
 
@@ -2113,9 +2131,9 @@ foreach($query_run as $row)
         <td class="table-button">
         <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
 
-        <button type="button" class="btn btn-success editbtn_semestral"><i class="lni lni-pencil"></i>EDIT</button>
+        <button type="button" class="btn btn-success editbtn_semestral"><i class="lni lni-pencil"></i></button>
 
-        <!-- <button type="button" class="btn btn-danger deletebtn_online_refference"><i class="lni lni-trash-can">DELETE</i></button> -->
+        <!-- <button type="button" class="btn btn-danger deletebtn_online_refference"><i class="lni lni-trash-can"></i></button> -->
         </td>
     </tr>
 
@@ -2137,7 +2155,7 @@ echo "No Record Found";
 
 
 
-<div class="container-fluid mt-5">
+<div class="container-fluid mt-5 header-title">
 <span><b>Prepared:</b><b><a><?php echo strtoupper($cname); ?></a></b></span>
 
 
@@ -2229,9 +2247,9 @@ echo "No Record Found";
                             <!-- <td>
                                 <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button>
 
-                                <button type="button" class="btn btn-success editbtn"><i class="lni lni-pencil"></i>EDIT</button>
+                                <button type="button" class="btn btn-success editbtn"><i class="lni lni-pencil"></i></button>
 
-                                <button type="button" class="btn btn-danger deletebtn"><i class="lni lni-trash-can"></i>DELETE</button>
+                                <button type="button" class="btn btn-danger deletebtn"><i class="lni lni-trash-can"></i></button>
                                 </td> -->
                             </tr>
                         </tbody>
@@ -2278,7 +2296,7 @@ echo "No Record Found";
 </div>
 
 
-<button type="button" class="btn btn-primary float-left add_databtn_mapping_table" data-toggle="modal" data-target="#mapping_table">
+<button type="button" class="btn btn-primary add_databtn_mapping_table" data-toggle="modal" data-target="#mapping_table">
                         ADD DATA
                     </button>
 
@@ -2326,31 +2344,31 @@ echo "No Record Found";
                         <div class="form-group" Style="Display:flex;">
 
                         
-                        <input type="checkbox" name="pl1_s" id="pl1s" value="/" class="form-control">
+                        <input type="checkbox" name="pl1_s" id="pl1s" value="✓" class="form-control">
                         
 
-                        <input type="checkbox" name="pl2_s" id="pl2s" value="/" class="form-control">
+                        <input type="checkbox" name="pl2_s" id="pl2s" value="✓" class="form-control">
                         
 
-                        <input type="checkbox" name="pl3_s" id="pl3s" value="/" class="form-control">
+                        <input type="checkbox" name="pl3_s" id="pl3s" value="✓" class="form-control">
                     
 
-                        <input type="checkbox" name="pl4_s" id="pl4s" value="/" class="form-control">
+                        <input type="checkbox" name="pl4_s" id="pl4s" value="✓" class="form-control">
                      
 
-                        <input type="checkbox" name="pl5_s" id="pl5s" value="/" class="form-control">
+                        <input type="checkbox" name="pl5_s" id="pl5s" value="✓" class="form-control">
                     
 
-                        <input type="checkbox" name="pl6_s" id="pl6s" value="/" class="form-control">
+                        <input type="checkbox" name="pl6_s" id="pl6s" value="✓" class="form-control">
                       
 
-                        <input type="checkbox" name="pl7_s" id="pl7s" value="/" class="form-control">
+                        <input type="checkbox" name="pl7_s" id="pl7s" value="✓" class="form-control">
                     
 
-                        <input type="checkbox" name="pl8_s" id="pl8s" value="/" class="form-control">
+                        <input type="checkbox" name="pl8_s" id="pl8s" value="✓" class="form-control">
                   
 
-                        <input type="checkbox" name="pl9_s" id="pl9s" value="/" class="form-control">
+                        <input type="checkbox" name="pl9_s" id="pl9s" value="✓" class="form-control">
                        
                     </div>
 
@@ -2409,31 +2427,31 @@ echo "No Record Found";
                         <div class="form-group" Style="Display:flex;">
 
                         
-                        <input type="checkbox" name="pl1" id="pl1" value="/" class="form-control">
+                        <input type="checkbox" name="pl1" id="pl1" value="✓" class="form-control pls">
                         
 
-                        <input type="checkbox" name="pl2" id="pl2" value="/" class="form-control">
+                        <input type="checkbox" name="pl2" id="pl2" value="✓" class="form-control pls">
                         
 
-                        <input type="checkbox" name="pl3" id="pl3" value="/" class="form-control">
+                        <input type="checkbox" name="pl3" id="pl3" value="✓" class="form-control pls">
                     
 
-                        <input type="checkbox" name="pl4" id="pl4" value="/" class="form-control">
+                        <input type="checkbox" name="pl4" id="pl4" value="✓" class="form-control pls">
                      
 
-                        <input type="checkbox" name="pl5" id="pl5" value="/" class="form-control">
+                        <input type="checkbox" name="pl5" id="pl5" value="✓" class="form-control pls">
                     
 
-                        <input type="checkbox" name="pl6" id="pl6" value="/" class="form-control">
+                        <input type="checkbox" name="pl6" id="pl6" value="✓" class="form-control pls">
                       
 
-                        <input type="checkbox" name="pl7" id="pl7" value="/" class="form-control">
+                        <input type="checkbox" name="pl7" id="pl7" value="✓" class="form-control pls">
                     
 
-                        <input type="checkbox" name="pl8" id="pl8" value="/" class="form-control">
+                        <input type="checkbox" name="pl8" id="pl8" value="✓" class="form-control pls">
                   
 
-                        <input type="checkbox" name="pl9" id="pl9" value="/" class="form-control">
+                        <input type="checkbox" name="pl9" id="pl9" value="✓" class="form-control pls">
 
                 
                        
@@ -2538,21 +2556,21 @@ foreach($query_run as $row)
 <tr>
         <td class="hide-id"> <?php echo $row['id']; ?> </td>
         <td class=""><?php echo $row['learn_out_mapping']; ?></td>
-        <td class=""><?php echo $row['pl1']; ?></td>
-        <td class=""><?php echo $row['pl2']; ?></td>
-        <td class=""><?php echo $row['pl3']; ?></td>
-        <td class=""><?php echo $row['pl4']; ?></td>
-        <td class=""><?php echo $row['pl5']; ?></td>
-        <td class=""><?php echo $row['pl6']; ?></td>
-        <td class=""><?php echo $row['pl7']; ?></td>
-        <td class=""><?php echo $row['pl8']; ?></td>
-        <td class=""><?php echo $row['pl9']; ?></td>
+        <td class="text-center"><?php echo $row['pl1']; ?></td>
+        <td class="text-center"><?php echo $row['pl2']; ?></td>
+        <td class="text-center"><?php echo $row['pl3']; ?></td>
+        <td class="text-center"><?php echo $row['pl4']; ?></td>
+        <td class="text-center"><?php echo $row['pl5']; ?></td>
+        <td class="text-center"><?php echo $row['pl6']; ?></td>
+        <td class="text-center"><?php echo $row['pl7']; ?></td>
+        <td class="text-center"><?php echo $row['pl8']; ?></td>
+        <td class="text-center"><?php echo $row['pl9']; ?></td>
         <td class="table-button">
         <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
 
-        <button type="button" class="btn btn-success editbtn_mapping_tablepls"><i class="lni lni-pencil"></i>EDIT</button>
+        <button type="button" class="btn btn-success editbtn_mapping_tablepls"><i class="lni lni-pencil"></i></button>
 
-        <button type="button" class="btn btn-danger deletebtn_mapping_tablepls"><i class="lni lni-trash-can">DELETE</i></button>
+        <button type="button" class="btn btn-danger deletebtn_mapping_tablepls"><i class="lni lni-trash-can"></i></button>
         </td>
     </tr>
 
@@ -2599,7 +2617,7 @@ echo "No Record Found";
 
 
 <!-- ADD MODAL GRADUATE ATTRIBUTES -->
-<button type="button" class="btn btn-primary float-left add_databtn_decriptors" data-toggle="modal" data-target="#decriptors">
+<button type="button" class="btn btn-primary add_databtn_decriptors" data-toggle="modal" data-target="#decriptors">
                         ADD DATA
                     </button>
 
@@ -2638,20 +2656,20 @@ echo "No Record Found";
                     <div class="form-group">
                         
                         
-                        <input type="checkbox" name="rate1_s"value="/">
+                        <input type="checkbox" name="rate1_s"value="✓">
                         <label style="margin-left: 5px;">1</label><br>
                         
 
-                        <input type="checkbox" name="rate2_s" value="/">
+                        <input type="checkbox" name="rate2_s" value="✓">
                         <label style="margin-left: 5px;">2</label><br>
 
-                        <input type="checkbox" name="rate3_s" value="/">
+                        <input type="checkbox" name="rate3_s" value="✓">
                         <label style="margin-left: 5px;">3</label><br>
 
-                        <input type="checkbox" name="rate4_s" value="/">
+                        <input type="checkbox" name="rate4_s" value="✓">
                         <label style="margin-left: 5px;">4</label><br>
 
-                        <input type="checkbox" name="rate5_s" value="/">
+                        <input type="checkbox" name="rate5_s" value="✓">
                         <label style="margin-left: 5px;">5</label>
                       
                        
@@ -2695,19 +2713,19 @@ echo "No Record Found";
                     </div>
 
                     <div class="form-group">
-                        <input type="checkbox" name="rate1" id="rate1" value="/">
+                        <input type="checkbox" name="rate1" id="rate1" value="✓">
                         <label for="">1</label>
 
-                        <input type="checkbox" name="rate2" id="rate2" value="/">
+                        <input type="checkbox" name="rate2" id="rate2" value="✓">
                         <label for="">2</label>
 
-                        <input type="checkbox" name="rate3" id="rate3" value="/">
+                        <input type="checkbox" name="rate3" id="rate3" value="✓">
                         <label for="">3</label>
 
-                        <input type="checkbox" name="rate4" id="rate4" value="/">
+                        <input type="checkbox" name="rate4" id="rate4" value="✓">
                         <label for="">4</label>
 
-                        <input type="checkbox" name="rate5" id="rate5" value="/">
+                        <input type="checkbox" name="rate5" id="rate5" value="✓">
                         <label for="">5</label>
                     </div>
                 </div>
@@ -2814,9 +2832,9 @@ foreach($query_run as $row)
         <td class="table-button">
         <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
 
-        <button type="button" class="btn btn-success editbtn_decriptors"><i class="lni lni-pencil"></i>EDIT</button>
+        <button type="button" class="btn btn-success editbtn_decriptors"><i class="lni lni-pencil"></i></button>
 
-        <button type="button" class="btn btn-danger deletebtn_decriptors"><i class="lni lni-trash-can">DELETE</i></button>
+        <button type="button" class="btn btn-danger deletebtn_decriptors"><i class="lni lni-trash-can"></i></button>
         </td>
     </tr>
 
@@ -2862,7 +2880,7 @@ echo "No Record Found";
 <!-- ADD online REFFERENCE -->
 
 <!--Add Modal Final Period Table -->
-<button type="button" class="btn btn-primary float-left graduate_attribute" data-toggle="modal" data-target="#graduate_attribute">
+<button type="button" class="btn btn-primary graduate_attribute" data-toggle="modal" data-target="#graduate_attribute">
                         ADD DATA
                     </button>
 
@@ -3024,9 +3042,9 @@ foreach($query_run as $row)
         <td class="table-button">
         <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
 
-        <button type="button" class="btn btn-success editbtn_graduate_attributes"><i class="lni lni-pencil"></i>EDIT</button>
+        <button type="button" class="btn btn-success editbtn_graduate_attributes"><i class="lni lni-pencil"></i></button>
 
-        <button type="button" class="btn btn-danger deletebtn_graduate_attributes"><i class="lni lni-trash-can">DELETE</i></button>
+        <button type="button" class="btn btn-danger deletebtn_graduate_attributes"><i class="lni lni-trash-can"></i></button>
         </td>
     </tr>
 
