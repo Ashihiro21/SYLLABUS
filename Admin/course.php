@@ -21,7 +21,7 @@
 
 
 <div class="container-fluid">
-<h1>Department</h1>
+<h1>Course</h1>
 
 
         <!-- Modal module_learning-->
@@ -30,7 +30,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Department </h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Add Course </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -39,11 +39,23 @@
                 <form action="Admin_Crud/insert_category.php" method="POST">
 
                     <div class="modal-body">
+                        
+                    <div class="form-group">
+                        <label for="catid">Category Name</label>
+                        <input name="catid" id="catid1" class="form-control" placeholder="Enter Category Name">
+                    </div>
+                    
                     <div class="form-group">
                         <label for="name">Category Name</label>
                         <input name="name" id="name1" class="form-control" placeholder="Enter Category Name">
                     </div>
 
+                        <div class="form-group">
+                            <label>Initial</label>
+                            <input type="text" name="initial" id="initial1" class="form-control"
+                                placeholder="Enter Initial">
+                        </div>
+                        
                         <div class="form-group">
                             <label>Initial</label>
                             <input type="text" name="initial" id="initial1" class="form-control"
@@ -74,7 +86,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel1"> Department  </h5>
+                    <h5 class="modal-title" id="exampleModalLabel1"> Course  </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -116,7 +128,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"> Delete Student Data </h5>
+                    <h5 class="modal-title" id="exampleModalLabel"> Delete Course </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -187,7 +199,7 @@ ON
     <thead>
         <tr>
             <th class="hide-id">ID</th>
-            <th>Category ID</th>
+            <th>Category</th>
             <th>Course</th>
             <th>Initial</th>
             <th>Course Department</th>
@@ -314,6 +326,21 @@ $(document).ready(function() {
             });
         });
     </script>
+
+<script>
+$("#parentbox").change(function() {
+    $category = $("#parentbox").val();
+    
+    $.ajax({
+        url: 'data.php',
+        method: 'POST',
+        data: {'category': $category},
+        success: function(response) {
+            $("#childbox").html(response);
+        }
+    });
+});
+</script>
 
 
 </div>
