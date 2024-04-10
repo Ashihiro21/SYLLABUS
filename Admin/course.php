@@ -1,4 +1,48 @@
-<?php include_once 'index.php';?>
+<?php include_once 'index.php';
+
+?>
+
+<?php
+
+function populateCetegoryDropdown() {
+    // Replace these database connection details with your own
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "syllabus";
+
+    // Create connection
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // SQL query to get positions from the database (replace 'your_table_name' with the actual table name)
+    $sql = "SELECT * FROM category";
+    $result = $conn->query($sql);
+
+    $options = "";
+
+    if ($result->num_rows > 0) {
+        // Output data of each row
+        while ($row = $result->fetch_assoc()) {
+            $options .= "<option value='" . $row["id"] . "'>" . $row["name"] . "</option>";
+        }
+    } else {
+        $options .= "<option value=''>No category found</option>";
+    }
+
+    $conn->close();
+
+    return $options;
+}
+
+
+
+
+?>
 
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
@@ -36,18 +80,20 @@
                     </button>
                 </div>
 
-                <form action="Admin_Crud/insert_category.php" method="POST">
+                <form action="Admin_Crud/insert_course.php" method="POST">
 
                     <div class="modal-body">
                         
-                    <div class="form-group">
-                        <label for="catid">Category Name</label>
-                        <input name="catid" id="catid1" class="form-control" placeholder="Enter Category Name">
+                    <div class="form-group" id="catid">
+                            <label> Position </label>
+                            <select name="catid" class="form-control">
+                            <?php echo populateCetegoryDropdown(); ?>
+                    </select>
                     </div>
                     
                     <div class="form-group">
-                        <label for="name">Category Name</label>
-                        <input name="name" id="name1" class="form-control" placeholder="Enter Category Name">
+                        <label for="cname">Category Name</label>
+                        <input name="cname" id="cname1" class="form-control" placeholder="Enter Category Name">
                     </div>
 
                         <div class="form-group">
@@ -55,11 +101,11 @@
                             <input type="text" name="initial" id="initial1" class="form-control"
                                 placeholder="Enter Initial">
                         </div>
-                        
+
                         <div class="form-group">
-                            <label>Initial</label>
-                            <input type="text" name="initial" id="initial1" class="form-control"
-                                placeholder="Enter Initial">
+                            <label>Course Department</label>
+                            <input type="text" name="course_department" id="course_department" class="form-control"
+                                placeholder="Enter Department Initial">
                         </div>
 
                      
