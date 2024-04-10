@@ -2230,20 +2230,35 @@ echo "No Record Found";
 
 
 <div class="container-box mt-5 header-title mb-5">
-<span><b>Prepared:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><a>  <?php echo ($course_departments); ?></a></b></span>
+<span><b>Prepared:</b><b><a class="course">  <?php echo ($course_departments); ?></a></b></span>
 
 
 
 
 
-<td><?php echo $row['term']; ?> <?php echo $row['year']; ?></td><br><br>
-<span><b>Approved:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><a><?php echo $first_name ." ".$last_name; ?></a></b></span>
-<span><b><a><?php echo $position ." , ". $course_initial; ?></a></b></span>
+<a class="term_year"><td><?php echo $row['term']; ?> <?php echo $row['year']; ?></a></td><br><br>
+<span><b>Approved:</b><b><a class="dept_name"><?php echo $first_name ." ".$last_name; ?></a></b></span>
+<span><a class="initial"><?php echo $position ." , ". $course_initial; ?></a></span><br><br>
 
+
+<!-- FOR REVISED -->
+<span><b>Endorsed:</b><b><a class="dept_name"><?php echo $first_name ." ".$last_name; ?></a></b></span>
+<span><a class="initial"><?php echo $position ." , ". $category_initial; ?></a></span>
 
 
 
 </div>
+
+<style>
+    .term_year, .initial{
+        margin-left: 9rem;
+    }
+
+    .course, .dept_name{
+        margin-left: 3rem;
+    }
+    
+</style>
 
 
 <!-- MAPPING HEADER -->
