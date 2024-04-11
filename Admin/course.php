@@ -84,7 +84,7 @@ function populateCetegoryDropdown() {
 
                     <div class="modal-body">
                         
-                    <div class="form-group" id="catid">
+                    <div class="form-group" id="catid1">
                             <label> Position </label>
                             <select name="catid" class="form-control">
                             <?php echo populateCetegoryDropdown(); ?>
@@ -99,13 +99,13 @@ function populateCetegoryDropdown() {
                         <div class="form-group">
                             <label>Initial</label>
                             <input type="text" name="initial" id="initial1" class="form-control"
-                                placeholder="Enter Initial">
+                                placeholder="Enter Department Initial">
                         </div>
 
                         <div class="form-group">
                             <label>Course Department</label>
-                            <input type="text" name="course_department" id="course_department" class="form-control"
-                                placeholder="Enter Department Initial">
+                            <input type="text" name="course_department" id="course_department1" class="form-control"
+                                placeholder="Enter Course Department">
                         </div>
 
                      
@@ -138,28 +138,43 @@ function populateCetegoryDropdown() {
                     </button>
                 </div>
 
-                <form action="Admin_Crud/edit_category.php" method="POST">
+                <form action="Admin_Crud/edit_course.php" method="POST">
 
                     <div class="modal-body">
                         
                     <input type="hidden" name="update_id" id="update_id">
 
                    
+                         
+                    <div class="form-group" id="catid1">
+                            <label> Position </label>
+                            <select name="catid" class="form-control">
+                            <?php echo populateCetegoryDropdown(); ?>
+                    </select>
+                    </div>
+                    
                     <div class="form-group">
-                        <label for="name">Category Name</label>
-                        <input name="name" id="name" class="form-control" placeholder="Enter Category Name">
+                        <label for="cname">Category Name</label>
+                        <input name="cname" id="cname" class="form-control" placeholder="Enter Category Name">
                     </div>
 
                         <div class="form-group">
                             <label>Initial</label>
                             <input type="text" name="initial" id="initial" class="form-control"
-                                placeholder="Enter Initial">
+                                placeholder="Enter Department Initial">
                         </div>
+
+                        <div class="form-group">
+                            <label>Course Department</label>
+                            <input type="text" name="course_department" id="course_department" class="form-control"
+                                placeholder="Enter Course Department">
+                        </div>
+
 
                 </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" name="updatedata" class="btn btn-primary">Update Data</button>
+                        <button type="submit" name="updatedata5" class="btn btn-primary">Update Data</button>
                     </div>
                 </form>
 
@@ -180,7 +195,7 @@ function populateCetegoryDropdown() {
                     </button>
                 </div>
 
-                <form action="Admin_Crud/delete_category.php" method="POST">
+                <form action="Admin_Crud/delete_course.php" method="POST">
 
                     <div class="modal-body">
 
@@ -258,7 +273,7 @@ ON
         while ($row = mysqli_fetch_assoc($query_run)) {
             ?>
             <tr>
-            <td class="hide-id"> <?= $row['id']; ?> </td>
+            <td class="hide-id"> <?= $row['course_id']; ?> </td>
             <td> <?= $row['category_name']; ?> </td>
             <td> <?= $row['course_name'];  ?> </td>
             <td> <?= $row['course_initial'];  ?> </td>
@@ -318,10 +333,7 @@ ON
 <script>
 $(document).ready(function() {
     $('#myTable').DataTable({
-    	lengthMenu: [
-        [10, 25, 50, -1],
-        [10, 25, 50, 'All']
-    ]
+    	pageLength : 10
 
     });
 });
@@ -332,22 +344,20 @@ $(document).ready(function() {
     $(document).ready(function () {
 
         $('.editbtn').on('click', function () {
+    $('#editmodal').modal('show');
 
+    var $tr = $(this).closest('tr');
+    var data = $tr.find("td").map(function () {
+        return $(this).text().trim(); // Trim to remove leading/trailing whitespace
+    }).get();
 
-            $('#editmodal').modal('show');
+    $('#update_id').val(data[0]); // Assuming this is the ID of the course
+    $('#catid').val(data[1]); // Assuming this is the category ID
+    $('#cname').val(data[2]); // Assuming this is the course name
+    $('#initial').val(data[3]); // Assuming this is the initial
+    $('#course_department').val(data[4]); // Assuming this is the course department
+});
 
-            $tr = $(this).closest('tr');
-
-            var data = $tr.children("td").map(function () {
-                return $(this).text();
-            }).get();
-
-            console.log(data);
-
-            $('#update_id').val(data[0]);
-            $('#name').val(data[1]);
-            $('#initial').val(data[2]); // Corrected index
-        });
     });
 </script>
 

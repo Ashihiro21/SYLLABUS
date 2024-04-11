@@ -1518,19 +1518,211 @@ echo "No Record Found";
 
 
 
+<!--Add Modal PERCENT GRADING -->
+<button type="button" class="btn btn-primary percent_grading" data-toggle="modal" data-target="#percent_grading">
+                        ADD DATA
+                    </button>
+
+                    <!-- Modal -->
+ <div class="modal fade" id="percent_grading" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Grading System </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/insert_percentage.php" method="POST">
+
+                    <div class="modal-body">
+                    <div class="form-group">
+                            <label> Description  </label>
+                            <input type="text" name="description" id="description6" class="form-control"
+                                placeholder="Enter Description">
+                        </div>
+
+                        <div class="form-group">
+                            <label> Percent  </label>
+                            <input type="text" name="percent" id="percent6" class="form-control"
+                                placeholder="Enter Percent">
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="insertdata" class="btn btn-primary">Save Data</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- EDIT PERCENTAGE -->
+
+<!-- EDIT POP UP FORM (Bootstrap MODAL) -->
+<div class="modal fade" id="editmodal_percentage" tabindex="-1" role="dialog" aria-labelledby="editpercentage"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editpercentage"> COURSE LEARNING OUTCOMES </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/update_percentage.php" method="POST">
+
+                    <div class="modal-body">
+
+                        <input type="hidden" name="update_id20" id="update_id20">
+
+                        <div class="form-group">
+                            <label> Description </label>
+                            <input type="text" name="description" id="description" class="form-control"
+                                placeholder="Enter Description">
+                        </div>
+
+                        <div class="form-group">
+                            <label> Percent </label>
+                            <input type="text" name="percents" id="percents" class="form-control"
+                                placeholder="Enter Percent">
+                        </div>
+
+
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="updatedata" class="btn btn-primary">Update Data</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- DELETE PERCENTAGE --> 
+
+    <div class="modal fade" id="deletemodal_percentage" tabindex="-1" role="dialog" aria-labelledby="onsite_reffence"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="onsite_reffence"> Delete On-Site References </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/delete_percentage.php" method="POST">
+
+                    <div class="modal-body">
+
+                        <input type="hidden" name="delete_id20" id="delete_id20">
+
+                        <h4> Do you want to Delete this Data ??</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"> NO </button>
+                        <button type="submit" name="deletedata" class="btn btn-primary"> Yes !! Delete it. </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+
+<div class="container mt-5 me-5">
+    <table id="datatableid" class="table table-bordered">
+        <thead>
+            <tr>
+                <th colspan="3" scope="col">GRADING SYSTEM</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            // Database connection
+            $connection = mysqli_connect("localhost", "root", "", "syllabus");
+            if (mysqli_connect_errno()) {
+                echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                die();
+            }
+
+    
+            $total_percent_query = "SELECT SUM(`percents`) AS total_percent FROM percent";
+            $total_percent_result = mysqli_query($connection, $total_percent_query);
+            $total_percent_row = mysqli_fetch_assoc($total_percent_result);
+            
+            $total_percent = $total_percent_row['total_percent'];
+            
+     
+
+
+            // Fetch module learning records
+            $query = "SELECT `id`, `description`, `percents` FROM `percent`";
+
+            $query_run = mysqli_query($connection, $query);
+
+            if ($query_run) {
+                while ($row = mysqli_fetch_assoc($query_run)) {
+            ?>
+                    <tr>
+                        <td class="hide-id"><?php echo $row['id']; ?></td>
+                        <td><?php echo $row['description']; ?></td>
+                 
+                       
+
+                        <td><?php echo $row['percents']; ?></td>
+                        
+                        <td class="table-button">
+                            <button type="button" class="btn btn-success editbtn_percentage"><i class="lni lni-pencil"></i></button>
+                            <button type="button" class="btn btn-danger deletebtn_percentage"><i class="lni lni-trash-can"></i></button>
+                        </td>
+                    </tr>
+            <?php
+                }
+            } else {
+                echo "No Record Found";
+            }
+            ?>
+            <tr>
+                <td colspan="5">TOTAL <a style="margin-left:8rem;"><?php echo  $total_percent; ?></a>%</td>
+                
+               
+            </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
 <div class="text-wrap container-box mt-5">
-<a><b>GRADING SYSTEM</b></a>
-<span><a>Class Participation</a><a style="margin-left:6rem;"><b>20%</b></a></span>
-<span><a>Enabling Assessment</a><a style="margin-left:5rem;"><b>50%</b></a></span>
-<span><a>Summative Assessment</a><a style="margin-left:4rem;"><b>30%</b></a></span>
-______________________________ <br>
-
-<span><a><b>TOTAL</b></a><a style="margin-left:10rem;"><b>100%</b></a></span><br><br>
 
 
 
-<span><b>Overall Final Grade</b><a> = Midterm + Final</a></span>
-<a>2</a>
+
+<span style="margin-left:4rem;"><b>Overall Final Grade</b><a> = Midterm + Final</a></span>
+<a style="margin-left:22rem;">2</a>
 
 
 <div class="mt-5 text-wrap container-fluid">
@@ -3754,6 +3946,53 @@ descriptions for the graduate attributes.</a>
             });
         });
     </script>
+
+
+<script>
+    $(document).ready(function () {
+
+        $('.editbtn_percentage').on('click', function () {
+
+            $('#editmodal_percentage').modal('show');
+
+            $tr = $(this).closest('tr');
+
+            var data = $tr.children("td").map(function () {
+                return $(this).text();
+            }).get();
+
+            console.log(data);
+
+            $('#update_id20').val(data[0]);
+            $('#description').val(data[1]);
+            $('#percents').val(data[2]);
+        });
+    });
+</script>
+
+<!-- DELETE BTN FOR PERCENTAGE -->
+
+<script>
+        $(document).ready(function () {
+
+            $('.deletebtn_percentage').on('click', function () {
+
+                $('#deletemodal_percentage').modal('show');
+
+                $tr = $(this).closest('tr');
+
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                console.log(data);
+
+                $('#delete_id20').val(data[0]);
+
+            });
+        });
+    </script>
+
 
 <script>
     function goback() {
