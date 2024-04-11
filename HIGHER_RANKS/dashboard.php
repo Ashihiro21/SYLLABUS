@@ -1925,12 +1925,12 @@ echo "No Record Found";
 <!-- ADD ONSITE REFFERENCE -->
 
 <!--Add Modal Final Period Table -->
-<button type="button" class="btn btn-primary onsite_reffence" data-toggle="modal" data-target="#onsite_reffence">
+<button type="button" class="btn btn-primary onsite_reffence_tables" data-toggle="modal" data-target="#onsite_reffence_tables">
                         ADD DATA
                     </button>
 
                     <!-- Modal -->
- <div class="modal fade" id="onsite_reffence" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+ <div class="modal fade" id="onsite_reffence_tables" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
