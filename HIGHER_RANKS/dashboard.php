@@ -24,11 +24,13 @@ $sql = "SELECT
             c.`initial` AS `category_initial`,
             c.`dean_name` AS `deans`,
             c.`dean_position` AS `deans_position`,
+            c.`dean_signature` AS `dean_signatures`,
             co.`cname`,
             co.`course_department` AS `course_departments`,
             co.`initial` AS `course_initial`,
             co.`department_name` AS `course_dept_name`,
-            co.`department_position` AS `dept_position`
+            co.`department_position` AS `dept_position`,
+            co.`dept_signature` AS `dept_signatures`
         FROM 
             `users` AS u 
         LEFT JOIN 
@@ -64,6 +66,8 @@ if ($result->num_rows > 0) {
         $category_dean_position = $row['deans_position'];
         $dept_head = $row['course_dept_name'];
         $dept_head_position = $row['dept_position'];
+        $dept_head_signature = $row['dept_signatures'];
+        $deans_category_signature = $row['dean_signatures'];
         
     }
 } else {
@@ -1581,7 +1585,7 @@ echo "No Record Found";
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editpercentage"> COURSE LEARNING OUTCOMES </h5>
+                    <h5 class="modal-title" id="editpercentage"> EDIT GRADING SYSTEM </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -1627,7 +1631,7 @@ echo "No Record Found";
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="onsite_reffence"> Delete On-Site References </h5>
+                    <h5 class="modal-title" id="onsite_reffence"> DELETE Grading Systems </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -2321,7 +2325,7 @@ echo "No Record Found";
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="edit_semestral"> COURSE LEARNING OUTCOMES </h5>
+                    <h5 class="modal-title" id="edit_semestral"> EDIT SEMESTER </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -2334,7 +2338,7 @@ echo "No Record Found";
                         <input type="hidden" name="update_id9" id="update_id9">
                         
                         <div class="form-group">
-                        <label for="term">term</label>
+                        <label for="term">Term</label>
                         <select name="term" id="term" class="form-control">
                             <option value="1st Semester">1st Semester</option>
                             <option value="2nd Semester">2nd Semester</option>
@@ -2425,21 +2429,291 @@ echo "No Record Found";
 </table>
 
 
-
-
-
-
 <div class="container-box mt-5 header-title mb-5">
 <span><b>Prepared:</b><b><a class="course">  <?php echo ($course_departments); ?></a></b></span>
 
 
 
 <a class="term_year"><td><?php echo $row['term']; ?> <?php echo $row['year']; ?></a></td><br><br>
+
+
+
+
+
+
+
+
+<!-- EDIT POP UP FORM (Bootstrap MODAL) -->
+<div class="modal fade" id="editmodal_signature" tabindex="-1" role="dialog" aria-labelledby="edit_signature" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="edit_signature">UPLOAD SIGNATURE</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="edit_signature_form" action="Course_Syllabus/update_signature.php" method="POST" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <input type="hidden" name="update_id22" id="update_id22">
+                    <div class="form-group">
+                        <label for="dept_signature">Dept Signature</label>
+                        <input type="file" name="dept_signature" id="dept_signature" class="form-control">
+                        <!-- Display a preview of the selected image -->
+                        <img src="#" id="preview_dept_signature" style="display:none; max-width: 100px; max-height: 100px;" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" name="updatedata" class="btn btn-primary">Update Data</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- EDIT POP UP FORM (Bootstrap MODAL) -->
+<div class="modal fade" id="editmodal_signature_dean" tabindex="-1" role="dialog" aria-labelledby="edit_signature_dean" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="edit_signature_dean">UPLOAD SIGNATURE</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="edit_signature_dean_form" action="Course_Syllabus/update_signature_dean.php" method="POST" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <input type="hidden" name="update_id23" id="update_id23">
+                    <div class="form-group">
+                        <label for="dean_signature">Dean Signature</label>
+                        <input type="file" name="dean_signature" id="dean_signature" class="form-control">
+                        <!-- Display a preview of the selected image -->
+                        <img src="#" id="preview_dean_signature" style="display:none; max-width: 100px; max-height: 100px;" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" name="updatedata" class="btn btn-primary">Update Data</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- SEMESTRAL -->
+<?php
+ 
+
+ // Database connection
+ 
+ 
+ $connection = mysqli_connect("localhost","root","","syllabus");
+ if (mysqli_connect_errno()){
+     echo "Failed to connect to MySQL: " . mysqli_connect_error();
+     die();
+     }
+
+
+
+     $email = $_SESSION['email'];
+     $query1 = "SELECT 
+                 u.`first_name`, 
+                 u.`last_name`, 
+                 u.`department`, 
+                 u.`catid`, 
+                 u.`phone_number`, 
+                 u.`email`, 
+                 u.`password`, 
+                 p.`name` AS `position`,
+                 c.`id` AS `category_id`,
+                 c.`name` AS `category_name`,
+                 c.`initial` AS `category_initial`,
+                 c.`dean_name` AS `deans`,
+                 c.`dean_position` AS `deans_position`,
+                 c.`dean_signature` AS `dean_signatures`,
+                 co.`cname`,
+                 co.`course_department` AS `course_departments`,
+                 co.`id` AS `course_id`,
+                 co.`initial` AS `course_initial`,
+                 co.`department_name` AS `course_dept_name`,
+                 co.`department_position` AS `dept_position`,
+                 co.`dept_signature` AS `dept_signatures`
+             FROM 
+                 `users` AS u 
+             LEFT JOIN 
+                 `position` AS p ON u.`position` = p.`id`
+             LEFT JOIN 
+                 `category` AS c ON u.`department` = c.`id`
+             LEFT JOIN
+                 `course` AS co ON u.`catid` = co.`id`
+             WHERE 
+                 u.email = '$email'";
+ $query_run1 = mysqli_query($connection, $query1);
+?>  
+<table id="datatableid">
+<thead>
+    <tr>
+        <!-- <th scope="col">Provider</th>
+        <th scope="col">Reference Material</th>
+        <th scope="col">Action</th> -->
+    </tr>
+</thead>
+<?php
+if($query_run1)
+{
+foreach($query_run1 as $rows)
+{
+?>
+<tbody>
+  
+<tr>
+        <td class="hide-id"> <?php echo $rows['course_id']; ?> </td>
+        <td class="hide-id"><?php echo $rows['dept_signatures']; ?></td>
+        <td class="table-button">
+        <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
+
+        <button type="button" class="btn btn-success editbtn_signature m-3"><i class="lni lni-pencil"></i></button><a>UPLOAD SIGNATURE</a>
+
+    
+        </td>
+    </tr>
+
+
+
+</tbody>
+<?php           
+}
+}
+else 
+{
+echo "No Record Found";
+}
+?>
+</table>
+
+
+
+
+
+
+
+
+<span><b></b><b><a class="initial"><img src="<?php echo $dept_head_signature; ?>" alt="Department Head Signature"></a></b></span>
 <span><b>Approved:</b><b><a class="dept_name"><?php echo $dept_head; ?></a></b></span>
 <span><a class="initial"><?php echo $dept_head_position ." , ". $course_initial; ?></a></span><br><br>
 
 
+
+
+
+<!-- SEMESTRAL -->
+<?php
+ 
+
+ // Database connection
+ 
+ 
+ $connection = mysqli_connect("localhost","root","","syllabus");
+ if (mysqli_connect_errno()){
+     echo "Failed to connect to MySQL: " . mysqli_connect_error();
+     die();
+     }
+
+
+
+     $email = $_SESSION['email'];
+     $query2 = "SELECT 
+                 u.`first_name`, 
+                 u.`last_name`, 
+                 u.`department`, 
+                 u.`catid`, 
+                 u.`phone_number`, 
+                 u.`email`, 
+                 u.`password`, 
+                 p.`name` AS `position`,
+                 c.`id` AS `category_id`,
+                 c.`name` AS `category_name`,
+                 c.`initial` AS `category_initial`,
+                 c.`dean_name` AS `deans`,
+                 c.`dean_position` AS `deans_position`,
+                 c.`dean_signature` AS `dean_signatures`,
+                 co.`cname`,
+                 co.`course_department` AS `course_departments`,
+                 co.`id` AS `course_id`,
+                 co.`initial` AS `course_initial`,
+                 co.`department_name` AS `course_dept_name`,
+                 co.`department_position` AS `dept_position`,
+                 co.`dept_signature` AS `dept_signatures`
+             FROM 
+                 `users` AS u 
+             LEFT JOIN 
+                 `position` AS p ON u.`position` = p.`id`
+             LEFT JOIN 
+                 `category` AS c ON u.`department` = c.`id`
+             LEFT JOIN
+                 `course` AS co ON u.`catid` = co.`id`
+             WHERE 
+                 u.email = '$email'";
+ $query_run2 = mysqli_query($connection, $query2);
+?>  
+<table id="datatableid">
+<thead>
+    <tr>
+        <!-- <th scope="col">Provider</th>
+        <th scope="col">Reference Material</th>
+        <th scope="col">Action</th> -->
+    </tr>
+</thead>
+<?php
+if($query_run2)
+{
+foreach($query_run2 as $table_rows)
+{
+?>
+<tbody>
+  
+<tr>
+        <td class="hide-id"> <?php echo $table_rows['category_id']; ?> </td>
+        <td class="hide-id"><?php echo $table_rows['dean_signatures']; ?></td>
+        <td class="table-button">
+        <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
+
+        <button type="button" class="btn btn-success editbtn_signature_dean m-3"><i class="lni lni-pencil"></i></button><a>UPLOAD SIGNATURE</a>
+
+    
+        </td>
+    </tr>
+
+
+
+</tbody>
+<?php           
+}
+}
+else 
+{
+echo "No Record Found";
+}
+?>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- FOR REVISED -->
+<span><b></b><b><a class="initial"><img src="<?php echo $deans_category_signature; ?>" alt="Department Head Signature"></a></b></span>
 <span><b>Endorsed:</b><b><a class="dept_name"><?php echo $category_dean; ?></a></b></span>
 <span><a class="initial"><?php echo $category_dean_position ." , ". $category_initial; ?></a></span>
 
@@ -3775,6 +4049,66 @@ descriptions for the graduate attributes.</a>
         });
     });
 </script>
+
+
+<script>
+    $(document).ready(function () {
+        $('.editbtn_signature').on('click', function () {
+            $('#editmodal_signature').modal('show');
+            $tr = $(this).closest('tr');
+            var data = $tr.children("td").map(function () {
+                return $(this).text();
+            }).get();
+            $('#update_id22').val(data[0]);
+            // Clear any previously selected file
+            $('#dept_signature').val('');
+        });
+
+        // Preview the selected image
+        $('#dept_signature').change(function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#preview_dept_signature').attr('src', e.target.result).show();
+                }
+                reader.readAsDataURL(file);
+            } else {
+                $('#preview_dept_signature').hide();
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('.editbtn_signature_dean').on('click', function () {
+            $('#editmodal_signature_dean').modal('show');
+            $tr = $(this).closest('tr');
+            var data = $tr.children("td").map(function () {
+                return $(this).text();
+            }).get();
+            $('#update_id23').val(data[0]);
+            // Clear any previously selected file
+            $('#dean_signature').val('');
+        });
+
+        // Preview the selected image
+        $('#dean_signature').change(function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#preview_dean_signature').attr('src', e.target.result).show();
+                }
+                reader.readAsDataURL(file);
+            } else {
+                $('#preview_dean_signature').hide();
+            }
+        });
+    });
+</script>
+
 
 
 <!-- EDIT BTN FOR MAPPING TABLE PLS -->
