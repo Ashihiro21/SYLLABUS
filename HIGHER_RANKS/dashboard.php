@@ -2434,8 +2434,6 @@ echo "No Record Found";
 
 
 
-
-
 <a class="term_year"><td><?php echo $row['term']; ?> <?php echo $row['year']; ?></a></td><br><br>
 <span><b>Approved:</b><b><a class="dept_name"><?php echo $dept_head; ?></a></b></span>
 <span><a class="initial"><?php echo $dept_head_position ." , ". $course_initial; ?></a></span><br><br>
