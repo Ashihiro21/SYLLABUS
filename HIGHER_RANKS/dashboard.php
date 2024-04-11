@@ -2405,7 +2405,7 @@ foreach($query_run as $row)
         <td class="table-button">
         <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
 
-        <button type="button" class="btn btn-success editbtn_semestral sysllabus_button"><i class="lni lni-pencil"></i></button>
+        <button type="button" class="btn btn-success editbtn_semestral sysllabus_button m-3"><i class="lni lni-pencil"></i></button><a>EDIT SEMESTER</a>
 
         <!-- <button type="button" class="btn btn-danger deletebtn_online_refference"><i class="lni lni-trash-can"></i></button> -->
         </td>
