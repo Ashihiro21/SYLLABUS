@@ -22,9 +22,13 @@ $sql = "SELECT
             c.`id` AS `id`,
             c.`name` AS `category_name`,
             c.`initial` AS `category_initial`,
+            c.`dean_name` AS `deans`,
+            c.`dean_position` AS `deans_position`,
             co.`cname`,
             co.`course_department` AS `course_departments`,
-            co.`initial` AS `course_initial`
+            co.`initial` AS `course_initial`,
+            co.`department_name` AS `course_dept_name`,
+            co.`department_position` AS `dept_position`
         FROM 
             `users` AS u 
         LEFT JOIN 
@@ -56,6 +60,10 @@ if ($result->num_rows > 0) {
         $cname = $row['cname'];
         $course_initial = $row['course_initial'];
         $course_departments = $row['course_departments'];
+        $category_dean = $row['deans'];
+        $category_dean_position = $row['deans_position'];
+        $dept_head = $row['course_dept_name'];
+        $dept_head_position = $row['dept_position'];
         
     }
 } else {
@@ -2429,13 +2437,13 @@ echo "No Record Found";
 
 
 <a class="term_year"><td><?php echo $row['term']; ?> <?php echo $row['year']; ?></a></td><br><br>
-<span><b>Approved:</b><b><a class="dept_name"><?php echo $first_name ." ".$last_name; ?></a></b></span>
-<span><a class="initial"><?php echo $position ." , ". $course_initial; ?></a></span><br><br>
+<span><b>Approved:</b><b><a class="dept_name"><?php echo $dept_head; ?></a></b></span>
+<span><a class="initial"><?php echo $dept_head_position ." , ". $course_initial; ?></a></span><br><br>
 
 
 <!-- FOR REVISED -->
-<span><b>Endorsed:</b><b><a class="dept_name"><?php echo $first_name ." ".$last_name; ?></a></b></span>
-<span><a class="initial"><?php echo $position ." , ". $category_initial; ?></a></span>
+<span><b>Endorsed:</b><b><a class="dept_name"><?php echo $category_dean; ?></a></b></span>
+<span><a class="initial"><?php echo $category_dean_position ." , ". $category_initial; ?></a></span>
 
 
 
