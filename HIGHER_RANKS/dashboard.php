@@ -191,7 +191,7 @@ td{
 
     <nav>
     <span class="float-right"><p><?php echo $position; ?><a href="logout.php">Logout</a></p></span>
-    <span class="m-2"><button class="btn btn-danger">Download as PDF</button><button class="dl-word btn btn-secondary">Download as Word</button></span>
+    <span class="m-2"><a href="generate_pdf_syllabus.php" class="btn btn-danger">Download as PDF</a><a class="dl-word btn btn-secondary">Download as Word</a></span>
     </nav>
    
     <div class="pt-5 pb-4">
@@ -792,7 +792,14 @@ td{
                     <tr>
                             <td class="hide-id"> <?php echo $row['id']; ?> </td>
                             <td class=""><?php echo $row['comlab']; ?><?php echo "."; ?><?php echo $row['learn_out']; ?></td>
-                            <td class=""><?php echo $row['topic_learn_out']; ?></td>
+                            <td class=""><?php
+                        if (strpos($row['topic_learn_out'], 'TLO') !== false || strpos($row['topic_learn_out'], "\n") !== false) {
+                            // If 'TLO' or a line break is found, replace it with <br>
+                            echo str_replace(array('', "\n"), '<br>', $row['topic_learn_out']);
+                        } else {
+                            echo $row['topic_learn_out'];
+                        }
+                        ?></td>
                             <td class="table-button">
                             <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
 
