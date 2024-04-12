@@ -165,6 +165,14 @@ td{
     padding-bottom: 5px;
 }
 
+.dl-word{
+    margin-left: 1rem;
+    background-color: #0d6efd;
+}
+
+.dl-word:hover{
+    background-color: #0a5cb8;
+}
 
 .btn-primary{
     margin-left: 5rem;
@@ -173,6 +181,8 @@ td{
     margin-left: 5rem;
 }
 
+
+
   
 
 </style>
@@ -180,7 +190,8 @@ td{
 
 
     <nav>
-    <span class="account-header"><p><?php echo $position; ?><a href="logout.php">Logout</a></p></span>
+    <span class="float-right"><p><?php echo $position; ?><a href="logout.php">Logout</a></p></span>
+    <span class="m-2"><button class="btn btn-danger">Download as PDF</button><button class="dl-word btn btn-secondary">Download as Word</button></span>
     </nav>
    
     <div class="pt-5 pb-4">

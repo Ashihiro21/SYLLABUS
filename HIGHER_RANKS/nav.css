@@ -1,13 +1,15 @@
 /* Styling the navigation bar */
 nav {
     background-color: #333; /* Background color */
-    padding: 10px 0; /* Padding */
+    padding-top: 1rem; /* Padding */
+    padding-right: 1rem;
+    margin-bottom: 3rem;
 }
 
 nav span {
     display: inline-block; /* Make the span element inline-block */
     color: #fff; /* Text color */
-    font-size: 18px; /* Font size */
+    font-size: 28px; /* Font size */
 }
 
 nav a {
@@ -17,7 +19,9 @@ nav a {
 }
 
 nav a:hover {
-    text-decoration: underline; /* Add underline on hover */
+    text-decoration: none; /* Add underline on hover */
+    color: white;
+    
 }
 
 nav p {
