@@ -156,7 +156,7 @@ table, tr, th, td{
 </style>
 
 <body>
-<img style="margin-left: 12rem; margin-top: 1rem;" src="../img/logos.png" alt="Image" width="190">
+<img style="margin-left: 16rem; margin-top: 1rem;" src="../img/logos.png" alt="Image" width="190">
 
     <h4 style="text-align:center; margin-top: 1rem;">DE LA SALLE UNIVERSITY-DASMARINAS</h4>
     <h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($category_name).'</h4>
@@ -679,6 +679,26 @@ $html .= '<p><img style="padding-left:145px; padding-top:10px;" src="' . $deans_
 $html .='<span><b>Approved by:</b><b><a style="padding-left:20px;" class="course">'.$category_dean.'</a></span>';
 $html .='<span><b><p style="padding-left:140px;" class="course">'.$category_dean_position.", ".$category_initial.'</p></b></span>';
 '</p></td>';
+
+
+$html .='<img style="margin-left: 16rem; margin-top: 1rem;" src="../img/logos.png" alt="Image" width="190">';
+
+$html .= '<h4 style="text-align:center; margin-top: 1rem;">DE LA SALLE UNIVERSITY-DASMARINAS</h4>';
+$html .=  '<h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($category_name).'</h4>';
+$html .=   '<h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($course_departments).'</h4';
+$html .= '<h4 style="text-align:center; margin-top: 1rem;">PROGRAM LEARNING OUTCOME - COURSE LEARNING OUTCOME</h4>';
+$html .=   '<h4 style="text-align:center; margin-top: -1rem;">MAPPING TABLE FOR '.strtoupper($cname).'</h4';
+
+    $html .= '<span><a class="header">COURSE CODE</a><b><a style=" margin-left: 100px; margin-right: 2rem;">:</a></b><a class="data">'.$user['course_code'].'</a></span><br>';
+    $html .= '<span><a class="header">COURSE TITLE</a><b><a style=" margin-left: 97px; margin-right: 2rem;">:</a></b><a class="data">'.$user['course_tittle'].'</a></span><br>';
+    $html .= '<span><a class="header">COURSE TYPE</a><b><a style=" margin-left: 103px; margin-right: 2rem;">:</a></b><a class="data">'.$user['course_Type'].'</a></span><br>';
+    $html .= '<span><a class="header">COURSE CREDIT</a><b><a style=" margin-left: 84px; margin-right: 2rem;">:</a></b><a class="data">'.$user['course_credit'].'</a></span><br>';
+    $html .= '<span><a class="header">LEARNING MODALITY</a><b><a style=" margin-left: 36px; margin-right: 2rem;">:</a></b><a class="data">'.$user['learning_modality'].'</a></span><br>';
+    $html .= '<span><a class="header">PRE-REQUISITES</a><b><a style=" margin-left: 82px; margin-right: 2rem;">:</a></b><a class="data">'.$user['pre_requisit'].'</a></span><br>';
+    $html .= '<span><a class="header">CO-REQUISITES</a><b><a style=" margin-left: 90px; margin-right: 2rem;">:</a></b><a class="data">'.$user['co_pre_requisit'].'</a></span><br>';
+
+    
+
 
 
 $html .= '</body>';
