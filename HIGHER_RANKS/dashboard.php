@@ -856,7 +856,7 @@ td{
                         </div>
 
                         <div class="form-group">
-                            <label>Week No</label>
+                            <label>Date</label>
                             <input type="text" name="date" id="date1" class="form-control"
                                 placeholder="Enter Date">
                         </div>
@@ -932,7 +932,7 @@ td{
                         </div>
 
                         <div class="form-group">
-                            <label>Week No</label>
+                            <label>Date</label>
                             <input type="text" name="date" id="date" class="form-control"
                                 placeholder="Enter Date">
                         </div>
@@ -1299,7 +1299,7 @@ echo "No Record Found";
                         </div>
 
                         <div class="form-group">
-                            <label>Week No</label>
+                            <label>Date</label>
                             <input type="text" name="date" id="date1" class="form-control"
                                 placeholder="Enter Date">
                         </div>
@@ -1377,7 +1377,7 @@ echo "No Record Found";
                         </div>
 
                         <div class="form-group">
-                            <label>Week No</label>
+                            <label>Date</label>
                             <input type="text" name="date" id="1date" class="form-control"
                                 placeholder="Enter Date">
                         </div>
@@ -2358,8 +2358,8 @@ echo "No Record Found";
                         <div class="form-group">
                         <label for="term">Term</label>
                         <select name="term" id="term" class="form-control">
-                            <option value="1st Semester">1st Semester</option>
-                            <option value="2nd Semester">2nd Semester</option>
+                        <option value="1<sup>st</sup> Semester">1st Semester</option>
+                            <option value="2<sup>nd</sup> Semester">2nd Semester</option>
                             <option value="Special Term">Special Term</option>
                         </select>
                     </div>
