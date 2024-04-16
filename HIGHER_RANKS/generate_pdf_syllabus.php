@@ -9,6 +9,7 @@ if (!isset($_SESSION['email'])) {
 include('../Database/connection.php');
 
 $email = $_SESSION['email'];
+$email = $_SESSION['email'];
 $sql = "SELECT 
             u.`first_name`, 
             u.`last_name`, 
@@ -149,6 +150,27 @@ table, tr, th, td{
 
 .container{
     margin-left: 2rem;
+}
+
+.checkmark {
+  width: 30px;
+  height: 30px;
+  background-color: #ffffff;
+
+  border-radius: 50%;
+  position: relative;
+}
+
+.checkmark:after {
+  content: "";
+  width: 10px;
+  height: 20px;
+  border: solid #000000;
+  border-width: 0 2px 2px 0;
+  position: absolute;
+  top: 7px;
+  left: 9px;
+  transform: rotate(45deg);
 }
 
 
@@ -701,6 +723,153 @@ $html .=   '<h4 style="text-align:center; margin-top: -1rem;">MAPPING TABLE FOR 
 
 
 
+    
+
+    $html .= '<table class="teaching_guid" style="font-size: 14px"; height: 100px;>';
+    $html .= '<tr>'; // Opening row tag
+    $html .= '<th rowspan="2" scope="col">Course Learning Outcome</th>';
+    $html .= '<th class="text-center" colspan="9" scope="col">Program Learning Outcomes</th>';
+    $html .= '</tr>'; // Closing the header row
+    
+    $html .= '<tr>'; // Opening a new row for data
+    $html .= '<th scope="col">PLO1</th>';
+    $html .= '<th scope="col">PLO2</th>';
+    $html .= '<th scope="col">PLO3</th>';
+    $html .= '<th scope="col">PLO4</th>';
+    $html .= '<th scope="col">PLO5</th>';
+    $html .= '<th scope="col">PLO6</th>';
+    $html .= '<th scope="col">PLO7</th>';
+    $html .= '<th scope="col">PLO8</th>';
+    $html .= '<th scope="col">PLO9</th>';
+    $html .= '</tr>'; // Closing the data row
+    
+   
+    
+
+$sql = "SELECT * FROM mapping_table";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+
+    while ($row = $result->fetch_assoc()) {
+        $html .= '<tr>';
+    
+        $html .= '<td height="1px"  class="teaching_guid">'. $row['learn_out_mapping'] . '</td>';
+        $html .= '<td height="1px" class="teaching_guid">'. $row['pl1'] . '</td>';
+        $html .= '<td height="1px" class="teaching_guid">'. $row['pl2'] . '</td>';
+        $html .= '<td height="1px" class="teaching_guid">'. $row['pl3'] . '</td>';
+        $html .= '<td height="1px" class="teaching_guid">'. $row['pl4'] . '</td>';
+        $html .= '<td height="1px" class="teaching_guid">'. $row['pl5'] . '</td>';
+        $html .= '<td height="1px" class="teaching_guid">'. $row['pl6'] . '</td>';
+        $html .= '<td height="1px" class="teaching_guid">'. $row['pl7'] . '</td>';
+        $html .= '<td height="1px" class="teaching_guid">'. $row['pl8'] . '</td>';
+        $html .= '<td height="1px" class="teaching_guid">'. $row['pl9'] . '</td>';
+        $html .= '</tr>';
+    }
+    
+    // Total row
+   
+}
+
+$html .= '</table>';
+$html .= '<p style="font-style:italic; margin-top: -10px; margin-left: 10px; ">NOTE: Provide a check mark on the areas in which the program learning outcome (PLO) is hit by the course
+learning outcome (CLO)</p>';
+
+
+
+
+$html .='<img style="margin-left: 16rem; margin-top: 1rem;" src="../img/logos.png" alt="Image" width="190">';
+$html .= '<h4 style="text-align:center; margin-top: 1rem;">DE LA SALLE UNIVERSITY-DASMARINAS</h4>';
+$html .=  '<h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($category_name).'</h4>';
+$html .=   '<h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($course_departments).'</h4';
+$html .= '<h4 style="text-align:center; margin-top: 1rem;">GRADUATE ATTRIBUTES (DESCRIPTORS/INSTITUTIONAL LEARNING OUTCOMES) –</h4>';
+$html .=   '<h4 style="text-align:center; margin-top: -1rem;">PROGRAM LEARNING OUTCOME MAPPING TABLE FOR '.strtoupper($cname).'</h4';
+
+
+$html .= '<table class="teaching_guid" style="font-size: 16px"; height: 100px;>';
+$html .= '<tr>'; // Opening row tag
+$html .= '<th scope="col">Program Learning Outcomes</th>';
+$html .= '<th scope="col">1</th>';
+$html .= '<th scope="col">2</th>';
+$html .= '<th scope="col">3</th>';
+$html .= '<th scope="col">4</th>';
+$html .= '<th scope="col">5</th>';
+$html .= '</tr>'; // Closing the data row
+
+
+
+
+$sql = "SELECT * FROM decriptors";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+
+while ($row = $result->fetch_assoc()) {
+    $html .= '<tr>';
+
+    $html .= '<td height="5px"  class="teaching_guid">'. $row['program_learn'] . '</td>';
+    $html .= '<td height="5px" class="teaching_guid">'. $row['rate1'] . '</td>';
+    $html .= '<td height="5px" class="teaching_guid">'. $row['rate2'] . '</td>';
+    $html .= '<td height="5px" class="teaching_guid">'. $row['rate3'] . '</td>';
+    $html .= '<td height="5px" class="teaching_guid">'. $row['rate4'] . '</td>';
+    $html .= '<td height="5px" class="teaching_guid">'. $row['rate5'] . '</td>';
+    $html .= '</tr>';
+}
+
+// Total row
+
+}
+
+$html .= '</table>';
+$html .= '<p style="font-style:italic; margin-top: 15px; margin-left: 10px; ">NOTE: Provide a check mark on the areas in which the Graduate Attribute (Descriptors/Institutional
+Learning Outcome) is hit by the program learning outcome (PLO). Kindly refer to the descriptors
+(institutional learning outcomes) to clearly understand what each attribute refers to or expects from its
+graduates. 
+</p>';
+
+
+
+
+$html .='<img style="margin-left: 16rem; margin-top: 1rem;" src="../img/logos.png" alt="Image" width="190">';
+$html .= '<h4 style="text-align:center; margin-top: 1rem;">DE LA SALLE UNIVERSITY-DASMARINAS</h4>';
+$html .=  '<h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($category_name).'</h4>';
+$html .=   '<h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($course_departments).'</h4';
+$html .= '<h4 style="text-align:center; margin-top: 4rem;">GRADUATES ATTRIBUTES AND INSTITUTIONAL LEARNING OUTCOMES (ILOs) </h4>';
+
+
+$html .= '<table class="teaching_guid" style="font-size: 16px"; height: 100px;>';
+$html .= '<tr>'; // Opening row tag
+$html .= '<th scope="col">Graduate Attribute (GA)</th>';
+$html .= '<th scope="col">Descriptors (Institutional Learning Outcome)</th>';
+$html .= '</tr>'; // Closing the data row
+
+
+
+
+$sql = "SELECT * FROM graduates_attributes";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+
+while ($row = $result->fetch_assoc()) {
+    $html .= '<tr>';
+
+    $html .= '<td height="5px" style="text-align:left;"  class="teaching_guid">'. $row['graduate_att'] . '</td>';
+    $html .= '<td height="5px" style="text-align:left;" class="teaching_guid">'. $row['descriptors_learn_out'] . '</td>';
+    $html .= '</tr>';
+}
+
+// Total row
+
+}
+
+$html .= '</table>';
+$html .= '<p style="border-top:1px solid black; width:235px; margin-top: 85px; margin-left: 10px;"></p>';
+$html .= '<p style="font-style:italic; margin-left: 10px; ">Approved in </a>'. date("F") ." ".date("Y").' <a>during a multi-sectoral committee specifically convened for the purpose of coming up with 
+descriptions for the graduate attributes. 
+</p>';
+
+
+
+
+
 $html .= '</body>';
 $html .= '</html>';
 
@@ -711,7 +880,7 @@ $dompdf->loadHtml($html);
 
 $dompdf->set_option('isHtml5ParserEnabled', true);
 $dompdf->set_option('isPhpEnabled', true);
-$dompdf->set_option('defaultFont', '✔');
+$dompdf->set_option('defaultFont', '/');
 
 // Set paper size and orientation
 $dompdf->setPaper('A4', 'portrait');
