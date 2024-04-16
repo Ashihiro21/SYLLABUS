@@ -191,7 +191,8 @@ td{
 
     <nav>
     <span class="float-right"><p><?php echo $position; ?><a href="logout.php">Logout</a></p></span>
-    <span class="m-2"><a href="generate_pdf_syllabus.php" class="btn btn-danger">Download as PDF</a><a class="dl-word btn btn-secondary">Download as Word</a></span>
+    <span class="m-2"><a href="generate_pdf_syllabus.php" class="btn btn-danger">Download as PDF</a>
+    <a href="generate_word_syllabus.php" class="dl-word btn btn-secondary">Download as Word</a></span>
     </nav>
    
     <div class="pt-5 pb-4">
