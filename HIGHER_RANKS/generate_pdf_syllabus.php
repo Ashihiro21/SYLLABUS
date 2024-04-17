@@ -9,7 +9,6 @@ if (!isset($_SESSION['email'])) {
 include('../Database/connection.php');
 
 $email = $_SESSION['email'];
-$email = $_SESSION['email'];
 $sql = "SELECT 
             u.`first_name`, 
             u.`last_name`, 
@@ -865,6 +864,7 @@ $html .= '<p style="border-top:1px solid black; width:235px; margin-top: 85px; m
 $html .= '<p style="font-style:italic; margin-left: 10px; ">Approved in </a>'. date("F") ." ".date("Y").' <a>during a multi-sectoral committee specifically convened for the purpose of coming up with 
 descriptions for the graduate attributes. 
 </p>';
+
 
 
 

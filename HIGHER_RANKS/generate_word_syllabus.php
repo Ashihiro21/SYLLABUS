@@ -143,6 +143,72 @@ if ($result->num_rows > 0) {
 }
 
 
+$section->addText('LEARNING PLAN', array('bold' => true, 'size' => 11, 'name' => 'Times New Roman'), array('alignment' => 'left'));
+$section->addText('Learning Outcomes for Midterm Period', array('bold' => true, 'size' => 9, 'name' => 'Times New Roman'), array('alignment' => 'left'));
+
+
+
+$styleTable = array('borderSize' => 6, 'borderColor' => '#000000', 'cellMargin' => 80);
+$styleFirstRow = array('borderBottomSize' => 1);
+$styleCell = array('valign' => 'center');
+$fontStyle = array('bold' => true, 'align' => 'center');
+$phpWord->addTableStyle('Fancy Table', $styleTable, $styleFirstRow);
+$tableWidth = 5000; // You can adjust this value as needed
+
+$table = $section->addTable('Fancy Table');
+$table->setWidth($tableWidth); // Set the width of the table
+$table->addRow(900);
+$table->addCell(2000, $styleCell)->addText(htmlspecialchars('Course Learning Outcomes'), $fontStyle);
+$table->addCell(2000, $styleCell)->addText(htmlspecialchars('Topic Learning Outcomes'), $fontStyle);
+
+// Fetch data from the database and populate the table
+$sql = "SELECT * FROM course_leaning ORDER BY id ASC";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $table->addRow();
+        $table->addCell(3000)->addText($row['comlab'].".".$row['learn_out']);
+        $topicLearnOut = $row['topic_learn_out'];
+        if (strpos($topicLearnOut, 'TLO') !== false || strpos($topicLearnOut, "\n") !== false) {
+            $topicLearnOut = str_replace("\n", '<w:br/>', $topicLearnOut); // Use Word specific break tag
+        }
+        $table->addCell(3000)->addText($topicLearnOut);
+    }
+}
+
+$section->addTextBreak(1);
+
+
+$styleTable = array('borderSize' => 6, 'borderColor' => '#000000', 'cellMargin' => 80);
+$styleFirstRow = array('borderBottomSize' => 1);
+$styleCell = array('valign' => 'center');
+$fontStyle = array('bold' => true, 'align' => 'center');
+$phpWord->addTableStyle('Fancy Table', $styleTable, $styleFirstRow);
+$tableWidth = 5000; // You can adjust this value as needed
+
+$table = $section->addTable('Fancy Table');
+$table->setWidth($tableWidth); // Set the width of the table
+$table->addRow(900);
+$table->addCell(2000, $styleCell)->addText(htmlspecialchars('Module No and Learning Outcomes'), $fontStyle);
+$table->addCell(2000, $styleCell)->addText(htmlspecialchars('Week'), $fontStyle);
+
+// Fetch data from the database and populate the table
+$sql = "SELECT * FROM module_learning ORDER BY id ASC";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $table->addRow();
+        $topicLearnOut = $row['teaching_activities'];
+        if (strpos($topicLearnOut, 'TLO') !== false || strpos($topicLearnOut, "\n") !== false) {
+            $topicLearnOut = str_replace("\n", '<w:br/>', $topicLearnOut); // Use Word specific break tag
+        }
+        $table->addCell(3000)->addText($topicLearnOut);
+        $table->addCell(3000)->addText($row['week'].".".$row['date']);
+    }
+}
+
+$section->addTextBreak(1);
+
 
 
 
@@ -159,7 +225,7 @@ if ($result->num_rows > 0) {
 
 // Save the document as a Word file
 $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-$docFileName = 'chillyfacts.docx';
+$docFileName = 'generated_document.docx';
 $objWriter->save($docFileName);
 
 // Set headers to force download
