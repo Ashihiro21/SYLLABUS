@@ -191,20 +191,55 @@ $table->setWidth($tableWidth); // Set the width of the table
 $table->addRow(900);
 $table->addCell(2000, $styleCell)->addText(htmlspecialchars('Module No and Learning Outcomes'), $fontStyle);
 $table->addCell(2000, $styleCell)->addText(htmlspecialchars('Week'), $fontStyle);
+$table->addCell(2000, $styleCell)->addText(htmlspecialchars('Teaching-Learning Activities / Assessment Strategy'), $fontStyle);
+$table->addCell(2000, $styleCell)->addText(htmlspecialchars('Technology Enabler'), $fontStyle);
+$table->addCell(2000, $styleCell)->addText(htmlspecialchars('Onsite / F2F'), $fontStyle);
+$table->addCell(2000, $styleCell)->addText(htmlspecialchars('Asynchronous'), $fontStyle);
+$table->addCell(2000, $styleCell)->addText(htmlspecialchars('Alloted Hours'), $fontStyle);
 
 // Fetch data from the database and populate the table
 $sql = "SELECT * FROM module_learning ORDER BY id ASC";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
+    
+    $total_hour_query = "SELECT 
+        SUM(hours) as total_hours, 
+        SUM(asy) as total_asy_hours,
+        SUM(onsite) as total_onsite_hours 
+    FROM module_learning";
+    $total_hour_result = mysqli_query($conn, $total_hour_query);
+    $total_hour_row = mysqli_fetch_assoc($total_hour_result);
+    
+    $total_hour = $total_hour_row['total_hours'];
+    $total_asy_hours = $total_hour_row['total_asy_hours'];
+    $total_onsite_hours = $total_hour_row['total_onsite_hours'];
+
     while ($row = $result->fetch_assoc()) {
         $table->addRow();
-        $topicLearnOut = $row['teaching_activities'];
-        if (strpos($topicLearnOut, '•') !== false || strpos($topicLearnOut, "•") !== false) {
+        $topicLearnOut = $row['module_no'];
+        if (strpos($topicLearnOut, 'TLO') !== false || strpos($topicLearnOut, "•") !== false) {
             $topicLearnOut = str_replace("\n", '<w:br/><w:br/>', $topicLearnOut); // Use Word specific break tag
         }
         $table->addCell(3000)->addText($topicLearnOut);
+
         $table->addCell(3000)->addText($row['week'].".".$row['date']);
+        $teaching_activities = $row['teaching_activities'];
+        if (strpos($teaching_activities, '•') !== false || strpos($teaching_activities, "•") !== false) {
+            $teaching_activities = str_replace("\n", '<w:br/><w:br/>', $teaching_activities); // Use Word specific break tag
+        }
+        $table->addCell(3000)->addText($teaching_activities );
+        
+        $table->addCell(3000)->addText($row['technology'] );
+        $table->addCell(3000)->addText($row['onsite'] == 1 ? '/' : '');
+        $table->addCell(3000)->addText($row['asy'] == 1 ? '/' : '');
+        $table->addCell(3000)->addText($row['hours']);
     }
+    $table->addRow();
+    $table->addCell(21000, ['gridSpan' => 4])->addText('TOTAL'); // Assuming 3000 units per cell
+
+    $table->addCell(3000)->addText($total_onsite_hours);
+    $table->addCell(3000)->addText($total_asy_hours);
+    $table->addCell(3000)->addText($total_hour);
 }
 
 $section->addTextBreak(1);
