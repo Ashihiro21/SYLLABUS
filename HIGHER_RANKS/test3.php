@@ -355,7 +355,7 @@ td{
                     
 
 
-
+                       
                         <div class="form-group">
                             <label> Pre requisites </label>
                             <input type="text" name="pre_requisit" id="pre_requisit" class="form-control" placeholder="Enter pre_requisit">
