@@ -404,7 +404,7 @@ $section->addText('2.  Enrollment in an E-Class.  Please ensure that your Office
 ', array('normal' => true, 'size' => 10, 'name' => 'Times New Roman'), array('alignment' => 'left'));
 $section->addText('3.  Traditional Blended Learning Model.  This course adopts the traditional blended learning model. This means that there will be a mix of face-to-face and asynchronous classes. Majority of teaching-learning activities and assessments are undertaken onsite. The total number of onsite classes shall be 50% of the number of hours allotted for the whole semester.
 ', array('normal' => true, 'size' => 10, 'name' => 'Times New Roman'), array('alignment' => 'left'));
-$section->addText('4. Online Asynchronous Sessions.', array('normal' => true, 'size' => 10, 'name' => 'Times New Roman'), array('alignment' => 'left'));
+$section->addText('4. Online Asynchronous Sessions.', array('normal' => true, 'size' => 10, 'name' => 'Times New Roman'), array('alignment' => 'left'));    
 
 
 
