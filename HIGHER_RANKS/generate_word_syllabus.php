@@ -199,8 +199,8 @@ if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $table->addRow();
         $topicLearnOut = $row['teaching_activities'];
-        if (strpos($topicLearnOut, 'TLO') !== false || strpos($topicLearnOut, "\n") !== false) {
-            $topicLearnOut = str_replace("\n", '<w:br/>', $topicLearnOut); // Use Word specific break tag
+        if (strpos($topicLearnOut, '•') !== false || strpos($topicLearnOut, "•") !== false) {
+            $topicLearnOut = str_replace("\n", '<w:br/><w:br/>', $topicLearnOut); // Use Word specific break tag
         }
         $table->addCell(3000)->addText($topicLearnOut);
         $table->addCell(3000)->addText($row['week'].".".$row['date']);

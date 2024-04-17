@@ -843,7 +843,7 @@ td{
 
                         <div class="form-group">
                         <label for="teaching_activities1">Teaching-Learning Activities / Assessment Strategy</label>
-                        <textarea name="teaching_activities" id="teaching_activities1" class="editor2" placeholder="Enter Teaching-Learning Activities / Assessment Strategy" cols="50" rows="5"></textarea>
+                        <textarea name="teaching_activities" id="teaching_activities1" class="" placeholder="Enter Teaching-Learning Activities / Assessment Strategy" cols="50" rows="5"></textarea>
                     </div>
 
 
