@@ -1025,7 +1025,18 @@ td{
                         <td><?php echo $row['module_no']; ?></td>
                         <td><?php echo $row['week']; ?></td>
                         <td><?php echo $row['date']; ?></td>
-                        <td><?php echo $row['teaching_activities']; ?></td>
+                        <td>
+                        <?php  
+                            if (strpos($row['teaching_activities'], '•') !== false || strpos($row['teaching_activities'], "\n") !== false) {
+                                // If '•' or a line break is found, replace it with <br>
+                                echo str_replace(array('', "\n"), '<br>', $row['teaching_activities']);
+                            } else {
+                                echo $row['teaching_activities'];
+                            } 
+                        ?>
+                    </td>
+
+                        
                         <td><?php echo $row['technology']; ?></td>
                         <td><?php echo $row['onsite']; ?></td>
                         <td><?php echo $row['asy']; ?></td>
