@@ -159,7 +159,7 @@ if ($result->num_rows > 0) {
 
 // Save the document as a Word file
 $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-$docFileName = 'chillyfacts.docx';
+$docFileName = 'generated_document.docx';
 $objWriter->save($docFileName);
 
 // Set headers to force download

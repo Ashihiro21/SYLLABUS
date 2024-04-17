@@ -9,7 +9,6 @@ if (!isset($_SESSION['email'])) {
 include('../Database/connection.php');
 
 $email = $_SESSION['email'];
-$email = $_SESSION['email'];
 $sql = "SELECT 
             u.`first_name`, 
             u.`last_name`, 
