@@ -23,7 +23,7 @@ h2{
     grid-template-columns: repeat(3, auto);
     grid-auto-rows: min-content;
     gap: 10px;
-    justify-content: left; 
+    justify-content: center; 
     align-items: left;
 }
 
