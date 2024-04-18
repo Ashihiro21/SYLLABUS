@@ -178,10 +178,11 @@ td{
 }
 
 .btn-primary{
-    margin-left: 5rem;
+    margin-left: 50rem;
 }
 .sysllabus_button{
-    margin-left: 5rem;
+    margin-left: 50rem;
+   
 }
 .custom-card {
     margin: 13.5rem;
@@ -191,9 +192,8 @@ td{
         align-items: center;
         height: 100%;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.9); /* Shadow effect */
+        
     }
-
-
 
   
 
@@ -563,7 +563,7 @@ td{
                             
                             <td class="hide-id" style="border: 1px solid white;"><?php echo $row['course_description']; ?></td>
                                 
-                            <td>
+                            <td class="centered-btn">
                                 <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
 
                                 <button type="button" class="btn sysllabus_button btn-success editbtn"><i class="lni lni-pencil"></i></button>
@@ -582,7 +582,7 @@ td{
             ?>
                     </table>
            
-                    <div class="container text-left">
+    <div class="container text-left">
     <div class="header">COURSE CODE</div>
     <div>:</div>
     <div><?php echo $row['course_code']; ?></div>
@@ -1679,6 +1679,10 @@ echo "No Record Found";
 
                         <h4> Do you want to Delete this Data ??</h4>
                     </div>
+
+
+
+                    
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"> NO </button>
                         <button type="submit" name="deletedata" class="btn btn-primary"> Yes !! Delete it. </button>
