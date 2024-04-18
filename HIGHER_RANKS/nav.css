@@ -1,5 +1,6 @@
 /* Styling the navigation bar */
 nav {
+    width: 100%; /* Ensure the navigation bar takes up the full width */
     background-color: #333; /* Background color */
     padding-top: 1rem; /* Padding */
     padding-right: 1rem;
