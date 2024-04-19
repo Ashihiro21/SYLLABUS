@@ -636,23 +636,7 @@ td{
     <div class="header mt-4">COURSE LEARNING OUTCOMES:</div>
     <p> By the end of this course, students are expected to: </p>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-    
-                
-
-                    </div> 
-
-
+</div> 
                     <button type="button" class="btn btn-primary add_databtn" data-toggle="modal" data-target="#studentaddmodal">
                         ADD DATA
                     </button>
@@ -1564,10 +1548,8 @@ echo "No Record Found";
 
 
 
+
 <!--Add Modal PERCENT GRADING -->
-<button type="button" class="btn btn-primary percent_grading" data-toggle="modal" data-target="#percent_grading">
-                        ADD DATA
-                    </button>
 
                     <!-- Modal -->
  <div class="modal fade" id="percent_grading" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -1611,7 +1593,7 @@ echo "No Record Found";
 
 
 
-    <!-- EDIT PERCENTAGE -->
+    <!--EDIT PERCENTAGE-->
 
 <!-- EDIT POP UP FORM (Bootstrap MODAL) -->
 <div class="modal fade" id="editmodal_percentage" tabindex="-1" role="dialog" aria-labelledby="editpercentage"
@@ -1694,8 +1676,12 @@ echo "No Record Found";
     </div>
 
 
-
+<div class="card custom-card">
+<div class="card-body">
+<button type="button" class="btn btn-primary percent_grading" data-toggle="modal" data-target="#percent_grading">ADD DATA
+</button> 
 <div class="container mt-5 me-5">
+    
     <table id="datatableid" class="table table-bordered">
         <thead>
             <tr>
@@ -2771,7 +2757,8 @@ echo "No Record Found";
 
 
 <!-- MAPPING HEADER -->
-
+<div class="card custom-card">
+<div class="card-body">
 <div class="pt-5 pb-4">
         <img src="../img/logos.png" class="logos" alt="">
         
