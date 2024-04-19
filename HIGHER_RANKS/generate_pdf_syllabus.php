@@ -252,7 +252,7 @@ $html .= '</table>';
 $html .= '<table class="teaching_guid">';
 $html .= '<tr>';
 $html .= '<th class="teaching_guid">Module No and Learning Outcomes</th>';
-$html .= '<th width="100%" class="teaching_guid">Week No</th>';
+$html .= '<th width="100%" class="teaching_guid">Week</th>';
 $html .= '<th class="teaching_guid">Teaching-Learning Activities / Assessment Strategy</th>';
 $html .= '<th class="teaching_guid">Technology Enabler</th>';
 $html .= '<th class="teaching_guid">Onsite / F2F</th>';
