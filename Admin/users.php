@@ -2,45 +2,28 @@
 
 <?php
 
-function populateCetegoryDropdown() {
-    // Replace these database connection details with your own
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "syllabus";
+// Database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "syllabus";
 
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    // SQL query to get positions from the database (replace 'your_table_name' with the actual table name)
-    $sql = "SELECT * FROM category";
-    $result = $conn->query($sql);
-
-    $options = "";
-
-    if ($result->num_rows > 0) {
-        // Output data of each row
-        while ($row = $result->fetch_assoc()) {
-            $options .= "<option value='" . $row["id"] . "'>" . $row["name"] . "</option>";
-        }
-    } else {
-        $options .= "<option value=''>No category found</option>";
-    }
-
-    $conn->close();
-
-    return $options;
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
-
-
+$sql = "SELECT * FROM position";
+$result = mysqli_query($conn, $sql);
+$positions = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 ?>
+
+
+
 
 
 
@@ -125,7 +108,7 @@ function populateCetegoryDropdown() {
                     </button>
                 </div>
 
-                <form action="Admin_Crud/edit_category.php" method="POST">
+                <form action="Admin_Crud/edit_users.php" method="POST">
 
                     <div class="modal-body">
                         
@@ -134,7 +117,7 @@ function populateCetegoryDropdown() {
                    
                     <div class="form-group">
                         <label for="name">First Name</label>
-                        <input name="name" id="first_name" class="form-control" placeholder="Enter First Name">
+                        <input name="first_name" id="first_name" class="form-control" placeholder="Enter First Name">
                     </div>
 
                         <div class="form-group">
@@ -144,7 +127,7 @@ function populateCetegoryDropdown() {
                         </div>
                         
 
-<div class="form-group">
+        <div class="form-group">
 
                                         <?php
                 // Database connection
@@ -163,7 +146,7 @@ function populateCetegoryDropdown() {
                 $result = $conn->query($sql);
 
                 // Generate the category dropdown
-                $categoryDropdown = '<select id="categorySelect" id="category" name="category" class="form-control">';
+                $categoryDropdown = '<select name="department" id="categorySelect" class="form-control">';
                 // Add a default "Select Category" option
                 $categoryDropdown .= '<option value="">Select Category</option>';
 
@@ -193,7 +176,7 @@ function populateCetegoryDropdown() {
 
     <div class="form-group">
                             <label>Contact</label>
-                            <input type="text" name="contact" id="contact" class="form-control"
+                            <input type="text" name="phone_number" id="phone_number" class="form-control"
                                 placeholder="Enter contact">
                         </div>
    
@@ -203,6 +186,19 @@ function populateCetegoryDropdown() {
                             <input type="text" name="email" id="email" class="form-control"
                                 placeholder="Enter email">
                         </div>
+
+
+                        <!-- Dropdown for Position -->
+    <div class="form-group">
+    <div class="dropdown">
+        <select id="position" class="custom-select fadeIn sixth" name="position" required>
+            <option value="" selected disabled>Select Position</option>
+            <?php foreach ($positions as $position) { ?>
+                <option value="<?php echo $position['id']; ?>"><?php echo $position['name']; ?></option>
+            <?php } ?>
+        </select>
+    </div>
+</div>
 
 
 
@@ -409,9 +405,11 @@ $(document).ready(function() {
             $('#update_id').val(data[0]); // User ID
             $('#first_name').val(data[1]); // First Name
             $('#last_name').val(data[2]); // Last Name
-            $('#category').val(data[3]); // Category ID
-            $('#contact').val(data[5]); // Contact
+            $('#department').val(data[3]); // Category ID
+            $('#catid').val(data[4]); // Category ID
+            $('#phone_number').val(data[5]); // Contact
             $('#email').val(data[6]); // Email
+            $('#position').val(data[7]); // Email
         });
     });
 </script>

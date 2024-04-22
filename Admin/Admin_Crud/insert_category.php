@@ -17,9 +17,10 @@ if(isset($_POST['insertdata']))
 {
     $name = $_POST['name'];
     $initial = $_POST['initial'];
+    $dean_name = $_POST['dean_name'];
 
-    $sql = "INSERT INTO  category (`name`, `initial`)
-    VALUES ('$name', '$initial')";
+    $sql = "INSERT INTO  category (`name`, `initial`, `dean_name`)
+    VALUES ('$name', '$initial','$dean_name')";
 
     if ($connection->query($sql) === TRUE) {
         echo '<script> alert("Data Saved"); </script>';

@@ -6,8 +6,9 @@ if(isset($_POST['updatedata'])) {
     
     $name = $_POST['name'];
     $initial = $_POST['initial'];
+    $dean_name = $_POST['dean_name'];
     
-    $query = "UPDATE category SET name='$name', initial='$initial' WHERE id='$id'";
+    $query = "UPDATE category SET name='$name', initial='$initial' , dean_name='$dean_name' WHERE id='$id'";
     $query_run = mysqli_query($connection, $query);
 
     if($query_run) {

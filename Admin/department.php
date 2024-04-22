@@ -45,11 +45,17 @@
                     </div>
 
                         <div class="form-group">
-                            <label>Initial</label>
+                            <label>Category Initial</label>
                             <input type="text" name="initial" id="initial1" class="form-control"
                                 placeholder="Enter Initial">
                         </div>
 
+
+                        <div class="form-group">
+                            <label>Dean Name</label>
+                            <input type="text" name="dean_name" id="dean_name1" class="form-control"
+                                placeholder="Enter Dean Name">
+                        </div>
                      
 
 
@@ -93,9 +99,15 @@
                     </div>
 
                         <div class="form-group">
-                            <label>Initial</label>
+                            <label>Category Initial</label>
                             <input type="text" name="initial" id="initial" class="form-control"
                                 placeholder="Enter Initial">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Dean Name</label>
+                            <input type="text" name="dean_name" id="dean_name" class="form-control"
+                                placeholder="Enter Dean Name">
                         </div>
 
                 </div>
@@ -172,8 +184,9 @@
     <thead>
         <tr>
             <th class="hide-id">Name</th>
-            <th class="w-50">Name</th>
-            <th>Initial</th>
+            <th >Category Name</th>
+            <th>Category Initial</th>
+            <th>Dean Name</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -186,6 +199,7 @@
             <td class="hide-id"> <?= $row['id']; ?> </td>
             <td class="w-50"> <?= $row['name']; ?> </td>
             <td> <?= $row['initial'];  ?> </td>
+            <td> <?= $row['dean_name'];  ?> </td>
             <td>
             <button type="button" class="btn btn-success editbtn"><i class="lni lni-pencil"></i></button>
             <button type="button" class="btn btn-danger deletebtn"><i class="lni lni-trash-can"></i></button>
@@ -267,6 +281,7 @@ $(document).ready(function() {
             $('#update_id').val(data[0]);
             $('#name').val(data[1]);
             $('#initial').val(data[2]); // Corrected index
+            $('#dean_name').val(data[3]); // Corrected index
         });
     });
 </script>

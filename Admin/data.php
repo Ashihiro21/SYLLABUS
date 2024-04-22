@@ -19,13 +19,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['catid'])) {
     $result = $conn->query($sql);
 
     // Generate the course dropdown
-    $courseDropdown = '<select id="courseSelect" class="form-control">';
+    $courseDropdown = '<select id="courseSelect" name="catid" class="form-control">';
 
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
             // Check if this is the first iteration, then set it as selected
             $selected = ($row['catid'] == 1) ? 'selected' : '';
-            $courseDropdown .= '<option value="'.$row['catid'].'" '.$selected.'>'.$row['cname'].'</option>';
+            $courseDropdown .= '<option value="'.$row['id'].'" '.$selected.'>'.$row['cname'].'</option>';
         }
     }
 
