@@ -54,11 +54,11 @@
                 </li>
 
                 <li>
-                    <a href="#">
+                    <a href="users.php">
                         <span class="icon">
-                            <ion-icon name="help-outline"></ion-icon>
+                        <ion-icon name="person-add"></ion-icon>
                         </span>
-                        <span class="title">Help</span>
+                        <span class="title">Users</span>
                     </a>
                 </li>
 

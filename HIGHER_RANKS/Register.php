@@ -262,7 +262,7 @@ $positions = mysqli_fetch_all($result, MYSQLI_ASSOC);
     outline: none;
 } 
 /* alert.message */
-body {}
+
 
 .fancy-alert {
     font-family: sans-serif;
@@ -469,6 +469,7 @@ body {}
         </select>
     </div>
 </div>
+
     <input type="submit" class="fadeIn fourth show-alert__success" value="Register">
 </form>
 

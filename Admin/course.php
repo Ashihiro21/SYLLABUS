@@ -92,20 +92,20 @@ function populateCetegoryDropdown() {
                     </div>
                     
                     <div class="form-group">
-                        <label for="cname">Category Name</label>
-                        <input name="cname" id="cname1" class="form-control" placeholder="Enter Category Name">
+                        <label for="cname">Course Name</label>
+                        <input name="cname" id="cname1" class="form-control" placeholder="Enter Course Name">
                     </div>
 
                         <div class="form-group">
                             <label>Initial</label>
                             <input type="text" name="initial" id="initial1" class="form-control"
-                                placeholder="Enter Initial">
+                                placeholder="Enter Course Department Initial">
                         </div>
 
                         <div class="form-group">
                             <label>Course Department</label>
-                            <input type="text" name="course_department" id="course_department" class="form-control"
-                                placeholder="Enter Department Initial">
+                            <input type="text" name="course_department" id="course_department1" class="form-control"
+                                placeholder="Enter Course Department">
                         </div>
 
                      
@@ -126,46 +126,46 @@ function populateCetegoryDropdown() {
 
 
 
-    <!-- EDIT POP UP FORM LEARNING MODULE TABLE (Bootstrap MODAL) -->
- <div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel1"> Course  </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <form action="Admin_Crud/edit_category.php" method="POST">
-
-                    <div class="modal-body">
-                        
-                    <input type="hidden" name="update_id" id="update_id">
-
-                   
-                    <div class="form-group">
-                        <label for="name">Category Name</label>
-                        <input name="name" id="name" class="form-control" placeholder="Enter Category Name">
-                    </div>
-
-                        <div class="form-group">
-                            <label>Initial</label>
-                            <input type="text" name="initial" id="initial" class="form-control"
-                                placeholder="Enter Initial">
-                        </div>
-
-                </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" name="updatedata" class="btn btn-primary">Update Data</button>
-                    </div>
-                </form>
-
+  <!-- EDIT POP UP FORM FOR COURSE TABLE (Bootstrap MODAL) -->
+<div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1"> Edit Course </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
+            <form action="Admin_Crud/edit_course.php" method="POST">
+                <div class="modal-body">
+                    <input type="hidden" name="update_id" id="update_id">
+                    <div class="form-group">
+                        <label> Category </label>
+                        <select name="catid" id="edit_catid" class="form-control">
+                            <?php echo populateCetegoryDropdown(); ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="cname">Course Name</label>
+                        <input name="cname" id="edit_cname" class="form-control" placeholder="Enter Course Name">
+                    </div>
+                    <div class="form-group">
+                        <label>Initial</label>
+                        <input type="text" name="initial" id="edit_initial" class="form-control" placeholder="Enter Course Department Initial">
+                    </div>
+                    <div class="form-group">
+                        <label>Course Department</label>
+                        <input type="text" name="course_department" id="edit_course_department" class="form-control" placeholder="Enter Course Department">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" name="updatedata" class="btn btn-primary">Update Data</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
     
 
  <!-- DELETE POP UP FORM  FOR LEARNING MODULE(Bootstrap MODAL) -->
@@ -180,7 +180,7 @@ function populateCetegoryDropdown() {
                     </button>
                 </div>
 
-                <form action="Admin_Crud/delete_category.php" method="POST">
+                <form action="Admin_Crud/delete_course.php" method="POST">
 
                     <div class="modal-body">
 
@@ -220,23 +220,25 @@ function populateCetegoryDropdown() {
 
 
 
- $query = "SELECT 
- c.id AS course_id, 
- c.catid, 
- c.cname AS course_name, 
- c.initial AS course_initial, 
- c.course_department, 
- cat.id AS category_id, 
- cat.name AS category_name, 
- cat.initial AS category_initial 
-FROM 
- course c 
-LEFT JOIN 
- category cat 
-ON 
- c.catid = cat.id;
-";
+     $query = "SELECT 
+     c.id AS course_id, 
+     c.catid, 
+     c.cname AS course_name, 
+     c.initial AS course_initial, 
+     c.course_department, 
+     cat.id AS category_id, 
+     cat.name AS category_name, 
+     cat.initial AS category_initial 
+ FROM 
+     course c 
+ LEFT JOIN 
+     category cat 
+ ON 
+     c.catid = cat.id 
+ ORDER BY 
+ cat.id  ASC;"; // ASC for ascending order
  $query_run = mysqli_query($connection, $query);
+ 
 ?>  
 
 
@@ -258,7 +260,7 @@ ON
         while ($row = mysqli_fetch_assoc($query_run)) {
             ?>
             <tr>
-            <td class="hide-id"> <?= $row['id']; ?> </td>
+            <td class="hide-id"> <?= $row['course_id']; ?> </td>
             <td> <?= $row['category_name']; ?> </td>
             <td> <?= $row['course_name'];  ?> </td>
             <td> <?= $row['course_initial'];  ?> </td>
@@ -316,37 +318,27 @@ ON
     <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
 
 <script>
-$(document).ready(function() {
-    $('#myTable').DataTable({
-    	lengthMenu: [
-        [10, 25, 50, -1],
-        [10, 25, 50, 'All']
-    ]
+  $('#myTable').DataTable({
+    	pageLength : 50
 
     });
-});
 </script>
 
 
 <script>
     $(document).ready(function () {
-
         $('.editbtn').on('click', function () {
-
-
             $('#editmodal').modal('show');
-
             $tr = $(this).closest('tr');
-
             var data = $tr.children("td").map(function () {
                 return $(this).text();
             }).get();
-
             console.log(data);
-
             $('#update_id').val(data[0]);
-            $('#name').val(data[1]);
-            $('#initial').val(data[2]); // Corrected index
+            $('#edit_catid').val(data[1]); // Populate category dropdown with correct category
+            $('#edit_cname').val(data[2]);
+            $('#edit_initial').val(data[3]);
+            $('#edit_course_department').val(data[4]);
         });
     });
 </script>

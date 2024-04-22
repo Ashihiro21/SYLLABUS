@@ -305,7 +305,7 @@ $positions = mysqli_fetch_all($result, MYSQLI_ASSOC);
 } 
 
 
-        body {}
+        /* body {} */
 
 .fancy-alert {
     font-family: sans-serif;
@@ -400,10 +400,10 @@ $positions = mysqli_fetch_all($result, MYSQLI_ASSOC);
     background: rgba(0, 0, 0, 0.12);
 }
 
-.container {0
+/* .container {0
     text-align: center;
     margin: 200px 0;
-}
+} */
 
 .show-alert {
     border: 0;
