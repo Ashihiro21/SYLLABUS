@@ -9,7 +9,6 @@ if (!isset($_SESSION['email'])) {
 include('../Database/connection.php');
 
 $email = $_SESSION['email'];
-$email = $_SESSION['email'];
 $sql = "SELECT 
             u.`first_name`, 
             u.`last_name`, 
@@ -253,7 +252,7 @@ $html .= '</table>';
 $html .= '<table class="teaching_guid">';
 $html .= '<tr>';
 $html .= '<th class="teaching_guid">Module No and Learning Outcomes</th>';
-$html .= '<th width="100%" class="teaching_guid">Week No</th>';
+$html .= '<th width="100%" class="teaching_guid">Week</th>';
 $html .= '<th class="teaching_guid">Teaching-Learning Activities / Assessment Strategy</th>';
 $html .= '<th class="teaching_guid">Technology Enabler</th>';
 $html .= '<th class="teaching_guid">Onsite / F2F</th>';
@@ -865,6 +864,7 @@ $html .= '<p style="border-top:1px solid black; width:235px; margin-top: 85px; m
 $html .= '<p style="font-style:italic; margin-left: 10px; ">Approved in </a>'. date("F") ." ".date("Y").' <a>during a multi-sectoral committee specifically convened for the purpose of coming up with 
 descriptions for the graduate attributes. 
 </p>';
+
 
 
 
