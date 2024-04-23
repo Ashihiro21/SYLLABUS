@@ -80,7 +80,8 @@ $conn->close();
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Dashboard</title>
+    <title>SYLLABUS</title>
+    <link rel="icon" type="image/png" href="../img/DLSU-D.png"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="nav.css">

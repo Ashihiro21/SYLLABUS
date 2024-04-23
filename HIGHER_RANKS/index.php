@@ -89,9 +89,10 @@ $sql = "SELECT * FROM course_leaning";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <link rel="icon" type="image/png" href="../img/DLSU-D.png"/>
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor5/41.2.1/ckeditor.min.js"></script>
-    <title>Document</title>
+    <title>SYLLABUS</title>
 </head>
 
 <style>

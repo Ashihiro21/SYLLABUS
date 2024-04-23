@@ -74,7 +74,8 @@ $positions = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <title>dlsud registration</title>
+    <link rel="icon" type="image/png" href="../img/DLSU-D.png"/>
+    <title>SYLLABUS</title>
     <style>
         html {
             background-color: #000;

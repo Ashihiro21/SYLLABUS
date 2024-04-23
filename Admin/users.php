@@ -112,7 +112,7 @@ $positions = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
                     <div class="modal-body">
                         
-                    <input type="text" name="update_id" id="update_id">
+                    <input type="hidden" name="update_id" id="update_id">
 
                    
                     <div class="form-group">
@@ -220,7 +220,7 @@ $positions = mysqli_fetch_all($result, MYSQLI_ASSOC);
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"> Delete Student Data </h5>
+                    <h5 class="modal-title" id="exampleModalLabel"> Delete Data </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -228,7 +228,7 @@ $positions = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
                 <form action="Admin_Crud/delete_users.php" method="POST">
                     <div class="modal-body">
-                        <input type="text" name="delete_id" id="delete_id">
+                        <input type="hidden" name="delete_id" id="delete_id">
                         <h4> Do you want to Delete this Data ??</h4>
                     </div>
                     <div class="modal-footer">
