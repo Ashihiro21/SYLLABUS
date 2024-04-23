@@ -2,9 +2,8 @@
 
 session_start();
 // Check if the user is logged in, if not, redirect to the login page
-if (!isset($_SESSION["logged_in"]) || $_SESSION["logged_in"] !== true || $_SESSION["role"] !== "user") {
-    // If user is not logged in or not a user, redirect to login page
-    header("Location: login.php");
+if (!isset($_SESSION['email'])) {
+    header("Location: index.php");
     exit();
 }
 
@@ -25,11 +24,13 @@ $sql = "SELECT
             c.`initial` AS `category_initial`,
             c.`dean_name` AS `deans`,
             c.`dean_position` AS `deans_position`,
+            c.`dean_signature` AS `dean_signatures`,
             co.`cname`,
             co.`course_department` AS `course_departments`,
             co.`initial` AS `course_initial`,
             co.`department_name` AS `course_dept_name`,
-            co.`department_position` AS `dept_position`
+            co.`department_position` AS `dept_position`,
+            co.`dept_signature` AS `dept_signatures`
         FROM 
             `users` AS u 
         LEFT JOIN 
@@ -65,6 +66,8 @@ if ($result->num_rows > 0) {
         $category_dean_position = $row['deans_position'];
         $dept_head = $row['course_dept_name'];
         $dept_head_position = $row['dept_position'];
+        $dept_head_signature = $row['dept_signatures'];
+        $deans_category_signature = $row['dean_signatures'];
         
     }
 } else {
@@ -78,14 +81,17 @@ $conn->close();
 <html>
 <head>
     <title>SYLLABUS</title>
+    <link rel="icon" type="image/png" href="../img/DLSU-D.png"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="nav.css">
-    <link rel="icon" type="image/png" href="../img/DLSU-D.png"/>
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor5/41.2.1/ckeditor.min.js"></script>
 </head>
 <style>
+    body{
+        overflow-x: hidden;
+    }
  
  .hide-id {
     display: none;
@@ -163,13 +169,32 @@ td{
     padding-bottom: 5px;
 }
 
+.dl-word{
+    margin-left: 1rem;
+    background-color: #0d6efd;
+}
+
+.dl-word:hover{
+    background-color: #0a5cb8;
+}
 
 .btn-primary{
-    margin-left: 5rem;
+    margin-left: 50rem;
 }
 .sysllabus_button{
-    margin-left: 5rem;
+    margin-left: 50rem;
+   
 }
+.custom-card {
+    margin: 13.5rem;
+        border: 1px solid #6c757d; /* Corrected border color syntax */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.9); /* Shadow effect */
+        
+    }
 
   
 
@@ -178,11 +203,14 @@ td{
 
 
     <nav>
-    <a href="generate_pdf_syllabus.php" class="btn btn-danger">Download as PDF</a>
-    <a href="generate_word_syllabus.php" class="btn btn-primary">Download as PDF</a>
-    <span class="account-header"><p><?php echo $position; ?><a href="logout.php">Logout</a></p></span>
+    <span class="float-right"><p><?php echo $position; ?><a href="logout.php">Logout</a></p></span>
+    <span class="m-2"><a href="generate_pdf_syllabus.php" class="btn btn-danger">Download as PDF</a>
+    <a href="generate_word_syllabus.php" class="dl-word btn btn-secondary">Download as Word</a></span>
     </nav>
    
+    <div class="card custom-card" >
+    <div class="card-body">
+
     <div class="pt-5 pb-4">
         <img src="../img/logos.png" class="logos" alt="">
     </div>
@@ -213,6 +241,55 @@ td{
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+
+                <div class="modal-body">
+                    <!-- Dropdowns will be loaded here -->
+                    <?php
+                    // Database connection
+                    $servername = "localhost";
+                    $username = "root";
+                    $password = "";
+                    $dbname = "syllabus";
+
+                    $conn = new mysqli($servername, $username, $password, $dbname);
+
+                    if ($conn->connect_error) {
+                        die("Connection failed: " . $conn->connect_error);
+                    }
+
+
+                    $sql = "SELECT id, name FROM category";
+                    $result = $conn->query($sql);
+
+                    // Generate the category dropdown
+                    $categoryDropdown = '<select id="categorySelect" class="form-control">';
+                    // Remove the "Select Category" option
+                    // $categoryDropdown .= '<option value="">Select Category</option>';
+
+                    if ($result->num_rows > 0) {
+                        while($row = $result->fetch_assoc()) {
+                            // Check if this is the first iteration, then set it as selected
+                            $selected = ($row['id'] == 1) ? 'selected' : '';
+                            $categoryDropdown .= '<option value="'.$row['id'].'" '.$selected.'>'.$row['name'].'</option>';
+                        }
+
+                        $categoryDropdown .= '</select>';
+                        echo $categoryDropdown;
+                    } else {
+                        echo 'Invalid request!';
+                    }
+
+                    ?>
+
+                    <!-- course dropdown will be loaded dynamically -->
+                    <div id="courseDropdown"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="saveSelection">Save</button>
+                </div>
+            </div>
+
 
                 <form action="Course_Syllabus/update_course_learning_outcome.php" method="POST">
 
@@ -328,7 +405,7 @@ td{
                     
 
 
-
+                       
                         <div class="form-group">
                             <label> Pre requisites </label>
                             <input type="text" name="pre_requisit" id="pre_requisit" class="form-control" placeholder="Enter pre_requisit">
@@ -386,7 +463,7 @@ td{
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"> Delete Data </h5>
+                    <h5 class="modal-title" id="exampleModalLabel"> Delete Student Data </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -417,7 +494,7 @@ td{
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"> Delete Data </h5>
+                    <h5 class="modal-title" id="exampleModalLabel"> Delete Student Data </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -536,7 +613,7 @@ td{
                             
                             <td class="hide-id" style="border: 1px solid white;"><?php echo $row['course_description']; ?></td>
                                 
-                            <td>
+                            <td class="centered-btn">
                                 <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
 
                                 <button type="button" class="btn sysllabus_button btn-success editbtn"><i class="lni lni-pencil"></i></button>
@@ -555,7 +632,7 @@ td{
             ?>
                     </table>
            
-                    <div class="container text-left">
+    <div class="container text-left">
     <div class="header">COURSE CODE</div>
     <div>:</div>
     <div><?php echo $row['course_code']; ?></div>
@@ -609,23 +686,7 @@ td{
     <div class="header mt-4">COURSE LEARNING OUTCOMES:</div>
     <p> By the end of this course, students are expected to: </p>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-    
-                
-
-                    </div> 
-
-
+</div> 
                     <button type="button" class="btn btn-primary add_databtn" data-toggle="modal" data-target="#studentaddmodal">
                         ADD DATA
                     </button>
@@ -781,7 +842,14 @@ td{
                     <tr>
                             <td class="hide-id"> <?php echo $row['id']; ?> </td>
                             <td class=""><?php echo $row['comlab']; ?><?php echo "."; ?><?php echo $row['learn_out']; ?></td>
-                            <td class=""><?php echo $row['topic_learn_out']; ?></td>
+                            <td class=""><?php
+                        if (strpos($row['topic_learn_out'], 'TLO') !== false || strpos($row['topic_learn_out'], "\n") !== false) {
+                            // If 'TLO' or a line break is found, replace it with <br>
+                            echo str_replace(array('', "\n"), '<br>', $row['topic_learn_out']);
+                        } else {
+                            echo $row['topic_learn_out'];
+                        }
+                        ?></td>
                             <td class="table-button">
                             <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
 
@@ -838,7 +906,7 @@ td{
                         </div>
 
                         <div class="form-group">
-                            <label>Week No</label>
+                            <label>Date</label>
                             <input type="text" name="date" id="date1" class="form-control"
                                 placeholder="Enter Date">
                         </div>
@@ -914,7 +982,7 @@ td{
                         </div>
 
                         <div class="form-group">
-                            <label>Week No</label>
+                            <label>Date</label>
                             <input type="text" name="date" id="date" class="form-control"
                                 placeholder="Enter Date">
                         </div>
@@ -1062,7 +1130,7 @@ td{
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel5"> Delete Data </h5>
+                    <h5 class="modal-title" id="exampleModalLabel5"> Delete Student Data </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -1281,7 +1349,7 @@ echo "No Record Found";
                         </div>
 
                         <div class="form-group">
-                            <label>Week No</label>
+                            <label>Date</label>
                             <input type="text" name="date" id="date1" class="form-control"
                                 placeholder="Enter Date">
                         </div>
@@ -1359,7 +1427,7 @@ echo "No Record Found";
                         </div>
 
                         <div class="form-group">
-                            <label>Week No</label>
+                            <label>Date</label>
                             <input type="text" name="date" id="1date" class="form-control"
                                 placeholder="Enter Date">
                         </div>
@@ -1408,7 +1476,7 @@ echo "No Record Found";
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"> Delete Data </h5>
+                    <h5 class="modal-title" id="exampleModalLabel"> Delete Student Data </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -1530,10 +1598,8 @@ echo "No Record Found";
 
 
 
+
 <!--Add Modal PERCENT GRADING -->
-<button type="button" class="btn btn-primary percent_grading" data-toggle="modal" data-target="#percent_grading">
-                        ADD DATA
-                    </button>
 
                     <!-- Modal -->
  <div class="modal fade" id="percent_grading" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -1577,7 +1643,7 @@ echo "No Record Found";
 
 
 
-    <!-- EDIT PERCENTAGE -->
+    <!--EDIT PERCENTAGE-->
 
 <!-- EDIT POP UP FORM (Bootstrap MODAL) -->
 <div class="modal fade" id="editmodal_percentage" tabindex="-1" role="dialog" aria-labelledby="editpercentage"
@@ -1585,7 +1651,7 @@ echo "No Record Found";
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editpercentage"> COURSE LEARNING OUTCOMES </h5>
+                    <h5 class="modal-title" id="editpercentage"> EDIT GRADING SYSTEM </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -1631,7 +1697,7 @@ echo "No Record Found";
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="onsite_reffence"> Delete On-Site References </h5>
+                    <h5 class="modal-title" id="onsite_reffence"> DELETE Grading Systems </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -1645,6 +1711,10 @@ echo "No Record Found";
 
                         <h4> Do you want to Delete this Data ??</h4>
                     </div>
+
+
+
+                    
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"> NO </button>
                         <button type="submit" name="deletedata" class="btn btn-primary"> Yes !! Delete it. </button>
@@ -1656,8 +1726,12 @@ echo "No Record Found";
     </div>
 
 
-
+<div class="card custom-card">
+<div class="card-body">
+<button type="button" class="btn btn-primary percent_grading" data-toggle="modal" data-target="#percent_grading">ADD DATA
+</button> 
 <div class="container mt-5 me-5">
+    
     <table id="datatableid" class="table table-bordered">
         <thead>
             <tr>
@@ -2325,7 +2399,7 @@ echo "No Record Found";
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="edit_semestral"> COURSE LEARNING OUTCOMES </h5>
+                    <h5 class="modal-title" id="edit_semestral"> EDIT SEMESTER </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -2338,10 +2412,10 @@ echo "No Record Found";
                         <input type="hidden" name="update_id9" id="update_id9">
                         
                         <div class="form-group">
-                        <label for="term">term</label>
+                        <label for="term">Term</label>
                         <select name="term" id="term" class="form-control">
-                            <option value="1st Semester">1st Semester</option>
-                            <option value="2nd Semester">2nd Semester</option>
+                        <option value="1<sup>st</sup> Semester">1st Semester</option>
+                            <option value="2<sup>nd</sup> Semester">2nd Semester</option>
                             <option value="Special Term">Special Term</option>
                         </select>
                     </div>
@@ -2429,21 +2503,321 @@ echo "No Record Found";
 </table>
 
 
-
-
-
-
 <div class="container-box mt-5 header-title mb-5">
 <span><b>Prepared:</b><b><a class="course">  <?php echo ($course_departments); ?></a></b></span>
 
 
 
 <a class="term_year"><td><?php echo $row['term']; ?> <?php echo $row['year']; ?></a></td><br><br>
+
+
+
+
+
+
+
+
+<!-- EDIT POP UP FORM (Bootstrap MODAL) -->
+<div class="modal fade" id="editmodal_signature" tabindex="-1" role="dialog" aria-labelledby="edit_signature" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="edit_signature">UPLOAD SIGNATURE</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="edit_signature_form" action="Course_Syllabus/update_signature.php" method="POST" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <input type="hidden" name="update_id22" id="update_id22">
+                    <div class="form-group">
+                        <label for="dept_signature">Dept Signature</label>
+                        <input type="file" name="dept_signature" id="dept_signature" class="form-control">
+                        <!-- Display a preview of the selected image -->
+                        <img src="#" id="preview_dept_signature" style="display:none; max-width: 100px; max-height: 100px;" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" name="updatedata" class="btn btn-primary">Update Data</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Your custom script -->
+<script>
+$(document).ready(function(){
+
+    $('#categorySelect').on('change', function(){
+        var categoryId = $(this).val();
+        $.ajax({
+            url: 'get_cities.php',
+            type: 'POST',
+            data: {catid: categoryId},
+            success: function(response){
+                $('#courseDropdown').html(response);
+            }
+        });
+    });
+
+    // Save button action (just an example)
+    $('#saveSelection').on('click', function(){
+        var category = $('#categorySelect option:selected').text();
+        var course = $('#courseSelect option:selected').text();
+        alert('Selected category: ' + category + ', course: ' + course);
+    });
+});
+</script>
+
+</body>
+</html>
+
+<!-- EDIT POP UP FORM (Bootstrap MODAL) -->
+<div class="modal fade" id="editmodal_signature_dean" tabindex="-1" role="dialog" aria-labelledby="edit_signature_dean" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="edit_signature_dean">UPLOAD SIGNATURE</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="edit_signature_dean_form" action="Course_Syllabus/update_signature_dean.php" method="POST" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <input type="hidden" name="update_id23" id="update_id23">
+                    <div class="form-group">
+                        <label for="dean_signature">Dean Signature</label>
+                        <input type="file" name="dean_signature" id="dean_signature" class="form-control">
+                        <!-- Display a preview of the selected image -->
+                        <img src="#" id="preview_dean_signature" style="display:none; max-width: 100px; max-height: 100px;" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" name="updatedata" class="btn btn-primary">Update Data</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- SEMESTRAL -->
+<?php
+ 
+
+ // Database connection
+ 
+ 
+ $connection = mysqli_connect("localhost","root","","syllabus");
+ if (mysqli_connect_errno()){
+     echo "Failed to connect to MySQL: " . mysqli_connect_error();
+     die();
+     }
+
+
+
+     $email = $_SESSION['email'];
+     $query1 = "SELECT 
+                 u.`first_name`, 
+                 u.`last_name`, 
+                 u.`department`, 
+                 u.`catid`, 
+                 u.`phone_number`, 
+                 u.`email`, 
+                 u.`password`, 
+                 p.`name` AS `position`,
+                 c.`id` AS `category_id`,
+                 c.`name` AS `category_name`,
+                 c.`initial` AS `category_initial`,
+                 c.`dean_name` AS `deans`,
+                 c.`dean_position` AS `deans_position`,
+                 c.`dean_signature` AS `dean_signatures`,
+                 co.`cname`,
+                 co.`course_department` AS `course_departments`,
+                 co.`id` AS `course_id`,
+                 co.`initial` AS `course_initial`,
+                 co.`department_name` AS `course_dept_name`,
+                 co.`department_position` AS `dept_position`,
+                 co.`dept_signature` AS `dept_signatures`
+             FROM 
+                 `users` AS u 
+             LEFT JOIN 
+                 `position` AS p ON u.`position` = p.`id`
+             LEFT JOIN 
+                 `category` AS c ON u.`department` = c.`id`
+             LEFT JOIN
+                 `course` AS co ON u.`catid` = co.`id`
+             WHERE 
+                 u.email = '$email'";
+ $query_run1 = mysqli_query($connection, $query1);
+?>  
+<table id="datatableid">
+<thead>
+    <tr>
+        <!-- <th scope="col">Provider</th>
+        <th scope="col">Reference Material</th>
+        <th scope="col">Action</th> -->
+    </tr>
+</thead>
+<?php
+if($query_run1)
+{
+foreach($query_run1 as $rows)
+{
+?>
+<tbody>
+  
+<tr>
+        <td class="hide-id"> <?php echo $rows['course_id']; ?> </td>
+        <td class="hide-id"><?php echo $rows['dept_signatures']; ?></td>
+        <td class="table-button">
+        <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
+
+        <button type="button" class="btn btn-success editbtn_signature m-3"><i class="lni lni-pencil"></i></button><a>UPLOAD SIGNATURE</a>
+
+    
+        </td>
+    </tr>
+
+
+
+</tbody>
+<?php           
+}
+}
+else 
+{
+echo "No Record Found";
+}
+?>
+</table>
+
+
+
+
+
+
+
+
+<span><b></b><b><a class="initial"><img src="<?php echo $dept_head_signature; ?>" alt="Department Head Signature"></a></b></span>
 <span><b>Approved:</b><b><a class="dept_name"><?php echo $dept_head; ?></a></b></span>
 <span><a class="initial"><?php echo $dept_head_position ." , ". $course_initial; ?></a></span><br><br>
 
 
+
+
+<!-- SEMESTRAL -->
+<?php
+ 
+
+ // Database connection
+ 
+ 
+ $connection = mysqli_connect("localhost","root","","syllabus");
+ if (mysqli_connect_errno()){
+     echo "Failed to connect to MySQL: " . mysqli_connect_error();
+     die();
+     }
+
+
+
+     $email = $_SESSION['email'];
+     $query2 = "SELECT 
+                 u.`first_name`, 
+                 u.`last_name`, 
+                 u.`department`, 
+                 u.`catid`, 
+                 u.`phone_number`, 
+                 u.`email`, 
+                 u.`password`, 
+                 p.`name` AS `position`,
+                 c.`id` AS `category_id`,
+                 c.`name` AS `category_name`,
+                 c.`initial` AS `category_initial`,
+                 c.`dean_name` AS `deans`,
+                 c.`dean_position` AS `deans_position`,
+                 c.`dean_signature` AS `dean_signatures`,
+                 co.`cname`,
+                 co.`course_department` AS `course_departments`,
+                 co.`id` AS `course_id`,
+                 co.`initial` AS `course_initial`,
+                 co.`department_name` AS `course_dept_name`,
+                 co.`department_position` AS `dept_position`,
+                 co.`dept_signature` AS `dept_signatures`
+             FROM 
+                 `users` AS u 
+             LEFT JOIN 
+                 `position` AS p ON u.`position` = p.`id`
+             LEFT JOIN 
+                 `category` AS c ON u.`department` = c.`id`
+             LEFT JOIN
+                 `course` AS co ON u.`catid` = co.`id`
+             WHERE 
+                 u.email = '$email'";
+ $query_run2 = mysqli_query($connection, $query2);
+?>  
+<table id="datatableid">
+<thead>
+    <tr>
+        <!-- <th scope="col">Provider</th>
+        <th scope="col">Reference Material</th>
+        <th scope="col">Action</th> -->
+    </tr>
+</thead>
+<?php
+if($query_run2)
+{
+foreach($query_run2 as $table_rows)
+{
+?>
+<tbody>
+  
+<tr>
+        <td class="hide-id"> <?php echo $table_rows['category_id']; ?> </td>
+        <td class="hide-id"><?php echo $table_rows['dean_signatures']; ?></td>
+        <td class="table-button">
+        <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
+
+        <button type="button" class="btn btn-success editbtn_signature_dean m-3"><i class="lni lni-pencil"></i></button><a>UPLOAD SIGNATURE</a>
+
+    
+        </td>
+    </tr>
+
+
+
+</tbody>
+<?php           
+}
+}
+else 
+{
+echo "No Record Found";
+}
+?>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- FOR REVISED -->
+<span><b></b><b><a class="initial"><img src="<?php echo $deans_category_signature; ?>" alt="Department Head Signature"></a></b></span>
 <span><b>Endorsed:</b><b><a class="dept_name"><?php echo $category_dean; ?></a></b></span>
 <span><a class="initial"><?php echo $category_dean_position ." , ". $category_initial; ?></a></span>
 
@@ -2464,7 +2838,8 @@ echo "No Record Found";
 
 
 <!-- MAPPING HEADER -->
-
+<div class="card custom-card">
+<div class="card-body">
 <div class="pt-5 pb-4">
         <img src="../img/logos.png" class="logos" alt="">
         
@@ -3779,6 +4154,66 @@ descriptions for the graduate attributes.</a>
         });
     });
 </script>
+
+
+<script>
+    $(document).ready(function () {
+        $('.editbtn_signature').on('click', function () {
+            $('#editmodal_signature').modal('show');
+            $tr = $(this).closest('tr');
+            var data = $tr.children("td").map(function () {
+                return $(this).text();
+            }).get();
+            $('#update_id22').val(data[0]);
+            // Clear any previously selected file
+            $('#dept_signature').val('');
+        });
+
+        // Preview the selected image
+        $('#dept_signature').change(function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#preview_dept_signature').attr('src', e.target.result).show();
+                }
+                reader.readAsDataURL(file);
+            } else {
+                $('#preview_dept_signature').hide();
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('.editbtn_signature_dean').on('click', function () {
+            $('#editmodal_signature_dean').modal('show');
+            $tr = $(this).closest('tr');
+            var data = $tr.children("td").map(function () {
+                return $(this).text();
+            }).get();
+            $('#update_id23').val(data[0]);
+            // Clear any previously selected file
+            $('#dean_signature').val('');
+        });
+
+        // Preview the selected image
+        $('#dean_signature').change(function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#preview_dean_signature').attr('src', e.target.result).show();
+                }
+                reader.readAsDataURL(file);
+            } else {
+                $('#preview_dean_signature').hide();
+            }
+        });
+    });
+</script>
+
 
 
 <!-- EDIT BTN FOR MAPPING TABLE PLS -->
