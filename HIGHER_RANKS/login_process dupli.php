@@ -46,7 +46,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     // Password is correct, set session variables
                     $_SESSION["email"] = $email;
                     $_SESSION["logged_in"] = true;
-                    $_SESSION["role"] = "user"; // Set role as "user"
 
                     $response["success"] = true;
                     $response["message"] = "User login successful.";
@@ -64,7 +63,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     // Password is correct, set session variables
                     $_SESSION["email"] = $email;
                     $_SESSION["logged_in"] = true;
-                    $_SESSION["role"] = "admin"; // Set role as "admin"
 
                     $response["success"] = true;
                     $response["message"] = "Admin login successful.";

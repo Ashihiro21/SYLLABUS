@@ -1,3 +1,19 @@
+<?php
+session_start();
+// Check if the user is logged in, if not, redirect to the login page
+if (!isset($_SESSION["logged_in"]) || $_SESSION["logged_in"] !== true || $_SESSION["role"] !== "admin") {
+    // If user is not logged in or not an admin, redirect to login page
+    header("Location: login.php");
+    exit();
+}
+
+$email = $_SESSION['email'];
+
+
+// Include the database connection securely
+require_once '../Database/connection.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,7 +38,7 @@
                         <span class="icon">
                         <ion-icon name='people'></ion-icon>
                         </span>
-                        <span class="title">Admin</span>
+                        <span class="title"><?php echo $email; ?></span>
                     </a>
                 </li>
 
@@ -65,12 +81,12 @@
                 <li>
                     <a href="position.php">
                         <span class="icon">
-                            <ion-icon name="settings-outline"></ion-icon>
+                            <ion-icon name="briefcase-outline"></ion-icon>
                         </span>
-                        <span class="title">Settings</span>
+                        <span class="title">Position</span>
                     </a>
                 </li>
-
+<!-- 
                 <li>
                     <a href="#">
                         <span class="icon">
@@ -78,10 +94,10 @@
                         </span>
                         <span class="title">Password</span>
                     </a>
-                </li>
+                </li> -->
 
                 <li>
-                    <a href="#">
+                    <a href="sign_out.php">
                         <span class="icon">
                             <ion-icon name="log-out-outline"></ion-icon>
                         </span>
