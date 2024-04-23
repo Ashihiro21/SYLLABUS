@@ -1090,22 +1090,22 @@ td{
             if ($query_run) {
                 while ($row = mysqli_fetch_assoc($query_run)) {
             ?>
-                    <tr>
-                        <td class="hide-id"><?php echo $row['id']; ?></td>
-                        <td><?php echo $row['module_no']; ?></td>
-                        <td><?php echo $row['week']; ?></td>
-                        <td><?php echo $row['date']; ?></td>
-                        <td><?php echo $row['teaching_activities']; ?></td>
-                        <td><?php echo $row['technology']; ?></td>
-                        <td><?php echo $row['onsite']; ?></td>
-                        <td><?php echo $row['asy']; ?></td>
+                                <tr>
+                    <td class="hide-id"><?php echo $row['id']; ?></td>
+                    <td><?php echo $row['module_no']; ?></td>
+                    <td><?php echo $row['week']; ?></td>
+                    <td><?php echo $row['date']; ?></td>
+                    <td><?php echo $row['teaching_activities']; ?></td>
+                    <td><?php echo $row['technology']; ?></td>
+                    <td><?php echo ($row['onsite'] == 1) ? '/' : ''; ?></td>
+                    <td><?php echo ($row['asy'] == 1) ? '/' : ''; ?></td>
+                    <td><?php echo $row['hours']; ?></td>
+                    <td class="table-button">
+                        <button type="button" class="btn btn-success editbtn_module_learning"><i class="lni lni-pencil"></i></button>
+                        <button type="button" class="btn btn-danger deletebtn_module_learning"><i class="lni lni-trash-can"></i></button>
+                    </td>
+                </tr>
 
-                        <td><?php echo $row['hours']; ?></td>
-                        <td class="table-button">
-                            <button type="button" class="btn btn-success editbtn_module_learning"><i class="lni lni-pencil"></i></button>
-                            <button type="button" class="btn btn-danger deletebtn_module_learning"><i class="lni lni-trash-can"></i></button>
-                        </td>
-                    </tr>
             <?php
                 }
             } else {
@@ -1563,21 +1563,21 @@ echo "No Record Found";
                 while ($row = mysqli_fetch_assoc($query_run)) {
             ?>
                     <tr>
-                        <td class="hide-id"><?php echo $row['id']; ?></td>
-                        <td><?php echo $row['module_no']; ?></td>
-                        <td><?php echo $row['week']; ?></td>
-                        <td><?php echo $row['date']; ?></td>
-                        <td><?php echo $row['teaching_activities']; ?></td>
-                        <td><?php echo $row['technology']; ?></td>
-                        <td><?php echo $row['onsite']; ?></td>
-                        <td><?php echo $row['asy']; ?></td>
+                    <td class="hide-id"><?php echo $row['id']; ?></td>
+                    <td><?php echo $row['module_no']; ?></td>
+                    <td><?php echo $row['week']; ?></td>
+                    <td><?php echo $row['date']; ?></td>
+                    <td><?php echo $row['teaching_activities']; ?></td>
+                    <td><?php echo $row['technology']; ?></td>
+                    <td><?php echo ($row['onsite'] == 1) ? '/' : ''; ?></td>
+                    <td><?php echo ($row['asy'] == 1) ? '/' : ''; ?></td>
+                    <td><?php echo $row['hours']; ?></td>
+                    <td class="table-button">
+                        <button type="button" class="btn btn-success editbtn_module_learning"><i class="lni lni-pencil"></i></button>
+                        <button type="button" class="btn btn-danger deletebtn_module_learning"><i class="lni lni-trash-can"></i></button>
+                    </td>
+                </tr>
 
-                        <td><?php echo $row['hours']; ?></td>
-                        <td class="table-button">
-                            <button type="button" class="btn btn-success editbtn_module_learning_final"><i class="lni lni-pencil"></i></button>
-                            <button type="button" class="btn btn-danger deletebtn_module_learning_final"><i class="lni lni-trash-can"></i></button>
-                        </td>
-                    </tr>
             <?php
                 }
             } else {
@@ -3890,39 +3890,37 @@ descriptions for the graduate attributes.</a>
 
 <script>
     $(document).ready(function () {
-
         $('.editbtn_module_learning').on('click', function () {
-
             $('#editmodal_module_learning').modal('show');
-
             $tr = $(this).closest('tr');
-
             var data = $tr.children("td").map(function () {
                 return $(this).text();
             }).get();
-
             console.log(data);
-
             $('#update_id3').val(data[0]);
             $('#module_no').val(data[1]);
-            $('#week').val(data[2]);    
-
-            // Auto check checkbox for course_Type
-            
+            $('#week').val(data[2]);
             $('#date').val(data[3]);
             $('#teaching_activities').val(data[4]);
             $('#technology').val(data[5]);
+            
+            // Handling the 'onsite' checkbox
             var onsite = data[6];
-            $('input[name="onsite"][value="' + onsite + '"]').prop('checked', true);
-
-            // Auto check checkbox for learning_modality
+            if (onsite === '/') {
+                $('input[name="onsite"]').prop('checked', true);
+            } else {
+                $('input[name="onsite"]').prop('checked', false);
+            }
+            
+            // Handling the 'asy' checkbox
             var asy = data[7];
-            $('input[name="asy"][value="' + asy + '"]').prop('checked', true);
-
-
+            if (asy === '/') {
+                $('input[name="asy"]').prop('checked', true);
+            } else {
+                $('input[name="asy"]').prop('checked', false);
+            }
         });
     });
-
 </script>
 
 
@@ -3952,12 +3950,19 @@ descriptions for the graduate attributes.</a>
             $('#1teaching_activities').val(data[4]);
             $('#1technology').val(data[5]);
             var onsite = data[6];
-            $('input[name="onsite"][value="' + onsite + '"]').prop('checked', true);
-
-            // Auto check checkbox for learning_modality
+            if (onsite === '/') {
+                $('input[name="onsite"]').prop('checked', true);
+            } else {
+                $('input[name="onsite"]').prop('checked', false);
+            }
+            
+            // Handling the 'asy' checkbox
             var asy = data[7];
-            $('input[name="asy"][value="' + asy + '"]').prop('checked', true);
-
+            if (asy === '/') {
+                $('input[name="asy"]').prop('checked', true);
+            } else {
+                $('input[name="asy"]').prop('checked', false);
+            }
 
         });
     });
@@ -4236,24 +4241,66 @@ descriptions for the graduate attributes.</a>
             $('#update_id10').val(data[0]);
             $('#learn_out_mapping').val(data[1]);
             var pl1 = data[2];
-            $('input[name="pl1"][value="' + pl1 + '"]').prop('checked', true);
+            if (pl1 === '/'){
+                $('input[name="pl1"]').prop('checked', true);
+            }else{
+                $('input[name="pl1"]').prop('checked', false);
+            }
             var pl2 = data[3];
-            $('input[name="pl2"][value="' + pl2 + '"]').prop('checked', true);
-            var pl3 = data[4];
-            $('input[name="pl3"][value="' + pl3 + '"]').prop('checked', true);
-            var pl4 = data[5];
-            $('input[name="pl4"][value="' + pl4 + '"]').prop('checked', true);
-            var pl5 = data[6];
-            $('input[name="pl5"][value="' + pl5 + '"]').prop('checked', true);
-            var pl6 = data[7];
-            $('input[name="pl6"][value="' + pl6 + '"]').prop('checked', true);
-            var pl7 = data[8];
-            $('input[name="pl7"][value="' + pl7 + '"]').prop('checked', true);
-            var pl8 = data[9];
-            $('input[name="pl8"][value="' + pl8 + '"]').prop('checked', true);
-            var pl9 = data[10];
-            $('input[name="pl9"][value="' + pl9 + '"]').prop('checked', true);
+            if (pl2 === '/'){
+                $('input[name="pl2"]').prop('checked', true);
+            }else{
+                $('input[name="pl2"]').prop('checked', false);
+            }
 
+            var pl3 = data[4];
+            if (pl3 === '/'){
+                $('input[name="pl3"]').prop('checked', true);
+            }else{
+                $('input[name="pl3"]').prop('checked', false);
+            }
+
+            var pl4 = data[5];
+            if (pl4 === '/'){
+                $('input[name="pl4"]').prop('checked', true);
+            }else{
+                $('input[name="pl4"]').prop('checked', false);
+            }
+
+            var pl5 = data[6];
+            if (pl5 === '/'){
+                $('input[name="pl5"]').prop('checked', true);
+            }else{
+                $('input[name="pl5"]').prop('checked', false);
+            }
+
+            var pl6 = data[7];
+            if (pl6 === '/'){
+                $('input[name="pl6"]').prop('checked', true);
+            }else{
+                $('input[name="pl6"]').prop('checked', false);
+            }
+
+            var pl7 = data[8];
+            if (pl7 === '/'){
+                $('input[name="pl7"]').prop('checked', true);
+            }else{
+                $('input[name="pl7"]').prop('checked', false);
+            }
+
+            var pl8 = data[9];
+            if (pl8 === '/'){
+                $('input[name="pl8"]').prop('checked', true);
+            }else{
+                $('input[name="pl8"]').prop('checked', false);
+            }
+            
+            var pl9 = data[10];
+            if (pl9 === '/'){
+                $('input[name="pl9"]').prop('checked', true);
+            }else{
+                $('input[name="pl9"]').prop('checked', false);
+            }
             
             
             
@@ -4307,15 +4354,39 @@ descriptions for the graduate attributes.</a>
             $('#update_id11').val(data[0]);
             $('#program_learn').val(data[1]);
             var rate1 = data[2];
-            $('input[name="rate1"][value="' + rate1 + '"]').prop('checked', true);
+            if (rate1 === '/'){
+                $('input[name="rate1"]').prop('checked', true);
+            }else{
+                $('input[name="rate1"]').prop('checked', false);
+            }
+
             var rate2 = data[3];
-            $('input[name="rate2"][value="' + rate2 + '"]').prop('checked', true);
+            if (rate2 === '/'){
+                $('input[name="rate2"]').prop('checked', true);
+            }else{
+                $('input[name="rate2"]').prop('checked', false);
+            }
+
             var rate3 = data[4];
-            $('input[name="rate3"][value="' + rate3 + '"]').prop('checked', true);
+            if (rate3 === '/'){
+                $('input[name="rate3"]').prop('checked', true);
+            }else{
+                $('input[name="rate3"]').prop('checked', false);
+            }
+
             var rate4 = data[5];
-            $('input[name="rate4"][value="' + rate4 + '"]').prop('checked', true);
+            if (rate4 === '/'){
+                $('input[name="rate4"]').prop('checked', true);
+            }else{
+                $('input[name="rate4"]').prop('checked', false);
+            }
+
             var rate5 = data[6];
-            $('input[name="rate5"][value="' + rate5 + '"]').prop('checked', true);
+            if (rate5 === '/'){
+                $('input[name="rate5"]').prop('checked', true);
+            }else{
+                $('input[name="rate5"]').prop('checked', false);
+            }
             
 
 
