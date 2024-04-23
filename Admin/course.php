@@ -28,7 +28,7 @@ function populateCetegoryDropdown() {
     if ($result->num_rows > 0) {
         // Output data of each row
         while ($row = $result->fetch_assoc()) {
-            $options .= "<option value='" . $row["id"] . "'>" . $row["name"] . "</option>";
+            $options .= "<option id='catid' value='" . $row["id"] . "'>" . $row["name"] . "</option>";
         }
     } else {
         $options .= "<option value=''>No category found</option>";
@@ -85,7 +85,7 @@ function populateCetegoryDropdown() {
                     <div class="modal-body">
                         
                     <div class="form-group" id="catid">
-                            <label> Position </label>
+                            <label> Category </label>
                             <select name="catid" class="form-control">
                             <?php echo populateCetegoryDropdown(); ?>
                     </select>
@@ -142,7 +142,9 @@ function populateCetegoryDropdown() {
                     <div class="form-group">
                         <label> Category </label>
                         <select name="catid" id="edit_catid" class="form-control">
-                            <?php echo populateCetegoryDropdown(); ?>
+                            <?php
+                
+                            echo populateCetegoryDropdown(); ?>
                         </select>
                     </div>
                     <div class="form-group">

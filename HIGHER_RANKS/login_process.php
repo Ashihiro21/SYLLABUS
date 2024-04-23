@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     $response["success"] = true;
                     $response["message"] = "Admin login successful.";
-                    $response["redirect"] = "../Admin/index.php"; // Set the redirect URL for admin
+                    $response["redirect"] = "../Admin/department.php"; // Set the redirect URL for admin
                 } else {
                     // Password is incorrect
                     $response["success"] = false;

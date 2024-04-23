@@ -21,7 +21,7 @@ require_once '../Database/connection.php';
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ADMIN</title>
+    <title>SYLLABUS</title>
     <!-- ======= Styles ====== -->
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="icon" type="image/png" href="../img/DLSU-D.png"/>
@@ -43,14 +43,14 @@ require_once '../Database/connection.php';
                     </a>
                 </li>
 
-                <li>
+                <!-- <li>
                     <a href="dashboard.php">
                         <span class="icon">
                             <ion-icon name="home-outline"></ion-icon>
                         </span>
                         <span class="title">Dashboard</span>
                     </a>
-                </li>
+                </li> -->
 
                 <li>
                     <a href="department.php">
