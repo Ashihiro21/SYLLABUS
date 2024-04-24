@@ -895,7 +895,7 @@ td{
                     </label>
                 </div>
                 <label>Alloted Hours</label>
-                        <input type="text" name="hours" id="hours1" class="form-control"
+                        <input type="text" name="hours" id="alloted_hours5" class="form-control"
                             placeholder="Enter Alloted Hours">
 
 
@@ -927,7 +927,7 @@ td{
 
                     <div class="modal-body">
                         
-                    <input type="hidden" name="update_id3" id="update_id3">
+                    <input type="text" name="update_id3" id="update_id3">
 
                     <div class="form-group">
                     <label for="module_no">Module No and Learning Outcomes</label>
@@ -970,6 +970,13 @@ td{
                         Asynchronous
                     </label>
                 </div>
+
+                
+                <div class="form-group">
+                            <label>Alloted Hours</label>
+                            <input type="text" name="alloted_hours" id="alloted_hours" class="form-control"
+                                placeholder="Enter Alloted Hours">
+                        </div>
 
 
                 </div>
@@ -1351,8 +1358,9 @@ echo "No Record Found";
                         Asynchronous
                     </label>
                 </div>
+
                 <label>Alloted Hours</label>
-                        <input type="text" name="hours" id="hours1" class="form-control"
+                        <input type="text" name="hours" id="1hours" class="form-control"
                             placeholder="Enter Alloted Hours">
 
 
@@ -1429,6 +1437,12 @@ echo "No Record Found";
                         Asynchronous
                     </label>
                 </div>
+
+                <div class="form-group">
+                            <label>Alloted Hours</label>
+                            <input type="text" name="alloted_hours2" id="alloted_hours2" class="form-control"
+                                placeholder="Enter Alloted Hours">
+                        </div>
 
 
                 </div>
@@ -3908,6 +3922,8 @@ descriptions for the graduate attributes.</a>
             } else {
                 $('input[name="asy"]').prop('checked', false);
             }
+
+            $('#alloted_hours').val(data[8]);
         });
     });
 </script>
@@ -3952,6 +3968,8 @@ descriptions for the graduate attributes.</a>
             } else {
                 $('input[name="asy1"]').prop('checked', false);
             }
+
+            $('#alloted_hours2').val(data[8]);
 
         });
     });

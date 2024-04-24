@@ -201,7 +201,7 @@ table, tr, th, td{
     <h4 style="">COURSE DESCRIPTION:</h4>
     
     <div class="box-description">
-    <p class="indented-paragraph">'.$user['course_description'].'</p>
+    <p class="indented-paragraph" style="text-align: justify; text-justify: inter-word;">'.$user['course_description'].'</p>
     </div>
 
     <h4 style="margin-top: 1rem;">COURSE LEARNING OUTCOMES:</h4>
@@ -286,10 +286,10 @@ if ($result->num_rows > 0) {
             $html .= $row['module_no'];
         }
         $html .= '<td width="70px" class="teaching_guid">'. $row['week'] ." ". $row['date'] . '</td>';
-        $html .= '<td class="teaching_guid">';
+        $html .= '<td width="100px" style="text-align:left" class="teaching_guid">';
         if (strpos($row['teaching_activities'], '•') !== false || strpos($row['teaching_activities'], "\n") !== false) {
             // If '•' or a line break is found, replace it with <br>
-            $html .= str_replace(array('•', "\n"), '<br>', $row['teaching_activities']);
+            $html .= str_replace(array('', "\n"), '<br>', $row['teaching_activities']);
         } else {
             $html .= $row['teaching_activities'];
         }
@@ -381,10 +381,10 @@ if ($result->num_rows > 0) {
             $html .= $row['module_no'];
         }
         $html .= '<td width="70px" class="teaching_guid">'. $row['week'] ." ". $row['date'] . '</td>';
-        $html .= '<td class="teaching_guid">';
+        $html .= '<td width="100px" style="text-align:left" class="teaching_guid">';
         if (strpos($row['teaching_activities'], '•') !== false || strpos($row['teaching_activities'], "\n") !== false) {
             // If '•' or a line break is found, replace it with <br>
-            $html .= str_replace(array('•', "\n"), '<br>', $row['teaching_activities']);
+            $html .= str_replace(array('', "\n"), '<br>', $row['teaching_activities']);
         } else {
             $html .= $row['teaching_activities'];
         }
@@ -441,6 +441,7 @@ if ($result->num_rows > 0) {
 
 $html .= '</table><br><br>';
 
+$html .'<div style="text-align: justify; text-justify: inter-word;">';
 
 $html .= '<span style="margin-top: 5rem;"><b style="margin-top: 1rem; margin-left: 2rem;">Overall Final Grade:</b> = <a style="border-bottom:1px solid black">Midterm + Final  <a></span><br>';
 $html .= '<span><a style="margin-left: 15rem">2 <a></span>';
@@ -620,6 +621,8 @@ $html .='</div>';
 
 
 $html .='<p style="padding-top: 1rem;">10. This course shall abide by any institutional policies that may be released after the approval of this syllabus. Any such policy shall be posted within the e-class at the forums section, news feed. It will also be briefly discussed during the soonest synchronous meeting.</p>';
+
+$html .='</div>';
 
 $html .='</div>';
 
