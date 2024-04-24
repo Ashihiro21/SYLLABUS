@@ -9,8 +9,8 @@ if(isset($_POST['updatedata15'])) {
     $date = $_POST['date'];
     $teaching_activities = $_POST['teaching_activities'];
     $technology = $_POST['technology'];
-    $onsite = $_POST['onsite'];
-    $asy = $_POST['asy'];
+    $onsite = $_POST['onsite1'];
+    $asy = $_POST['asy1'];
     
     $query = "UPDATE module_learning_final SET module_no='$module_no', week='$week', date='$date', teaching_activities='$teaching_activities' , technology='$technology', onsite='$onsite', asy='$asy'  WHERE id='$id'";
     $query_run = mysqli_query($connection, $query);

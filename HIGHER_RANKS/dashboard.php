@@ -244,50 +244,9 @@ td{
 
                 <div class="modal-body">
                     <!-- Dropdowns will be loaded here -->
-                    <?php
-                    // Database connection
-                    $servername = "localhost";
-                    $username = "root";
-                    $password = "";
-                    $dbname = "syllabus";
+                
 
-                    $conn = new mysqli($servername, $username, $password, $dbname);
-
-                    if ($conn->connect_error) {
-                        die("Connection failed: " . $conn->connect_error);
-                    }
-
-
-                    $sql = "SELECT id, name FROM category";
-                    $result = $conn->query($sql);
-
-                    // Generate the category dropdown
-                    $categoryDropdown = '<select id="categorySelect" class="form-control">';
-                    // Remove the "Select Category" option
-                    // $categoryDropdown .= '<option value="">Select Category</option>';
-
-                    if ($result->num_rows > 0) {
-                        while($row = $result->fetch_assoc()) {
-                            // Check if this is the first iteration, then set it as selected
-                            $selected = ($row['id'] == 1) ? 'selected' : '';
-                            $categoryDropdown .= '<option value="'.$row['id'].'" '.$selected.'>'.$row['name'].'</option>';
-                        }
-
-                        $categoryDropdown .= '</select>';
-                        echo $categoryDropdown;
-                    } else {
-                        echo 'Invalid request!';
-                    }
-
-                    ?>
-
-                    <!-- course dropdown will be loaded dynamically -->
-                    <div id="courseDropdown"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="saveSelection">Save</button>
-                </div>
+                
             </div>
 
 
@@ -463,7 +422,7 @@ td{
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"> Delete Student Data </h5>
+                    <h5 class="modal-title" id="exampleModalLabel"> Delete Data </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -494,7 +453,7 @@ td{
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"> Delete Student Data </h5>
+                    <h5 class="modal-title" id="exampleModalLabel"> Delete Data </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -1130,7 +1089,7 @@ td{
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel5"> Delete Student Data </h5>
+                    <h5 class="modal-title" id="exampleModalLabel5"> Delete Data </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -1370,11 +1329,11 @@ echo "No Record Found";
                         
                         <div class="form-group">
                     <label>
-                        <input type="checkbox" name="onsite2" value="1" id="onsite1">
+                        <input type="checkbox" name="onsite" value="1" id="1onsite">
                         Onsite / F2F
                     </label><br>
                     <label>
-                        <input type="checkbox" name="asy2" value="1" id="asynchronous1">
+                        <input type="checkbox" name="asy" value="1" id="1asynchronous">
                         Asynchronous
                     </label>
                 </div>
@@ -1448,11 +1407,11 @@ echo "No Record Found";
                         
                         <div class="form-group">
                     <label>
-                        <input type="checkbox" name="onsite" value="1" id="1onsite">
+                        <input type="checkbox" name="onsite1" value="1" id="1onsite">
                         Onsite / F2F
                     </label><br>
                     <label>
-                        <input type="checkbox" name="asy" value="1" id="1asynchronous">
+                        <input type="checkbox" name="asy1" value="1" id="1asynchronous">
                         Asynchronous
                     </label>
                 </div>
@@ -1476,7 +1435,7 @@ echo "No Record Found";
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"> Delete Student Data </h5>
+                    <h5 class="modal-title" id="exampleModalLabel"> Delete Data </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -1573,8 +1532,8 @@ echo "No Record Found";
                     <td><?php echo ($row['asy'] == 1) ? '/' : ''; ?></td>
                     <td><?php echo $row['hours']; ?></td>
                     <td class="table-button">
-                        <button type="button" class="btn btn-success editbtn_module_learning"><i class="lni lni-pencil"></i></button>
-                        <button type="button" class="btn btn-danger deletebtn_module_learning"><i class="lni lni-trash-can"></i></button>
+                        <button type="button" class="btn btn-success editbtn_module_learning_final"><i class="lni lni-pencil"></i></button>
+                        <button type="button" class="btn btn-danger deletebtn_module_learning_final"><i class="lni lni-trash-can"></i></button>
                     </td>
                 </tr>
 
@@ -3949,19 +3908,19 @@ descriptions for the graduate attributes.</a>
             $('#1date').val(data[3]);
             $('#1teaching_activities').val(data[4]);
             $('#1technology').val(data[5]);
-            var onsite = data[6];
-            if (onsite === '/') {
-                $('input[name="onsite"]').prop('checked', true);
+            var onsite1 = data[6];
+            if (onsite1 === '/') {
+                $('input[name="onsite1"]').prop('checked', true);
             } else {
-                $('input[name="onsite"]').prop('checked', false);
+                $('input[name="onsite1"]').prop('checked', false);
             }
             
             // Handling the 'asy' checkbox
-            var asy = data[7];
-            if (asy === '/') {
-                $('input[name="asy"]').prop('checked', true);
+            var asy1 = data[7];
+            if (asy1 === '/') {
+                $('input[name="asy1"]').prop('checked', true);
             } else {
-                $('input[name="asy"]').prop('checked', false);
+                $('input[name="asy1"]').prop('checked', false);
             }
 
         });
