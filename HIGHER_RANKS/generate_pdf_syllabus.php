@@ -131,7 +131,7 @@ body {
 
 .teaching_guid{
     border: 1px solid black;
-    padding: 10px;
+    padding-bottom: -20rem;
     border-collapse: collapse;
     text-align:center;
 }
@@ -251,15 +251,16 @@ if ($result->num_rows > 0) {
 $html .= '</table>';
 
 $html .= '<table class="teaching_guid">';
-$html .= '<tr>';
+$html .= '<tr style="height: 150px">';
 $html .= '<th class="teaching_guid">Module No and Learning Outcomes</th>';
 $html .= '<th width="100%" class="teaching_guid">Week</th>';
-$html .= '<th class="teaching_guid">Teaching-Learning Activities / Assessment Strategy</th>';
-$html .= '<th class="teaching_guid">Technology Enabler</th>';
-$html .= '<th class="teaching_guid">Onsite / F2F</th>';
-$html .= '<th class="teaching_guid">Asynchronous</th>';
-$html .= '<th class="teaching_guid">Alloted Hours</th>';
+$html .= '<th width="200px" class="teaching_guid">Teaching-Learning Activities / Assessment Strategy</th>';
+$html .= '<th style="" class="teaching_guid">Technology Enabler</th>';
+$html .= '<th height="15%"><p style="transform: rotate(-90deg); white-space: nowrap; width: 1px;">Onsite / F2F</p></th>';
+$html .= '<th height="15%"><p style="transform: rotate(-90deg); white-space: nowrap; width: 1px;">Asynchronous</p></th>';
+$html .= '<th height="15%"><p style="transform: rotate(-90deg); white-space: nowrap; width: 1px;">Alloted Hours</p></th>';
 $html .= '</tr>';
+
 
 $sql = "SELECT * FROM module_learning";
 $result = $conn->query($sql);
@@ -304,7 +305,7 @@ if ($result->num_rows > 0) {
     
     // Total row
     $html .= '<tr class="total">';
-    $html .= '<td class="teaching_guid onsite" colspan="4">TOTAL</td>';
+    $html .= '<td class="teaching_guid onsite" style="padding: 10px;" colspan="4"><b>TOTAL</b></td>';
     $html .= '<td class="teaching_guid onsite">'.$total_onsite_hours.'</td>';
     $html .= '<td class="teaching_guid onsite">'.$total_asy_hours.'</td>';
     $html .= '<td class="teaching_guid onsite">'.$total_hour.'</td>';
@@ -346,14 +347,14 @@ $html .= '</table>';
 $html .= '</table>';
 
 $html .= '<table class="teaching_guid">';
-$html .= '<tr>';
+$html .= '<tr style="height: 150px">';
 $html .= '<th class="teaching_guid">Module No and Learning Outcomes</th>';
-$html .= '<th class="teaching_guid">Week No</th>';
-$html .= '<th class="teaching_guid">Teaching-Learning Activities / Assessment Strategy</th>';
-$html .= '<th class="teaching_guid">Technology Enabler</th>';
-$html .= '<th class="teaching_guid">Onsite / F2F</th>';
-$html .= '<th class="teaching_guid">Asynchronous</th>';
-$html .= '<th class="teaching_guid">Alloted Hours</th>';
+$html .= '<th width="100%" class="teaching_guid">Week</th>';
+$html .= '<th width="200px" class="teaching_guid">Teaching-Learning Activities / Assessment Strategy</th>';
+$html .= '<th style="" class="teaching_guid">Technology Enabler</th>';
+$html .= '<th height="15%"><p style="transform: rotate(-90deg); white-space: nowrap; width: 1px;">Onsite / F2F</p></th>';
+$html .= '<th height="15%"><p style="transform: rotate(-90deg); white-space: nowrap; width: 1px;">Asynchronous</p></th>';
+$html .= '<th height="15%"><p style="transform: rotate(-90deg); white-space: nowrap; width: 1px;">Alloted Hours</p></th>';
 $html .= '</tr>';
 
 $sql = "SELECT * FROM module_learning_final";
@@ -399,7 +400,7 @@ if ($result->num_rows > 0) {
     
     // Total row
     $html .= '<tr class="total">';
-    $html .= '<td class="teaching_guid onsite" style="padding: 10px;" colspan="4">TOTAL</td>';
+    $html .= '<td class="teaching_guid onsite" style="padding: 10px;" colspan="4"><b>TOTAL</b></td>';
     $html .= '<td class="teaching_guid onsite" style="padding: 10px;">'.$total_onsite_hours.'</td>';
     $html .= '<td class="teaching_guid onsite" style="padding: 10px;">'.$total_asy_hours.'</td>';
     $html .= '<td class="teaching_guid onsite" style="padding: 10px;">'.$total_hour.'</td>';
@@ -436,7 +437,7 @@ if ($result->num_rows > 0) {
         $html .= '<td style="">'. $row['percents'] . '</td>';
         $html .= '</tr>';
     }
-    $html .="<td style='border-top:1px solid black;' colspan='5'>TOTAL <a style='margin-left:15.9rem;padding-top:2rem;'>$total_percent</a>%</td>";
+    $html .="<td style='border-top:1px solid black; font-weight:bold;' colspan='5'>TOTAL<a style='margin-left:15.9rem;padding-top:2rem;'>$total_percent</a>%</td>";
 }
 
 $html .= '</table><br><br>';
@@ -638,7 +639,7 @@ $html .= '<table>';
 
 
 $html .= '<tr>';
-$html .= '<th>Provider</th>';
+$html .= '<th width="170px">Provider</th>';
 $html .= '<th>Reference Material</th>';
 $html .= '</tr>';
 
@@ -683,7 +684,7 @@ if ($result->num_rows > 0) {
 $html .= '</table>';
 
 
-$html .='<span><b>Prepared:</b><b><a style="padding-left:30px;" class="course">'.$course_departments.'</a></b></span>';
+$html .='&nbsp;&nbsp;&nbsp;&nbsp;<span style=""><b>Prepared:</b><b><a style="padding-left:30px;" class="course">'.$course_departments.'</a></b></span>';
 
 
 
@@ -693,16 +694,16 @@ $html .='<p style="padding-left:130px; style="padding-top:10px;" class="term_yea
 
 $html .= '<p><img style="padding-left:145px; padding-top:10px;" src="' . $dept_head_signature . '" " class="course" alt="Department Head Signature"></p>';
 
-$html .='<span><b>Approved by:</b><b><a style="padding-left:20px;" class="course">'.$dept_head.'</a></span>';
-$html .='<span><b><p style="padding-left:140px;" class="course">'.$dept_head_position.", ".$course_initial.'</p></b></span>';
+$html .='&nbsp;&nbsp;&nbsp;&nbsp;<span style=""><b>Approved by:</b><b><a style="padding-left:20px;" class="course">'.$dept_head.'</a></span>';
+$html .='&nbsp;&nbsp;&nbsp;&nbsp;<span style=""><b><p style="padding-left:140px;" class="course">'.$dept_head_position.", ".$course_initial.'</p></b></span>';
 '</p></td>';
 
 
 
 $html .= '<p><img style="padding-left:145px; padding-top:10px;" src="' . $deans_category_signature . '" " class="course" alt="Department Head Signature"></p>';
 
-$html .='<span><b>Approved by:</b><b><a style="padding-left:20px;" class="course">'.$category_dean.'</a></span>';
-$html .='<span><b><p style="padding-left:140px;" class="course">'.$category_dean_position.", ".$category_initial.'</p></b></span>';
+$html .='&nbsp;&nbsp;&nbsp;&nbsp;<span style=""><b>Approved by:</b><b><a style="padding-left:20px;" class="course">'.$category_dean.'</a></span>';
+$html .='&nbsp;&nbsp;&nbsp;&nbsp;<span style=""><b><p style="padding-left:140px;" class="course">'.$category_dean_position.", ".$category_initial.'</p></b></span>';
 '</p></td>';
 
 
@@ -735,15 +736,15 @@ $html .=   '<h4 style="text-align:center; margin-top: -1rem;">MAPPING TABLE FOR 
     $html .= '</tr>'; // Closing the header row
     
     $html .= '<tr>'; // Opening a new row for data
-    $html .= '<th scope="col">PLO1</th>';
-    $html .= '<th scope="col">PLO2</th>';
-    $html .= '<th scope="col">PLO3</th>';
-    $html .= '<th scope="col">PLO4</th>';
-    $html .= '<th scope="col">PLO5</th>';
-    $html .= '<th scope="col">PLO6</th>';
-    $html .= '<th scope="col">PLO7</th>';
-    $html .= '<th scope="col">PLO8</th>';
-    $html .= '<th scope="col">PLO9</th>';
+    $html .= '<th width="1px" scope="col">PLO1</th>';
+    $html .= '<th width="1px" scope="col">PLO2</th>';
+    $html .= '<th width="1px" scope="col">PLO3</th>';
+    $html .= '<th width="1px" scope="col">PLO4</th>';
+    $html .= '<th width="1px" scope="col">PLO5</th>';
+    $html .= '<th width="1px" scope="col">PLO6</th>';
+    $html .= '<th width="1px" scope="col">PLO7</th>';
+    $html .= '<th width="1px" scope="col">PLO8</th>';
+    $html .= '<th width="1px" scope="col">PLO9</th>';
     $html .= '</tr>'; // Closing the data row
     
    
@@ -756,16 +757,16 @@ if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $html .= '<tr>';
     
-        $html .= '<td height="1px"  class="teaching_guid">'. $row['learn_out_mapping'] . '</td>';
-        $html .= '<td height="1px" class="teaching_guid">'. $row['pl1'] . '</td>';
-        $html .= '<td height="1px" class="teaching_guid">'. $row['pl2'] . '</td>';
-        $html .= '<td height="1px" class="teaching_guid">'. $row['pl3'] . '</td>';
-        $html .= '<td height="1px" class="teaching_guid">'. $row['pl4'] . '</td>';
-        $html .= '<td height="1px" class="teaching_guid">'. $row['pl5'] . '</td>';
-        $html .= '<td height="1px" class="teaching_guid">'. $row['pl6'] . '</td>';
-        $html .= '<td height="1px" class="teaching_guid">'. $row['pl7'] . '</td>';
-        $html .= '<td height="1px" class="teaching_guid">'. $row['pl8'] . '</td>';
-        $html .= '<td height="1px" class="teaching_guid">'. $row['pl9'] . '</td>';
+        $html .= '<td>'. $row['learn_out_mapping'] . '</td>';
+        $html .= '<td>'. $row['pl1'] . '</td>';
+        $html .= '<td>'. $row['pl2'] . '</td>';
+        $html .= '<td>'. $row['pl3'] . '</td>';
+        $html .= '<td>'. $row['pl4'] . '</td>';
+        $html .= '<td>'. $row['pl5'] . '</td>';
+        $html .= '<td>'. $row['pl6'] . '</td>';
+        $html .= '<td>'. $row['pl7'] . '</td>';
+        $html .= '<td>'. $row['pl8'] . '</td>';
+        $html .= '<td>'. $row['pl9'] . '</td>';
         $html .= '</tr>';
     }
     
@@ -808,7 +809,7 @@ if ($result->num_rows > 0) {
 while ($row = $result->fetch_assoc()) {
     $html .= '<tr>';
 
-    $html .= '<td height="5px"  class="teaching_guid">'. $row['program_learn'] . '</td>';
+    $html .= '<td style="text-align:left;" height="5px"  class="teaching_guid">'. $row['program_learn'] . '</td>';
     $html .= '<td height="5px" class="teaching_guid">'. $row['rate1'] . '</td>';
     $html .= '<td height="5px" class="teaching_guid">'. $row['rate2'] . '</td>';
     $html .= '<td height="5px" class="teaching_guid">'. $row['rate3'] . '</td>';
