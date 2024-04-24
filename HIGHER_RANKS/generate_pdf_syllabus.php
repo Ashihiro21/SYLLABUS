@@ -852,7 +852,15 @@ while ($row = $result->fetch_assoc()) {
     $html .= '<tr>';
 
     $html .= '<td height="5px" style="text-align:left;"  class="teaching_guid">'. $row['graduate_att'] . '</td>';
-    $html .= '<td height="5px" style="text-align:left;" class="teaching_guid">'. $row['descriptors_learn_out'] . '</td>';
+    $html .= '<td height="5px" style="text-align:left;" class="teaching_guid">';
+if (strpos($row['descriptors_learn_out'], 'TLO') !== false || strpos($row['descriptors_learn_out'], "\n") !== false) {
+    // If 'TLO' or a line break is found, replace it with <br>
+    $html .= str_replace(array('TLO', "\n"), '<br>', $row['descriptors_learn_out']);
+} else {
+    $html .= $row['descriptors_learn_out'];
+}
+$html .= '</td>';
+
     $html .= '</tr>';
 }
 

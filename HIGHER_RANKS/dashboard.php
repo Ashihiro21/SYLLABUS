@@ -672,8 +672,8 @@ td{
                         </div>
 
                     
-                        <label for="learn_out">Course Learning Outcomes</label>
-                        <textarea name="learn_out" id="learn_out" row="50" class="editor6" placeholder="Course Learning Outcomes"></textarea>
+                        <label for="learn_out">Course Learning Outcomes</label><br>
+                        <textarea name="learn_out" id="learn_out" row="70" cols="50" class="form-control" placeholder="Course Learning Outcomes"></textarea>
                 
 
                     </div>
@@ -886,11 +886,11 @@ td{
                         
                         <div class="form-group">
                     <label>
-                        <input type="checkbox" name="onsite1" value="1" id="onsite1">
+                        <input type="checkbox" name="onsite5" value="1" id="onsite5">
                         Onsite / F2F
                     </label><br>
                     <label>
-                        <input type="checkbox" name="asy1" value="1" id="asynchronous1">
+                        <input type="checkbox" name="asy5" value="1" id="asynchronous5">
                         Asynchronous
                     </label>
                 </div>
@@ -1051,7 +1051,14 @@ td{
             ?>
                                 <tr>
                     <td class="hide-id"><?php echo $row['id']; ?></td>
-                    <td><?php echo $row['module_no']; ?></td>
+                    <td class=""><?php
+                        if (strpos($row['module_no'], 'TLO') !== false || strpos($row['module_no'], "\n") !== false) {
+                            // If 'TLO' or a line break is found, replace it with <br>
+                            echo str_replace(array('', "\n"), '<br>', $row['module_no']);
+                        } else {
+                            echo $row['module_no'];
+                        }
+                        ?></td>
                     <td><?php echo $row['week']; ?></td>
                     <td><?php echo $row['date']; ?></td>
                     <td><?php echo $row['teaching_activities']; ?></td>
@@ -1250,7 +1257,14 @@ foreach($query_run as $row)
 <tr>
         <td class="hide-id"> <?php echo $row['id']; ?> </td>
         <td class=""><?php echo $row['final_learning_out']; ?></td>
-        <td class=""><?php echo $row['final_topic_leaning_out']; ?></td>
+        <td class=""><?php
+                        if (strpos($row['final_topic_leaning_out'], 'TLO') !== false || strpos($row['final_topic_leaning_out'], "\n") !== false) {
+                            // If 'TLO' or a line break is found, replace it with <br>
+                            echo str_replace(array('', "\n"), '<br>', $row['final_topic_leaning_out']);
+                        } else {
+                            echo $row['final_topic_leaning_out'];
+                        }
+                        ?></td>
         <td class="table-button">
         <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
 
@@ -1523,7 +1537,15 @@ echo "No Record Found";
             ?>
                     <tr>
                     <td class="hide-id"><?php echo $row['id']; ?></td>
-                    <td><?php echo $row['module_no']; ?></td>
+                    
+                    <td class=""><?php
+                        if (strpos($row['module_no'], 'TLO') !== false || strpos($row['module_no'], "\n") !== false) {
+                            // If 'TLO' or a line break is found, replace it with <br>
+                            echo str_replace(array('', "\n"), '<br>', $row['module_no']);
+                        } else {
+                            echo $row['module_no'];
+                        }
+                        ?></td>
                     <td><?php echo $row['week']; ?></td>
                     <td><?php echo $row['date']; ?></td>
                     <td><?php echo $row['teaching_activities']; ?></td>
@@ -2969,31 +2991,31 @@ echo "No Record Found";
                         <div class="form-group" Style="Display:flex;">
 
                         
-                        <input type="checkbox" name="pl1_s" id="pl1s" value="✓" class="form-control">
+                        <input type="checkbox" name="pl1_s" id="pl1s" value="/" class="form-control">
                         
 
-                        <input type="checkbox" name="pl2_s" id="pl2s" value="✓" class="form-control">
+                        <input type="checkbox" name="pl2_s" id="pl2s" value="/" class="form-control">
                         
 
-                        <input type="checkbox" name="pl3_s" id="pl3s" value="✓" class="form-control">
+                        <input type="checkbox" name="pl3_s" id="pl3s" value="/" class="form-control">
                     
 
-                        <input type="checkbox" name="pl4_s" id="pl4s" value="✓" class="form-control">
+                        <input type="checkbox" name="pl4_s" id="pl4s" value="/" class="form-control">
                      
 
-                        <input type="checkbox" name="pl5_s" id="pl5s" value="✓" class="form-control">
+                        <input type="checkbox" name="pl5_s" id="pl5s" value="/" class="form-control">
                     
 
-                        <input type="checkbox" name="pl6_s" id="pl6s" value="✓" class="form-control">
+                        <input type="checkbox" name="pl6_s" id="pl6s" value="/" class="form-control">
                       
 
-                        <input type="checkbox" name="pl7_s" id="pl7s" value="✓" class="form-control">
+                        <input type="checkbox" name="pl7_s" id="pl7s" value="/" class="form-control">
                     
 
-                        <input type="checkbox" name="pl8_s" id="pl8s" value="✓" class="form-control">
+                        <input type="checkbox" name="pl8_s" id="pl8s" value="/" class="form-control">
                   
 
-                        <input type="checkbox" name="pl9_s" id="pl9s" value="✓" class="form-control">
+                        <input type="checkbox" name="pl9_s" id="pl9s" value="/" class="form-control">
                        
                     </div>
 
@@ -3052,31 +3074,31 @@ echo "No Record Found";
                         <div class="form-group" Style="Display:flex;">
 
                         
-                        <input type="checkbox" name="pl1" id="pl1" value="✓" class="form-control pls">
+                        <input type="checkbox" name="pl1" id="pl1" value="/" class="form-control pls">
                         
 
-                        <input type="checkbox" name="pl2" id="pl2" value="✓" class="form-control pls">
+                        <input type="checkbox" name="pl2" id="pl2" value="/" class="form-control pls">
                         
 
-                        <input type="checkbox" name="pl3" id="pl3" value="✓" class="form-control pls">
+                        <input type="checkbox" name="pl3" id="pl3" value="/" class="form-control pls">
                     
 
-                        <input type="checkbox" name="pl4" id="pl4" value="✓" class="form-control pls">
+                        <input type="checkbox" name="pl4" id="pl4" value="/" class="form-control pls">
                      
 
-                        <input type="checkbox" name="pl5" id="pl5" value="✓" class="form-control pls">
+                        <input type="checkbox" name="pl5" id="pl5" value="/" class="form-control pls">
                     
 
-                        <input type="checkbox" name="pl6" id="pl6" value="✓" class="form-control pls">
+                        <input type="checkbox" name="pl6" id="pl6" value="/" class="form-control pls">
                       
 
-                        <input type="checkbox" name="pl7" id="pl7" value="✓" class="form-control pls">
+                        <input type="checkbox" name="pl7" id="pl7" value="/" class="form-control pls">
                     
 
-                        <input type="checkbox" name="pl8" id="pl8" value="✓" class="form-control pls">
+                        <input type="checkbox" name="pl8" id="pl8" value="/" class="form-control pls">
                   
 
-                        <input type="checkbox" name="pl9" id="pl9" value="✓" class="form-control pls">
+                        <input type="checkbox" name="pl9" id="pl9" value="/" class="form-control pls">
 
                 
                        
@@ -3281,20 +3303,20 @@ echo "No Record Found";
                     <div class="form-group">
                         
                         
-                        <input type="checkbox" name="rate1_s"value="✓">
+                        <input type="checkbox" name="rate1_s"value="/">
                         <label style="margin-left: 5px;">1</label><br>
                         
 
-                        <input type="checkbox" name="rate2_s" value="✓">
+                        <input type="checkbox" name="rate2_s" value="/">
                         <label style="margin-left: 5px;">2</label><br>
 
-                        <input type="checkbox" name="rate3_s" value="✓">
+                        <input type="checkbox" name="rate3_s" value="/">
                         <label style="margin-left: 5px;">3</label><br>
 
-                        <input type="checkbox" name="rate4_s" value="✓">
+                        <input type="checkbox" name="rate4_s" value="/">
                         <label style="margin-left: 5px;">4</label><br>
 
-                        <input type="checkbox" name="rate5_s" value="✓">
+                        <input type="checkbox" name="rate5_s" value="/">
                         <label style="margin-left: 5px;">5</label>
                       
                        
@@ -3338,19 +3360,19 @@ echo "No Record Found";
                     </div>
 
                     <div class="form-group">
-                        <input type="checkbox" name="rate1" id="rate1" value="✓">
+                        <input type="checkbox" name="rate1" id="rate1" value="/">
                         <label for="">1</label>
 
-                        <input type="checkbox" name="rate2" id="rate2" value="✓">
+                        <input type="checkbox" name="rate2" id="rate2" value="/">
                         <label for="">2</label>
 
-                        <input type="checkbox" name="rate3" id="rate3" value="✓">
+                        <input type="checkbox" name="rate3" id="rate3" value="/">
                         <label for="">3</label>
 
-                        <input type="checkbox" name="rate4" id="rate4" value="✓">
+                        <input type="checkbox" name="rate4" id="rate4" value="/">
                         <label for="">4</label>
 
-                        <input type="checkbox" name="rate5" id="rate5" value="✓">
+                        <input type="checkbox" name="rate5" id="rate5" value="/">
                         <label for="">5</label>
                     </div>
                 </div>
@@ -3662,8 +3684,16 @@ foreach($query_run as $row)
   
 <tr>
         <td class="hide-id"> <?php echo $row['id']; ?> </td>
+        
         <td class=""><?php echo $row['graduate_att']; ?></td>
-        <td class=""><?php echo $row['descriptors_learn_out']; ?></td>
+        <td class=""><?php
+                        if (strpos($row['descriptors_learn_out'], 'TLO') !== false || strpos($row['descriptors_learn_out'], "\n") !== false) {
+                            // If 'TLO' or a line break is found, replace it with <br>
+                            echo str_replace(array('', "\n"), '<br>', $row['descriptors_learn_out']);
+                        } else {
+                            echo $row['descriptors_learn_out'];
+                        }
+                        ?></td>
         <td class="table-button">
         <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
 
