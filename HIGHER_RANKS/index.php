@@ -298,8 +298,9 @@ if ($result->num_rows > 0) {
 
 // Close connection
 $conn->close();
+
 ?>
-<br><br>
+<br><br><br><br>
 
 <!-- TEACHING ASSESMENT GUIDE WITH COMPUTATION -->
 <?php
@@ -365,20 +366,19 @@ FROM
     echo "<table style='width: 100%;
     border-collapse: collapse;'>
     <tr>
-        <td style='border: 1px solid #dddddd;text-align: center; font-weight:bold;'>Module No and Learning Outcomes</td>
-        <td style='border: 1px solid #dddddd;text-align: center; font-weight:bold;'>Weeks</td>
-        <td style='border: 1px solid #dddddd;text-align: center; font-weight:bold;'>Teaching-Learning Activities / Assessment Strategy</td>
-        <td style='border: 1px solid #dddddd;text-align: center; font-weight:bold;'>Technology Enabler</td>
-        <td style='border: 1px solid #dddddd;text-align: center;   font-weight:bold;'><a style='display: block; transform: rotate(-90deg); white-space: nowrap;'>Onsite / F2F</a></td>
-
-        <td style='border: 1px solid #dddddd;text-align: center;   font-weight:bold;'><a style='display: block; transform: rotate(-90deg); white-space: nowrap;'>Asynchronous</a></td>
-        <td style='border: 1px solid #dddddd;text-align: center;   font-weight:bold;'>Alloted Hours</td>
+        <td style='border: 1px solid #dddddd; padding:8px; text-align: center; font-weight:bold;'>Module No and Learning Outcomes</td>
+        <td style='border: 1px solid #dddddd; padding:8px; text-align: center; font-weight:bold; padding: 18px;'>Weeks</td>
+        <td style='border: 1px solid #dddddd; padding:8px; text-align: center; font-weight:bold; padding: 18px;'>Teaching-Learning Activities / Assessment Strategy</td>
+        <td style='border: 1px solid #dddddd; padding:8px; text-align: center; font-weight:bold;'>Technology Enabler</td>
+        <td style='border: 1px solid #dddddd; padding:8px; text-align: center; font-weight:bold;'>Onsite / F2F</td>
+        <td style='border: 1px solid #dddddd; padding:8px; text-align: center; font-weight:bold;'>Asynchronous</td>
+        <td style='border: 1px solid #dddddd; padding:8px; text-align: center; font-weight:bold;'>Alloted Hours</td>
     </tr>";
     
     // Output data of each row
     while ($row = $result->fetch_assoc()) {
         echo "<tr>
-        <td style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>";
+        <td style='border: 1px solid #dddddd; padding:8px; text-align: center;'>";
     
         if (strpos($row['module_no'], 'TLO') !== false || strpos($row['module_no'], "\n") !== false) {
             // If 'TLO' or a line break is found, replace it with <br>
@@ -389,31 +389,31 @@ FROM
     
         echo "</td>
 
-                <td style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>" . $row["week"] . "   " . $row["date"] . "</td>
+                <td style='border: 1px solid #dddddd; padding:8px; text-align: center;'>" . $row["week"] . "   " . $row["date"] . "</td>
                 
-                <td style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>";
+                <td style='border: 1px solid #dddddd; padding:8px; text-align: left; width: 50px'>";
     
         if (strpos($row['teaching_activities'], '•') !== false || strpos($row['teaching_activities'], "\n") !== false) {
             // If 'TLO' or a line break is found, replace it with <br>
-            echo str_replace(array('<br>', "\n"), '<br><br>', $row['teaching_activities']);
+            echo str_replace(array('', "\n"), '<br>', $row['teaching_activities']);
         } else {
             echo $row['teaching_activities'];
         }
         echo "</td>
-        <td style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>" . $row["technology"] . "</td>
-        <td style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>" . ($row['onsite'] == 1 ? '/' : '') . "</td>
-        <td style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>" . ($row['asy'] == 1 ? '/' : '') . "</td>
-        <td style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>" . $row["hours"] . "</td>
+        <td style='border: 1px solid #dddddd; padding:8px; text-align: center;'>" . $row["technology"] . "</td>
+        <td style='border: 1px solid #dddddd; padding:8px; text-align: center;'>" . ($row['onsite'] == 1 ? '/' : '') . "</td>
+        <td style='border: 1px solid #dddddd; padding:8px; text-align: center;'>" . ($row['asy'] == 1 ? '/' : '') . "</td>
+        <td style='border: 1px solid #dddddd; padding:8px; text-align: center;'>" . $row["hours"] . "</td>
     </tr>";
     
     }
 
 
     echo "<tr style='background-color:#ffbb33'>
-    <td style='border: 1px solid #dddddd;text-align: center; padding: 8px;' colspan='4'><p style='font-weight:bold;'>TOTAL <p></td>
-    <td style='border: 1px solid #dddddd;text-align: center; padding: 8px;'> " . ($total_onsite_hours * $hours) . " </td>
-    <td style='border: 1px solid #dddddd;text-align: center; padding: 8px;'> " . ($total_asy_hours * $hours) . " </td>
-    <td style='border: 1px solid #dddddd;text-align: center; padding: 8px;'> " . $total_hour . " </td>
+    <td style='border: 1px solid #dddddd; text-align: center; padding: 18px;' colspan='4'><p style='font-weight:bold;'>TOTAL <p></td>
+    <td style='border: 1px solid #dddddd; text-align: center; padding: 18px;'> " . ($total_onsite_hours * $hours) . " </td>
+    <td style='border: 1px solid #dddddd; text-align: center; padding: 18px;'> " . ($total_asy_hours * $hours) . " </td>
+    <td style='border: 1px solid #dddddd; text-align: center; padding: 18px;'> " . $total_hour . " </td>
 </tr>";
 
 
@@ -430,7 +430,6 @@ FROM
 // Close connection
 $conn->close();
 ?>
-
 <p style="">Learning Outcomes for Final Period</p>
 
 
@@ -496,7 +495,7 @@ if ($result->num_rows > 0) {
 // Close connection
 $conn->close();
 ?>
-<br><br>
+<br><br><br><br>
 
 <!-- TEACHING ASSESMENT GUIDE WITH COMPUTATION -->
 
@@ -563,19 +562,19 @@ FROM
     echo "<table style='width: 100%;
     border-collapse: collapse;'>
     <tr>
-        <td style='border: 1px solid #dddddd;text-align: center; font-weight:bold;'>Module No and Learning Outcomes</td>
-        <td style='border: 1px solid #dddddd;text-align: center; font-weight:bold; padding: 18px;'>Weeks</td>
-        <td style='border: 1px solid #dddddd;text-align: center; font-weight:bold; padding: 18px;'>Teaching-Learning Activities / Assessment Strategy</td>
-        <td style='border: 1px solid #dddddd;text-align: center; font-weight:bold;'>Technology Enabler</td>
-        <td style='border: 1px solid #dddddd;text-align: center; font-weight:bold;'>Onsite / F2F</td>
-        <td style='border: 1px solid #dddddd;text-align: center; font-weight:bold;'>Asynchronous</td>
-        <td style='border: 1px solid #dddddd;text-align: center; font-weight:bold;'>Alloted Hours</td>
+        <td style='border: 1px solid #dddddd; padding: 8px; text-align: center; font-weight:bold;'>Module No and Learning Outcomes</td>
+        <td style='border: 1px solid #dddddd; padding: 8px; text-align: center; font-weight:bold; padding: 18px;'>Weeks</td>
+        <td style='border: 1px solid #dddddd; padding: 8px; text-align: center; font-weight:bold; padding: 18px;'>Teaching-Learning Activities / Assessment Strategy</td>
+        <td style='border: 1px solid #dddddd; padding: 8px; text-align: center; font-weight:bold;'>Technology Enabler</td>
+        <td style='border: 1px solid #dddddd; padding: 8px; text-align: center; font-weight:bold;'>Onsite / F2F</td>
+        <td style='border: 1px solid #dddddd; padding: 8px; text-align: center; font-weight:bold;'>Asynchronous</td>
+        <td style='border: 1px solid #dddddd; padding: 8px; text-align: center; font-weight:bold;'>Alloted Hours</td>
     </tr>";
     
     // Output data of each row
     while ($row = $result->fetch_assoc()) {
         echo "<tr>
-        <td style='border: 1px solid #dddddd;text-align: center;'>";
+        <td style='border: 1px solid #dddddd; padding: 8px; text-align: center;'>";
     
         if (strpos($row['module_no'], 'TLO') !== false || strpos($row['module_no'], "\n") !== false) {
             // If 'TLO' or a line break is found, replace it with <br>
@@ -586,31 +585,31 @@ FROM
     
         echo "</td>
 
-                <td style='border: 1px solid #dddddd;text-align: center;'>" . $row["week"] . "   " . $row["date"] . "</td>
+                <td style='border: 1px solid #dddddd; padding: 8px; text-align: center;'>" . $row["week"] . "   " . $row["date"] . "</td>
                 
-                <td style='border: 1px solid #dddddd;text-align: left; width: 50px'>";
+                <td style='border: 1px solid #dddddd; padding: 8px; text-align: left; width: 50px'>";
     
         if (strpos($row['teaching_activities'], '•') !== false || strpos($row['teaching_activities'], "\n") !== false) {
             // If 'TLO' or a line break is found, replace it with <br>
-            echo str_replace(array('<br>', "\n"), '<br><br>', $row['teaching_activities']);
+            echo str_replace(array('', "\n"), '<br>', $row['teaching_activities']);
         } else {
             echo $row['teaching_activities'];
         }
         echo "</td>
-        <td style='border: 1px solid #dddddd;text-align: center;'>" . $row["technology"] . "</td>
-        <td style='border: 1px solid #dddddd;text-align: center;'>" . ($row['onsite'] == 1 ? '/' : '') . "</td>
-        <td style='border: 1px solid #dddddd;text-align: center;'>" . ($row['asy'] == 1 ? '/' : '') . "</td>
-        <td style='border: 1px solid #dddddd;text-align: center;'>" . $row["hours"] . "</td>
+        <td style='border: 1px solid #dddddd; padding: 8px; text-align: center;'>" . $row["technology"] . "</td>
+        <td style='border: 1px solid #dddddd; padding: 8px; text-align: center;'>" . ($row['onsite'] == 1 ? '/' : '') . "</td>
+        <td style='border: 1px solid #dddddd; padding: 8px; text-align: center;'>" . ($row['asy'] == 1 ? '/' : '') . "</td>
+        <td style='border: 1px solid #dddddd; padding: 8px; text-align: center;'>" . $row["hours"] . "</td>
     </tr>";
     
     }
 
 
     echo "<tr style='background-color:#ffbb33'>
-    <td style='border: 1px solid #dddddd;text-align: center; padding: 8px;' colspan='4'><p style='font-weight:bold;'>TOTAL <p></td>
-    <td style='border: 1px solid #dddddd;text-align: center; padding: 8px;'> " . ($total_onsite_hours * $hours) . " </td>
-    <td style='border: 1px solid #dddddd;text-align: center; padding: 8px;'> " . ($total_asy_hours * $hours) . " </td>
-    <td style='border: 1px solid #dddddd;text-align: center; padding: 8px;'> " . $total_hour . " </td>
+    <td style='border: 1px solid #dddddd; text-align: center; padding: 18px;' colspan='4'><p style='font-weight:bold;'>TOTAL <p></td>
+    <td style='border: 1px solid #dddddd; text-align: center; padding: 18px;'> " . ($total_onsite_hours * $hours) . " </td>
+    <td style='border: 1px solid #dddddd; text-align: center; padding: 18px;'> " . ($total_asy_hours * $hours) . " </td>
+    <td style='border: 1px solid #dddddd; text-align: center; padding: 18px;'> " . $total_hour . " </td>
 </tr>";
 
 
