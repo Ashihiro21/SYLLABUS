@@ -927,7 +927,7 @@ td{
 
                     <div class="modal-body">
                         
-                    <input type="text" name="update_id3" id="update_id3">
+                    <input type="hidden" name="update_id3" id="update_id3">
 
                     <div class="form-group">
                     <label for="module_no">Module No and Learning Outcomes</label>
