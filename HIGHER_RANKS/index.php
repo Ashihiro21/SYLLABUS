@@ -1,6 +1,5 @@
 <?php
 
-session_start();
 // Check if the user is logged in, if not, redirect to the login page
 if (!isset($_SESSION["logged_in"]) || $_SESSION["logged_in"] !== true || $_SESSION["role"] !== "user") {
     // If user is not logged in or not a user, redirect to login page
@@ -96,9 +95,9 @@ $sql = "SELECT * FROM course_leaning";
 </head>
 
 <style>
-    /* #exportContent{
+    #exportContent{
         display:none;
-    } */
+    }
     ul{
         list-style-type:none;
     }

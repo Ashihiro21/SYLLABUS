@@ -205,7 +205,10 @@ td{
     <nav>
     <span class="float-right"><p><?php echo $position; ?><a href="logout.php">Logout</a></p></span>
     <span class="m-2"><a href="generate_pdf_syllabus.php" class="btn btn-danger">Download as PDF</a>
-    <a href="generate_word_syllabus.php" class="dl-word btn btn-secondary">Download as Word</a></span>
+    <?php
+
+    include("index.php");
+    ?>
     </nav>
    
     <div class="card custom-card" >
