@@ -195,8 +195,22 @@ td{
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.9); /* Shadow effect */
         
     }
+    .custom-policy{
+        margin: 1.5rem;
+        border: 1px solid #6c757d; /* Corrected border color syntax */
+      
+        height: 100%;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.9); /* Shadow effect */
+    }
+    .text-rotate{
+        transform: rotate(-180deg); /* Rotate text vertically */
+        white-space: nowrap;
+        writing-mode: vertical-lr;
+    }
 
-  
+ 
+
+    
 
 </style>
 <body>
@@ -759,9 +773,9 @@ td{
 
                     </div>
 
-                    <div class="container-fluid mt-5 header-title"><br>
-                    <b><a>LEARNING PLAN</a></b><br>
-                    <b><a>Learning Outcomes for Midterm Period </a></b>
+                    <div class="container-fluid header-title"><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><a>LEARNING PLAN</a></b><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><a>Learning Outcomes for Midterm Period </a></b>
                     </div>
 
         
@@ -1002,15 +1016,14 @@ td{
         <thead>
             
             <tr>
-            
                 <th class="" scope="col">Module No and Learning Outcomes</th>
                 <th class="" class="" scope="col">Week No</th>
                 <th class="" scope="col">Date</th>
                 <th class="" scope="col">Teaching-Learning Activities / Assessment Strategy</th>
                 <th class="" scope="col">Technology Enabler</th>
-                <th class="" scope="col">Onsite / F2F</th>
-                <th class="" scope="col">Asynchronous</th>
-                <th class="" scope="col">Alloted Hours</th>
+                <th class="text-rotate" scope="col">Onsite / F2F</th>
+                <th class="text-rotate" scope="col">Asynchronous</th>
+                <th class="text-rotate" scope="col">Alloted Hours</th>
                 <th class="" scope="col">Actions</th>
             </tr>
         </thead>
@@ -1223,7 +1236,7 @@ td{
 <br>
 
 <div class="container-fluid mt-5 header-title">
-<a>Learning Outcomes for Final Period</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a>Learning Outcomes for Final Period</a>
 </div>
 
 
@@ -1501,9 +1514,9 @@ echo "No Record Found";
                 <th scope="col">Date</th>
                 <th scope="col">Teaching-Learning Activities / Assessment Strategy</th>
                 <th scope="col">Technology Enabler</th>
-                <th scope="col">Onsite / F2F</th>
-                <th scope="col">Asynchronous</th>
-                <th scope="col">Alloted Hours</th>
+                <th class="text-rotate" scope="col">Onsite / F2F</th>
+                <th class="text-rotate" scope="col">Asynchronous</th>
+                <th class="text-rotate" scope="col">Alloted Hours</th>
                 <th scope="col">Actions</th>
             </tr>
         </thead>
@@ -1808,7 +1821,8 @@ echo "No Record Found";
 <span style="margin-left:4rem;"><b>Overall Final Grade</b><a> = Midterm + Final</a></span>
 <a style="margin-left:22rem;">2</a>
 
-
+<div class="card custom-policy">
+<div class="card-body">
 <div class="mt-5 text-wrap container-fluid">
 <a><b>COURSE POLICIES AND REQUIREMENTS </b></a><br>
 
@@ -1976,7 +1990,8 @@ echo "No Record Found";
     will also be briefly discussed during the soonest synchronous meeting. </a><br><br>
 </div>
 </div>
-
+        </div>
+        </div>
 
 <!-- GRADING SYSTEM -->
 
@@ -2011,7 +2026,7 @@ echo "No Record Found";
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Learning Outcomes for Final Period </h5>
+                    <h5 class="modal-title" id="exampleModalLabel" style="">Add Learning Outcomes for Final Period </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
