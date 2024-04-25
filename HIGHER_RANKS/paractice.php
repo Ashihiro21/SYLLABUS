@@ -1,81 +1,87 @@
 <?php
-
 session_start();
+
 // Check if the user is logged in, if not, redirect to the login page
 if (!isset($_SESSION['email'])) {
-    header("Location: index.php");
+    header("Location: login.php");
     exit();
 }
 
 include('../Database/connection.php');
 
 $email = $_SESSION['email'];
+
+// Prepare and execute SQL statement
 $sql = "SELECT 
-            u.`first_name`, 
-            u.`last_name`, 
-            u.`department`, 
-            u.`catid`, 
-            u.`phone_number`, 
-            u.`email`, 
-            u.`password`, 
-            p.`name` AS `position`,
-            c.`id` AS `id`,
-            c.`name` AS `category_name`,
-            c.`initial` AS `category_initial`,
-            c.`dean_name` AS `deans`,
-            c.`dean_position` AS `deans_position`,
-            c.`dean_signature` AS `dean_signatures`,
-            co.`cname`,
-            co.`course_department` AS `course_departments`,
-            co.`initial` AS `course_initial`,
-            co.`department_name` AS `course_dept_name`,
-            co.`department_position` AS `dept_position`,
-            co.`dept_signature` AS `dept_signatures`
+            u.first_name, 
+            u.last_name, 
+            u.department, 
+            u.catid, 
+            u.phone_number, 
+            u.email, 
+            u.password, 
+            p.name AS position,
+            c.id AS category_id,
+            c.name AS category_name,
+            c.initial AS category_initial,
+            c.dean_name AS category_dean,
+            c.dean_position AS category_dean_position,
+            c.dean_signature AS deans_category_signature,
+            co.cname,
+            co.course_department AS course_department,
+            co.initial AS course_initial,
+            co.department_name AS dept_head,
+            co.department_position AS dept_head_position,
+            co.dept_signature AS dept_head_signature
         FROM 
-            `users` AS u 
+            users AS u 
         LEFT JOIN 
-            `position` AS p ON u.`position` = p.`id`
+            position AS p ON u.position = p.id
         LEFT JOIN 
-            `category` AS c ON u.`department` = c.`id`
+            category AS c ON u.department = c.id
         LEFT JOIN
-            `course` AS co ON u.`catid` = co.`id`
+            course AS co ON u.catid = co.id
         WHERE 
-            u.email = '$email'";
+            u.email = ?";
 
-
-
-$result = $conn->query($sql);
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
-    // Output data of each row
-    while ($row = $result->fetch_assoc()) {
-        $first_name = $row['first_name'];
-        $last_name = $row['last_name'];
-        $department = $row['department'];
-        $courses = $row['catid'];
-        $phone_number = $row['phone_number'];
-        $email = $row['email'];
-        $password = $row['password'];
-        $position = $row['position'];
-        $category_name = $row['category_name'];
-        $category_initial = $row['category_initial'];
-        $cname = $row['cname'];
-        $course_initial = $row['course_initial'];
-        $course_departments = $row['course_departments'];
-        $category_dean = $row['deans'];
-        $category_dean_position = $row['deans_position'];
-        $dept_head = $row['course_dept_name'];
-        $dept_head_position = $row['dept_position'];
-        $dept_head_signature = $row['dept_signatures'];
-        $deans_category_signature = $row['dean_signatures'];
-        
-    }
+    // Fetch data
+    $row = $result->fetch_assoc();
+    $_SESSION['department'] = $row['department']; // Add department to session
+    $first_name = $row['first_name'];
+    $last_name = $row['last_name'];
+    $department = $row['department'];
+    $courses = $row['catid'];
+    $phone_number = $row['phone_number'];
+    $email = $row['email'];
+    $password = $row['password'];
+    $position = $row['position'];
+    $category_name = $row['category_name'];
+    $category_initial = $row['category_initial'];
+    $cname = $row['cname'];
+    $course_initial = $row['course_initial'];
+    $course_departments = $row['course_department'];
+    $category_dean = $row['category_dean'];
+    $category_dean_position = $row['category_dean_position'];
+    $dept_head = $row['dept_head'];
+    $dept_head_position = $row['dept_head_position'];
+    $dept_head_signature = $row['dept_head_signature'];
+    $deans_category_signature = $row['deans_category_signature'];
 } else {
     $position = "Position not found";
 }
 
+// Close statement and connection
+$stmt->close();
 $conn->close();
 ?>
+
+
 
 <!DOCTYPE html>
 <html>
@@ -196,6 +202,12 @@ td{
         
     }
 
+
+    .float{
+        position: absolute;
+        right: 10rem;
+    }
+
   
 
 </style>
@@ -203,12 +215,15 @@ td{
 
 
     <nav>
-    <span class="float-right"><p><?php echo $position; ?><a href="logout.php">Logout</a></p></span>
-    <span class="m-2"><a href="generate_pdf_syllabus.php" class="btn btn-danger">Download as PDF</a>
+        <span class="float-right"><p><?php echo $position; ?><a href="logout.php">Logout</a></p></span>
+        <span class="m-2"><a href="generate_pdf_syllabus.php" class="btn btn-danger">Download as PDF</a>
+       
     <?php
 
     include("index.php");
     ?>
+
+<a><?php echo $department ?></a>
     </nav>
    
     <div class="card custom-card" >
@@ -289,7 +304,121 @@ td{
     
 
 
-    
+    <button type="button" class="btn btn-primary float" data-toggle="modal" data-target="#addmodal">
+  Add Course
+</button>
+
+    <div class="modal fade" id="addmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">ADD COURSE SYLLABUS</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form action="Course_Syllabus/add_course_syllabus.php" method="POST">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Course Code</label>
+                        <input type="text" name="course_code" class="form-control" placeholder="Enter course code">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Course Title</label>
+                        <input type="text" name="course_tittle" class="form-control" placeholder="Enter course title">
+                    </div>
+
+                    <div class="form-group">
+                        <fieldset>
+                            <legend>Course Type</legend>
+                            <div>
+                                <input type="radio" id="lecture1" name="course_Type1" value="Lecture">
+                                <label for="lecture">Lecture</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="laboratory1" name="course_Type1" value="Laboratory">
+                                <label for="laboratory">Laboratory</label>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Course Credit</label>
+                        <input type="text" name="course_credit" class="form-control" placeholder="Enter course credit">
+                    </div>
+
+                    <div class="form-group">
+                        <fieldset>
+                            <legend>Learning Modality</legend>
+                            <div>
+                                <input type="radio" id="traditional1" name="learning_modality1" value="Traditional">
+                                <label for="traditional">Traditional</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="flex_blended1" name="learning_modality1" value="Flex Blended">
+                                <label for="flex_blended">Flex Blended</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="fully_onsite1" name="learning_modality1" value="Fully Onsite">
+                                <label for="fully_onsite">Fully Onsite</label>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Pre-requisites</label>
+                        <input type="text" name="pre_requisit" class="form-control" placeholder="Enter pre-requisites">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Co Pre-requisites</label>
+                        <input type="text" name="co_pre_requisit" class="form-control" placeholder="Enter co pre-requisites">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Professor</label>
+                        <input type="text" name="professor" class="form-control" placeholder="Enter professor">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="consultation_hours_date">Consultation Hours</label>
+                        <input id="consultation_hours_date1" name="consultation_hours_date" class="form-control" rows="5" cols="50" style="width: 300px;" placeholder="Enter consultation Day and Hours"></input>
+                    </div>
+
+                    <div class="form-group">
+                        <input id="consultation_hours_room1" name="consultation_hours_room" class="form-control" rows="5" cols="50" style="width: 300px;" placeholder="Enter consultation Room"></input>
+                    </div>
+
+                    <div class="form-group">
+                        <input id="consultation_hours_email1" name="consultation_hours_email" class="form-control" rows="5" cols="50" style="width: 300px;" placeholder="Enter consultation Email"></input>
+                    </div>
+
+                    <div class="form-group">
+                        <input id="consultation_hours_number1" name="consultation_hours_number" class="form-control" rows="5" cols="50" style="width: 300px;" placeholder="Enter consultation Contact"></input>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="course_description">Course Description</label>
+                        <textarea id="course_description1" name="course_description" class="form-control" rows="7" cols="70" style="width: 450px;" placeholder="Enter Course Description"></textarea>
+                    </div>
+
+                    <div class="form-group">
+    <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+</div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" name="adddata" class="btn btn-primary">Add Data</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
 
 
 
@@ -338,6 +467,8 @@ td{
                             </div>
                         
                         </fieldset>
+
+                        
                     </div>
 
                     
@@ -404,6 +535,12 @@ td{
                             <label for="course_description">Course Description</label>
                             <textarea id="course_description" name="course_description" id="course_description" class="form-control" rows="7" cols="70" style="width: 450px;" placeholder="Enter Course Description"></textarea>
                         </div>
+
+                        <div class="form-group">
+    <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+</div>
+
+
 
                         
                     </div>
@@ -533,8 +670,9 @@ td{
                              die();
                              }
                      
+                         $department = $_SESSION['department']; 
 
-                         $query = "SELECT * FROM course_syllabus";
+                         $query = "SELECT `id`, `course_code`, `course_tittle`, `course_Type`, `course_credit`, `learning_modality`, `pre_requisit`, `co_pre_requisit`, `professor`, `consultation_hours_date`, `consultation_hours_room`, `consultation_hours_email`, `consultation_hours_number`, `course_description`, `email`, `department` FROM `course_syllabus` WHERE department='$department'";
                          $query_run = mysqli_query($connection, $query);
             ?>  
                     <table id="datatableid">
@@ -593,58 +731,100 @@ td{
                 }
             ?>
                     </table>
-           
-    <div class="container text-left">
-    <div class="header">COURSE CODE</div>
-    <div>:</div>
-    <div><?php echo $row['course_code']; ?></div>
-  
-    <div class="header">COURSE TITLE</div>
-    <div>:</div>
-    <div><?php echo $row['course_tittle']; ?></div>
+                  
+                    <?php
+// Establish a database connection (replace 'hostname', 'username', 'password', and 'database' with your actual database credentials)
+$mysqli = new mysqli("localhost", "root", "", "syllabus");
 
-    <div class="header">COURSE TYPE</div>
-    <div>:</div>
-    <div><?php echo $row['course_Type']; ?></div>
-   
-    <div class="header">COURSE CREDIT</div>
-    <div>:</div>
-    <div><?php echo $row['course_credit']; ?></div>
+// Check connection
+if ($mysqli->connect_error) {
+    die("Connection failed: " . $mysqli->connect_error);
+}
 
-    <div class="header">LEARNING MODALITY</div>
-    <div>:</div>
-    <div><?php echo $row['learning_modality']; ?></div>
+$department = $_SESSION['department']; 
+// Prepare SQL query
+$sql = "SELECT `id`, `course_code`, `course_tittle`, `course_Type`, `course_credit`, `learning_modality`, `pre_requisit`, `co_pre_requisit`, `professor`, `consultation_hours_date`, `consultation_hours_room`, `consultation_hours_email`, `consultation_hours_number`, `course_description`, `email`, `department` FROM `course_syllabus` WHERE department='$department'";
 
-    <div class="header">PRE-REQUISITES</div>
-    <div>:</div>
-    <div><?php echo $row['pre_requisit']; ?></div>
+// Execute query
+$result = $mysqli->query($sql);
 
-    <div class="header">CO-REQUISITES</div>
-    <div>:</div>
-    <div><?php echo $row['co_pre_requisit']; ?></div>
- 
-    <div class="header">PROFESSOR</div>
-    <div>:</div>
-    <div><?php echo $row['professor']; ?></div>
+// Check if there are results
+if ($result->num_rows > 0) {
+    ?>
 
-    <div class="header">CONSULTATION HOURS</div>
-    <div>:</div>
-    <div>
-        <?php echo $row['consultation_hours_date']; ?><br>
-        <?php echo $row['consultation_hours_room']; ?><br>
-        <?php echo $row['consultation_hours_email']; ?><br>
-        <?php echo $row['consultation_hours_number']; ?>
+        <?php
+        // Loop through the result set
+        while ($row = $result->fetch_assoc()) {
+            ?>
+
+       <div class="container text-left">
+                <div class="header">COURSE CODE</div>
+                <div>:</div>
+                <div><?php echo $row['course_code']; ?></div>
+
+                <div class="header">COURSE TITLE</div>
+                <div>:</div>
+                <div><?php echo $row['course_tittle']; ?></div>
+
+                <div class="header">COURSE TYPE</div>
+                <div>:</div>
+                <div><?php echo $row['course_Type']; ?></div>
+
+                <div class="header">COURSE CREDIT</div>
+                <div>:</div>
+                <div><?php echo $row['course_credit']; ?></div>
+
+                <div class="header">LEARNING MODALITY</div>
+                <div>:</div>
+                <div><?php echo $row['learning_modality']; ?></div>
+
+                <div class="header">PRE-REQUISITES</div>
+                <div>:</div>
+                <div><?php echo $row['pre_requisit']; ?></div>
+
+                <div class="header">CO-REQUISITES</div>
+                <div>:</div>
+                <div><?php echo $row['co_pre_requisit']; ?></div>
+
+                <div class="header">PROFESSOR</div>
+                <div>:</div>
+                <div><?php echo $row['professor']; ?></div>
+
+
+                <div class="header">CONSULTATION HOURS</div>
+                <div>:</div>
+                <div>
+                    <?php echo $row['consultation_hours_date']; ?><br>
+                    <?php echo $row['consultation_hours_room']; ?><br>
+                    <?php echo $row['consultation_hours_email']; ?><br>
+                    <?php echo $row['consultation_hours_number']; ?>
+                </div>
+                </div>
+                <div class="container-box course_description">
     </div>
 
-    
-</div>
-
-<div class="container-box course_description">
-    </div>
-    
-    <div class="container-box desc">
-        <div class="header mt-4">COURSE DESCRIPTION:</div>
+                <div class="container-box desc">
+    <div class="header mt-4">COURSE DESCRIPTION:</div>
     <div class="text-wrap descriptions"><?php echo $row['course_description']; ?></div>
+ <!-- Close the container -->
+
+                <?php
+        }
+        ?>
+    <?php
+} else {
+    echo "<div class='container'><br>";
+    echo "0 results";
+    echo "</div> ";
+}
+
+// Close database connection
+$mysqli->close();
+?>
+
+
+</div> 
+<div class="mt-5 header-title"><br>
     <div class="header mt-4">COURSE LEARNING OUTCOMES:</div>
     <p> By the end of this course, students are expected to: </p>
 </div>
@@ -757,12 +937,14 @@ td{
                 </table>
            
 
+                 
                     </div>
 
-                    <div class="container-fluid mt-5 header-title"><br>
+                    <div class="mt-5 header-title"><br>
                     <b><a>LEARNING PLAN</a></b><br>
                     <b><a>Learning Outcomes for Midterm Period </a></b>
                     </div>
+             
 
         
                     <div class="container mt-5">
@@ -1222,7 +1404,7 @@ td{
 
 <br>
 
-<div class="container-fluid mt-5 header-title">
+<div class="mt-5 header-title">
 <a>Learning Outcomes for Final Period</a>
 </div>
 
