@@ -174,7 +174,7 @@ $sql = "SELECT * FROM course_leaning";
     <span><a style=''>By the end of this course, students are expected to:</a></span>
 
 
-
+<br>
 
 
 
@@ -216,7 +216,7 @@ if ($result->num_rows > 0) {
     // Output data of each row
     while($row = $result->fetch_assoc()) {
         echo "<tr>
-                <td>" . $row["comlab"]." . ". $row["learn_out"]. "</td>
+                <td style='padding-bottom:10px;'>" . $row["comlab"]." . ". $row["learn_out"]."</td>
             </tr>";
     }
     
@@ -370,8 +370,8 @@ FROM
         <td style='border: 1px solid #dddddd; padding:8px; text-align: center; font-weight:bold; padding: 18px;'>Weeks</td>
         <td style='border: 1px solid #dddddd; padding:8px; text-align: center; font-weight:bold; padding: 18px;'>Teaching-Learning Activities / Assessment Strategy</td>
         <td style='border: 1px solid #dddddd; padding:8px; text-align: center; font-weight:bold;'>Technology Enabler</td>
-        <td style='border: 1px solid #dddddd; padding:8px; text-align: center; font-weight:bold;'>Onsite / F2F</td>
-        <td style='border: 1px solid #dddddd; padding:8px; text-align: center; font-weight:bold;'>Asynchronous</td>
+        <td style='border: 1px solid #dddddd; padding:8px; text-align: center; font-weight:bold; '>Onsite / F2F</td>
+        <td style='border: 1px solid #dddddd; padding:8px; text-align: center; font-weight:bold; '>Asynchronous</td>
         <td style='border: 1px solid #dddddd; padding:8px; text-align: center; font-weight:bold;'>Alloted Hours</td>
     </tr>";
     
