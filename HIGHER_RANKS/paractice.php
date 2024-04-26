@@ -223,11 +223,8 @@ td{
     include("index.php");
     ?>
 
-<a><?php echo $department ?></a>
     </nav>
    
-    <div class="card custom-card" >
-    <div class="card-body">
 
     <div class="pt-5 pb-4">
         <img src="../img/logos.png" class="logos" alt="">
@@ -642,6 +639,9 @@ td{
                             <textarea name="topic_learn_out" id="topic_learn_out" class="form-control" placeholder="Enter Course Learning Outcome" cols="90" rows="5"></textarea>
                         </div>
 
+
+                        
+
                         
                     </div>
                     <div class="modal-footer">
@@ -828,8 +828,7 @@ $mysqli->close();
     <div class="header mt-4">COURSE LEARNING OUTCOMES:</div>
     <p> By the end of this course, students are expected to: </p>
 </div>
-</div> 
-                    <button type="button" class="btn btn-primary add_databtn" data-toggle="modal" data-target="#studentaddmodal">
+                    <button type="button" class="btn btn-primary add_databtn float" data-toggle="modal" data-target="#studentaddmodal">
                         ADD DATA
                     </button>
 
@@ -858,6 +857,10 @@ $mysqli->close();
                         <label for="learn_out">Course Learning Outcomes</label><br>
                         <textarea name="learn_out" id="learn_out" row="70" cols="50" class="form-control" placeholder="Course Learning Outcomes"></textarea>
                 
+
+                        <div class="form-group">
+    <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+</div>
 
                     </div>
                     <div class="modal-footer">
@@ -891,8 +894,8 @@ $mysqli->close();
                          }
                  
                 
-
-                     $query = "SELECT * FROM course_leaning";
+                     $department = $_SESSION['department']; 
+                     $query = "SELECT * FROM course_leaning WHERE department = $department";
                      $query_run = mysqli_query($connection, $query);
         ?>  
                 <table id="datatableid">
@@ -963,8 +966,8 @@ $mysqli->close();
                          }
                  
                 
-
-                     $query = "SELECT * FROM course_leaning";
+                     $department = $_SESSION['department'];
+                     $query = "SELECT * FROM course_leaning WHERE department = $department";
                      $query_run = mysqli_query($connection, $query);
         ?>  
                 <table id="datatableid" class="table table-bordered">
@@ -1019,7 +1022,7 @@ $mysqli->close();
 
 
 
-                    <button type="button" class="btn btn-primary add_databtn" data-toggle="modal" data-target="#addmodal_module_learning">
+                    <button type="button" class="btn btn-primary add_databtn float" data-toggle="modal" data-target="#addmodal_module_learning">
                         ADD DATA
                     </button>
 
@@ -1083,6 +1086,10 @@ $mysqli->close();
                         <input type="text" name="hours" id="alloted_hours5" class="form-control"
                             placeholder="Enter Alloted Hours">
 
+
+                            <div class="form-group">
+    <input type="text" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+</div>
 
                     </div>
                     <div class="modal-footer">
@@ -1204,14 +1211,14 @@ $mysqli->close();
                 echo "Failed to connect to MySQL: " . mysqli_connect_error();
                 die();
             }
-
+            $department = $_SESSION['department']; 
             // Calculate total hours
             $total_hour_query = "SELECT `hours`,`asy`,`onsite`,
             SUM(hours) as total_hours, 
             SUM(asy) as total_asy_hours,
             SUM(onsite) as total_onsite_hours 
         FROM 
-            module_learning";
+            module_learning WHERE department = $department";
             $total_hour_result = mysqli_query($connection, $total_hour_query);
             $total_hour_row = mysqli_fetch_assoc($total_hour_result);
 
@@ -1221,6 +1228,7 @@ $mysqli->close();
             $total_hour = $total_hour_row['total_hours'];
             $total_asy_hours = $total_hour_row['total_asy_hours'];
             $total_onsite_hours = $total_hour_row['total_onsite_hours'];
+
 
             // Fetch module learning records
             $query = "SELECT 
@@ -1234,7 +1242,7 @@ $mysqli->close();
                         `asy`, 
                         `hours`
                     FROM 
-                        `module_learning`";
+                        `module_learning` WHERE department = $department ";
 
             $query_run = mysqli_query($connection, $query);
 
@@ -1359,7 +1367,7 @@ $mysqli->close();
 
 
   <!--Add Modal Final Period Table -->
-<button type="button" class="btn btn-primary add_databtn_final" data-toggle="modal" data-target="#studentaddmodal15">
+<button type="button" class="btn btn-primary add_databtn_final float" data-toggle="modal" data-target="#studentaddmodal15">
                         ADD DATA
                     </button>
 
@@ -1388,6 +1396,10 @@ $mysqli->close();
                         <label>Topic Learning Outcomes</label>
                         <textarea name="final_topic_leaning_out" id="final_topic_leaning_out6" class="editor3" placeholder="Enter Learning Outcome" cols="50" rows="5"></textarea>
                     </div>
+
+                    <div class="form-group">
+                    <input type="text" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+                </div>
 
                     </div>
                     <div class="modal-footer">
@@ -1427,7 +1439,8 @@ $mysqli->close();
 
 
 
- $query = "SELECT * FROM  laerning_final";
+ $department = $_SESSION['department']; 
+ $query = "SELECT * FROM  laerning_final WHERE department = $department";
  $query_run = mysqli_query($connection, $query);
 ?>  
 <table id="datatableid" class="table table-bordered">
@@ -1483,7 +1496,7 @@ echo "No Record Found";
 
 </div>
 
-<button type="button" class="btn btn-primary add_databtn_final" data-toggle="modal" data-target="#addmodal_module_learning_final">
+<button type="button" class="btn btn-primary add_databtn_final float" data-toggle="modal" data-target="#addmodal_module_learning_final">
                         ADD DATA
                     </button>
 
@@ -1548,6 +1561,10 @@ echo "No Record Found";
                         <input type="text" name="hours" id="1hours" class="form-control"
                             placeholder="Enter Alloted Hours">
 
+
+                            <div class="form-group">
+    <input type="text" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+</div>
 
                     </div>
                     <div class="modal-footer">
@@ -1698,13 +1715,15 @@ echo "No Record Found";
                 die();
             }
 
+            $department = $_SESSION['department']; 
+
             // Calculate total hours
             $total_hour_query = "SELECT `hours`,`asy`,`onsite`,
             SUM(hours) as total_hours, 
             SUM(asy) as total_asy_hours,
             SUM(onsite) as total_onsite_hours 
         FROM 
-        module_learning_final";
+        module_learning_final WHERE department = $department";
             $total_hour_result = mysqli_query($connection, $total_hour_query);
             $total_hour_row = mysqli_fetch_assoc($total_hour_result);
 
@@ -1727,7 +1746,7 @@ echo "No Record Found";
                         `asy`, 
                         `hours`
                     FROM 
-                        `module_learning_final`";
+                        `module_learning_final` WHERE department = $department";
 
             $query_run = mysqli_query($connection, $query);
 
@@ -1761,7 +1780,7 @@ echo "No Record Found";
             <?php
                 }
             } else {
-                echo "No Record Found";
+                // echo "No Record Found";
             }
             ?>
             <tr>
@@ -1807,6 +1826,10 @@ echo "No Record Found";
                             <input type="text" name="percent" id="percent6" class="form-control"
                                 placeholder="Enter Percent">
                         </div>
+
+                        <div class="form-group">
+                    <input type="text" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+                </div>
 
 
                     </div>
@@ -1908,7 +1931,7 @@ echo "No Record Found";
 
 <div class="card custom-card">
 <div class="card-body">
-<button type="button" class="btn btn-primary percent_grading" data-toggle="modal" data-target="#percent_grading">ADD DATA
+<button type="button" class="btn btn-primary percent_grading float" data-toggle="modal" data-target="#percent_grading">ADD DATA
 </button> 
 <div class="container mt-5 me-5">
     
@@ -1928,8 +1951,10 @@ echo "No Record Found";
                 die();
             }
 
-    
-            $total_percent_query = "SELECT SUM(`percents`) AS total_percent FROM percent";
+      
+            $department = $_SESSION['department']; 
+
+            $total_percent_query = "SELECT SUM(`percents`) AS total_percent FROM percent WHERE department = $department ";
             $total_percent_result = mysqli_query($connection, $total_percent_query);
             $total_percent_row = mysqli_fetch_assoc($total_percent_result);
             
@@ -1939,7 +1964,7 @@ echo "No Record Found";
 
 
             // Fetch module learning records
-            $query = "SELECT `id`, `description`, `percents` FROM `percent`";
+            $query = "SELECT `id`, `description`, `percents` FROM `percent` WHERE department = $department ";
 
             $query_run = mysqli_query($connection, $query);
 
@@ -2183,7 +2208,7 @@ echo "No Record Found";
 <!-- ADD ONSITE REFFERENCE -->
 
 <!--Add Modal Final Period Table -->
-<button type="button" class="btn btn-primary onsite_reffence_tables" data-toggle="modal" data-target="#onsite_reffence_tables">
+<button type="button" class="btn btn-primary onsite_reffence_tables float" data-toggle="modal" data-target="#onsite_reffence_tables">
                         ADD DATA
                     </button>
 
@@ -2212,6 +2237,10 @@ echo "No Record Found";
                         <label>Reference Material</label>
                         <textarea name="Reference_Material" id="Reference_Material6" class="editor7" placeholder="Enter Learning Outcome" cols="50" rows="5"></textarea>
                     </div>
+
+                    <div class="form-group">
+    <input type="text" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+        </div>
 
                     </div>
                     <div class="modal-footer">
@@ -2324,8 +2353,8 @@ echo "No Record Found";
      }
 
 
-
- $query = "SELECT * FROM  onsite_reffence";
+ $department = $_SESSION['department'];
+ $query = "SELECT * FROM  onsite_reffence WHERE department = $department";
  $query_run = mysqli_query($connection, $query);
 ?>  
 <table id="datatableid" class="table table-bordered">
@@ -2380,7 +2409,7 @@ echo "No Record Found";
 <!-- ADD online REFFERENCE -->
 
 <!--Add Modal Final Period Table -->
-<button type="button" class="btn btn-primary online_reffence" data-toggle="modal" data-target="#online_reffence">
+<button type="button" class="btn btn-primary online_reffence float" data-toggle="modal" data-target="#online_reffence">
                         ADD DATA
                     </button>
 
@@ -2409,6 +2438,10 @@ echo "No Record Found";
                         <label>Reference Material</label>
                         <textarea name="refference_material" id="refference_material6" class="Editor8" placeholder="Enter Reference Material" cols="50" rows="5"></textarea>
                     </div>
+
+                    <div class="form-group">
+                    <input type="text" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+</div>
 
                     </div>
                     <div class="modal-footer">
@@ -2519,9 +2552,8 @@ echo "No Record Found";
      die();
      }
 
-
-
- $query = "SELECT * FROM  online_refference";
+ $department = $_SESSION['department'];
+ $query = "SELECT * FROM  online_refference WHERE department = $department";
  $query_run = mysqli_query($connection, $query);
 ?>  
 <table id="datatableid" class="table table-bordered">
@@ -2561,7 +2593,7 @@ foreach($query_run as $row)
 }
 else 
 {
-echo "No Record Found";
+// echo "No Record Found";
 }
 ?>
 </table>
@@ -2570,6 +2602,109 @@ echo "No Record Found";
 
 
 </div>
+
+
+<!--Add Modal Final Period Table -->
+<button type="button" class="btn btn-primary add_semester float" data-toggle="modal" data-target="#add_semester">
+                        ADD DATA
+                    </button>
+
+                    <!-- Modal -->
+ <div class="modal fade" id="add_semester" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Online References</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/insert_semester.php" method="POST">
+
+                    <div class="modal-body">
+                    <div class="form-group">
+    <label for="term">Term</label>
+    <select name="term" id="term1" class="form-control">
+        <option value="--select semester--" disabled selected>select semester</option>
+        <option value="1<sup>st</sup> Semester">1st Semester</option>
+        <option value="2<sup>nd</sup> Semester">2nd Semester</option>
+        <option value="Special Term">Special Term</option>
+    </select>
+</div>
+
+<select style="display:none" name="second_call" id="second_call1" class="form-control">
+    <option value=""></option>
+</select>
+
+
+<script>
+    document.getElementById('term1').addEventListener('change', function () {
+        var term = this.value;
+        var secondCallDropdown = document.getElementById('second_call1');
+        
+        // Clear existing options
+        secondCallDropdown.innerHTML = '';
+        
+        // Depending on the selected term, populate the second call options dynamically
+        if (term === '1<sup>st</sup> Semester') {
+            // Add options for 1st Semester
+            addOptions(secondCallDropdown, [
+                { value: 'first semester', text: 'first semester' },
+            ]);
+        } else if (term === '2<sup>nd</sup> Semester') {
+            // Add options for 2nd Semester
+            addOptions(secondCallDropdown, [
+                { value: 'second semester', text: 'second semester' },
+            ]);
+        } else if (term === 'Special Term') {
+            // Add options for Special Term
+            addOptions(secondCallDropdown, [
+                { value: 'special term', text: 'special term' },
+            ]);
+        }
+    });
+
+    // Function to add options to a dropdown
+    function addOptions(selectElement, options) {
+        options.forEach(function (option) {
+            var optionElement = document.createElement('option');
+            optionElement.value = option.value;
+            optionElement.textContent = option.text;
+            selectElement.appendChild(optionElement);
+        });
+    }
+</script>
+
+                    
+
+
+
+
+
+                        <div class="form-group">
+                            <label>Year</label>
+                            <input type="text" name="year" id="year1" class="form-control"
+                                placeholder="Enter Year">
+                        </div>
+
+
+                    <div class="form-group">
+                    <input type="text" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+</div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="insertdata" class="btn btn-primary">Save Data</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
 
 <!-- EDIT SEMESTRAL -->
 
@@ -2592,13 +2727,57 @@ echo "No Record Found";
                         <input type="hidden" name="update_id9" id="update_id9">
                         
                         <div class="form-group">
-                        <label for="term">Term</label>
-                        <select name="term" id="term" class="form-control">
-                        <option value="1<sup>st</sup> Semester">1st Semester</option>
-                            <option value="2<sup>nd</sup> Semester">2nd Semester</option>
-                            <option value="Special Term">Special Term</option>
-                        </select>
-                    </div>
+    <label for="term">Term</label>
+    <select name="term" id="term" class="form-control">
+        <option value="--select semester--" disabled selected>select semester</option>
+        <option value="1<sup>st</sup> Semester">1st Semester</option>
+        <option value="2<sup>nd</sup> Semester">2nd Semester</option>
+        <option value="Special Term">Special Term</option>
+    </select>
+</div>
+
+<select style="display:none" name="second_call" id="second_call" class="form-control">
+    <option value=""></option>
+</select>
+
+
+<script>
+    document.getElementById('term').addEventListener('change', function () {
+        var term = this.value;
+        var secondCallDropdown = document.getElementById('second_call');
+        
+        // Clear existing options
+        secondCallDropdown.innerHTML = '';
+        
+        // Depending on the selected term, populate the second call options dynamically
+        if (term === '1<sup>st</sup> Semester') {
+            // Add options for 1st Semester
+            addOptions(secondCallDropdown, [
+                { value: 'first semester', text: 'first semester' },
+            ]);
+        } else if (term === '2<sup>nd</sup> Semester') {
+            // Add options for 2nd Semester
+            addOptions(secondCallDropdown, [
+                { value: 'second semester', text: 'second semester' },
+            ]);
+        } else if (term === 'Special Term') {
+            // Add options for Special Term
+            addOptions(secondCallDropdown, [
+                { value: 'special term', text: 'special term' },
+            ]);
+        }
+    });
+
+    // Function to add options to a dropdown
+    function addOptions(selectElement, options) {
+        options.forEach(function (option) {
+            var optionElement = document.createElement('option');
+            optionElement.value = option.value;
+            optionElement.textContent = option.text;
+            selectElement.appendChild(optionElement);
+        });
+    }
+</script>
 
                         <div class="form-group">
                             <label>Year</label>
@@ -2621,66 +2800,8 @@ echo "No Record Found";
     </div>
 
 
+</div>
 
-<!-- SEMESTRAL -->
-<?php
- 
-
- // Database connection
- 
- 
- $connection = mysqli_connect("localhost","root","","syllabus");
- if (mysqli_connect_errno()){
-     echo "Failed to connect to MySQL: " . mysqli_connect_error();
-     die();
-     }
-
-
-
- $query = "SELECT * FROM  semestral";
- $query_run = mysqli_query($connection, $query);
-?>  
-<table id="datatableid">
-<thead>
-    <tr>
-        <!-- <th scope="col">Provider</th>
-        <th scope="col">Reference Material</th>
-        <th scope="col">Action</th> -->
-    </tr>
-</thead>
-<?php
-if($query_run)
-{
-foreach($query_run as $row)
-{
-?>
-<tbody>
-  
-<tr>
-        <td class="hide-id"> <?php echo $row['id']; ?> </td>
-        <td class="hide-id"><?php echo $row['term']; ?></td>
-        <td class="hide-id"><?php echo $row['year']; ?></td>
-        <td class="table-button">
-        <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
-
-        <button type="button" class="btn btn-success editbtn_semestral sysllabus_button m-3"><i class="lni lni-pencil"></i></button><a>EDIT SEMESTER</a>
-
-        <!-- <button type="button" class="btn btn-danger deletebtn_online_refference"><i class="lni lni-trash-can"></i></button> -->
-        </td>
-    </tr>
-
-
-
-</tbody>
-<?php           
-}
-}
-else 
-{
-echo "No Record Found";
-}
-?>
-</table>
 
 
 <div class="container-box mt-5 header-title mb-5">
@@ -2688,7 +2809,59 @@ echo "No Record Found";
 
 
 
-<a class="term_year"><td><?php echo $row['term']; ?> <?php echo $row['year']; ?></a></td><br><br>
+<!-- SEMESTRAL -->
+<?php
+// Database connection
+$connection = mysqli_connect("localhost", "root", "", "syllabus");
+if (mysqli_connect_errno()) {
+    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+    die();
+}
+
+$department = $_SESSION['department'];
+
+$query = "SELECT * FROM semestral WHERE department = $department";
+$query_run = mysqli_query($connection, $query);
+?>
+
+<table id="datatableid">
+    <thead>
+        <tr>
+            <!-- <th scope="col">Provider</th>
+            <th scope="col">Reference Material</th>
+            <th scope="col">Action</th> -->
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        if ($query_run) {
+            while ($row = mysqli_fetch_assoc($query_run)) {
+                $id = $row['id'];
+                $term = $row['term'];
+                $year = $row['year'];
+        ?>
+                <tr>
+                    <td class="hide-id"> <?php echo $id; ?> </td>
+                    <td class="hide-id"><?php echo $term; ?></td>
+                    <td class="hide-id"><?php echo $year; ?></td>
+                    
+                <a class="term_year"><?php echo $term . ' ' . $year; ?></a><br><br>
+                    <td class="table-button">
+                        <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
+                        <button type="button" class="btn btn-success editbtn_semestral sysllabus_button m-3"><i class="lni lni-pencil"></i></button><a>EDIT SEMESTER</a>
+                        <!-- <button type="button" class="btn btn-danger deletebtn_online_refference"><i class="lni lni-trash-can"></i></button> -->
+                    </td>
+                </tr>
+        <?php
+            }
+        } else {
+            echo "<tr><td colspan='3'>No Record Found</td></tr>";
+        }
+        ?>
+    </tbody>
+</table>
+
+
 
 
 
@@ -3048,8 +3221,8 @@ echo "No Record Found";
                              die();
                              }
                      
-
-                         $query = "SELECT * FROM course_syllabus";
+                         $department = $_SESSION['department']; 
+                         $query = "SELECT * FROM course_syllabus WHERE department = $department";
                          $query_run = mysqli_query($connection, $query);
             ?>  
                     <table id="datatableid">
@@ -3109,40 +3282,87 @@ echo "No Record Found";
             ?>
                     </table>
            
-                    <div class="container text-left">
-    <div class=" header text-left">COURSE CODE</div>
-    <div class="">:</div>
-    <div class=""><?php echo $row['course_code']; ?></div>
-  
-    <div class=" header text-left">COURSE TITLE</div>
-    <div class="">:</div>
-    <div class=""><?php echo $row['course_tittle']; ?></div>
+                    <?php
+// Establish a database connection (replace 'hostname', 'username', 'password', and 'database' with your actual database credentials)
+$mysqli = new mysqli("localhost", "root", "", "syllabus");
 
-    <div class=" header text-left">COURSE TYPE</div>
-    <div class="">:</div>
-    <div class=""><?php echo $row['course_Type']; ?></div>
-   
-    <div class=" header text-left">COURSE CREDIT</div>
-    <div class="">:</div>
-    <div class=""><?php echo $row['course_credit']; ?></div>
+// Check connection
+if ($mysqli->connect_error) {
+    die("Connection failed: " . $mysqli->connect_error);
+}
 
-    <div class=" header text-left">LEARNING MODALITY</div>
-    <div class="">:</div>
-    <div class=""><?php echo $row['learning_modality']; ?></div>
+$department = $_SESSION['department']; 
+// Prepare SQL query
+$sql = "SELECT `id`, `course_code`, `course_tittle`, `course_Type`, `course_credit`, `learning_modality`, `pre_requisit`, `co_pre_requisit`, `professor`, `consultation_hours_date`, `consultation_hours_room`, `consultation_hours_email`, `consultation_hours_number`, `course_description`, `email`, `department` FROM `course_syllabus` WHERE department='$department'";
 
-    <div class=" header text-left">PRE-REQUISITES</div>
-    <div class="">:</div>
-    <div class=""><?php echo $row['pre_requisit']; ?></div>
+// Execute query
+$result = $mysqli->query($sql);
 
-    <div class=" header text-left">CO-REQUISITES</div>
-    <div class="">:</div>
-    <div class=""><?php echo $row['co_pre_requisit']; ?></div>
+// Check if there are results
+if ($result->num_rows > 0) {
+    ?>
+
+        <?php
+        // Loop through the result set
+        while ($row = $result->fetch_assoc()) {
+            ?>
+
+       <div class="container text-left">
+                <div class="header">COURSE CODE</div>
+                <div>:</div>
+                <div><?php echo $row['course_code']; ?></div>
+
+                <div class="header">COURSE TITLE</div>
+                <div>:</div>
+                <div><?php echo $row['course_tittle']; ?></div>
+
+                <div class="header">COURSE TYPE</div>
+                <div>:</div>
+                <div><?php echo $row['course_Type']; ?></div>
+
+                <div class="header">COURSE CREDIT</div>
+                <div>:</div>
+                <div><?php echo $row['course_credit']; ?></div>
+
+                <div class="header">LEARNING MODALITY</div>
+                <div>:</div>
+                <div><?php echo $row['learning_modality']; ?></div>
+
+                <div class="header">PRE-REQUISITES</div>
+                <div>:</div>
+                <div><?php echo $row['pre_requisit']; ?></div>
+
+                <div class="header">CO-REQUISITES</div>
+                <div>:</div>
+                <div><?php echo $row['co_pre_requisit']; ?></div>
 
 
-</div>
+
+                
+                </div>
+             
+
+             
+ <!-- Close the container -->
+
+                <?php
+        }
+        ?>
+    <?php
+} else {
+    echo "<div class='container'><br>";
+    echo "0 results";
+    echo "</div> ";
+}
+
+// Close database connection
+$mysqli->close();
+?>
 
 
-<button type="button" class="btn btn-primary add_databtn_mapping_table" data-toggle="modal" data-target="#mapping_table">
+
+
+<button type="button" class="btn btn-primary add_databtn_mapping_table float" data-toggle="modal" data-target="#mapping_table">
                         ADD DATA
                     </button>
 
@@ -3215,8 +3435,13 @@ echo "No Record Found";
                   
 
                         <input type="checkbox" name="pl9_s" id="pl9s" value="/" class="form-control">
+
                        
                     </div>
+
+                    <div class="form-group">
+                <input type="text" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+            </div>
 
                     </div>
                     <div class="modal-footer">
@@ -3366,8 +3591,8 @@ echo "No Record Found";
      }
 
 
-
- $query = "SELECT * FROM  mapping_table";
+ $department = $_SESSION['department']; 
+ $query = "SELECT * FROM  mapping_table WHERE department = $department";
  $query_run = mysqli_query($connection, $query);
 ?>  
 <table id="datatableid" class="table table-bordered b-5">
@@ -3463,7 +3688,7 @@ echo "No Record Found";
 
 
 <!-- ADD MODAL GRADUATE ATTRIBUTES -->
-<button type="button" class="btn btn-primary add_databtn_decriptors" data-toggle="modal" data-target="#decriptors">
+<button type="button" class="btn btn-primary add_databtn_decriptors float" data-toggle="modal" data-target="#decriptors">
                         ADD DATA
                     </button>
 
@@ -3520,6 +3745,12 @@ echo "No Record Found";
                       
                        
                     </div>
+
+                    
+                <div class="form-group">
+                    <input type="text" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+                </div>
+
 
                     </div>
                     <div class="modal-footer">
@@ -3642,8 +3873,8 @@ echo "No Record Found";
      }
 
 
-
- $query = "SELECT * FROM decriptors";
+ $department = $_SESSION['department']; 
+ $query = "SELECT * FROM decriptors WHERE department = $department";
  $query_run = mysqli_query($connection, $query);
 ?>  
 <table id="datatableid" class="table table-bordered b-5">
@@ -3726,7 +3957,7 @@ echo "No Record Found";
 <!-- ADD online REFFERENCE -->
 
 <!--Add Modal Final Period Table -->
-<button type="button" class="btn btn-primary graduate_attribute" data-toggle="modal" data-target="#graduate_attribute">
+<button type="button" class="btn btn-primary graduate_attribute float" data-toggle="modal" data-target="#graduate_attribute">
                         ADD DATA
                     </button>
 
@@ -3755,6 +3986,10 @@ echo "No Record Found";
                         <label>Descriptors (Institutional Learning Outcome)</label>
                         <textarea name="descriptors_learn_out" id="descriptors_learn_out6" class="Editor11" placeholder="Enter Descriptors (Institutional Learning Outcome)" cols="50" rows="5"></textarea>
                     </div>
+
+                    <div class="form-group">
+    <input type="text" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+</div>
 
                     </div>
                     <div class="modal-footer">
@@ -3861,8 +4096,8 @@ echo "No Record Found";
      }
 
 
-
- $query = "SELECT * FROM  graduates_attributes";
+     $department = $_SESSION['department']; 
+ $query = "SELECT * FROM  graduates_attributes WHERE department = $department";
  $query_run = mysqli_query($connection, $query);
 ?>  
 <table id="datatableid" class="table table-bordered">

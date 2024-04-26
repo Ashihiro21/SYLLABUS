@@ -15,12 +15,13 @@ if ($connection->connect_error) {
 
 if(isset($_POST['insertdata']))
 {
-    $e_provider = $_POST['e_provider'];
-    $refference_material = $_POST['refference_material'];
+    $term = $_POST['term'];
+    $year = $_POST['year'];
+    $second_call = $_POST['second_call'];
     $department = $_POST['department'];
 
-    $sql = "INSERT INTO online_refference (`e_provider`, `refference_material`, `department`)
-    VALUES ('$e_provider', '$refference_material', '$department')";
+    $sql = "INSERT INTO semestral (`term`, `year`, `department`, `second_call`)
+    VALUES ('$term', '$year', '$department', '$second_call')";
 
     if ($connection->query($sql) === TRUE) {
         echo '<script> alert("Data Saved"); </script>';
