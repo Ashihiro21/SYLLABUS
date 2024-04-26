@@ -48,7 +48,7 @@ if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $first_name = $row['first_name'];
         $last_name = $row['last_name'];
-        $department = $row['department'];
+        $_SESSION['department'] = $row['department']; 
         $courses = $row['catid'];
         $phone_number = $row['phone_number'];
         $email = $row['email'];
@@ -68,6 +68,7 @@ if ($result->num_rows > 0) {
     }
 } 
 
+$department = $_SESSION['department']; 
 $sql = mysqli_query($conn,"SELECT * FROM course_syllabus");
 $user = mysqli_fetch_assoc($sql);
 
@@ -184,32 +185,49 @@ table, tr, th, td{
     <h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($category_name).'</h4>
     <h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($course_departments).'</h4>
 
-    <h4 style="text-align:center;">COURSE SYLLABUS</h4>
-
-    <span><a class="header">COURSE CODE</a><b><a style=" margin-left: 100px; margin-right: 2rem;">:</a></b><a class="data">'.$user['course_code'].'</a></span><br>
-    <span><a class="header">COURSE TITLE</a><b><a style=" margin-left: 97px; margin-right: 2rem;">:</a></b><a class="data">'.$user['course_tittle'].'</a></span><br>
-    <span><a class="header">COURSE TYPE</a><b><a style=" margin-left: 103px; margin-right: 2rem;">:</a></b><a class="data">'.$user['course_Type'].'</a></span><br>
-    <span><a class="header">COURSE CREDIT</a><b><a style=" margin-left: 84px; margin-right: 2rem;">:</a></b><a class="data">'.$user['course_credit'].'</a></span><br>
-    <span><a class="header">LEARNING MODALITY</a><b><a style=" margin-left: 36px; margin-right: 2rem;">:</a></b><a class="data">'.$user['learning_modality'].'</a></span><br>
-    <span><a class="header">PRE-REQUISITES</a><b><a style=" margin-left: 82px; margin-right: 2rem;">:</a></b><a class="data">'.$user['pre_requisit'].'</a></span><br>
-    <span><a class="header">CO-REQUISITES</a><b><a style=" margin-left: 90px; margin-right: 2rem;">:</a></b><a class="data">'.$user['co_pre_requisit'].'</a></span><br>
-    <span><a class="header">CONSULTATION HOURS </a><b><a style=" margin-left: 22px; margin-right: 2rem;">:</a></b><a class="data">'.$user['consultation_hours_date'].'</a></span><br>
-    <span><a class="" style=" margin-left: 253px; margin-right: 2rem;></a><a></a><a class="data">'.$user['consultation_hours_room'].'</a></span><br>
-    <span><a class="" style=" margin-left: 253px; margin-right: 2rem; ></a><a></a><a class="data">'.$user['consultation_hours_email'].'</a></span><br>
-    <span><a class="" style=" margin-left: 253px; margin-right: 2rem; ></a><a></a><a class="data">'.$user['consultation_hours_number'].'</a></span>
-
-    <h4 style="">COURSE DESCRIPTION:</h4>
+    <h4 style="text-align:center;">COURSE SYLLABUS</h4>';
+ 
     
-    <div class="box-description">
-    <p class="indented-paragraph" style="text-align: justify; text-justify: inter-word;">'.$user['course_description'].'</p>
-    </div>
+    $department = $_SESSION['department'];
+    // Using prepared statement to prevent SQL injection
+    $sql = "SELECT `id`, `course_code`, `course_tittle`, `course_Type`, `course_credit`, `learning_modality`, `pre_requisit`, `co_pre_requisit`, `professor`, `consultation_hours_date`, `consultation_hours_room`, `consultation_hours_email`, `consultation_hours_number`, `course_description`, `email`, `department` FROM `course_syllabus` WHERE department=?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $department);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            // Properly formatted HTML output
+          
+          $html .='  <span><a class="header">COURSE CODE</a><b><a style=" margin-left: 100px; margin-right: 2rem;">:</a></b><a class="data">'.$row['course_code'].'</a></span><br>';
+          $html .='<span><a class="header">COURSE TITLE</a><b><a style=" margin-left: 97px; margin-right: 2rem;">:</a></b><a class="data">'.$row['course_tittle'].'</a></span><br>';
+          $html .='<span><a class="header">COURSE TYPE</a><b><a style=" margin-left: 103px; margin-right: 2rem;">:</a></b><a class="data">'.$row['course_Type'].'</a></span><br>';
+          $html .=' <span><a class="header">COURSE CREDIT</a><b><a style=" margin-left: 84px; margin-right: 2rem;">:</a></b><a class="data">'.$row['course_credit'].'</a></span><br>';
+          $html .='<span><a class="header">LEARNING MODALITY</a><b><a style=" margin-left: 36px; margin-right: 2rem;">:</a></b><a class="data">'.$row['learning_modality'].'</a></span><br>';
+          $html .='<span><a class="header">PRE-REQUISITES</a><b><a style=" margin-left: 82px; margin-right: 2rem;">:</a></b><a class="data">'.$row['pre_requisit'].'</a></span><br>';
+          $html .='<span><a class="header">CO-REQUISITES</a><b><a style=" margin-left: 90px; margin-right: 2rem;">:</a></b><a class="data">'.$row['co_pre_requisit'].'</a></span><br>';
+          $html .='<span><a class="header">PROFESSOR</a><b><a style=" margin-left: 120px; margin-right: 2rem;">:</a></b><a class="data">'.$row['professor'].'</a></span><br>';
+          $html .='<span><a class="header">CONSULTATION HOURS </a><b><a style=" margin-left: 22px; margin-right: 2rem;">:</a></b><a class="data">'.$row['consultation_hours_date'].'</a></span><br>';
+          $html .='<span><a class="" style=" margin-left: 253px; margin-right: 2rem;></a><a></a><a class="data">'.$row['consultation_hours_room'].'</a></span><br>';
+          $html .='<span><a class="" style=" margin-left: 253px; margin-right: 2rem; ></a><a></a><a class="data">'.$row['consultation_hours_email'].'</a></span><br>';
+          $html .='<span><a class="" style=" margin-left: 253px; margin-right: 2rem; ></a><a></a><a class="data">'.$row['consultation_hours_number'].'</a></span>';
+          $html .='<h4 style="">COURSE DESCRIPTION:</h4>';
+          $html .='<div class="box-description">';
+          $html .='<p class="indented-paragraph" style="text-align: justify; text-justify: inter-word;">'.$row['course_description'].'</p>';
+          $html .=' </div>';
+    
+        }
+    } 
 
-    <h4 style="margin-top: 1rem;">COURSE LEARNING OUTCOMES:</h4>
-    <a style="">By the end of this course, students are expected to:</a>
-    <br><br>';
-
+    
+    
+    $html .= '<h4 style="margin-top: 1rem;">COURSE LEARNING OUTCOMES:</h4>';
+    $html .= '<a style="">By the end of this course, students are expected to:</a><br><br>';
+    
+    $department = $_SESSION['department']; 
     // Fetch and display course learning outcomes
-    $sql = "SELECT * FROM course_leaning ORDER BY id ASC";
+    $sql = "SELECT * FROM course_leaning WHERE department = $department ORDER BY id ASC";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
@@ -230,7 +248,9 @@ $html .= '<th>Course Learning Outcomes</th>';
 $html .= '<th>Topic Learning Outcomes</th>';
 $html .= '</tr>';
 
-$sql = "SELECT * FROM course_leaning ORDER BY id ASC";
+$department = $_SESSION['department']; 
+
+$sql = "SELECT * FROM course_leaning WHERE department = $department  ORDER BY id ASC";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -253,7 +273,7 @@ $html .= '</table>';
 $html .= '<table class="teaching_guid">';
 $html .= '<tr style="height: 150px">';
 $html .= '<th class="teaching_guid">Module No and Learning Outcomes</th>';
-$html .= '<th width="100%" class="teaching_guid">Week</th>';
+$html .= '<th width="" class="teaching_guid">Week</th>';
 $html .= '<th width="200px" class="teaching_guid">Teaching-Learning Activities / Assessment Strategy</th>';
 $html .= '<th style="" class="teaching_guid">Technology Enabler</th>';
 $html .= '<th height="15%"><p style="transform: rotate(-90deg); white-space: nowrap; width: 1px;">Onsite / F2F</p></th>';
@@ -261,15 +281,15 @@ $html .= '<th height="15%"><p style="transform: rotate(-90deg); white-space: now
 $html .= '<th height="15%"><p style="transform: rotate(-90deg); white-space: nowrap; width: 1px;">Alloted Hours</p></th>';
 $html .= '</tr>';
 
-
-$sql = "SELECT * FROM module_learning";
+$department = $_SESSION['department']; 
+$sql = "SELECT * FROM module_learning WHERE department = $department";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     $total_hour_query = "SELECT 
         SUM(hours) as total_hours, 
         SUM(asy) as total_asy_hours,
         SUM(onsite) as total_onsite_hours 
-    FROM module_learning";
+    FROM module_learning WHERE department = $department";
     $total_hour_result = mysqli_query($conn, $total_hour_query);
     $total_hour_row = mysqli_fetch_assoc($total_hour_result);
     
@@ -324,7 +344,8 @@ $html .= '<th>Course Learning Outcomes</th>';
 $html .= '<th>Topic Learning Outcomes</th>';
 $html .= '</tr>';
 
-$sql = "SELECT * FROM laerning_final ORDER BY id ASC";
+$department = $_SESSION['department']; 
+$sql = "SELECT * FROM laerning_final WHERE department = $department ORDER BY id ASC";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -357,14 +378,16 @@ $html .= '<th height="15%"><p style="transform: rotate(-90deg); white-space: now
 $html .= '<th height="15%"><p style="transform: rotate(-90deg); white-space: nowrap; width: 1px;">Alloted Hours</p></th>';
 $html .= '</tr>';
 
-$sql = "SELECT * FROM module_learning_final";
+
+$department = $_SESSION['department']; 
+$sql = "SELECT * FROM module_learning_final WHERE department = $department ORDER BY id ASC";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     $total_hour_query = "SELECT 
         SUM(hours) as total_hours, 
         SUM(asy) as total_asy_hours,
         SUM(onsite) as total_onsite_hours 
-    FROM module_learning_final";
+    FROM module_learning_final WHERE department = $department";
     $total_hour_result = mysqli_query($conn, $total_hour_query);
     $total_hour_row = mysqli_fetch_assoc($total_hour_result);
     
@@ -422,7 +445,9 @@ $html .= '</style>';
 
 $html .= '<table class="tables">';
 
-$sql = "SELECT * FROM percent ORDER BY id ASC";
+
+$department = $_SESSION['department']; 
+$sql = "SELECT * FROM percent WHERE department = $department ORDER BY  id ASC";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     $total_percent_query = "SELECT SUM(`percents`) AS total_percent FROM percent";
@@ -550,8 +575,8 @@ $html .= 'ul { list-style-type: lower-roman; padding: 0; }'; // Apply CSS to set
 $html .= '</style>';
 
 
-
-$sql = "SELECT * FROM percent ORDER BY id ASC";
+$department = $_SESSION['department']; 
+$sql = "SELECT * FROM percent WHERE department = $department ORDER  BY id ASC";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     $html .= '<ul>'; // Start unordered list
@@ -579,7 +604,31 @@ $html .='<div class="container-2" style="margin-bottom: 0rem; margin-top: -2rem;
 $html .='</div>';
 
 $html .='<div class="container-2" style="margin-left: 7rem;margin-bottom: -2rem;  overflow-wrap: break-word;">';
-$html .='<p>a. <b>Schedule. </b>The schedule of self-care week for the '.$user4['second_call']." ".$user4['year'].' is on '.$user5['date'].'. During this week, there shall be no asynchronous/synchronous meetings, F2F classes, new modules, new assessments, and deadlines.</p>';
+
+$department = $_SESSION['department']; 
+// Fetch and display course learning outcomes
+$sql = "SELECT * FROM semestral WHERE department = $department ORDER BY id ASC";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $html .='<p>a. <b>Schedule. </b>The schedule of self-care week for the '.$row['second_call']." ".$row['year'].' is on ';
+    }
+}
+
+
+
+
+$department = $_SESSION['department']; 
+// Fetch and display course learning outcomes
+$sql = "SELECT `date` FROM module_learning_final WHERE department = '$department' ORDER BY id ASC LIMIT 1";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $html .= $row['date'] . '. During this week, there shall be no asynchronous/synchronous meetings, F2F classes, new modules, new assessments, and deadlines.</p>';
+    }
+    
+}
+
 $html .='<p>b. <b>Prerogative. </b>Students may avail of the self-care program, whether online or onsite, provided by the different units of the University.</p>';
 $html .='</div>';
 
@@ -643,7 +692,9 @@ $html .= '<th width="170px">Provider</th>';
 $html .= '<th>Reference Material</th>';
 $html .= '</tr>';
 
-$sql = "SELECT * FROM `onsite_reffence` ORDER BY id ASC";
+$department = $_SESSION['department']; 
+
+$sql = "SELECT * FROM `onsite_reffence` WHERE department = $department  ORDER BY id ASC";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -670,7 +721,10 @@ $html .= '<th>Call Number / E-provider </th>';
 $html .= '<th>Reference Material</th>';
 $html .= '</tr>';
 
-$sql = "SELECT * FROM `online_refference` ORDER BY id ASC";
+
+
+$department = $_SESSION['department']; 
+$sql = "SELECT * FROM `online_refference` WHERE department = $department ORDER BY id ASC";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -687,9 +741,16 @@ $html .= '</table>';
 $html .='&nbsp;&nbsp;&nbsp;&nbsp;<span style=""><b>Prepared:</b><b><a style="padding-left:30px;" class="course">'.$course_departments.'</a></b></span>';
 
 
-
-$html .='<p style="padding-left:130px; style="padding-top:10px;" class="term_year">'.$user4['term']." ".$user4['year'].'</p></td>';
-
+$department = $_SESSION['department']; 
+// Fetch and display course learning outcomes
+$sql = "SELECT * FROM semestral WHERE department = $department";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $html .='<p style="padding-left:130px; style="padding-top:10px;" class="term_year">'.$row['term']." ".$row['year'].'</p></td>';
+    }
+    
+}
 
 
 $html .= '<p><img style="padding-left:145px; padding-top:10px;" src="' . $dept_head_signature . '" " class="course" alt="Department Head Signature"></p>';
@@ -715,18 +776,36 @@ $html .=   '<h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($cour
 $html .= '<h4 style="text-align:center; margin-top: 1rem;">PROGRAM LEARNING OUTCOME - COURSE LEARNING OUTCOME</h4>';
 $html .=   '<h4 style="text-align:center; margin-top: -1rem;">MAPPING TABLE FOR '.strtoupper($cname).'</h4';
 
-    $html .= '<span><a class="header">COURSE CODE</a><b><a style=" margin-left: 100px; margin-right: 2rem;">:</a></b><a class="data">'.$user['course_code'].'</a></span><br>';
-    $html .= '<span><a class="header">COURSE TITLE</a><b><a style=" margin-left: 97px; margin-right: 2rem;">:</a></b><a class="data">'.$user['course_tittle'].'</a></span><br>';
-    $html .= '<span><a class="header">COURSE TYPE</a><b><a style=" margin-left: 103px; margin-right: 2rem;">:</a></b><a class="data">'.$user['course_Type'].'</a></span><br>';
-    $html .= '<span><a class="header">COURSE CREDIT</a><b><a style=" margin-left: 84px; margin-right: 2rem;">:</a></b><a class="data">'.$user['course_credit'].'</a></span><br>';
-    $html .= '<span><a class="header">LEARNING MODALITY</a><b><a style=" margin-left: 36px; margin-right: 2rem;">:</a></b><a class="data">'.$user['learning_modality'].'</a></span><br>';
-    $html .= '<span><a class="header">PRE-REQUISITES</a><b><a style=" margin-left: 82px; margin-right: 2rem;">:</a></b><a class="data">'.$user['pre_requisit'].'</a></span><br>';
-    $html .= '<span><a class="header">CO-REQUISITES</a><b><a style=" margin-left: 90px; margin-right: 2rem;">:</a></b><a class="data">'.$user['co_pre_requisit'].'</a></span><br>';
+   
+$department = $_SESSION['department'];
+// Using prepared statement to prevent SQL injection
+$sql = "SELECT `id`, `course_code`, `course_tittle`, `course_Type`, `course_credit`, `learning_modality`, `pre_requisit`, `co_pre_requisit`, `professor`, `consultation_hours_date`, `consultation_hours_room`, `consultation_hours_email`, `consultation_hours_number`, `course_description`, `email`, `department` FROM `course_syllabus` WHERE department=?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $department);
+$stmt->execute();
+$result = $stmt->get_result();
 
-    
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        // Properly formatted HTML output
+      
+      $html .='  <span><a class="header">COURSE CODE</a><b><a style=" margin-left: 100px; margin-right: 2rem;">:</a></b><a class="data">'.$row['course_code'].'</a></span><br>';
+      $html .='<span><a class="header">COURSE TITLE</a><b><a style=" margin-left: 97px; margin-right: 2rem;">:</a></b><a class="data">'.$row['course_tittle'].'</a></span><br>';
+      $html .='<span><a class="header">COURSE TYPE</a><b><a style=" margin-left: 103px; margin-right: 2rem;">:</a></b><a class="data">'.$row['course_Type'].'</a></span><br>';
+      $html .=' <span><a class="header">COURSE CREDIT</a><b><a style=" margin-left: 84px; margin-right: 2rem;">:</a></b><a class="data">'.$row['course_credit'].'</a></span><br>';
+      $html .='<span><a class="header">LEARNING MODALITY</a><b><a style=" margin-left: 36px; margin-right: 2rem;">:</a></b><a class="data">'.$row['learning_modality'].'</a></span><br>';
+      $html .='<span><a class="header">PRE-REQUISITES</a><b><a style=" margin-left: 82px; margin-right: 2rem;">:</a></b><a class="data">'.$row['pre_requisit'].'</a></span><br>';
+      $html .='<span><a class="header">CO-REQUISITES</a><b><a style=" margin-left: 90px; margin-right: 2rem;">:</a></b><a class="data">'.$row['co_pre_requisit'].'</a></span><br>';
+
+    }
+} 
 
 
 
+
+
+    $html .= '<h4 style="margin-top: 1rem;">COURSE LEARNING OUTCOMES:</h4>';
+    $html .= '<a style="">By the end of this course, students are expected to:</a><br><br>';
     
 
     $html .= '<table class="teaching_guid" style="font-size: 14px"; height: 100px;>';
@@ -749,8 +828,8 @@ $html .=   '<h4 style="text-align:center; margin-top: -1rem;">MAPPING TABLE FOR 
     
    
     
-
-$sql = "SELECT * FROM mapping_table";
+$department = $_SESSION['department']; 
+$sql = "SELECT * FROM mapping_table WHERE department = $department";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
 
@@ -801,8 +880,8 @@ $html .= '</tr>'; // Closing the data row
 
 
 
-
-$sql = "SELECT * FROM decriptors";
+$department = $_SESSION['department']; 
+$sql = "SELECT * FROM decriptors WHERE department = $department";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
 
@@ -848,7 +927,8 @@ $html .= '</tr>'; // Closing the data row
 
 
 
-$sql = "SELECT * FROM graduates_attributes";
+$department = $_SESSION['department']; 
+$sql = "SELECT * FROM graduates_attributes WHERE department = $department";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
 

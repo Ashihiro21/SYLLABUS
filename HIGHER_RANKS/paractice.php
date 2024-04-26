@@ -1280,9 +1280,11 @@ $mysqli->close();
             ?>
             <tr>
                 <td colspan="5">TOTAL</td>
-                <td><?php echo $total_onsite_hours * $hours; ?></td>
-                <td><?php echo $total_asy_hours * $hours; ?></td>
-                <td><?php echo $total_hour; ?></td>
+                <td><?php echo (is_numeric($total_onsite_hours) && is_numeric($hours)) ? ($total_onsite_hours * $hours) : 0; ?></td>
+                <td><?php echo (is_numeric($total_asy_hours) && is_numeric($hours)) ? ($total_asy_hours * $hours) : 0; ?></td>
+                <td><?php echo is_numeric($total_hour) ? $total_hour : 0; ?></td>
+
+
             </tr>
         </tbody>
     </table>
@@ -1785,9 +1787,9 @@ echo "No Record Found";
             ?>
             <tr>
                 <td colspan="5">TOTAL</td>
-                <td><?php echo $total_onsite_hours * $hours; ?></td>
-                <td><?php echo $total_asy_hours * $hours; ?></td>
-                <td><?php echo $total_hour; ?></td>
+                <td><?php echo (is_numeric($total_onsite_hours) && is_numeric($hours)) ? ($total_onsite_hours * $hours) : 0; ?></td>
+                <td><?php echo (is_numeric($total_asy_hours) && is_numeric($hours)) ? ($total_asy_hours * $hours) : 0; ?></td>
+                <td><?php echo is_numeric($total_hour) ? $total_hour : 0; ?></td>
             </tr>
         </tbody>
     </table>
