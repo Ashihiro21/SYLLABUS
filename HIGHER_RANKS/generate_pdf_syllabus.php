@@ -450,7 +450,7 @@ $department = $_SESSION['department'];
 $sql = "SELECT * FROM percent WHERE department = $department ORDER BY  id ASC";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
-    $total_percent_query = "SELECT SUM(`percents`) AS total_percent FROM percent";
+    $total_percent_query = "SELECT SUM(`percents`) AS total_percent FROM percent WHERE department = $department";
     $total_percent_result = mysqli_query($conn, $total_percent_query);
     $total_percent_row = mysqli_fetch_assoc($total_percent_result);
             

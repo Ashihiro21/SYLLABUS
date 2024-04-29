@@ -49,7 +49,7 @@ if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $first_name = $row['first_name'];
         $last_name = $row['last_name'];
-        $department = $row['department'];
+        $_SESSION['department'] = $row['department'];
         $courses = $row['catid'];
         $phone_number = $row['phone_number'];
         $email = $row['email'];
@@ -153,23 +153,49 @@ $sql = "SELECT * FROM course_leaning";
     <a style="text-align:center; padding-top: 5rem;">COURSE SYLLABUS</a><br>
 </div><br>
   
-    
-    
-    <span><a style='font-weight: bold;'><b>COURSE CODE</b></a><b><a style="padding-left: 100px; padding-right: 2rem;"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><b> :</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $user['course_code'];?></a></span><br>
-    <span><a style='font-weight: bold;'><b>COURSE TITLE</b></a><b><a style="padding-left: 97px; padding-right: 2rem;"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a><b>:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $user['course_tittle'];?></a></span><br>
-    <span><a style='font-weight: bold;'><b>COURSE TYPE</b></a><b><a style="padding-left: 103px; padding-right: 2rem;"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><b> :</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $user['course_Type'];?></a></span><br>
-    <span><a style='font-weight: bold;'><b>COURSE CREDIT</b></a><b><a style="padding-left: 84px; padding-right: 2rem;"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><b>:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $user['course_credit']; ?></a></span><br>
-    <span><a style='font-weight: bold;'><b>LEARNING MODALITY</b></a><b><a style="padding-left: 36px; padding-right: 2rem;"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><b>:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $user['learning_modality']?></a></span><br>
-    <span><a style='font-weight: bold;'><b>PRE-REQUISITES</b></a><b><a style="padding-left: 82px; padding-right: 2rem;"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><b>:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $user['pre_requisit']; ?></a></span><br>
-    <span><a style='font-weight: bold;'><b>CO-REQUISITES</b></a><b><a style="padding-left: 90px; padding-right: 2rem;"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><b>:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $user['co_pre_requisit']; ?></a></span><br>
-    <span><a style='font-weight: bold;'><b>CONSULTATION HOURS</b></a><b><a style="padding-left: 22px; padding-right: 2rem;"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;<a><b> :</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $user['consultation_hours_date']; ?></a></span><br>
-    <span><a style="padding-left: 253px; padding-right: 2rem;"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><b> :</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $user['consultation_hours_room']; ?></a></span><br>
-    <span><a style="padding-left: 253px; padding-right: 2rem;"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><b> :</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $user['consultation_hours_email']; ?></a></span><br>
-    <span><a style="padding-left: 253px; padding-right: 2rem;"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><b> :</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $user['consultation_hours_number']; ?></a></span>
+  <?php
+
+$department = $_SESSION['department'];
+
+// Using prepared statement to prevent SQL injection
+$sql = "SELECT `id`, `course_code`, `course_tittle`, `course_Type`, `course_credit`, `learning_modality`, `pre_requisit`, `co_pre_requisit`, `professor`, `consultation_hours_date`, `consultation_hours_room`, `consultation_hours_email`, `consultation_hours_number`, `course_description`, `email`, `department` FROM `course_syllabus` WHERE department=?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $department);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        ?>
+
+
+    <span><a style='font-weight: bold;'><b>COURSE CODE</b></a><b><a style="padding-left: 100px; padding-right: 2rem;"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><b> :</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $row['course_code'];?></a></span><br>
+    <span><a style='font-weight: bold;'><b>COURSE TITLE</b></a><b><a style="padding-left: 97px; padding-right: 2rem;"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a><b>:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $row['course_tittle'];?></a></span><br>
+    <span><a style='font-weight: bold;'><b>COURSE TYPE</b></a><b><a style="padding-left: 103px; padding-right: 2rem;"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><b> :</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $row['course_Type'];?></a></span><br>
+    <span><a style='font-weight: bold;'><b>COURSE CREDIT</b></a><b><a style="padding-left: 84px; padding-right: 2rem;"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><b>:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $row['course_credit']; ?></a></span><br>
+    <span><a style='font-weight: bold;'><b>LEARNING MODALITY</b></a><b><a style="padding-left: 36px; padding-right: 2rem;"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><b>:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $row['learning_modality']?></a></span><br>
+    <span><a style='font-weight: bold;'><b>PRE-REQUISITES</b></a><b><a style="padding-left: 82px; padding-right: 2rem;"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><b>:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $row['pre_requisit']; ?></a></span><br>
+    <span><a style='font-weight: bold;'><b>CO-REQUISITES</b></a><b><a style="padding-left: 90px; padding-right: 2rem;"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><b>:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $row['co_pre_requisit']; ?></a></span><br>
+    <span><a style='font-weight: bold;'><b>CONSULTATION HOURS</b></a><b><a style="padding-left: 22px; padding-right: 2rem;"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;<a><b> :</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $row['consultation_hours_date']; ?></a></span><br>
+    <span><a style="padding-left: 253px; padding-right: 2rem;"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><b> :</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $row['consultation_hours_room']; ?></a></span><br>
+    <span><a style="padding-left: 253px; padding-right: 2rem;"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><b> :</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $row['consultation_hours_email']; ?></a></span><br>
+    <span><a style="padding-left: 253px; padding-right: 2rem;"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><b> :</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $row['consultation_hours_number']; ?></a></span>
     <p></p>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <span><a style='font-weight: bold;'><b>COURSE DESCRIPTION:</b></a><b><a style="padding-left: 100px; padding-right: 2rem; text-align: justify;"></a></b></a></span><br><br>
-    <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $user['course_description']; ?></a></a><br><br>
+    <a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $row['course_description']; ?></a></a><br><br>
+    
+
+    
+    <?php
+    }
+} else {
+    echo "No courses found for the selected department.";
+}
+
+// Close the database connection
+$conn->close();
+?>
     <span><p style='font-weight: bold;'>COURSE LEARNING OUTCOMES:</a><b><a style="padding-left: 100px; padding-right: 2rem;"></p></b></a></span>
     <span><a style=''>By the end of this course, students are expected to:</a></span>
 
@@ -202,8 +228,8 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// SQL query
-$sql = "SELECT `id`, `comlab`, `learn_out`   FROM `course_leaning`";
+$department = $_SESSION['department'];
+$sql = "SELECT `id`, `comlab`, `learn_out`   FROM `course_leaning` WHERE department = $department";
 
 // Execute query
 $result = $conn->query($sql);
@@ -223,7 +249,7 @@ if ($result->num_rows > 0) {
     // Close table
     echo "</table>";
 } else {
-    echo "0 results";
+    echo "No Results";
 }
 
 // Close connection
@@ -257,7 +283,7 @@ if ($conn->connect_error) {
 }
 
 // SQL query
-$sql = "SELECT `comlab`, `learn_out`, `topic_learn_out` FROM `course_leaning`";
+$sql = "SELECT `comlab`, `learn_out`, `topic_learn_out` FROM `course_leaning` WHERE department = $department";
 
 // Execute query
 $result = $conn->query($sql);
@@ -293,7 +319,7 @@ if ($result->num_rows > 0) {
     // Close table
     echo "</table>";
 } else {
-    echo "0 results";
+    echo "No Results";
 }
 
 // Close connection
@@ -324,7 +350,7 @@ if ($conn->connect_error) {
 
 
 
-// Execute query
+$department = $_SESSION['department'];
 
 
 // Check if any rows were returned
@@ -335,7 +361,8 @@ if ($result->num_rows > 0) {
     SUM(asy) as total_asy_hours,
     SUM(onsite) as total_onsite_hours 
 FROM 
-    module_learning";
+    module_learning 
+WHERE department = $department";
     $total_hour_result = mysqli_query($conn, $total_hour_query);
     $total_hour_row = mysqli_fetch_assoc($total_hour_result);
 
@@ -358,7 +385,8 @@ FROM
     `asy`, 
     `hours`
     FROM 
-    `module_learning`";
+    `module_learning` 
+WHERE department = $department";
 
 
     $result = $conn->query($sql);
@@ -410,11 +438,12 @@ FROM
 
 
     echo "<tr style='background-color:#ffbb33'>
-    <td style='border: 1px solid #dddddd; text-align: center; padding: 18px;' colspan='4'><p style='font-weight:bold;'>TOTAL <p></td>
-    <td style='border: 1px solid #dddddd; text-align: center; padding: 18px;'> " . ($total_onsite_hours * $hours) . " </td>
-    <td style='border: 1px solid #dddddd; text-align: center; padding: 18px;'> " . ($total_asy_hours * $hours) . " </td>
-    <td style='border: 1px solid #dddddd; text-align: center; padding: 18px;'> " . $total_hour . " </td>
+    <td style='border: 1px solid #dddddd; text-align: center; padding: 18px;' colspan='4'><p style='font-weight:bold;'>TOTAL</p></td>
+    <td style='border: 1px solid #dddddd; text-align: center; padding: 18px;'>" . (is_numeric($total_onsite_hours) && is_numeric($hours) ? ($total_onsite_hours * $hours) : 0) . "</td>
+    <td style='border: 1px solid #dddddd; text-align: center; padding: 18px;'>" . (is_numeric($total_asy_hours) && is_numeric($hours) ? ($total_asy_hours * $hours) : 0) . "</td>
+    <td style='border: 1px solid #dddddd; text-align: center; padding: 18px;'>" . (is_numeric($total_hour) ? $total_hour : 0) . "</td>
 </tr>";
+
 
 
 
@@ -424,7 +453,7 @@ FROM
     // Close table
     echo "</table>";
 } else {
-    echo "0 results";
+    echo "No Results";
 }
 
 // Close connection
@@ -451,9 +480,9 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
+$department = $_SESSION['department'];
 // SQL query
-$sql = "SELECT `final_learning_out`, `final_topic_leaning_out` FROM `laerning_final`";
+$sql = "SELECT `final_learning_out`, `final_topic_leaning_out` FROM `laerning_final` WHERE department = $department";
 
 // Execute query
 $result = $conn->query($sql);
@@ -489,7 +518,7 @@ if ($result->num_rows > 0) {
     // Close table
     echo "</table>";
 } else {
-    echo "0 results";
+    echo "No Results";
 }
 
 // Close connection
@@ -520,7 +549,7 @@ if ($conn->connect_error) {
 
 
 
-// Execute query
+$department = $_SESSION['department'];
 
 
 // Check if any rows were returned
@@ -531,7 +560,8 @@ if ($result->num_rows > 0) {
     SUM(asy) as total_asy_hours,
     SUM(onsite) as total_onsite_hours 
 FROM 
-    module_learning_final";
+module_learning_final
+WHERE department = $department";
     $total_hour_result = mysqli_query($conn, $total_hour_query);
     $total_hour_row = mysqli_fetch_assoc($total_hour_result);
 
@@ -554,7 +584,8 @@ FROM
     `asy`, 
     `hours`
     FROM 
-    `module_learning_final`";
+    `module_learning_final` 
+WHERE department = $department";
 
 
     $result = $conn->query($sql);
@@ -562,19 +593,19 @@ FROM
     echo "<table style='width: 100%;
     border-collapse: collapse;'>
     <tr>
-        <td style='border: 1px solid #dddddd; padding: 8px; text-align: center; font-weight:bold;'>Module No and Learning Outcomes</td>
-        <td style='border: 1px solid #dddddd; padding: 8px; text-align: center; font-weight:bold; padding: 18px;'>Weeks</td>
-        <td style='border: 1px solid #dddddd; padding: 8px; text-align: center; font-weight:bold; padding: 18px;'>Teaching-Learning Activities / Assessment Strategy</td>
-        <td style='border: 1px solid #dddddd; padding: 8px; text-align: center; font-weight:bold;'>Technology Enabler</td>
-        <td style='border: 1px solid #dddddd; padding: 8px; text-align: center; font-weight:bold;'>Onsite / F2F</td>
-        <td style='border: 1px solid #dddddd; padding: 8px; text-align: center; font-weight:bold;'>Asynchronous</td>
-        <td style='border: 1px solid #dddddd; padding: 8px; text-align: center; font-weight:bold;'>Alloted Hours</td>
+        <td style='border: 1px solid #dddddd; padding:8px; text-align: center; font-weight:bold;'>Module No and Learning Outcomes</td>
+        <td style='border: 1px solid #dddddd; padding:8px; text-align: center; font-weight:bold; padding: 18px;'>Weeks</td>
+        <td style='border: 1px solid #dddddd; padding:8px; text-align: center; font-weight:bold; padding: 18px;'>Teaching-Learning Activities / Assessment Strategy</td>
+        <td style='border: 1px solid #dddddd; padding:8px; text-align: center; font-weight:bold;'>Technology Enabler</td>
+        <td style='border: 1px solid #dddddd; padding:8px; text-align: center; font-weight:bold; '>Onsite / F2F</td>
+        <td style='border: 1px solid #dddddd; padding:8px; text-align: center; font-weight:bold; '>Asynchronous</td>
+        <td style='border: 1px solid #dddddd; padding:8px; text-align: center; font-weight:bold;'>Alloted Hours</td>
     </tr>";
     
     // Output data of each row
     while ($row = $result->fetch_assoc()) {
         echo "<tr>
-        <td style='border: 1px solid #dddddd; padding: 8px; text-align: center;'>";
+        <td style='border: 1px solid #dddddd; padding:8px; text-align: center;'>";
     
         if (strpos($row['module_no'], 'TLO') !== false || strpos($row['module_no'], "\n") !== false) {
             // If 'TLO' or a line break is found, replace it with <br>
@@ -585,9 +616,9 @@ FROM
     
         echo "</td>
 
-                <td style='border: 1px solid #dddddd; padding: 8px; text-align: center;'>" . $row["week"] . "   " . $row["date"] . "</td>
+                <td style='border: 1px solid #dddddd; padding:8px; text-align: center;'>" . $row["week"] . "   " . $row["date"] . "</td>
                 
-                <td style='border: 1px solid #dddddd; padding: 8px; text-align: left; width: 50px'>";
+                <td style='border: 1px solid #dddddd; padding:8px; text-align: left; width: 50px'>";
     
         if (strpos($row['teaching_activities'], '•') !== false || strpos($row['teaching_activities'], "\n") !== false) {
             // If 'TLO' or a line break is found, replace it with <br>
@@ -596,21 +627,22 @@ FROM
             echo $row['teaching_activities'];
         }
         echo "</td>
-        <td style='border: 1px solid #dddddd; padding: 8px; text-align: center;'>" . $row["technology"] . "</td>
-        <td style='border: 1px solid #dddddd; padding: 8px; text-align: center;'>" . ($row['onsite'] == 1 ? '/' : '') . "</td>
-        <td style='border: 1px solid #dddddd; padding: 8px; text-align: center;'>" . ($row['asy'] == 1 ? '/' : '') . "</td>
-        <td style='border: 1px solid #dddddd; padding: 8px; text-align: center;'>" . $row["hours"] . "</td>
+        <td style='border: 1px solid #dddddd; padding:8px; text-align: center;'>" . $row["technology"] . "</td>
+        <td style='border: 1px solid #dddddd; padding:8px; text-align: center;'>" . ($row['onsite'] == 1 ? '/' : '') . "</td>
+        <td style='border: 1px solid #dddddd; padding:8px; text-align: center;'>" . ($row['asy'] == 1 ? '/' : '') . "</td>
+        <td style='border: 1px solid #dddddd; padding:8px; text-align: center;'>" . $row["hours"] . "</td>
     </tr>";
     
     }
 
 
     echo "<tr style='background-color:#ffbb33'>
-    <td style='border: 1px solid #dddddd; text-align: center; padding: 18px;' colspan='4'><p style='font-weight:bold;'>TOTAL <p></td>
-    <td style='border: 1px solid #dddddd; text-align: center; padding: 18px;'> " . ($total_onsite_hours * $hours) . " </td>
-    <td style='border: 1px solid #dddddd; text-align: center; padding: 18px;'> " . ($total_asy_hours * $hours) . " </td>
-    <td style='border: 1px solid #dddddd; text-align: center; padding: 18px;'> " . $total_hour . " </td>
+    <td style='border: 1px solid #dddddd; text-align: center; padding: 18px;' colspan='4'><p style='font-weight:bold;'>TOTAL</p></td>
+    <td style='border: 1px solid #dddddd; text-align: center; padding: 18px;'>" . (is_numeric($total_onsite_hours) && is_numeric($hours) ? ($total_onsite_hours * $hours) : 0) . "</td>
+    <td style='border: 1px solid #dddddd; text-align: center; padding: 18px;'>" . (is_numeric($total_asy_hours) && is_numeric($hours) ? ($total_asy_hours * $hours) : 0) . "</td>
+    <td style='border: 1px solid #dddddd; text-align: center; padding: 18px;'>" . (is_numeric($total_hour) ? $total_hour : 0) . "</td>
 </tr>";
+
 
 
 
@@ -620,7 +652,7 @@ FROM
     // Close table
     echo "</table>";
 } else {
-    echo "0 results";
+    echo "No Results";
 }
 
 // Close connection
@@ -648,8 +680,8 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
-$total_percent_query = "SELECT SUM(`percents`) AS total_percent FROM percent";
+$department = $_SESSION['department'];
+$total_percent_query = "SELECT SUM(`percents`) AS total_percent FROM percent WHERE department = $department";
 $total_percent_result = mysqli_query($conn, $total_percent_query);
 $total_percent_row = mysqli_fetch_assoc($total_percent_result);
         
@@ -658,7 +690,7 @@ $total_percent = $total_percent_row['total_percent'];
 // Fetch module learning records
 
 // SQL query
-$sql = "SELECT `description`, `percents` FROM `percent`";
+$sql = "SELECT `description`, `percents` FROM `percent` WHERE department = $department";
 
 // Execute query
 $result = $conn->query($sql);
@@ -686,7 +718,7 @@ if ($result->num_rows > 0) {
     // Close table
     echo "</table>";
 } else {
-    echo "0 results";
+    echo "No Results";
 }
 
 // Close connection
@@ -782,9 +814,9 @@ $conn->close();
                 
 
                             // Fetch module learning records
-
+                            $department = $_SESSION['department'];
                             // SQL query
-                            $sql = "SELECT `description`, `percents` FROM `percent`";
+                            $sql = "SELECT `description`, `percents` FROM `percent` WHERE department = $department";
 
                             // Execute query
                             $result = $conn->query($sql);
@@ -810,7 +842,79 @@ $conn->close();
         <li>
             <p><strong>Self-Care:</strong></p>
             <ol type="a">
-            <li><strong>Schedule. </strong> The schedule of self-care week for the <?php echo $user4['second_call']." ".$user4['year'];?> is on <?php echo $user5['date'];?>. During this week, there shall be no asynchronous/synchronous meetings, F2F classes, new modules, new assessments, and deadlines.</li>
+            <?php
+// Establishing a connection to your database
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "syllabus";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $database);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Assuming $_SESSION['department'] contains the department value
+$department = $_SESSION['department']; 
+
+// Query to fetch data from the database based on the department
+$sql = "SELECT * FROM semestral WHERE department = $department ORDER BY id ASC";
+$result = $conn->query($sql);
+
+// HTML generation
+$html = ''; // Initialize the variable to store HTML content
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $html .= '<p>a. <b>Schedule. </b>The schedule of self-care week for the ' . $row['second_call'] . ' ' . $row['year'] . ' is on ';
+    }
+}
+
+// Close the database connection
+$conn->close();
+
+// Output the generated HTML
+echo $html;
+?>
+
+ <?php
+// Establishing a connection to your database
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "syllabus";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $database);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Assuming $_SESSION['department'] contains the department value
+$department = $_SESSION['department']; 
+
+// Query to fetch data from the database based on the department
+$sql = "SELECT `date` FROM module_learning_final WHERE department = '$department' ORDER BY id ASC LIMIT 1";
+$result = $conn->query($sql);
+
+// HTML generation
+$html = ''; // Initialize the variable to store HTML content
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $html .= $row['date'] . '. During this week, there shall be no asynchronous/synchronous meetings, F2F classes, new modules, new assessments, and deadlines.</p>';
+    }
+}
+
+// Close the database connection
+$conn->close();
+
+// Output the generated HTML
+echo $html;
+?></li>
                 <li><strong>Prerogative.</strong> Students may avail of the self-care program, whether online or onsite, provided by the different units of the University.</li>
             </ol>
         </li>
@@ -856,14 +960,15 @@ $dbname = "syllabus";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
-
+$department = $_SESSION['department'];
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
 // SQL query
-$sql = "SELECT `Provider`, `Reference_Material` FROM `onsite_reffence`";
+$sql = "SELECT `Provider`, `Reference_Material` FROM `onsite_reffence` 
+WHERE department = $department";
 
 // Execute query
 $result = $conn->query($sql);
@@ -890,7 +995,7 @@ if ($result->num_rows > 0) {
     // Close table
     echo "</table>";
 } else {
-    echo "0 results";
+    echo "No Results";
 }
 
 // Close connection
@@ -919,9 +1024,10 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
+$department = $_SESSION['department'];
 // SQL query
-$sql = "SELECT  `e_provider`, `refference_material` FROM `online_refference`";
+$sql = "SELECT  `e_provider`, `refference_material` FROM `online_refference` 
+WHERE department = $department";
 
 // Execute query
 $result = $conn->query($sql);
@@ -948,7 +1054,7 @@ if ($result->num_rows > 0) {
     // Close table
     echo "</table>";
 } else {
-    echo "0 results";
+    echo "No Results";
 }
 
 // Close connection
@@ -958,8 +1064,39 @@ $conn->close();
 
 
 <span><b>Prepared:</b><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="padding-left:30px;" class="course"><?php echo $course_departments ?></a></b></span><br>
+<?php
+// Establish connection to your database
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "syllabus";
 
-<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="padding-left:130px; padding-top:10px;" class="term_year"><?php echo $user4['term']." ".$user4['year'] ?></a></span>
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$department = $_SESSION['department']; 
+
+// Fetch and display course learning outcomes
+$sql = "SELECT * FROM semestral WHERE department = '$department'";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $term = $row['term'];
+        $year = $row['year'];
+        echo '<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="term_year">' . $term . " " . $year . '</a></span>';
+    }
+}
+
+// Close the connection
+$conn->close();
+?>
+
 
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img style="padding-left:145px; padding-top:10px;" src="http://localhost/Github/SYLLABUS/HIGHER_RANKS/<?php echo $dept_head_signature ?>" class="course" alt="Department Head Signature"></p>
 
@@ -993,13 +1130,46 @@ $conn->close();
 
     
     
-    <span><a style='font-weight: bold;'>COURSE CODE</a><b><a style="padding-left: 100px; padding-right: 2rem;"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $user['course_code'];?></a></span><br>
-    <span><a style='font-weight: bold;'>COURSE TITLE</a><b><a style="padding-left: 97px; padding-right: 2rem;"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a> :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $user['course_tittle'];?></a></span><br>
-    <span><a style='font-weight: bold;'>COURSE TYPE</a><b><a style="padding-left: 103px; padding-right: 2rem;"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $user['course_Type'];?></a></span><br>
-    <span><a style='font-weight: bold;'>COURSE CREDIT</a><b><a style="padding-left: 84px; padding-right: 2rem;"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $user['course_credit']; ?></a></span><br>
-    <span><a style='font-weight: bold;'>LEARNING MODALITY</a><b><a style="padding-left: 36px; padding-right: 2rem;"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $user['learning_modality']?></a></span><br>
-    <span><a style='font-weight: bold;'>PRE-REQUISITES</a><b><a style="padding-left: 82px; padding-right: 2rem;"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $user['pre_requisit']; ?></a></span><br>
-    <span><a style='font-weight: bold;'>CO-REQUISITES</a><b><a style="padding-left: 90px; padding-right: 2rem;"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a>:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $user['co_pre_requisit']; ?></a></span><br><br>
+<?php
+
+$servername = "localhost"; // Replace with your server name
+$username = "root"; // Replace with your username
+$password = ""; // Replace with your password
+$dbname = "syllabus"; // Replace with your database name
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+$department = $_SESSION['department'];
+
+// Using prepared statement to prevent SQL injection
+$sql = "SELECT `id`, `course_code`, `course_tittle`, `course_Type`, `course_credit`, `learning_modality`, `pre_requisit`, `co_pre_requisit`, `professor`, `consultation_hours_date`, `consultation_hours_room`, `consultation_hours_email`, `consultation_hours_number`, `course_description`, `email`, `department` FROM `course_syllabus` WHERE department=?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $department);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        ?>
+
+
+    <span><a style='font-weight: bold;'><b>COURSE CODE</b></a><b><a style="padding-left: 100px; padding-right: 2rem;"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><b> :</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $row['course_code'];?></a></span><br>
+    <span><a style='font-weight: bold;'><b>COURSE TITLE</b></a><b><a style="padding-left: 97px; padding-right: 2rem;"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a><b>:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $row['course_tittle'];?></a></span><br>
+    <span><a style='font-weight: bold;'><b>COURSE TYPE</b></a><b><a style="padding-left: 103px; padding-right: 2rem;"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><b> :</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $row['course_Type'];?></a></span><br>
+    <span><a style='font-weight: bold;'><b>COURSE CREDIT</b></a><b><a style="padding-left: 84px; padding-right: 2rem;"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><b>:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $row['course_credit']; ?></a></span><br>
+    <span><a style='font-weight: bold;'><b>LEARNING MODALITY</b></a><b><a style="padding-left: 36px; padding-right: 2rem;"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><b>:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $row['learning_modality']?></a></span><br>
+    <span><a style='font-weight: bold;'><b>PRE-REQUISITES</b></a><b><a style="padding-left: 82px; padding-right: 2rem;"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><b>:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $row['pre_requisit']; ?></a></span><br>
+    <span><a style='font-weight: bold;'><b>CO-REQUISITES</b></a><b><a style="padding-left: 90px; padding-right: 2rem;"></a></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><b>:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $row['co_pre_requisit']; ?></a></span><br>    
+    <?php
+    }
+} else {
+    echo "No courses found for the selected department.";
+}
+
+// Close the database connection
+$conn->close();
+?>
 
     
 
@@ -1016,7 +1186,7 @@ $dbname = "syllabus";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
-
+$department = $_SESSION['department'];
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -1032,7 +1202,7 @@ if ($result->num_rows > 0) {
 
 
     // SQL query
-    $sql = "SELECT `id`, `learn_out_mapping`, `pl1`, `pl2`, `pl3`, `pl4`, `pl5`, `pl6`, `pl7`, `pl8`, `pl9` FROM `mapping_table`";
+    $sql = "SELECT `id`, `learn_out_mapping`, `pl1`, `pl2`, `pl3`, `pl4`, `pl5`, `pl6`, `pl7`, `pl8`, `pl9` FROM `mapping_table` WHERE department = $department";
 
 
     $result = $conn->query($sql);
@@ -1090,7 +1260,7 @@ if ($result->num_rows > 0) {
     // Close table
     echo "</table>";
 } else {
-    echo "0 results";
+    echo "No Results";
 }
 
 // Close connection
@@ -1146,9 +1316,9 @@ if ($conn->connect_error) {
 // Check if any rows were returned
 if ($result->num_rows > 0) {
 
-
+    $department = $_SESSION['department'];
     // SQL query
-    $sql = "SELECT `id`, `program_learn`, `rate1`, `rate2`, `rate3`, `rate4`, `rate5` FROM `decriptors`";
+    $sql = "SELECT `id`, `program_learn`, `rate1`, `rate2`, `rate3`, `rate4`, `rate5` FROM `decriptors` WHERE department = $department";
 
 
     $result = $conn->query($sql);
@@ -1192,7 +1362,7 @@ if ($result->num_rows > 0) {
     // Close table
     echo "</table>";
 } else {
-    echo "0 results";
+    echo "No Results";
 }
 
 // Close connection
@@ -1245,9 +1415,10 @@ if ($conn->connect_error) {
 // Check if any rows were returned
 if ($result->num_rows > 0) {
 
-
+    $department = $_SESSION['department'];
     // SQL query
-    $sql = "SELECT `id`, `graduate_att`, `descriptors_learn_out` FROM `graduates_attributes`";
+    $sql = "SELECT `id`, `graduate_att`, `descriptors_learn_out` FROM `graduates_attributes` WHERE department = $department
+    ";
 
 
     $result = $conn->query($sql);
@@ -1288,7 +1459,7 @@ if ($result->num_rows > 0) {
     // Close table
     echo "</table>";
 } else {
-    echo "0 results";
+    echo "No Results";
 }
 
 // Close connection

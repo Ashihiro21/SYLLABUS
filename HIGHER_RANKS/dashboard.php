@@ -2259,7 +2259,7 @@ $result = $conn->query($sql);
 $html = ''; // Initialize the variable to store HTML content
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        $row['date'] . '. During this week, there shall be no asynchronous/synchronous meetings, F2F classes, new modules, new assessments, and deadlines.</p>';
+        $html .= $row['date'] . '. During this week, there shall be no asynchronous/synchronous meetings, F2F classes, new modules, new assessments, and deadlines.</p>';
     }
 }
 
