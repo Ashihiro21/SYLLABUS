@@ -895,7 +895,7 @@ $mysqli->close();
                  
                 
                      $department = $_SESSION['department']; 
-                     $query = "SELECT * FROM course_leaning WHERE department = $department";
+                    
                      $query_run = mysqli_query($connection, $query);
         ?>  
                 <table id="datatableid">
