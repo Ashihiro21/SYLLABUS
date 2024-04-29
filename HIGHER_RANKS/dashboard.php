@@ -542,7 +542,7 @@ td{
                         </div>
 
                                     <div class="form-group">
-                <input type="text" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+                <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
             </div>
 
                         
@@ -863,7 +863,7 @@ $mysqli->close();
                 
 
                         <div class="form-group">
-    <input type="text" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+    <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
 </div>
 
                     </div>
@@ -1068,7 +1068,7 @@ $mysqli->close();
 
 
                     <div class="form-group">
-    <input type="text" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+    <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
 </div>
                         
                         <div class="form-group">
@@ -1360,7 +1360,7 @@ $mysqli->close();
 
 
                         <div class="form-group">
-            <input type="text" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+            <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
                  </div>
 
 
@@ -1411,7 +1411,7 @@ $mysqli->close();
                     </div>
 
                     <div class="form-group">
-    <input type="text" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+    <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
             </div>
 
                     </div>
@@ -1575,7 +1575,7 @@ echo "No Record Found";
 
 
                             <div class="form-group">
-                    <input type="text" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+                    <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
                 </div>
 
 
@@ -1848,7 +1848,7 @@ echo "No Record Found";
 
                         
                     <div class="form-group">
-                        <input type="text" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+                        <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
                     </div>
 
                     </div>
@@ -2371,6 +2371,11 @@ echo $html;
                         <textarea name="Reference_Material" id="Reference_Material6" class="editor7" placeholder="Enter Learning Outcome" cols="50" rows="5"></textarea>
                     </div>
 
+                    <div class="form-group">
+                <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+            </div>
+
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -2482,8 +2487,9 @@ echo $html;
      }
 
 
+     $department = $_SESSION['department'];
 
- $query = "SELECT * FROM  onsite_reffence";
+ $query = "SELECT * FROM  onsite_reffence WHERE department = $department";
  $query_run = mysqli_query($connection, $query);
 ?>  
 <table id="datatableid" class="table table-bordered">
@@ -2567,6 +2573,11 @@ echo "No Record Found";
                         <label>Reference Material</label>
                         <textarea name="refference_material" id="refference_material6" class="Editor8" placeholder="Enter Reference Material" cols="50" rows="5"></textarea>
                     </div>
+
+
+                    <div class="form-group">
+                    <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+                </div>
 
                     </div>
                     <div class="modal-footer">
@@ -2678,8 +2689,8 @@ echo "No Record Found";
      }
 
 
-
- $query = "SELECT * FROM  online_refference";
+ $department = $_SESSION['department'];
+ $query = "SELECT * FROM  online_refference WHERE department = $department";
  $query_run = mysqli_query($connection, $query);
 ?>  
 <table id="datatableid" class="table table-bordered">
@@ -2729,7 +2740,108 @@ echo "No Record Found";
 
 </div>
 
-<!-- EDIT SEMESTRAL -->
+<button type="button" class="btn btn-primary add_semester float" data-toggle="modal" data-target="#add_semester">
+                        ADD DATA
+                    </button>
+
+                    <!-- Modal -->
+ <div class="modal fade" id="add_semester" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Online References</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/insert_semester.php" method="POST">
+
+                    <div class="modal-body">
+                    <div class="form-group">
+    <label for="term">Term</label>
+    <select name="term" id="term1" class="form-control">
+        <option value="--select semester--" disabled selected>select semester</option>
+        <option value="1<sup>st</sup> Semester">1st Semester</option>
+        <option value="2<sup>nd</sup> Semester">2nd Semester</option>
+        <option value="Special Term">Special Term</option>
+    </select>
+</div>
+
+<select style="display:none" name="second_call" id="second_call1" class="form-control">
+    <option value=""></option>
+</select>
+
+
+<script>
+    document.getElementById('term1').addEventListener('change', function () {
+        var term = this.value;
+        var secondCallDropdown = document.getElementById('second_call1');
+        
+        // Clear existing options
+        secondCallDropdown.innerHTML = '';
+        
+        // Depending on the selected term, populate the second call options dynamically
+        if (term === '1<sup>st</sup> Semester') {
+            // Add options for 1st Semester
+            addOptions(secondCallDropdown, [
+                { value: 'first semester', text: 'first semester' },
+            ]);
+        } else if (term === '2<sup>nd</sup> Semester') {
+            // Add options for 2nd Semester
+            addOptions(secondCallDropdown, [
+                { value: 'second semester', text: 'second semester' },
+            ]);
+        } else if (term === 'Special Term') {
+            // Add options for Special Term
+            addOptions(secondCallDropdown, [
+                { value: 'special term', text: 'special term' },
+            ]);
+        }
+    });
+
+    // Function to add options to a dropdown
+    function addOptions(selectElement, options) {
+        options.forEach(function (option) {
+            var optionElement = document.createElement('option');
+            optionElement.value = option.value;
+            optionElement.textContent = option.text;
+            selectElement.appendChild(optionElement);
+        });
+    }
+</script>
+
+                    
+
+
+
+
+
+                        <div class="form-group">
+                            <label>Year</label>
+                            <input type="text" name="year" id="year1" class="form-control"
+                                placeholder="Enter Year">
+                        </div>
+
+
+                    <div class="form-group">
+                    <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+</div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="insertdata" class="btn btn-primary">Save Data</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+
 
 <!-- EDIT POP UP FORM (Bootstrap MODAL) -->
 <div class="modal fade" id="editmodal_semestral" tabindex="-1" role="dialog" aria-labelledby="edit_semestral"
@@ -2750,13 +2862,57 @@ echo "No Record Found";
                         <input type="hidden" name="update_id9" id="update_id9">
                         
                         <div class="form-group">
-                        <label for="term">Term</label>
-                        <select name="term" id="term" class="form-control">
-                        <option value="1<sup>st</sup> Semester">1st Semester</option>
-                            <option value="2<sup>nd</sup> Semester">2nd Semester</option>
-                            <option value="Special Term">Special Term</option>
-                        </select>
-                    </div>
+    <label for="term">Term</label>
+    <select name="term" id="term" class="form-control">
+        <option value="--select semester--" disabled selected>select semester</option>
+        <option value="1<sup>st</sup> Semester">1st Semester</option>
+        <option value="2<sup>nd</sup> Semester">2nd Semester</option>
+        <option value="Special Term">Special Term</option>
+    </select>
+</div>
+
+<select style="display:none" name="second_call" id="second_call" class="form-control">
+    <option value=""></option>
+</select>
+
+
+<script>
+    document.getElementById('term').addEventListener('change', function () {
+        var term = this.value;
+        var secondCallDropdown = document.getElementById('second_call');
+        
+        // Clear existing options
+        secondCallDropdown.innerHTML = '';
+        
+        // Depending on the selected term, populate the second call options dynamically
+        if (term === '1<sup>st</sup> Semester') {
+            // Add options for 1st Semester
+            addOptions(secondCallDropdown, [
+                { value: 'first semester', text: 'first semester' },
+            ]);
+        } else if (term === '2<sup>nd</sup> Semester') {
+            // Add options for 2nd Semester
+            addOptions(secondCallDropdown, [
+                { value: 'second semester', text: 'second semester' },
+            ]);
+        } else if (term === 'Special Term') {
+            // Add options for Special Term
+            addOptions(secondCallDropdown, [
+                { value: 'special term', text: 'special term' },
+            ]);
+        }
+    });
+
+    // Function to add options to a dropdown
+    function addOptions(selectElement, options) {
+        options.forEach(function (option) {
+            var optionElement = document.createElement('option');
+            optionElement.value = option.value;
+            optionElement.textContent = option.text;
+            selectElement.appendChild(optionElement);
+        });
+    }
+</script>
 
                         <div class="form-group">
                             <label>Year</label>
@@ -2779,74 +2935,69 @@ echo "No Record Found";
     </div>
 
 
+</div>
+
 
 <!-- SEMESTRAL -->
-<?php
- 
-
- // Database connection
- 
- 
- $connection = mysqli_connect("localhost","root","","syllabus");
- if (mysqli_connect_errno()){
-     echo "Failed to connect to MySQL: " . mysqli_connect_error();
-     die();
-     }
-
-
-
- $query = "SELECT * FROM  semestral";
- $query_run = mysqli_query($connection, $query);
-?>  
-<table id="datatableid">
-<thead>
-    <tr>
-        <!-- <th scope="col">Provider</th>
-        <th scope="col">Reference Material</th>
-        <th scope="col">Action</th> -->
-    </tr>
-</thead>
-<?php
-if($query_run)
-{
-foreach($query_run as $row)
-{
-?>
-<tbody>
-  
-<tr>
-        <td class="hide-id"> <?php echo $row['id']; ?> </td>
-        <td class="hide-id"><?php echo $row['term']; ?></td>
-        <td class="hide-id"><?php echo $row['year']; ?></td>
-        <td class="table-button">
-        <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
-
-        <button type="button" class="btn btn-success editbtn_semestral sysllabus_button m-3"><i class="lni lni-pencil"></i></button><a>EDIT SEMESTER</a>
-
-        <!-- <button type="button" class="btn btn-danger deletebtn_online_refference"><i class="lni lni-trash-can"></i></button> -->
-        </td>
-    </tr>
-
-
-
-</tbody>
-<?php           
-}
-}
-else 
-{
-echo "No Record Found";
-}
-?>
-</table>
-
-
 <div class="container-box mt-5 header-title mb-5">
 <span><b>Prepared:</b><b><a class="course">  <?php echo ($course_departments); ?></a></b></span>
 
+<!-- SEMESTRAL -->
+<?php
+// Database connection
+$connection = mysqli_connect("localhost", "root", "", "syllabus");
+if (mysqli_connect_errno()) {
+    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+    die();
+}
+
+$department = $_SESSION['department'];
+
+$query = "SELECT * FROM semestral WHERE department = $department";
+$query_run = mysqli_query($connection, $query);
+?>
+
+<table id="datatableid">
+    <thead>
+        <tr>
+            <!-- <th scope="col">Provider</th>
+            <th scope="col">Reference Material</th>
+            <th scope="col">Action</th> -->
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        if ($query_run) {
+            while ($row = mysqli_fetch_assoc($query_run)) {
+                $id = $row['id'];
+                $term = $row['term'];
+                $year = $row['year'];
+        ?>
+                <tr>
+                    <td class="hide-id"> <?php echo $id; ?> </td>
+                    <td class="hide-id"><?php echo $term; ?></td>
+                    <td class="hide-id"><?php echo $year; ?></td>
+                    
+                <a class="term_year"><?php echo $term . ' ' . $year; ?></a><br><br>
+                    <td class="table-button">
+                        <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
+                        <button type="button" class="btn btn-success editbtn_semestral sysllabus_button m-3"><i class="lni lni-pencil"></i></button><a>EDIT SEMESTER</a>
+                        <!-- <button type="button" class="btn btn-danger deletebtn_online_refference"><i class="lni lni-trash-can"></i></button> -->
+                    </td>
+                </tr>
+        <?php
+            }
+        } else {
+            echo "<tr><td colspan='3'>No Record Found</td></tr>";
+        }
+        ?>
+    </tbody>
+</table>
 
 
-<a class="term_year"><td><?php echo $row['term']; ?> <?php echo $row['year']; ?></a></td><br><br>
+
+
+
 
 
 
@@ -3206,8 +3357,9 @@ echo "No Record Found";
                              die();
                              }
                      
+                         $department = $_SESSION['department']; 
 
-                         $query = "SELECT * FROM course_syllabus";
+                         $query = "SELECT `id`, `course_code`, `course_tittle`, `course_Type`, `course_credit`, `learning_modality`, `pre_requisit`, `co_pre_requisit`, `professor`, `consultation_hours_date`, `consultation_hours_room`, `consultation_hours_email`, `consultation_hours_number`, `course_description`, `email`, `department` FROM `course_syllabus` WHERE department='$department'";
                          $query_run = mysqli_query($connection, $query);
             ?>  
                     <table id="datatableid">
@@ -3248,13 +3400,13 @@ echo "No Record Found";
                             
                             <td class="hide-id" style="border: 1px solid white;"><?php echo $row['course_description']; ?></td>
                                 
-                            <!-- <td>
-                                <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button>
+                            <td class="centered-btn">
+                                <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
 
-                                <button type="button" class="btn btn-success editbtn"><i class="lni lni-pencil"></i></button>
+                                <button type="button" class="btn sysllabus_button btn-success editbtn"><i class="lni lni-pencil"></i></button>
 
-                                <button type="button" class="btn btn-danger deletebtn"><i class="lni lni-trash-can"></i></button>
-                                </td> -->
+                                <!-- <button type="button" class="btn btn-danger deletebtn"><i class="lni lni-trash-can"></i></button> -->
+                                </td>
                             </tr>
                         </tbody>
                         <?php           
@@ -3266,39 +3418,78 @@ echo "No Record Found";
                 }
             ?>
                     </table>
+
+                    <?php
+            // Establish a database connection (replace 'hostname', 'username', 'password', and 'database' with your actual database credentials)
+            $mysqli = new mysqli("localhost", "root", "", "syllabus");
+
+            // Check connection
+            if ($mysqli->connect_error) {
+                die("Connection failed: " . $mysqli->connect_error);
+            }
+
+            $department = $_SESSION['department']; 
+            // Prepare SQL query
+            $sql = "SELECT `id`, `course_code`, `course_tittle`, `course_Type`, `course_credit`, `learning_modality`, `pre_requisit`, `co_pre_requisit`, `professor`, `consultation_hours_date`, `consultation_hours_room`, `consultation_hours_email`, `consultation_hours_number`, `course_description`, `email`, `department` FROM `course_syllabus` WHERE department='$department'";
+
+            // Execute query
+            $result = $mysqli->query($sql);
+
+            // Check if there are results
+            if ($result->num_rows > 0) {
+                ?>
+
+                    <?php
+                    // Loop through the result set
+                    while ($row = $result->fetch_assoc()) {
+                        ?>
            
-                    <div class="container text-left">
-    <div class=" header text-left">COURSE CODE</div>
-    <div class="">:</div>
-    <div class=""><?php echo $row['course_code']; ?></div>
+    <div class="container text-left">
+    <div class="header">COURSE CODE</div>
+    <div>:</div>
+    <div><?php echo $row['course_code']; ?></div>
   
-    <div class=" header text-left">COURSE TITLE</div>
-    <div class="">:</div>
-    <div class=""><?php echo $row['course_tittle']; ?></div>
+    <div class="header">COURSE TITLE</div>
+    <div>:</div>
+    <div><?php echo $row['course_tittle']; ?></div>
 
-    <div class=" header text-left">COURSE TYPE</div>
-    <div class="">:</div>
-    <div class=""><?php echo $row['course_Type']; ?></div>
+    <div class="header">COURSE TYPE</div>
+    <div>:</div>
+    <div><?php echo $row['course_Type']; ?></div>
    
-    <div class=" header text-left">COURSE CREDIT</div>
-    <div class="">:</div>
-    <div class=""><?php echo $row['course_credit']; ?></div>
+    <div class="header">COURSE CREDIT</div>
+    <div>:</div>
+    <div><?php echo $row['course_credit']; ?></div>
 
-    <div class=" header text-left">LEARNING MODALITY</div>
-    <div class="">:</div>
-    <div class=""><?php echo $row['learning_modality']; ?></div>
+    <div class="header">LEARNING MODALITY</div>
+    <div>:</div>
+    <div><?php echo $row['learning_modality']; ?></div>
 
-    <div class=" header text-left">PRE-REQUISITES</div>
-    <div class="">:</div>
-    <div class=""><?php echo $row['pre_requisit']; ?></div>
+    <div class="header">PRE-REQUISITES</div>
+    <div>:</div>
+    <div><?php echo $row['pre_requisit']; ?></div>
 
-    <div class=" header text-left">CO-REQUISITES</div>
-    <div class="">:</div>
-    <div class=""><?php echo $row['co_pre_requisit']; ?></div>
+    <div class="header">CO-REQUISITES</div>
+    <div>:</div>
+    <div><?php echo $row['co_pre_requisit']; ?></div>
 
-
+    
 </div>
 
+
+<?php
+        }
+        ?>
+    <?php
+} else {
+    echo "<div class='container'><br>";
+    echo "0 results";
+    echo "</div> ";
+}
+
+// Close database connection
+$mysqli->close();
+?>
 
 <button type="button" class="btn btn-primary add_databtn_mapping_table" data-toggle="modal" data-target="#mapping_table">
                         ADD DATA
@@ -3328,6 +3519,10 @@ echo "No Record Found";
                         
 
                         </div>
+
+                                            <div class="form-group">
+                        <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+                    </div>
 
 
                         <div class="form-group">
@@ -3524,8 +3719,8 @@ echo "No Record Found";
      }
 
 
-
- $query = "SELECT * FROM  mapping_table";
+     $department = $_SESSION['department'];
+ $query = "SELECT * FROM  mapping_table WHERE department = $department";
  $query_run = mysqli_query($connection, $query);
 ?>  
 <table id="datatableid" class="table table-bordered b-5">
@@ -3650,6 +3845,11 @@ echo "No Record Found";
                         
 
                         </div>
+
+                                            <div class="form-group">
+                        <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+                    </div>
+
 
 
                         <div class="form-group">
@@ -3801,7 +4001,8 @@ echo "No Record Found";
 
 
 
- $query = "SELECT * FROM decriptors";
+     $department = $_SESSION['department'];
+ $query = "SELECT * FROM decriptors WHERE department = $department";
  $query_run = mysqli_query($connection, $query);
 ?>  
 <table id="datatableid" class="table table-bordered b-5">
@@ -3914,6 +4115,10 @@ echo "No Record Found";
                         <textarea name="descriptors_learn_out" id="descriptors_learn_out6" class="Editor11" placeholder="Enter Descriptors (Institutional Learning Outcome)" cols="50" rows="5"></textarea>
                     </div>
 
+                                    <div class="form-group">
+                    <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+                </div>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -4019,8 +4224,9 @@ echo "No Record Found";
      }
 
 
-
- $query = "SELECT * FROM  graduates_attributes";
+     $department = $_SESSION['department'];
+ $query = "SELECT * FROM  graduates_attributes 
+ WHERE department = $department";
  $query_run = mysqli_query($connection, $query);
 ?>  
 <table id="datatableid" class="table table-bordered">
