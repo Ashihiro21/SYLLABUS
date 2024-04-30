@@ -57,7 +57,7 @@ require_once '../Database/connection.php';
                         <span class="icon">
                             <ion-icon name="people-outline"></ion-icon>
                         </span>
-                        <span class="title">Department</span>
+                        <span class="title">Category</span>
                     </a>
                 </li>
 
