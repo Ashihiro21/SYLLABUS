@@ -107,6 +107,18 @@ function populateCetegoryDropdown() {
                             <input type="text" name="course_department" id="course_department1" class="form-control"
                                 placeholder="Enter Course Department">
                         </div>
+                        
+                        <div class="form-group">
+                            <label>Department Chair Name</label>
+                            <input type="text" name="department_name" id="department_name1" class="form-control"
+                                placeholder="Enter Department Chair Name">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Department Position</label>
+                            <input type="text" name="department_position" id="department_position1" value="Chair" class="form-control"
+                                placeholder="Enter Department Position">
+                        </div>
 
                      
 
@@ -159,6 +171,21 @@ function populateCetegoryDropdown() {
                         <label>Course Department</label>
                         <input type="text" name="course_department" id="edit_course_department" class="form-control" placeholder="Enter Course Department">
                     </div>
+
+                    <div class="form-group">
+                            <label>Department Chair Name</label>
+                            <input type="text" name="department_name" id="edit_department_name" class="form-control"
+                                placeholder="Enter Department Chair Name">
+                        </div>
+
+
+                    <div class="form-group">
+                            <label>Department Chair Name</label>
+                            <input type="text" name="department_position" id="edit_department_position" value="Chair" class="form-control"
+                                placeholder="Enter Department Chair Name">
+                        </div>
+
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -228,6 +255,9 @@ function populateCetegoryDropdown() {
      c.cname AS course_name, 
      c.initial AS course_initial, 
      c.course_department, 
+     c.department_name, 
+     c.department_position, 
+     c.dept_signature, 
      cat.id AS category_id, 
      cat.name AS category_name, 
      cat.initial AS category_initial 
@@ -238,7 +268,7 @@ function populateCetegoryDropdown() {
  ON 
      c.catid = cat.id 
  ORDER BY 
- cat.id  ASC;"; // ASC for ascending order
+ category_name  ASC;"; // ASC for ascending order
  $query_run = mysqli_query($connection, $query);
  
 ?>  
@@ -253,6 +283,9 @@ function populateCetegoryDropdown() {
             <th>Course</th>
             <th>Initial</th>
             <th>Course Department</th>
+            <th>Department Chair</th>
+            <th>Department Position</th>
+            <th>Department Chair Signature</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -267,6 +300,12 @@ function populateCetegoryDropdown() {
             <td> <?= $row['course_name'];  ?> </td>
             <td> <?= $row['course_initial'];  ?> </td>
             <td> <?= $row['course_department'];  ?> </td>
+            <td> <?= $row['department_name'];  ?> </td>
+            <td> <?= $row['department_position'];  ?> </td>
+                    <td>
+            <?= isset($row['dept_signature']) && !empty($row['dept_signature']) ? $row['dept_signature'] : 'No signature available'; ?>
+        </td>
+
             <td>
             <button type="button" class="btn btn-success editbtn"><i class="lni lni-pencil"></i></button>
             <button type="button" class="btn btn-danger deletebtn"><i class="lni lni-trash-can"></i></button>
@@ -341,6 +380,9 @@ function populateCetegoryDropdown() {
             $('#edit_cname').val(data[2]);
             $('#edit_initial').val(data[3]);
             $('#edit_course_department').val(data[4]);
+            $('#edit_department_name').val(data[5]);
+            $('#edit_department_position').val(data[6]);
+            
         });
     });
 </script>
