@@ -2954,7 +2954,8 @@ echo "No Record Found";
 
 <!-- SEMESTRAL -->
 <div class="container-box mt-5 header-title mb-5">
-<span style="margin-right:60rem;"><b>Prepared:</b><b><a class="course">  <?php echo ($course_departments); ?></a></b></span>
+<div style="margin-right:60rem;">
+<span ><b>Prepared:</b><b><a class="course">  <?php echo ($course_departments); ?></a></b></span>
 
 <!-- SEMESTRAL -->
 <?php
@@ -3327,7 +3328,7 @@ echo "No Record Found";
 
 </div>
 </div>
-
+</div>
 <style>
     .term_year, .initial{
         margin-left: 9rem;
