@@ -86,7 +86,7 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Word and Color Filter</title>
+    <title>HIGHER AND LOWER LEVEL REPORT</title>
     <style>
         table, td, th{
             border-collapse: collapse;
@@ -123,6 +123,8 @@ $conn->close();
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
+
+    $department = $_SESSION['department']; 
 
     // Example words array
     $higherArray = [
@@ -186,7 +188,7 @@ $conn->close();
     // Filter words from database based on the words array
     $filteredWords = [];
     foreach ($higherArray as $word) {
-        $sql = "SELECT `clo_number`, `course_learn_out` FROM `practice` WHERE `course_learn_out` LIKE '%$word%'";
+        $sql = "SELECT `comlab`, `learn_out` FROM `course_leaning` WHERE `learn_out` LIKE '%$word%' and department='$department'";
         $result = $conn->query($sql);
         if ($result && $result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
@@ -199,7 +201,7 @@ $conn->close();
     // Filter colors from database based on the colors array
     $filteredColors = [];
     foreach ($lowerArray as $color) {
-        $sql = "SELECT `clo_number`, `course_learn_out` FROM `practice` WHERE `course_learn_out` LIKE '%$color%'";
+        $sql = "SELECT `comlab`, `learn_out` FROM `course_leaning` WHERE `learn_out` LIKE '%$color%' and department='$department'";
         $result = $conn->query($sql);
         if ($result && $result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
@@ -223,19 +225,19 @@ $conn->close();
             <td>
                 <?php if(!empty($filteredWords)): ?>
                     <?php foreach($filteredWords as $word): ?>
-                        <p><?php echo $word['clo_number']; ?> . <?php echo $word['course_learn_out']; ?> </p>
+                        <p><?php echo $word['comlab']; ?> . <?php echo $word['learn_out']; ?> </p>
                     <?php endforeach; ?>
                 <?php else: ?>
-                    <p>No words found.</p>
+                    <p>No Higher Level found.</p>
                 <?php endif; ?>
             </td>
             <td>
                 <?php if(!empty($filteredColors)): ?>
                     <?php foreach($filteredColors as $color): ?>
-                        <p><?php echo $color['clo_number']; ?> . <?php echo $color['course_learn_out']; ?> </p>
+                        <p><?php echo $color['comlab']; ?> . <?php echo $color['learn_out']; ?> </p>
                     <?php endforeach; ?>
                 <?php else: ?>
-                    <p>No colors found.</p>
+                    <p>No Higher Level found.</p>
                 <?php endif; ?>
             </td>
         </tr>
@@ -243,8 +245,8 @@ $conn->close();
     </div>
     <?php
     // Check if $lowerArray has more matches than $higherArray
-    if ($lowerMatches > $higherMatches) {
-        echo "<p class='footer'>Add more words to the higher level array.</p>";
+    if ($lowerMatches >= $higherMatches) {
+        echo "<p class='footer'>Add More Higher Level to Make higher Level.</p>";
     }
 
     // Close connection
