@@ -186,9 +186,11 @@ td{
 .btn-primary{
     margin-left: 50rem;
 }
+.btn-secondary{
+    margin-left: 30rem;
+}
 .sysllabus_button{
-    margin-left: 50rem;
-   
+    margin-left: 50rem; 
 }
 .custom-card {
     margin: 13.5rem;
@@ -1949,8 +1951,9 @@ echo "No Record Found";
 
 
 <div class="card custom-card">
-<div class="card-body">
-<button type="button" class="btn btn-primary percent_grading" data-toggle="modal" data-target="#percent_grading">ADD DATA
+<div class="card-body ">
+
+<button type="button" class="btn btn-primary percent_grading " data-toggle="modal" data-target="#percent_grading" style="margin-left: 18.9rem;">ADD DATA
 </button> 
 <div class="container mt-5 me-5">
     
@@ -2016,6 +2019,16 @@ echo "No Record Found";
         </tbody>
     </table>
 </div>
+<span style="margin-left:4rem;"><b>Overall Final Grade</b><a> = Midterm + Final</a></span>
+<a style="margin-left:22rem;">2</a>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
 </div>
 </div>
 
@@ -2030,8 +2043,6 @@ echo "No Record Found";
 
 
 
-<span style="margin-left:4rem;"><b>Overall Final Grade</b><a> = Midterm + Final</a></span>
-<a style="margin-left:22rem;">2</a>
 
 <div class="card custom-policy">
 <div class="card-body">
@@ -2341,7 +2352,9 @@ echo $html;
 <!-- ADD ONSITE REFFERENCE -->
 
 <!--Add Modal Final Period Table -->
-<button type="button" class="btn btn-primary onsite_reffence_tables" data-toggle="modal" data-target="#onsite_reffence_tables">
+<div class="card custom-card">
+<div class="card-body">
+<button type="button" class="btn btn-primary onsite_reffence_tables" data-toggle="modal" data-target="#onsite_reffence_tables" style="margin-left: 30rem;">
                         ADD DATA
                     </button>
 
@@ -2433,6 +2446,7 @@ echo $html;
     </div>
 
     <!-- DELETE ONSITE REFFERENCE --> 
+    
 
      <div class="modal fade" id="deletemodal_onsite_refference" tabindex="-1" role="dialog" aria-labelledby="onsite_reffence"
         aria-hidden="true">
@@ -2544,7 +2558,7 @@ echo "No Record Found";
 <!-- ADD online REFFERENCE -->
 
 <!--Add Modal Final Period Table -->
-<button type="button" class="btn btn-primary online_reffence" data-toggle="modal" data-target="#online_reffence">
+<button type="button" class="btn btn-primary online_reffence" data-toggle="modal" data-target="#online_reffence" style="margin-left: 30rem;">
                         ADD DATA
                     </button>
 
@@ -2740,7 +2754,7 @@ echo "No Record Found";
 
 </div>
 
-<button type="button" class="btn btn-primary add_semester float" data-toggle="modal" data-target="#add_semester">
+<button type="button" class="btn btn-primary add_semester float" data-toggle="modal" data-target="#add_semester" style="margin-left: 30rem;">
                         ADD DATA
                     </button>
 
@@ -2940,7 +2954,7 @@ echo "No Record Found";
 
 <!-- SEMESTRAL -->
 <div class="container-box mt-5 header-title mb-5">
-<span><b>Prepared:</b><b><a class="course">  <?php echo ($course_departments); ?></a></b></span>
+<span style="margin-right:60rem;"><b>Prepared:</b><b><a class="course">  <?php echo ($course_departments); ?></a></b></span>
 
 <!-- SEMESTRAL -->
 <?php
@@ -3311,7 +3325,7 @@ echo "No Record Found";
 <span><a class="initial"><?php echo $category_dean_position ." , ". $category_initial; ?></a></span>
 
 
-
+</div>
 </div>
 
 <style>
