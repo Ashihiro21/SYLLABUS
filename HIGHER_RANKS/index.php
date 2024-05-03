@@ -140,9 +140,9 @@ $sql = "SELECT * FROM course_leaning";
     document.body.removeChild(downloadLink);
 }
 </script>
-<body style="">
+<body>
 
-<button class="btn btn-primary" onclick="Export2Word('exportContent','html-content-with-image')">Download as Word</button>
+<button class="btn btn-primary" style="margin-left:1rem;" onclick="Export2Word('exportContent','html-content-with-image')">Download as Word</button>
 <div id="exportContent">
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style=""><img src="http://localhost/Github/SYLLABUS/HIGHER_RANKS/logos.jpeg" alt="" width="180" height="90">
 </a><br>
