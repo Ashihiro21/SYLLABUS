@@ -98,7 +98,7 @@ $html = '
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-    <link rel="icon" type="image/png" href="../img/DLSU-D.png"/>
+    <link rel="icon" type="image/PNG" href="DLSU-D.png"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>SYLLABUS</title>
@@ -350,7 +350,7 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $html .= '<tr>';
-        $html .= '<td>'. $row['final_learning_out'] . '</td>';
+        $html .= '<td>'. $row['comlab'] ." . ". $row['final_learning_out'] . '</td>';
         $html .= '<td>';
         if (strpos($row['final_topic_leaning_out'], 'TLO') !== false || strpos($row['final_topic_leaning_out'], "\n") !== false) {
             // If 'TLO' or a line break is found, replace it with <br>

@@ -232,6 +232,7 @@ td{
     
     ?>
     <a href="generate_pdf_high_and_low.php" class="btn btn-danger">High and Low Report</a>
+    <a href="generate_pdf_tos.php" class="btn btn-danger">TOS Report</a>
     </span>
     </nav>
    
