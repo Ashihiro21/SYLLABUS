@@ -100,7 +100,7 @@ $conn->close();
             margin: 0 auto;
             width: 50%;
         }
-        th,h1, .footer{
+        th,h1, .footer, h2{
             text-align: center;
         }
       
@@ -108,6 +108,7 @@ $conn->close();
 </head>
 <body>
     <h1>HIGHER AND LOWER LEVEL REPORT</h1>
+    <h2>Learning Outcomes for Midterm Period</h2>
 
     <?php
     // Database connection configuration
@@ -252,5 +253,161 @@ $conn->close();
     // Close connection
     $conn->close();
     ?>
+
+
+
+
+    <!--   Learning Outcomes for Final Period -->
+
+
+    <h2>Learning Outcomes for Final Period</h2>
+
+<?php
+// Database connection configuration
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "syllabus";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $database);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$department = $_SESSION['department']; 
+
+// Example words array
+$higherArray = [
+    "Design",
+    "Assemble",
+    "Construct",
+    "Conjecture",
+    "Develop",
+    "Formulate",
+    "Author",
+    "Investigate",
+    "Appraise",
+    "Argue",
+    "Defend",
+    "Judge",
+    "Select",
+    "Support",
+    "Value",
+    "Critique",
+    "Weight",
+    "Differentiate",
+    "Organize",
+    "Relate",
+    "Compare",
+    "Contrast",
+    "Distinguish",
+    "Examine",
+    "Question",
+    "Test"
+];
+
+$lowerArray = [
+    "Execute",
+    "Implement",
+    "Solve",
+    "Use",
+    "Interpret",
+    "Demonstrate",
+    "Operate",
+    "Schedule",
+    "Sketch",
+    "Classify",
+    "Describe",
+    "Discuss",
+    "Explain",
+    "Identify",
+    "Locate",
+    "Recognize",
+    "Report",
+    "Translate",
+    "Define",
+    "List",
+    "Memorize",
+    "State"
+];
+
+// Initialize counts for matches
+$higherMatches = 0;
+$lowerMatches = 0;
+
+// Filter words from database based on the words array
+$filteredWords = [];
+foreach ($higherArray as $word) {
+    $sql = "SELECT `comlab`, `final_learning_out` FROM `laerning_final` WHERE `final_learning_out` LIKE '%$word%' and department='$department'";
+    $result = $conn->query($sql);
+    if ($result && $result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            $filteredWords[] = $row;
+            $higherMatches++;
+        }
+    }
+}
+
+// Filter colors from database based on the colors array
+$filteredColors = [];
+foreach ($lowerArray as $color) {
+    $sql = "SELECT `comlab`, `final_learning_out` FROM `laerning_final` WHERE `final_learning_out` LIKE '%$color%' and department='$department'";
+    $result = $conn->query($sql);
+    if ($result && $result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            $filteredColors[] = $row;
+            $lowerMatches++;
+        }
+    }
+}
+
+// Calculate percentages
+$higherPercent = ($higherMatches / count($higherArray)) * 100;
+$lowerPercent = ($lowerMatches / count($lowerArray)) * 100;
+?>
+<div class="center">
+<table>
+    <tr>
+        <th>Higher Level (<?php echo round($higherPercent, 2); ?>%)</th>
+        <th>Lower Level (<?php echo round($lowerPercent, 2); ?>%)</th>
+    </tr>
+    <tr>
+        <td>
+            <?php if(!empty($filteredWords)): ?>
+                <?php foreach($filteredWords as $word): ?>
+                    <p><?php echo $word['comlab']; ?> . <?php echo $word['final_learning_out']; ?> </p>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>No Higher Level found.</p>
+            <?php endif; ?>
+        </td>
+        <td>
+            <?php if(!empty($filteredColors)): ?>
+                <?php foreach($filteredColors as $color): ?>
+                    <p><?php echo $color['comlab']; ?> . <?php echo $color['final_learning_out']; ?> </p>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>No Higher Level found.</p>
+            <?php endif; ?>
+        </td>
+    </tr>
+</table>
+</div>
+<?php
+// Check if $lowerArray has more matches than $higherArray
+if ($lowerMatches >= $higherMatches) {
+    echo "<p class='footer'>Add More Higher Level to Make higher Level.</p>";
+}
+
+// Close connection
+$conn->close();
+?>
+
+
+
+
 </body>
 </html>

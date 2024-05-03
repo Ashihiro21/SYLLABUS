@@ -1048,7 +1048,7 @@ $mysqli->close();
                     <div class="modal-body">
                     <div class="form-group">
                         <label for="module_no1">Module No and Learning Outcomes</label>
-                        <textarea name="module_no" id="module_no1" class="editor1" placeholder="Module No and Learning Outcomes" cols="50" rows="5"></textarea>
+                        <textarea name="module_no" id="module_no1" class="form-control 1" placeholder="Module No and Learning Outcomes" cols="50" rows="5"></textarea>
                     </div>
 
                         <div class="form-group">
@@ -1065,7 +1065,7 @@ $mysqli->close();
 
                         <div class="form-group">
                         <label for="teaching_activities1">Teaching-Learning Activities / Assessment Strategy</label>
-                        <textarea name="teaching_activities" id="teaching_activities1" class="editor2" placeholder="Enter Teaching-Learning Activities / Assessment Strategy" cols="50" rows="5"></textarea>
+                        <textarea name="teaching_activities" id="teaching_activities1" class="form-control 2" placeholder="Enter Teaching-Learning Activities / Assessment Strategy" cols="50" rows="5"></textarea>
                     </div>
 
 
@@ -1409,7 +1409,7 @@ $mysqli->close();
 
                         <div class="form-group">
                         <label>Topic Learning Outcomes</label>
-                        <textarea name="final_topic_leaning_out" id="final_topic_leaning_out6" class="editor3" placeholder="Enter Learning Outcome" cols="50" rows="5"></textarea>
+                        <textarea name="final_topic_leaning_out" id="final_topic_leaning_out6" class="form-control 3" placeholder="Enter Learning Outcome" cols="50" rows="5"></textarea>
                     </div>
 
                     <div class="form-group">
@@ -1531,7 +1531,7 @@ echo "No Record Found";
                     <div class="modal-body">
                     <div class="form-group">
                         <label for="module_no1">Module No and Learning Outcomes</label>
-                        <textarea name="module_no" id="module_no1" class="editor4" placeholder="Enter Module No and Learning Outcomes" cols="50" rows="5"></textarea>
+                        <textarea name="module_no" id="module_no1" class="form-control 4" placeholder="Enter Module No and Learning Outcomes" cols="50" rows="5"></textarea>
                     </div>
 
                         <div class="form-group">
@@ -1548,7 +1548,7 @@ echo "No Record Found";
 
                         <div class="form-group">
                         <label for="teaching_activities1">Teaching-Learning Activities / Assessment Strategy</label>
-                        <textarea name="teaching_activities" id="teaching_activities1" class="editor5" placeholder="Enter Teaching-Learning Activities / Assessment Strategy" cols="50" rows="5"></textarea>
+                        <textarea name="teaching_activities" id="teaching_activities1" class="form-control 5" placeholder="Enter Teaching-Learning Activities / Assessment Strategy" cols="50" rows="5"></textarea>
                     </div>
 
 
@@ -2381,7 +2381,7 @@ echo $html;
 
                         <div class="form-group">
                         <label>Reference Material</label>
-                        <textarea name="Reference_Material" id="Reference_Material6" class="editor7" placeholder="Enter Learning Outcome" cols="50" rows="5"></textarea>
+                        <textarea name="Reference_Material" id="Reference_Material6" class="form-control 7" placeholder="Enter Learning Outcome" cols="50" rows="5"></textarea>
                     </div>
 
                     <div class="form-group">
@@ -2585,7 +2585,7 @@ echo "No Record Found";
 
                         <div class="form-group">
                         <label>Reference Material</label>
-                        <textarea name="refference_material" id="refference_material6" class="Editor8" placeholder="Enter Reference Material" cols="50" rows="5"></textarea>
+                        <textarea name="refference_material" id="refference_material6" class="form-control 8" placeholder="Enter Reference Material" cols="50" rows="5"></textarea>
                     </div>
 
 
@@ -3529,7 +3529,7 @@ $mysqli->close();
 
                         <div class="form-group">
 
-                        <textarea type="text" name="learn_out_mapping" col="40" cols="50" rows="5" id="learn_out_mappings" class="Editor9"
+                        <textarea type="text" name="learn_out_mapping" col="40" cols="50" rows="5" id="learn_out_mappings" class="form-control 9"
                                 placeholder="Enter Computer Laborator"></textarea>
                         
 
@@ -3855,7 +3855,7 @@ echo "No Record Found";
                         <div class="form-group">
 
                         <label>Program Learning Outcomes</label><br>
-                        <textarea type="text" name="program_learn" col="40" cols="50" rows="5" class="Editor10"
+                        <textarea type="text" name="program_learn" col="40" cols="50" rows="5" class="form-control 10"
                                 placeholder="Enter Computer Laborator"></textarea>
                         
 

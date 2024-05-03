@@ -224,6 +224,7 @@ td{
     <nav>
     <span class="float-right"><p><?php echo $position; ?><a href="logout.php">Logout</a></p></span>
     <span class="m-2"><a href="paractice.php" class="btn btn-danger">Download as PDF</a>
+    <span class="m-2"><a href="generate_pdf_high_and_low.php" class="btn btn-danger">Download as High and low PDF</a>
     <?php
 
     include("index.php");
