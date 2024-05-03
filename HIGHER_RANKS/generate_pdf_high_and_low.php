@@ -267,7 +267,7 @@ $conn->close();
 
 // FINAL PERIOD
 
-$html .= '<h2>Learning Outcomes for Midterm Period</h2>';
+$html .= '<h2>Learning Outcomes for Final Period</h2>';
 
 
 // Database connection configuration
