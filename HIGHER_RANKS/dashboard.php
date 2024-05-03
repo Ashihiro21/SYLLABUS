@@ -231,7 +231,7 @@ td{
     include("index.php");
     
     ?>
-    <a href="generate_pdf_syllabus.php" class="btn btn-danger">High and Low Report</a>
+    <a href="generate_pdf_high_and_low.php" class="btn btn-danger">High and Low Report</a>
     </span>
     </nav>
    
