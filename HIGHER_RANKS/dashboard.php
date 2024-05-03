@@ -185,6 +185,7 @@ td{
 
 .btn-primary{
     margin-left: 50rem;
+    white-space: nowrap;
 }
 .btn-secondary{
     margin-left: 30rem;
@@ -875,7 +876,7 @@ $mysqli->close();
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" name="insertdata" class="btn btn-primary">Save Data</button>
+                        <button type="submit" name="insertdata" class="btn btn-primary" >Save Data</button>
                     </div>
                 </form>
 
@@ -2959,7 +2960,7 @@ echo "No Record Found";
 <!-- SEMESTRAL -->
 <div class="container-box mt-5 header-title mb-5">
 <div style="margin-right:60rem;">
-<span ><b>Prepared:</b><b><a class="course">  <?php echo ($course_departments); ?></a></b></span>
+<span ><b style="white-space: nowrap;">Prepared:</b><b><a class="course" style="white-space: nowrap;">  <?php echo ($course_departments); ?></a></b></span>
 
 <!-- SEMESTRAL -->
 <?php
@@ -3325,7 +3326,7 @@ echo "No Record Found";
 
 
 <!-- FOR REVISED -->
-<span><b></b><b><a class="initial"><img src="<?php echo $deans_category_signature; ?>" alt="Department Head Signature"></a></b></span>
+<span  style="white-space: nowrap;"><b></b><b><a class="initial"><img src="<?php echo $deans_category_signature; ?>" alt="Department Head Signature"></a></b></span><br>
 <span><b>Endorsed:</b><b><a class="dept_name"><?php echo $category_dean; ?></a></b></span>
 <span><a class="initial"><?php echo $category_dean_position ." , ". $category_initial; ?></a></span>
 
