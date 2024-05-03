@@ -225,11 +225,13 @@ td{
 
     <nav>
     <span class="float-right"><p><?php echo $position; ?><a href="logout.php">Logout</a></p></span>
-    <span class="m-2"><a href="generate_pdf_syllabus.php" class="btn btn-danger">Download as PDF</a>
-    <?php
+    <span><a href="generate_pdf_syllabus.php" class="btn btn-danger">Download as PDF</a>
+    <a> <?php
 
-    include("index.php");
-    ?>
+include("index.php");
+?></a>
+   
+    <a href="generate_pdf_high_and_low.php" class="btn btn-danger">Download High and Low</a></span>
     </nav>
    
     <div class="card custom-card" >
