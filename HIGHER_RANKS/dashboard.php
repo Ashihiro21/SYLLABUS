@@ -225,13 +225,11 @@ td{
 
     <nav>
     <span class="float-right"><p><?php echo $position; ?><a href="logout.php">Logout</a></p></span>
-    <span><a href="generate_pdf_syllabus.php" class="btn btn-danger">Download as PDF</a>
-    <a> <?php
+    <span class="m-2"><a href="generate_pdf_syllabus.php" class="btn btn-danger">Download as PDF</a>
+    <?php
 
-include("index.php");
-?></a>
-   
-    <a href="generate_pdf_high_and_low.php" class="btn btn-danger">Download High and Low</a></span>
+    include("index.php");
+    ?>
     </nav>
    
     <div class="card custom-card" >
@@ -4129,7 +4127,7 @@ echo "No Record Found";
 
                         <div class="form-group">
                         <label>Descriptors (Institutional Learning Outcome)</label>
-                        <textarea name="descriptors_learn_out" id="descriptors_learn_out6" class="Editor11" placeholder="Enter Descriptors (Institutional Learning Outcome)" cols="50" rows="5"></textarea>
+                        <textarea name="descriptors_learn_out" id="descriptors_learn_out6" class="form-control 11" placeholder="Enter Descriptors (Institutional Learning Outcome)" cols="50" rows="5"></textarea>
                     </div>
 
                                     <div class="form-group">
