@@ -115,7 +115,8 @@ function populateCetegoryDropdown() {
                         </div>
 
                         <div class="form-group">
-                            <input type="hidden" name="department_position" id="department_position1" value="Chair" class="form-control"
+                            <label>Department Position</label>
+                            <input type="text" name="department_position" id="department_position1" value="Chair" class="form-control"
                                 placeholder="Enter Department Position">
                         </div>
 
