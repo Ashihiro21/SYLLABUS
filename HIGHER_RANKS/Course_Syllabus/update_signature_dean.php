@@ -46,7 +46,7 @@ if(isset($_POST['updatedata'])) {
         $filenameWithPath = $postDirectory . $filename;
 
         // SQL query to update the database
-        $sql = "UPDATE category SET dean_signature = '$filenameWithPath' WHERE id = $update_id23";
+        $sql = "UPDATE course SET dean_signature = '$filenameWithPath' WHERE id = $update_id23";
 
         // Execute the query
         if($conn->query($sql) === TRUE){

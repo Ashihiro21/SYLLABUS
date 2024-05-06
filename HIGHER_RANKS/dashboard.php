@@ -26,7 +26,7 @@ $sql = "SELECT
             c.initial AS category_initial,
             c.dean_name AS category_dean,
             c.dean_position AS category_dean_position,
-            c.dean_signature AS deans_category_signature,
+            co.dean_signature AS deans_category_signature,
             co.cname,
             co.course_department AS course_department,
             co.initial AS course_initial,
@@ -1199,11 +1199,11 @@ $mysqli->close();
         <thead>
             
             <tr>
-                <th class="" scope="col">Module No and Learning Outcomes</th>
-                <th class="" class="" scope="col">Week No</th>
-                <th class="" scope="col">Date</th>
-                <th class="" scope="col">Teaching-Learning Activities / Assessment Strategy</th>
-                <th class="" scope="col">Technology Enabler</th>
+                <th style="width:5px; text-align:center"  class="" scope="col">Module No and Learning Outcomes</th>
+                <th style="text-align:center;" class="" class="" scope="col">Week No</th>
+                <th style="padding-left:35px;padding-right:35px; text-align:center;" class="" scope="col">Date</th>
+                <th style="text-align: center;" class="" scope="col"><p>Teaching-Learning Activities  / </p>Assessment Strategy</th>
+                <th style="width:5px;" class="" scope="col">Technology Enabler</th>
                 <th class="text-rotate" scope="col">Onsite / F2F</th>
                 <th class="text-rotate" scope="col">Asynchronous</th>
                 <th class="text-rotate" scope="col">Alloted Hours</th>
@@ -1258,8 +1258,8 @@ $mysqli->close();
                 while ($row = mysqli_fetch_assoc($query_run)) {
             ?>
                                 <tr>
-                    <td class="hide-id"><?php echo $row['id']; ?></td>
-                    <td class=""><?php
+                    <td style="text-align: center;" class="hide-id"><?php echo $row['id']; ?></td>
+                    <td style="text-align: center;" class=""><?php
                         if (strpos($row['module_no'], 'TLO') !== false || strpos($row['module_no'], "\n") !== false) {
                             // If 'TLO' or a line break is found, replace it with <br>
                             echo str_replace(array('', "\n"), '<br>', $row['module_no']);
@@ -1267,9 +1267,9 @@ $mysqli->close();
                             echo $row['module_no'];
                         }
                         ?></td>
-                    <td><?php echo $row['week']; ?></td>
-                    <td><?php echo $row['date']; ?></td>
-                    <td class=""><?php
+                    <td style="text-align: center;"><?php echo $row['week']; ?></td>
+                    <td style="text-align: center;"><?php echo $row['date']; ?></td>
+                    <td style="" class=""><?php
                         if (strpos($row['teaching_activities'], '•') !== false || strpos($row['teaching_activities'], "\n") !== false) {
                             // If 'TLO' or a line break is found, replace it with <br>
                             echo str_replace(array('', "\n"), '<br>', $row['teaching_activities']);
@@ -1277,11 +1277,11 @@ $mysqli->close();
                             echo $row['teaching_activities'];
                         }
                         ?></td>
-                    <td><?php echo $row['technology']; ?></td>
-                    <td><?php echo ($row['onsite'] == 1) ? '/' : ''; ?></td>
-                    <td><?php echo ($row['asy'] == 1) ? '/' : ''; ?></td>
-                    <td><?php echo $row['hours']; ?></td>
-                    <td class="table-button">
+                    <td style="text-align: center;"><?php echo $row['technology']; ?></td>
+                    <td style="text-align: center;"><?php echo ($row['onsite'] == 1) ? '/' : ''; ?></td>
+                    <td style="text-align: center;"><?php echo ($row['asy'] == 1) ? '/' : ''; ?></td>
+                    <td style="text-align: center;"><?php echo $row['hours']; ?></td>
+                    <td style="text-align: center;" class="table-button">
                         <button type="button" class="btn btn-success editbtn_module_learning"><i class="lni lni-pencil"></i></button>
                         <button type="button" class="btn btn-danger deletebtn_module_learning"><i class="lni lni-trash-can"></i></button>
                     </td>
@@ -1293,11 +1293,11 @@ $mysqli->close();
                 echo "No Record Found";
             }
             ?>
-            <tr>
-                <td colspan="5">TOTAL</td>
-                <td><?php echo (is_numeric($total_onsite_hours) && is_numeric($hours)) ? ($total_onsite_hours * $hours) : 0; ?></td>
-                <td><?php echo (is_numeric($total_asy_hours) && is_numeric($hours)) ? ($total_asy_hours * $hours) : 0; ?></td>
-                <td><?php echo is_numeric($total_hour) ? $total_hour : 0; ?></td>
+            <tr style="background-color:#F4A460;">
+                <td style="text-align: center; background-color:#F4A460;" colspan="5"><b>TOTAL</b></td>
+                <td style="text-align: center; background-color:#F4A460;"><?php echo (is_numeric($total_onsite_hours) && is_numeric($hours)) ? ($total_onsite_hours * $hours) : 0; ?></td>
+                <td style="text-align: center; background-color:#F4A460;"><?php echo (is_numeric($total_asy_hours) && is_numeric($hours)) ? ($total_asy_hours * $hours) : 0; ?></td>
+                <td style="text-align: center; background-color:#F4A460;"><?php echo is_numeric($total_hour) ? $total_hour : 0; ?></td>
             </tr>
         </tbody>
     </table>
@@ -1342,7 +1342,7 @@ $mysqli->close();
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel6"> Topic Learning Outcomes  </h5>
+                    <h5 class="modal-title" id="exampleModalLabel6"> Topic Learning Outcomes1  </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -1353,6 +1353,12 @@ $mysqli->close();
                     <div class="modal-body">
 
                         <input type="hidden" name="update_id5" id="update_id5">
+
+                        <div class="form-group">
+                            <label> Computer Laboratory </label>
+                            <input type="text" name="comlab" id="comlab_6" class="form-control"
+                                placeholder="Enter Computer Laboratory">
+                        </div>
 
                         <div class="form-group">
                             <label> Course Learning Outcomes  </label>
@@ -1406,6 +1412,12 @@ $mysqli->close();
                 <form action="Course_Syllabus/insert_course_learning_outcome_final.php" method="POST">
 
                     <div class="modal-body">
+                    <div class="form-group">
+                            <label> Computer Laboratory </label>
+                            <input type="text" name="comlab" id="comlab6" class="form-control"
+                                placeholder="Enter Computer Laboratory">
+                        </div>
+
                     <div class="form-group">
                             <label> Course Learning Outcomes  </label>
                             <input type="text" name="final_learning_out" id="final_learning_out6" class="form-control"
@@ -1465,7 +1477,7 @@ $mysqli->close();
 <table id="datatableid" class="table table-bordered">
 <thead>
     <tr>
-        <th scope="col">Course Learning Outcomes</th>
+        <th colspan="3">Course Learning Outcomes</th>
         <th scope="col">Topic Learning Outcomes</th>
         <th scope="col">Action</th>
     </tr>
@@ -1480,6 +1492,8 @@ foreach($query_run as $row)
   
 <tr>
         <td class="hide-id"> <?php echo $row['id']; ?> </td>
+        <td style="border-right:1px solid white;"><?php echo $row['comlab']; ?></td>
+        <td style="border-left:1px solid white;border-right:1px solid white; padding-left:0px;padding-right:0px;"><?php echo "."; ?></td>
         <td class=""><?php echo $row['final_learning_out']; ?></td>
         <td class=""><?php
                         if (strpos($row['final_topic_leaning_out'], 'TLO') !== false || strpos($row['final_topic_leaning_out'], "\n") !== false) {
@@ -1715,15 +1729,17 @@ echo "No Record Found";
     <table id="datatableid" class="table table-bordered">
         <thead>
             <tr>
-                <th scope="col">Module No and Learning Outcomes</th>
-                <th scope="col">Week No</th>
-                <th scope="col">Date</th>
-                <th scope="col">Teaching-Learning Activities / Assessment Strategy</th>
-                <th scope="col">Technology Enabler</th>
+            <tr>
+                <th style="width:5px; text-align:center"  class="" scope="col">Module No and Learning Outcomes</th>
+                <th style="text-align:center;" class="" class="" scope="col">Week No</th>
+                <th style="padding-left:35px;padding-right:35px; text-align:center;" class="" scope="col">Date</th>
+                <th style="text-align: center;" class="" scope="col"><p>Teaching-Learning Activities  / </p>Assessment Strategy</th>
+                <th style="width:5px;" class="" scope="col">Technology Enabler</th>
                 <th class="text-rotate" scope="col">Onsite / F2F</th>
                 <th class="text-rotate" scope="col">Asynchronous</th>
                 <th class="text-rotate" scope="col">Alloted Hours</th>
-                <th scope="col">Actions</th>
+                <th class="" scope="col">Actions</th>
+            </tr>
             </tr>
         </thead>
         <tbody>
@@ -1771,10 +1787,9 @@ echo "No Record Found";
             if ($query_run) {
                 while ($row = mysqli_fetch_assoc($query_run)) {
             ?>
-                    <tr>
-                    <td class="hide-id"><?php echo $row['id']; ?></td>
-                    
-                    <td class=""><?php
+                      <tr>
+                    <td style="text-align: center;" class="hide-id"><?php echo $row['id']; ?></td>
+                    <td style="text-align: center;" class=""><?php
                         if (strpos($row['module_no'], 'TLO') !== false || strpos($row['module_no'], "\n") !== false) {
                             // If 'TLO' or a line break is found, replace it with <br>
                             echo str_replace(array('', "\n"), '<br>', $row['module_no']);
@@ -1782,9 +1797,9 @@ echo "No Record Found";
                             echo $row['module_no'];
                         }
                         ?></td>
-                    <td><?php echo $row['week']; ?></td>
-                    <td><?php echo $row['date']; ?></td>
-                    <td class=""><?php
+                    <td style="text-align: center;"><?php echo $row['week']; ?></td>
+                    <td style="text-align: center;"><?php echo $row['date']; ?></td>
+                    <td style="" class=""><?php
                         if (strpos($row['teaching_activities'], '•') !== false || strpos($row['teaching_activities'], "\n") !== false) {
                             // If 'TLO' or a line break is found, replace it with <br>
                             echo str_replace(array('', "\n"), '<br>', $row['teaching_activities']);
@@ -1792,15 +1807,16 @@ echo "No Record Found";
                             echo $row['teaching_activities'];
                         }
                         ?></td>
-                    <td><?php echo $row['technology']; ?></td>
-                    <td><?php echo ($row['onsite'] == 1) ? '/' : ''; ?></td>
-                    <td><?php echo ($row['asy'] == 1) ? '/' : ''; ?></td>
-                    <td><?php echo $row['hours']; ?></td>
-                    <td class="table-button">
-                        <button type="button" class="btn btn-success editbtn_module_learning_final"><i class="lni lni-pencil"></i></button>
-                        <button type="button" class="btn btn-danger deletebtn_module_learning_final"><i class="lni lni-trash-can"></i></button>
+                    <td style="text-align: center;"><?php echo $row['technology']; ?></td>
+                    <td style="text-align: center;"><?php echo ($row['onsite'] == 1) ? '/' : ''; ?></td>
+                    <td style="text-align: center;"><?php echo ($row['asy'] == 1) ? '/' : ''; ?></td>
+                    <td style="text-align: center;"><?php echo $row['hours']; ?></td>
+                    <td style="text-align: center;" class="table-button">
+                        <button type="button" class="btn btn-success editbtn_module_learning"><i class="lni lni-pencil"></i></button>
+                        <button type="button" class="btn btn-danger deletebtn_module_learning"><i class="lni lni-trash-can"></i></button>
                     </td>
                 </tr>
+
 
             <?php
                 }
@@ -1808,11 +1824,11 @@ echo "No Record Found";
                 echo "No Record Found";
             }
             ?>
-            <tr>
-                <td colspan="5">TOTAL</td>
-                <td><?php echo (is_numeric($total_onsite_hours) && is_numeric($hours)) ? ($total_onsite_hours * $hours) : 0; ?></td>
-                <td><?php echo (is_numeric($total_asy_hours) && is_numeric($hours)) ? ($total_asy_hours * $hours) : 0; ?></td>
-                <td><?php echo is_numeric($total_hour) ? $total_hour : 0; ?></td>
+             <tr style="background-color:#F4A460;">
+                <td style="text-align: center; background-color:#F4A460;" colspan="5"><b>TOTAL</b></td>
+                <td style="text-align: center; background-color:#F4A460;"><?php echo (is_numeric($total_onsite_hours) && is_numeric($hours)) ? ($total_onsite_hours * $hours) : 0; ?></td>
+                <td style="text-align: center; background-color:#F4A460;"><?php echo (is_numeric($total_asy_hours) && is_numeric($hours)) ? ($total_asy_hours * $hours) : 0; ?></td>
+                <td style="text-align: center; background-color:#F4A460;"><?php echo is_numeric($total_hour) ? $total_hour : 0; ?></td>
             </tr>
         </tbody>
     </table>
@@ -2954,7 +2970,10 @@ echo "No Record Found";
     </div>
 
 
+    
 </div>
+
+
 
 
 <!-- SEMESTRAL -->
@@ -3117,8 +3136,13 @@ $(document).ready(function(){
 </div>
 
 
+
+
+
 <!-- SEMESTRAL -->
 <?php
+ 
+
  
 
  // Database connection
@@ -3147,7 +3171,7 @@ $(document).ready(function(){
                  c.`initial` AS `category_initial`,
                  c.`dean_name` AS `deans`,
                  c.`dean_position` AS `deans_position`,
-                 c.`dean_signature` AS `dean_signatures`,
+                 co.`dean_signature` AS `dean_signatures`,
                  co.`cname`,
                  co.`course_department` AS `course_departments`,
                  co.`id` AS `course_id`,
@@ -3201,10 +3225,6 @@ foreach($query_run1 as $rows)
 <?php           
 }
 }
-else 
-{
-echo "No Record Found";
-}
 ?>
 </table>
 
@@ -3215,8 +3235,19 @@ echo "No Record Found";
 
 
 
-<span><b></b><b><a class="initial"><img src="<?php echo $dept_head_signature; ?>" alt="Department Head Signature"></a></b></span>
-<span><b>Approved:</b><b><a class="dept_name"><?php echo $dept_head; ?></a></b></span>
+<span>
+    <b>
+        <a class="initial">
+            <img src="<?php echo isset($dept_head_signature) ? $dept_head_signature : "No_signature"; ?>" alt="Please Upload Signature" width="100px">
+        </a>
+    </b>
+</span>
+
+
+
+
+<span><b>Approved:</b><b><a class="dept_name"><?php echo $dept_head;
+ ?></a></b></span>
 <span><a class="initial"><?php echo $dept_head_position ." , ". $course_initial; ?></a></span><br><br>
 
 
@@ -3252,7 +3283,7 @@ echo "No Record Found";
                  c.`initial` AS `category_initial`,
                  c.`dean_name` AS `deans`,
                  c.`dean_position` AS `deans_position`,
-                 c.`dean_signature` AS `dean_signatures`,
+                 co.`dean_signature` AS `dean_signatures`,
                  co.`cname`,
                  co.`course_department` AS `course_departments`,
                  co.`id` AS `course_id`,
@@ -3289,7 +3320,7 @@ foreach($query_run2 as $table_rows)
 <tbody>
   
 <tr>
-        <td class="hide-id"> <?php echo $table_rows['category_id']; ?> </td>
+        <td class="hide-id"> <?php echo $rows['course_id']; ?> </td>
         <td class="hide-id"><?php echo $table_rows['dean_signatures']; ?></td>
         <td class="table-button">
         <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
@@ -3305,10 +3336,6 @@ foreach($query_run2 as $table_rows)
 </tbody>
 <?php           
 }
-}
-else 
-{
-echo "No Record Found";
 }
 ?>
 </table>
@@ -3326,7 +3353,7 @@ echo "No Record Found";
 
 
 <!-- FOR REVISED -->
-<span  style="white-space: nowrap;"><b></b><b><a class="initial"><img src="<?php echo $deans_category_signature; ?>" alt="Department Head Signature"></a></b></span><br>
+<span  style="white-space: nowrap;"><b></b><b><a class="initial"><img src="<?php echo $deans_category_signature; ?>" alt="Department Head Signature" width="100px"></a></b></span><br>
 <span><b>Endorsed:</b><b><a class="dept_name"><?php echo $category_dean; ?></a></b></span>
 <span><a class="initial"><?php echo $category_dean_position ." , ". $category_initial; ?></a></span>
 
@@ -4584,8 +4611,9 @@ descriptions for the graduate attributes.</a>
             console.log(data);
 
             $('#update_id5').val(data[0]);
-            $('#final_learning_out').val(data[1]);
-            $('#final_topic_leaning_out').val(data[2]);
+            $('#comlab_6').val(data[1]);
+            $('#final_learning_out').val(data[3]);
+            $('#final_topic_leaning_out').val(data[4]);
         });
     });
 </script>

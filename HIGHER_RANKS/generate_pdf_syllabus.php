@@ -23,7 +23,7 @@ $sql = "SELECT
             c.`initial` AS `category_initial`,
             c.`dean_name` AS `deans`,
             c.`dean_position` AS `deans_position`,
-            c.`dean_signature` AS `dean_signatures`,
+            co.`dean_signature` AS `dean_signatures`,
             co.`cname`,
             co.`course_department` AS `course_departments`,
             co.`initial` AS `course_initial`,

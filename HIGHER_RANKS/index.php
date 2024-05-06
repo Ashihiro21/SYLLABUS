@@ -24,7 +24,7 @@ $sql = "SELECT
             c.`initial` AS `category_initial`,
             c.`dean_name` AS `deans`,
             c.`dean_position` AS `deans_position`,
-            c.`dean_signature` AS `dean_signatures`,
+            co.`dean_signature` AS `dean_signatures`,
             co.`cname`,
             co.`course_department` AS `course_departments`,
             co.`initial` AS `course_initial`,
@@ -482,7 +482,7 @@ if ($conn->connect_error) {
 }
 $department = $_SESSION['department'];
 // SQL query
-$sql = "SELECT `final_learning_out`, `final_topic_leaning_out` FROM `laerning_final` WHERE department = $department";
+$sql = "SELECT `comlab`, `final_learning_out`, `final_topic_leaning_out` FROM `laerning_final` WHERE department = $department";
 
 // Execute query
 $result = $conn->query($sql);
@@ -500,7 +500,7 @@ if ($result->num_rows > 0) {
     // Output data of each row
     while ($row = $result->fetch_assoc()) {
         echo "<tr>
-                <td style='border: 1px solid #dddddd;text-align: left; padding: 8px;'>" . $row["final_learning_out"] . "</td>
+                <td style='border: 1px solid #dddddd;text-align: left; padding: 8px;'>" . $row["comlab"] .'.'. $row["final_learning_out"] . "</td>
                 <td style='border: 1px solid #dddddd;text-align: left; padding: 8px;'>";
     
         if (strpos($row['final_topic_leaning_out'], 'TLO') !== false || strpos($row['final_topic_leaning_out'], "\n") !== false) {

@@ -23,7 +23,7 @@ $sql = "SELECT
             c.`initial` AS `category_initial`,
             c.`dean_name` AS `deans`,
             c.`dean_position` AS `deans_position`,
-            c.`dean_signature` AS `dean_signatures`,
+            co.`dean_signature` AS `dean_signatures`,
             co.`cname`,
             co.`course_department` AS `course_departments`,
             co.`initial` AS `course_initial`,
@@ -135,7 +135,10 @@ th{
     <h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($category_name).'</h4>
     <h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($course_departments).'</h4>
 
-    <h4 style="text-align:center;">TABLE OF SPECIFICATION FOR SUMMATIVE EXAM</h4>';
+    <p style="text-align:center; font-weight:bold;">Table of Specifications</p>';
+    
+    
+
 
     $department = $_SESSION['department'];
     // Using prepared statement to prevent SQL injection
@@ -149,13 +152,7 @@ th{
         while ($row = $result->fetch_assoc()) {
             // Properly formatted HTML output
           
-          $html .='  <span><a class="header">COURSE CODE</a><b><a style=" margin-left: 100px; margin-right: 2rem;">:</a></b><a class="data">'.$row['course_code'].'</a></span><br>';
-          $html .='<span><a class="header">COURSE TITLE</a><b><a style=" margin-left: 97px; margin-right: 2rem;">:</a></b><a class="data">'.$row['course_tittle'].'</a></span><br>';
-          $html .='<span><a class="header">COURSE TYPE</a><b><a style=" margin-left: 103px; margin-right: 2rem;">:</a></b><a class="data">'.$row['course_Type'].'</a></span><br>';
-          $html .=' <span><a class="header">COURSE CREDIT</a><b><a style=" margin-left: 84px; margin-right: 2rem;">:</a></b><a class="data">'.$row['course_credit'].'</a></span><br>';
-          $html .='<span><a class="header">LEARNING MODALITY</a><b><a style=" margin-left: 36px; margin-right: 2rem;">:</a></b><a class="data">'.$row['learning_modality'].'</a></span><br>';
-          $html .='<span><a class="header">PRE-REQUISITES</a><b><a style=" margin-left: 82px; margin-right: 2rem;">:</a></b><a class="data">'.$row['pre_requisit'].'</a></span><br>';
-          $html .='<span><a class="header">CO-REQUISITES</a><b><a style=" margin-left: 90px; margin-right: 2rem;">:</a></b><a class="data">'.$row['co_pre_requisit'].'</a></span><br><br><br><br>';
+          $html .='<h4 style="text-align:center; margin-top: -1rem; font-weight:normal;">'.strtoupper($row['course_code']).'-'.strtoupper($row['course_tittle']).'</h4>';
         }
     } 
 

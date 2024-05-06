@@ -115,8 +115,17 @@ function populateCetegoryDropdown() {
                         </div>
 
                         <div class="form-group">
-                            <label>Department Position</label>
-                            <input type="text" name="department_position" id="department_position1" value="Chair" class="form-control"
+                            <input type="hidden" name="department_position" id="department_position1" value="Chair" class="form-control"
+                                placeholder="Enter Department Position">
+                        </div>
+
+                        <div class="form-group">
+                            <input type="hidden" name="dept_signature" id="dept_signature1" value="No Signature" class="form-control"
+                                placeholder="Enter Department Position">
+                        </div>
+
+                        <div class="form-group">
+                            <input type="hidden" name="dean_signature" id="dean_signature1" value="No Signature" class="form-control"
                                 placeholder="Enter Department Position">
                         </div>
 
