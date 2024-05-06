@@ -108,20 +108,23 @@ $html = '
 /* Add margins to the page */
 body {
     margin: 20px;
+    box-sizing: border-box;
 }
 .header{
     font-weight:bold;
 }
 
-
+table{
+    width: 100%;
+}
 
 table, th, td, tr{
     border: 1px solid black;
     border-collapse: collapse;
-    width:75px;
 }
-th,tr, td{
-    text-align:center
+th, td{
+    text-align:center;
+    padding:5px;
 }
 
 
@@ -160,9 +163,9 @@ th,tr, td{
     // LEARNING PLAN
     // Learning Outcomes for Midterm Period
 
-    $html .='<tr>';
-    $html .='<th rowspan="2">% ITEM</th>';
-    $html .='<th rowspan="2" style="padding: 25px;"><p>Time</p><p>Allotment/</p><p>topic(mins)</p></th>';
+    $html .='<tr style="margin:0px; padding:0px;">';
+    $html .='<th style="width:70px;" " rowspan="2">% ITEM</th>';
+    $html .='<th rowspan="2"><p>Time</p><p>Allotment/</p><p>topic(mins)</p></th>';
     $html .='<th rowspan="2">TOPICS</th>';
     $html .='<th colspan="4">LEVELS</th>';
     $html .='<th rowspan="2">No. of Items</th>';
