@@ -37,11 +37,14 @@ if ($email_count > 0) {
 // Hash password
 $password_hashed = password_hash($password, PASSWORD_DEFAULT);
 
-// Insert data into the database
-$sql = "INSERT INTO users (first_name, last_name, department, catid, phone_number, email, password, position) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+// Set default role
+$role = 'user'; // Default role for new users
+
+// Insert data into the database with role
+$sql = "INSERT INTO users (first_name, last_name, department, catid, phone_number, email, password, position, role) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("ssssssss", $first_name, $last_name, $department, $courses, $phone_number, $email, $password_hashed, $position);
+$stmt->bind_param("sssssssss", $first_name, $last_name, $department, $courses, $phone_number, $email, $password_hashed, $position, $role);
 $stmt->execute();
 
 // Check if registration was successful

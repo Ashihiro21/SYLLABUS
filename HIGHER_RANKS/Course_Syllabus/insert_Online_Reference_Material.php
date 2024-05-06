@@ -17,9 +17,10 @@ if(isset($_POST['insertdata']))
 {
     $e_provider = $_POST['e_provider'];
     $refference_material = $_POST['refference_material'];
+    $department = $_POST['department'];
 
-    $sql = "INSERT INTO online_refference (`e_provider`, `refference_material`)
-    VALUES ('$e_provider', '$refference_material')";
+    $sql = "INSERT INTO online_refference (`e_provider`, `refference_material`, `department`)
+    VALUES ('$e_provider', '$refference_material', '$department')";
 
     if ($connection->query($sql) === TRUE) {
         echo '<script> alert("Data Saved"); </script>';

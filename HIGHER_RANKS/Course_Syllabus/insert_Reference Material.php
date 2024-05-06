@@ -17,9 +17,10 @@ if(isset($_POST['insertdata']))
 {
     $Provider = $_POST['Provider'];
     $Reference_Material = $_POST['Reference_Material'];
+    $department = $_POST['department'];
 
-    $sql = "INSERT INTO onsite_reffence (`Provider`, `Reference_Material`)
-    VALUES ('$Provider', '$Reference_Material')";
+    $sql = "INSERT INTO onsite_reffence (`Provider`, `Reference_Material`, `department`)
+    VALUES ('$Provider', '$Reference_Material', '$department')";
 
     if ($connection->query($sql) === TRUE) {
         echo '<script> alert("Data Saved"); </script>';

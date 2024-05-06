@@ -51,13 +51,13 @@ if(isset($_POST['updatedata'])) {
         // Execute the query
         if($conn->query($sql) === TRUE){
             // Record updated successfully
-            echo "Records were updated successfully.";
+            header('Location: ../dashboard.php');
         } else{
             // Error updating record
             echo "ERROR: Could not execute $sql. " . $conn->error;
         }
     } else {
-        // File upload failed
+        header('Location: ../dashboard.php');
     }
 }
 

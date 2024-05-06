@@ -17,7 +17,8 @@ $positions = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">                                                                         
     <script src="https://kit.fontawesome.com/yourkit.js" crossorigin="anonymous"></script>
-    <title>dlsud registration</title>
+    <link rel="icon" type="image/png" href="../img/DLSU-D.png"/>
+    <title>SYLLABUS</title>
     <style>
         html {
             background-color: #000;
@@ -262,7 +263,7 @@ $positions = mysqli_fetch_all($result, MYSQLI_ASSOC);
     outline: none;
 } 
 /* alert.message */
-body {}
+
 
 .fancy-alert {
     font-family: sans-serif;
@@ -469,6 +470,7 @@ body {}
         </select>
     </div>
 </div>
+
     <input type="submit" class="fadeIn fourth show-alert__success" value="Register">
 </form>
 

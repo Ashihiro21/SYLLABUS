@@ -3,7 +3,7 @@ body{
     font-size: 18px;
 }
 h2{
-    text-align: left;
+    text-align: justify;
 }
 
 
@@ -61,6 +61,7 @@ padding-left: 19.7rem;
 .add_databtn{
 margin-left: 15px;
 }
+
 .text-area{
     border: 1px solid black;
     margin: 5px;

@@ -1,82 +1,92 @@
 <?php
-
 session_start();
+
 // Check if the user is logged in, if not, redirect to the login page
 if (!isset($_SESSION['email'])) {
-    header("Location: index.php");
+    header("Location: login.php");
     exit();
 }
 
 include('../Database/connection.php');
 
 $email = $_SESSION['email'];
+
+// Prepare and execute SQL statement
 $sql = "SELECT 
-            u.`first_name`, 
-            u.`last_name`, 
-            u.`department`, 
-            u.`catid`, 
-            u.`phone_number`, 
-            u.`email`, 
-            u.`password`, 
-            p.`name` AS `position`,
-            c.`id` AS `id`,
-            c.`name` AS `category_name`,
-            c.`initial` AS `category_initial`,
-            c.`dean_name` AS `deans`,
-            c.`dean_position` AS `deans_position`,
-            co.`cname`,
-            co.`course_department` AS `course_departments`,
-            co.`initial` AS `course_initial`,
-            co.`department_name` AS `course_dept_name`,
-            co.`department_position` AS `dept_position`
+            u.first_name, 
+            u.last_name, 
+            u.department, 
+            u.catid, 
+            u.phone_number, 
+            u.email, 
+            u.password, 
+            p.name AS position,
+            c.id AS category_id,
+            c.name AS category_name,
+            c.initial AS category_initial,
+            c.dean_name AS category_dean,
+            c.dean_position AS category_dean_position,
+            co.dean_signature AS deans_category_signature,
+            co.cname,
+            co.course_department AS course_department,
+            co.initial AS course_initial,
+            co.department_name AS dept_head,
+            co.department_position AS dept_head_position,
+            co.dept_signature AS dept_head_signature
         FROM 
-            `users` AS u 
+            users AS u 
         LEFT JOIN 
-            `position` AS p ON u.`position` = p.`id`
+            position AS p ON u.position = p.id
         LEFT JOIN 
-            `category` AS c ON u.`department` = c.`id`
+            category AS c ON u.department = c.id
         LEFT JOIN
-            `course` AS co ON u.`catid` = co.`id`
+            course AS co ON u.catid = co.id
         WHERE 
-            u.email = '$email'";
+            u.email = ?";
 
-
-
-$result = $conn->query($sql);
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
-    // Output data of each row
-    while ($row = $result->fetch_assoc()) {
-        $first_name = $row['first_name'];
-        $last_name = $row['last_name'];
-        $department = $row['department'];
-        $courses = $row['catid'];
-        $phone_number = $row['phone_number'];
-        $email = $row['email'];
-        $password = $row['password'];
-        $position = $row['position'];
-        $category_name = $row['category_name'];
-        $category_initial = $row['category_initial'];
-        $cname = $row['cname'];
-        $course_initial = $row['course_initial'];
-        $course_departments = $row['course_departments'];
-        $category_dean = $row['deans'];
-        $category_dean_position = $row['deans_position'];
-        $dept_head = $row['course_dept_name'];
-        $dept_head_position = $row['dept_position'];
-        
-    }
+    // Fetch data
+    $row = $result->fetch_assoc();
+    $_SESSION['department'] = $row['department']; // Add department to session
+    $first_name = $row['first_name'];
+    $last_name = $row['last_name'];
+    $department = $row['department'];
+    $courses = $row['catid'];
+    $phone_number = $row['phone_number'];
+    $email = $row['email'];
+    $password = $row['password'];
+    $position = $row['position'];
+    $category_name = $row['category_name'];
+    $category_initial = $row['category_initial'];
+    $cname = $row['cname'];
+    $course_initial = $row['course_initial'];
+    $course_departments = $row['course_department'];
+    $category_dean = $row['category_dean'];
+    $category_dean_position = $row['category_dean_position'];
+    $dept_head = $row['dept_head'];
+    $dept_head_position = $row['dept_head_position'];
+    $dept_head_signature = $row['dept_head_signature'];
+    $deans_category_signature = $row['deans_category_signature'];
 } else {
     $position = "Position not found";
 }
 
+// Close statement and connection
+$stmt->close();
 $conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Dashboard</title>
+    <title>SYLLABUS</title>
+    <link rel="icon" type="image/png" href="../img/DLSU-D.png"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="nav.css">
@@ -84,6 +94,9 @@ $conn->close();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor5/41.2.1/ckeditor.min.js"></script>
 </head>
 <style>
+    body{
+        overflow-x: hidden;
+    }
  
  .hide-id {
     display: none;
@@ -161,26 +174,72 @@ td{
     padding-bottom: 5px;
 }
 
+.dl-word{
+    margin-left: 1rem;
+    background-color: #0d6efd;
+}
+
+.dl-word:hover{
+    background-color: #0a5cb8;
+}
 
 .btn-primary{
-    margin-left: 5rem;
+    margin-left: 50rem;
+    white-space: nowrap;
+}
+.btn-secondary{
+    margin-left: 30rem;
 }
 .sysllabus_button{
-    margin-left: 5rem;
+    margin-left: 50rem; 
 }
+.custom-card {
+    margin: 13.5rem;
+        border: 1px solid #6c757d; /* Corrected border color syntax */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.9); /* Shadow effect */
+        
+    }
+    .custom-policy{
+        margin: 1.5rem;
+        border: 1px solid #6c757d; /* Corrected border color syntax */
+      
+        height: 100%;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.9); /* Shadow effect */
+    }
+    .text-rotate{
+        transform: rotate(-180deg); /* Rotate text vertically */
+        white-space: nowrap;
+        writing-mode: vertical-lr;
+    }
 
-  
+ 
+
+    
 
 </style>
 <body>
 
 
     <nav>
-    <a href="generate_pdf_syllabus.php" class="btn btn-danger">Download as PDF</a>
-    <a href="generate_word_syllabus.php" class="btn btn-primary">Download as PDF</a>
-    <span class="account-header"><p><?php echo $position; ?><a href="logout.php">Logout</a></p></span>
+    <span class="float-right"><p><?php echo $position; ?><a href="logout.php">Logout</a></p></span>
+    <span class="mb-4"><a href="generate_pdf_syllabus.php" class="btn btn-danger">Download as PDF</a>
+    <?php
+
+    include("index.php");
+    
+    ?>
+    <a href="generate_pdf_high_and_low.php" class="btn btn-danger">High and Low Report</a>
+    <a href="generate_pdf_tos.php" class="btn btn-danger">TOS Report</a>
+    </span>
     </nav>
    
+    <div class="card custom-card" >
+    <div class="card-body">
+
     <div class="pt-5 pb-4">
         <img src="../img/logos.png" class="logos" alt="">
     </div>
@@ -197,6 +256,123 @@ td{
 
 
    
+    <button type="button" class="btn btn-primary float" data-toggle="modal" data-target="#addmodal">
+  Add Course
+</button>
+
+    <div class="modal fade" id="addmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">ADD COURSE SYLLABUS</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form action="Course_Syllabus/add_course_syllabus.php" method="POST">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Course Code</label>
+                        <input type="text" name="course_code" class="form-control" placeholder="Enter course code">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Course Title</label>
+                        <input type="text" name="course_tittle" class="form-control" placeholder="Enter course title">
+                    </div>
+
+                    <div class="form-group">
+                        <fieldset>
+                            <legend>Course Type</legend>
+                            <div>
+                                <input type="radio" id="lecture1" name="course_Type1" value="Lecture">
+                                <label for="lecture">Lecture</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="laboratory1" name="course_Type1" value="Laboratory">
+                                <label for="laboratory">Laboratory</label>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Course Credit</label>
+                        <input type="text" name="course_credit" class="form-control" placeholder="Enter course credit">
+                    </div>
+
+                    <div class="form-group">
+                        <fieldset>
+                            <legend>Learning Modality</legend>
+                            <div>
+                                <input type="radio" id="traditional1" name="learning_modality1" value="Traditional">
+                                <label for="traditional">Traditional</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="flex_blended1" name="learning_modality1" value="Flex Blended">
+                                <label for="flex_blended">Flex Blended</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="fully_onsite1" name="learning_modality1" value="Fully Onsite">
+                                <label for="fully_onsite">Fully Onsite</label>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Pre-requisites</label>
+                        <input type="text" name="pre_requisit" class="form-control" placeholder="Enter pre-requisites">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Co Pre-requisites</label>
+                        <input type="text" name="co_pre_requisit" class="form-control" placeholder="Enter co pre-requisites">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Professor</label>
+                        <input type="text" name="professor" class="form-control" placeholder="Enter professor">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="consultation_hours_date">Consultation Hours</label>
+                        <input id="consultation_hours_date1" name="consultation_hours_date" class="form-control" rows="5" cols="50" style="width: 300px;" placeholder="Enter consultation Day and Hours"></input>
+                    </div>
+
+                    <div class="form-group">
+                        <input id="consultation_hours_room1" name="consultation_hours_room" class="form-control" rows="5" cols="50" style="width: 300px;" placeholder="Enter consultation Room"></input>
+                    </div>
+
+                    <div class="form-group">
+                        <input id="consultation_hours_email1" name="consultation_hours_email" class="form-control" rows="5" cols="50" style="width: 300px;" placeholder="Enter consultation Email"></input>
+                    </div>
+
+                    <div class="form-group">
+                        <input id="consultation_hours_number1" name="consultation_hours_number" class="form-control" rows="5" cols="50" style="width: 300px;" placeholder="Enter consultation Contact"></input>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="course_description">Course Description</label>
+                        <textarea id="course_description1" name="course_description" class="form-control" rows="7" cols="70" style="width: 450px;" placeholder="Enter Course Description"></textarea>
+                    </div>
+
+                    <div class="form-group">
+    <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+</div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" name="adddata" class="btn btn-primary">Add Data</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
 
 
  
@@ -211,6 +387,14 @@ td{
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+
+                <div class="modal-body">
+                    <!-- Dropdowns will be loaded here -->
+                
+
+                
+            </div>
+
 
                 <form action="Course_Syllabus/update_course_learning_outcome.php" method="POST">
 
@@ -326,7 +510,7 @@ td{
                     
 
 
-
+                       
                         <div class="form-group">
                             <label> Pre requisites </label>
                             <input type="text" name="pre_requisit" id="pre_requisit" class="form-control" placeholder="Enter pre_requisit">
@@ -364,6 +548,10 @@ td{
                             <textarea id="course_description" name="course_description" id="course_description" class="form-control" rows="7" cols="70" style="width: 450px;" placeholder="Enter Course Description"></textarea>
                         </div>
 
+                                    <div class="form-group">
+                <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+            </div>
+
                         
                     </div>
                     <div class="modal-footer">
@@ -384,7 +572,7 @@ td{
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"> Delete Student Data </h5>
+                    <h5 class="modal-title" id="exampleModalLabel"> Delete Data </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -415,7 +603,7 @@ td{
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"> Delete Student Data </h5>
+                    <h5 class="modal-title" id="exampleModalLabel"> Delete Data </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -480,8 +668,7 @@ td{
 
 
 
-
-                    <?php
+    <?php
                      
            
                      // Database connection
@@ -492,8 +679,9 @@ td{
                              die();
                              }
                      
+                         $department = $_SESSION['department']; 
 
-                         $query = "SELECT * FROM course_syllabus";
+                         $query = "SELECT `id`, `course_code`, `course_tittle`, `course_Type`, `course_credit`, `learning_modality`, `pre_requisit`, `co_pre_requisit`, `professor`, `consultation_hours_date`, `consultation_hours_room`, `consultation_hours_email`, `consultation_hours_number`, `course_description`, `email`, `department` FROM `course_syllabus` WHERE department='$department'";
                          $query_run = mysqli_query($connection, $query);
             ?>  
                     <table id="datatableid">
@@ -534,7 +722,7 @@ td{
                             
                             <td class="hide-id" style="border: 1px solid white;"><?php echo $row['course_description']; ?></td>
                                 
-                            <td>
+                            <td class="centered-btn">
                                 <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
 
                                 <button type="button" class="btn sysllabus_button btn-success editbtn"><i class="lni lni-pencil"></i></button>
@@ -552,8 +740,33 @@ td{
                 }
             ?>
                     </table>
+
+                    <?php
+            // Establish a database connection (replace 'hostname', 'username', 'password', and 'database' with your actual database credentials)
+            $mysqli = new mysqli("localhost", "root", "", "syllabus");
+
+            // Check connection
+            if ($mysqli->connect_error) {
+                die("Connection failed: " . $mysqli->connect_error);
+            }
+
+            $department = $_SESSION['department']; 
+            // Prepare SQL query
+            $sql = "SELECT `id`, `course_code`, `course_tittle`, `course_Type`, `course_credit`, `learning_modality`, `pre_requisit`, `co_pre_requisit`, `professor`, `consultation_hours_date`, `consultation_hours_room`, `consultation_hours_email`, `consultation_hours_number`, `course_description`, `email`, `department` FROM `course_syllabus` WHERE department='$department'";
+
+            // Execute query
+            $result = $mysqli->query($sql);
+
+            // Check if there are results
+            if ($result->num_rows > 0) {
+                ?>
+
+                    <?php
+                    // Loop through the result set
+                    while ($row = $result->fetch_assoc()) {
+                        ?>
            
-                    <div class="container text-left">
+    <div class="container text-left">
     <div class="header">COURSE CODE</div>
     <div>:</div>
     <div><?php echo $row['course_code']; ?></div>
@@ -604,26 +817,28 @@ td{
     <div class="container-box desc">
         <div class="header mt-4">COURSE DESCRIPTION:</div>
     <div class="text-wrap descriptions"><?php echo $row['course_description']; ?></div>
-    <div class="header mt-4">COURSE LEARNING OUTCOMES:</div>
-    <p> By the end of this course, students are expected to: </p>
-</div>
+</div> 
 
+<?php
+        }
+        ?>
+    <?php
+} else {
+    echo "<div class='container'><br>";
+    echo "0 results";
+    echo "</div> ";
+}
 
-
-
-
-
-
-
-
-
-
-    
-                
-
-                    </div> 
-
-
+// Close database connection
+$mysqli->close();
+?>
+                        <div style="margin-left:16.5rem; margin-top: 4rem;">
+                        <div class="font-weight-bold">COURSE LEARNING OUTCOMES:</div>
+                        <p> By the end of this course, students are expected to: </p>
+                        </div>
+                        </div>
+                        
+                        
                     <button type="button" class="btn btn-primary add_databtn" data-toggle="modal" data-target="#studentaddmodal">
                         ADD DATA
                     </button>
@@ -650,14 +865,18 @@ td{
                         </div>
 
                     
-                        <label for="learn_out">Course Learning Outcomes</label>
-                        <textarea name="learn_out" id="learn_out" row="50" class="editor6" placeholder="Course Learning Outcomes"></textarea>
+                        <label for="learn_out">Course Learning Outcomes</label><br>
+                        <textarea name="learn_out" id="learn_out" row="70" cols="50" class="form-control" placeholder="Course Learning Outcomes"></textarea>
                 
+
+                        <div class="form-group">
+    <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+</div>
 
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" name="insertdata" class="btn btn-primary">Save Data</button>
+                        <button type="submit" name="insertdata" class="btn btn-primary" >Save Data</button>
                     </div>
                 </form>
 
@@ -686,8 +905,8 @@ td{
                          }
                  
                 
-
-                     $query = "SELECT * FROM course_leaning";
+                         $department = $_SESSION['department'];
+                         $query = "SELECT * FROM course_leaning WHERE department = $department";
                      $query_run = mysqli_query($connection, $query);
         ?>  
                 <table id="datatableid">
@@ -734,9 +953,9 @@ td{
 
                     </div>
 
-                    <div class="container-fluid mt-5 header-title"><br>
-                    <b><a>LEARNING PLAN</a></b><br>
-                    <b><a>Learning Outcomes for Midterm Period </a></b>
+                    <div class="container-fluid header-title"><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><a>LEARNING PLAN</a></b><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><a>Learning Outcomes for Midterm Period </a></b>
                     </div>
 
         
@@ -757,7 +976,8 @@ td{
                  
                 
 
-                     $query = "SELECT * FROM course_leaning";
+                         $department = $_SESSION['department'];
+                     $query = "SELECT * FROM course_leaning WHERE department = $department";
                      $query_run = mysqli_query($connection, $query);
         ?>  
                 <table id="datatableid" class="table table-bordered">
@@ -779,7 +999,14 @@ td{
                     <tr>
                             <td class="hide-id"> <?php echo $row['id']; ?> </td>
                             <td class=""><?php echo $row['comlab']; ?><?php echo "."; ?><?php echo $row['learn_out']; ?></td>
-                            <td class=""><?php echo $row['topic_learn_out']; ?></td>
+                            <td class=""><?php
+                        if (strpos($row['topic_learn_out'], 'TLO') !== false || strpos($row['topic_learn_out'], "\n") !== false) {
+                            // If 'TLO' or a line break is found, replace it with <br>
+                            echo str_replace(array('', "\n"), '<br>', $row['topic_learn_out']);
+                        } else {
+                            echo $row['topic_learn_out'];
+                        }
+                        ?></td>
                             <td class="table-button">
                             <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
 
@@ -826,7 +1053,7 @@ td{
                     <div class="modal-body">
                     <div class="form-group">
                         <label for="module_no1">Module No and Learning Outcomes</label>
-                        <textarea name="module_no" id="module_no1" class="editor1" placeholder="Module No and Learning Outcomes" cols="50" rows="5"></textarea>
+                        <textarea name="module_no" id="module_no1" class="form-control 1" placeholder="Module No and Learning Outcomes" cols="50" rows="5"></textarea>
                     </div>
 
                         <div class="form-group">
@@ -836,18 +1063,20 @@ td{
                         </div>
 
                         <div class="form-group">
-                            <label>Week No</label>
+                            <label>Date</label>
                             <input type="text" name="date" id="date1" class="form-control"
                                 placeholder="Enter Date">
                         </div>
 
                         <div class="form-group">
                         <label for="teaching_activities1">Teaching-Learning Activities / Assessment Strategy</label>
-                        <textarea name="teaching_activities" id="teaching_activities1" class="editor2" placeholder="Enter Teaching-Learning Activities / Assessment Strategy" cols="50" rows="5"></textarea>
+                        <textarea name="teaching_activities" id="teaching_activities1" class="form-control 2" placeholder="Enter Teaching-Learning Activities / Assessment Strategy" cols="50" rows="5"></textarea>
                     </div>
 
 
-                        
+                    <div class="form-group">
+    <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+</div>
                         
                         <div class="form-group">
                             <label>Technology Enabler</label>
@@ -857,16 +1086,16 @@ td{
                         
                         <div class="form-group">
                     <label>
-                        <input type="checkbox" name="onsite1" value="1" id="onsite1">
+                        <input type="checkbox" name="onsite5" value="1" id="onsite5">
                         Onsite / F2F
                     </label><br>
                     <label>
-                        <input type="checkbox" name="asy1" value="1" id="asynchronous1">
+                        <input type="checkbox" name="asy5" value="1" id="asynchronous5">
                         Asynchronous
                     </label>
                 </div>
                 <label>Alloted Hours</label>
-                        <input type="text" name="hours" id="hours1" class="form-control"
+                        <input type="text" name="hours" id="alloted_hours5" class="form-control"
                             placeholder="Enter Alloted Hours">
 
 
@@ -912,7 +1141,7 @@ td{
                         </div>
 
                         <div class="form-group">
-                            <label>Week No</label>
+                            <label>Date</label>
                             <input type="text" name="date" id="date" class="form-control"
                                 placeholder="Enter Date">
                         </div>
@@ -942,6 +1171,13 @@ td{
                     </label>
                 </div>
 
+                
+                <div class="form-group">
+                            <label>Alloted Hours</label>
+                            <input type="text" name="alloted_hours" id="alloted_hours" class="form-control"
+                                placeholder="Enter Alloted Hours">
+                        </div>
+
 
                 </div>
                     <div class="modal-footer">
@@ -963,15 +1199,14 @@ td{
         <thead>
             
             <tr>
-            
-                <th class="" scope="col">Module No and Learning Outcomes</th>
-                <th class="" class="" scope="col">Week No</th>
-                <th class="" scope="col">Date</th>
-                <th class="" scope="col">Teaching-Learning Activities / Assessment Strategy</th>
-                <th class="" scope="col">Technology Enabler</th>
-                <th class="" scope="col">Onsite / F2F</th>
-                <th class="" scope="col">Asynchronous</th>
-                <th class="" scope="col">Alloted Hours</th>
+                <th style="width:5px; text-align:center"  class="" scope="col">Module No and Learning Outcomes</th>
+                <th style="text-align:center;" class="" class="" scope="col">Week No</th>
+                <th style="padding-left:35px;padding-right:35px; text-align:center;" class="" scope="col">Date</th>
+                <th style="text-align: center;" class="" scope="col"><p>Teaching-Learning Activities  / </p>Assessment Strategy</th>
+                <th style="width:5px;" class="" scope="col">Technology Enabler</th>
+                <th class="text-rotate" scope="col">Onsite / F2F</th>
+                <th class="text-rotate" scope="col">Asynchronous</th>
+                <th class="text-rotate" scope="col">Alloted Hours</th>
                 <th class="" scope="col">Actions</th>
             </tr>
         </thead>
@@ -984,13 +1219,15 @@ td{
                 die();
             }
 
+            
+            $department = $_SESSION['department'];
             // Calculate total hours
             $total_hour_query = "SELECT `hours`,`asy`,`onsite`,
             SUM(hours) as total_hours, 
             SUM(asy) as total_asy_hours,
             SUM(onsite) as total_onsite_hours 
         FROM 
-            module_learning";
+            module_learning WHERE department = $department";
             $total_hour_result = mysqli_query($connection, $total_hour_query);
             $total_hour_row = mysqli_fetch_assoc($total_hour_result);
 
@@ -1000,7 +1237,7 @@ td{
             $total_hour = $total_hour_row['total_hours'];
             $total_asy_hours = $total_hour_row['total_asy_hours'];
             $total_onsite_hours = $total_hour_row['total_onsite_hours'];
-
+            $department = $_SESSION['department'];
             // Fetch module learning records
             $query = "SELECT 
                         `id`, 
@@ -1013,40 +1250,54 @@ td{
                         `asy`, 
                         `hours`
                     FROM 
-                        `module_learning`";
+                        `module_learning` WHERE department = $department";
 
             $query_run = mysqli_query($connection, $query);
 
             if ($query_run) {
                 while ($row = mysqli_fetch_assoc($query_run)) {
             ?>
-                    <tr>
-                        <td class="hide-id"><?php echo $row['id']; ?></td>
-                        <td><?php echo $row['module_no']; ?></td>
-                        <td><?php echo $row['week']; ?></td>
-                        <td><?php echo $row['date']; ?></td>
-                        <td><?php echo $row['teaching_activities']; ?></td>
-                        <td><?php echo $row['technology']; ?></td>
-                        <td><?php echo $row['onsite']; ?></td>
-                        <td><?php echo $row['asy']; ?></td>
+                                <tr>
+                    <td style="text-align: center;" class="hide-id"><?php echo $row['id']; ?></td>
+                    <td style="text-align: center;" class=""><?php
+                        if (strpos($row['module_no'], 'TLO') !== false || strpos($row['module_no'], "\n") !== false) {
+                            // If 'TLO' or a line break is found, replace it with <br>
+                            echo str_replace(array('', "\n"), '<br>', $row['module_no']);
+                        } else {
+                            echo $row['module_no'];
+                        }
+                        ?></td>
+                    <td style="text-align: center;"><?php echo $row['week']; ?></td>
+                    <td style="text-align: center;"><?php echo $row['date']; ?></td>
+                    <td style="" class=""><?php
+                        if (strpos($row['teaching_activities'], '•') !== false || strpos($row['teaching_activities'], "\n") !== false) {
+                            // If 'TLO' or a line break is found, replace it with <br>
+                            echo str_replace(array('', "\n"), '<br>', $row['teaching_activities']);
+                        } else {
+                            echo $row['teaching_activities'];
+                        }
+                        ?></td>
+                    <td style="text-align: center;"><?php echo $row['technology']; ?></td>
+                    <td style="text-align: center;"><?php echo ($row['onsite'] == 1) ? '/' : ''; ?></td>
+                    <td style="text-align: center;"><?php echo ($row['asy'] == 1) ? '/' : ''; ?></td>
+                    <td style="text-align: center;"><?php echo $row['hours']; ?></td>
+                    <td style="text-align: center;" class="table-button">
+                        <button type="button" class="btn btn-success editbtn_module_learning"><i class="lni lni-pencil"></i></button>
+                        <button type="button" class="btn btn-danger deletebtn_module_learning"><i class="lni lni-trash-can"></i></button>
+                    </td>
+                </tr>
 
-                        <td><?php echo $row['hours']; ?></td>
-                        <td class="table-button">
-                            <button type="button" class="btn btn-success editbtn_module_learning"><i class="lni lni-pencil"></i></button>
-                            <button type="button" class="btn btn-danger deletebtn_module_learning"><i class="lni lni-trash-can"></i></button>
-                        </td>
-                    </tr>
             <?php
                 }
             } else {
                 echo "No Record Found";
             }
             ?>
-            <tr>
-                <td colspan="5">TOTAL</td>
-                <td><?php echo $total_onsite_hours * $hours; ?></td>
-                <td><?php echo $total_asy_hours * $hours; ?></td>
-                <td><?php echo $total_hour; ?></td>
+            <tr style="background-color:#F4A460;">
+                <td style="text-align: center; background-color:#F4A460;" colspan="5"><b>TOTAL</b></td>
+                <td style="text-align: center; background-color:#F4A460;"><?php echo (is_numeric($total_onsite_hours) && is_numeric($hours)) ? ($total_onsite_hours * $hours) : 0; ?></td>
+                <td style="text-align: center; background-color:#F4A460;"><?php echo (is_numeric($total_asy_hours) && is_numeric($hours)) ? ($total_asy_hours * $hours) : 0; ?></td>
+                <td style="text-align: center; background-color:#F4A460;"><?php echo is_numeric($total_hour) ? $total_hour : 0; ?></td>
             </tr>
         </tbody>
     </table>
@@ -1060,7 +1311,7 @@ td{
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel5"> Delete Student Data </h5>
+                    <h5 class="modal-title" id="exampleModalLabel5"> Delete Data </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -1091,7 +1342,7 @@ td{
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel6"> Topic Learning Outcomes  </h5>
+                    <h5 class="modal-title" id="exampleModalLabel6"> Topic Learning Outcomes1  </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -1104,6 +1355,12 @@ td{
                         <input type="hidden" name="update_id5" id="update_id5">
 
                         <div class="form-group">
+                            <label> Computer Laboratory </label>
+                            <input type="text" name="comlab" id="comlab_6" class="form-control"
+                                placeholder="Enter Computer Laboratory">
+                        </div>
+
+                        <div class="form-group">
                             <label> Course Learning Outcomes  </label>
                             <input type="text" name="final_learning_out" id="final_learning_out" class="form-control"
                                 placeholder="Enter Course Learning Outcomes">
@@ -1113,6 +1370,11 @@ td{
                         <label>Topic Learning Outcomes</label>
                         <textarea name="final_topic_leaning_out" id="final_topic_leaning_out" class="form-control" placeholder="Enter Learning Outcome" cols="50" rows="5"></textarea>
                     </div>
+
+
+                        <div class="form-group">
+            <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+                 </div>
 
 
                         
@@ -1151,6 +1413,12 @@ td{
 
                     <div class="modal-body">
                     <div class="form-group">
+                            <label> Computer Laboratory </label>
+                            <input type="text" name="comlab" id="comlab6" class="form-control"
+                                placeholder="Enter Computer Laboratory">
+                        </div>
+
+                    <div class="form-group">
                             <label> Course Learning Outcomes  </label>
                             <input type="text" name="final_learning_out" id="final_learning_out6" class="form-control"
                                 placeholder="Enter Course Learning Outcomes">
@@ -1158,8 +1426,12 @@ td{
 
                         <div class="form-group">
                         <label>Topic Learning Outcomes</label>
-                        <textarea name="final_topic_leaning_out" id="final_topic_leaning_out6" class="editor3" placeholder="Enter Learning Outcome" cols="50" rows="5"></textarea>
+                        <textarea name="final_topic_leaning_out" id="final_topic_leaning_out6" class="form-control 3" placeholder="Enter Learning Outcome" cols="50" rows="5"></textarea>
                     </div>
+
+                    <div class="form-group">
+    <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+            </div>
 
                     </div>
                     <div class="modal-footer">
@@ -1177,7 +1449,7 @@ td{
 <br>
 
 <div class="container-fluid mt-5 header-title">
-<a>Learning Outcomes for Final Period</a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a>Learning Outcomes for Final Period</a>
 </div>
 
 
@@ -1198,14 +1470,14 @@ td{
      }
 
 
-
- $query = "SELECT * FROM  laerning_final";
+     $department = $_SESSION['department'];
+ $query = "SELECT * FROM  laerning_final WHERE department = $department";
  $query_run = mysqli_query($connection, $query);
 ?>  
 <table id="datatableid" class="table table-bordered">
 <thead>
     <tr>
-        <th scope="col">Course Learning Outcomes</th>
+        <th colspan="3">Course Learning Outcomes</th>
         <th scope="col">Topic Learning Outcomes</th>
         <th scope="col">Action</th>
     </tr>
@@ -1220,8 +1492,17 @@ foreach($query_run as $row)
   
 <tr>
         <td class="hide-id"> <?php echo $row['id']; ?> </td>
+        <td style="border-right:1px solid white;"><?php echo $row['comlab']; ?></td>
+        <td style="border-left:1px solid white;border-right:1px solid white; padding-left:0px;padding-right:0px;"><?php echo "."; ?></td>
         <td class=""><?php echo $row['final_learning_out']; ?></td>
-        <td class=""><?php echo $row['final_topic_leaning_out']; ?></td>
+        <td class=""><?php
+                        if (strpos($row['final_topic_leaning_out'], 'TLO') !== false || strpos($row['final_topic_leaning_out'], "\n") !== false) {
+                            // If 'TLO' or a line break is found, replace it with <br>
+                            echo str_replace(array('', "\n"), '<br>', $row['final_topic_leaning_out']);
+                        } else {
+                            echo $row['final_topic_leaning_out'];
+                        }
+                        ?></td>
         <td class="table-button">
         <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
 
@@ -1269,7 +1550,7 @@ echo "No Record Found";
                     <div class="modal-body">
                     <div class="form-group">
                         <label for="module_no1">Module No and Learning Outcomes</label>
-                        <textarea name="module_no" id="module_no1" class="editor4" placeholder="Enter Module No and Learning Outcomes" cols="50" rows="5"></textarea>
+                        <textarea name="module_no" id="module_no1" class="form-control 4" placeholder="Enter Module No and Learning Outcomes" cols="50" rows="5"></textarea>
                     </div>
 
                         <div class="form-group">
@@ -1279,14 +1560,14 @@ echo "No Record Found";
                         </div>
 
                         <div class="form-group">
-                            <label>Week No</label>
+                            <label>Date</label>
                             <input type="text" name="date" id="date1" class="form-control"
                                 placeholder="Enter Date">
                         </div>
 
                         <div class="form-group">
                         <label for="teaching_activities1">Teaching-Learning Activities / Assessment Strategy</label>
-                        <textarea name="teaching_activities" id="teaching_activities1" class="editor5" placeholder="Enter Teaching-Learning Activities / Assessment Strategy" cols="50" rows="5"></textarea>
+                        <textarea name="teaching_activities" id="teaching_activities1" class="form-control 5" placeholder="Enter Teaching-Learning Activities / Assessment Strategy" cols="50" rows="5"></textarea>
                     </div>
 
 
@@ -1300,17 +1581,23 @@ echo "No Record Found";
                         
                         <div class="form-group">
                     <label>
-                        <input type="checkbox" name="onsite2" value="1" id="onsite1">
+                        <input type="checkbox" name="onsite" value="1" id="1onsite">
                         Onsite / F2F
                     </label><br>
                     <label>
-                        <input type="checkbox" name="asy2" value="1" id="asynchronous1">
+                        <input type="checkbox" name="asy" value="1" id="1asynchronous">
                         Asynchronous
                     </label>
                 </div>
+
                 <label>Alloted Hours</label>
-                        <input type="text" name="hours" id="hours1" class="form-control"
+                        <input type="text" name="hours" id="1hours" class="form-control"
                             placeholder="Enter Alloted Hours">
+
+
+                            <div class="form-group">
+                    <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+                </div>
 
 
                     </div>
@@ -1357,7 +1644,7 @@ echo "No Record Found";
                         </div>
 
                         <div class="form-group">
-                            <label>Week No</label>
+                            <label>Date</label>
                             <input type="text" name="date" id="1date" class="form-control"
                                 placeholder="Enter Date">
                         </div>
@@ -1378,14 +1665,20 @@ echo "No Record Found";
                         
                         <div class="form-group">
                     <label>
-                        <input type="checkbox" name="onsite" value="1" id="1onsite">
+                        <input type="checkbox" name="onsite1" value="1" id="1onsite">
                         Onsite / F2F
                     </label><br>
                     <label>
-                        <input type="checkbox" name="asy" value="1" id="1asynchronous">
+                        <input type="checkbox" name="asy1" value="1" id="1asynchronous">
                         Asynchronous
                     </label>
                 </div>
+
+                <div class="form-group">
+                            <label>Alloted Hours</label>
+                            <input type="text" name="alloted_hours2" id="alloted_hours2" class="form-control"
+                                placeholder="Enter Alloted Hours">
+                        </div>
 
 
                 </div>
@@ -1406,7 +1699,7 @@ echo "No Record Found";
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"> Delete Student Data </h5>
+                    <h5 class="modal-title" id="exampleModalLabel"> Delete Data </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -1436,15 +1729,17 @@ echo "No Record Found";
     <table id="datatableid" class="table table-bordered">
         <thead>
             <tr>
-                <th scope="col">Module No and Learning Outcomes</th>
-                <th scope="col">Week No</th>
-                <th scope="col">Date</th>
-                <th scope="col">Teaching-Learning Activities / Assessment Strategy</th>
-                <th scope="col">Technology Enabler</th>
-                <th scope="col">Onsite / F2F</th>
-                <th scope="col">Asynchronous</th>
-                <th scope="col">Alloted Hours</th>
-                <th scope="col">Actions</th>
+            <tr>
+                <th style="width:5px; text-align:center"  class="" scope="col">Module No and Learning Outcomes</th>
+                <th style="text-align:center;" class="" class="" scope="col">Week No</th>
+                <th style="padding-left:35px;padding-right:35px; text-align:center;" class="" scope="col">Date</th>
+                <th style="text-align: center;" class="" scope="col"><p>Teaching-Learning Activities  / </p>Assessment Strategy</th>
+                <th style="width:5px;" class="" scope="col">Technology Enabler</th>
+                <th class="text-rotate" scope="col">Onsite / F2F</th>
+                <th class="text-rotate" scope="col">Asynchronous</th>
+                <th class="text-rotate" scope="col">Alloted Hours</th>
+                <th class="" scope="col">Actions</th>
+            </tr>
             </tr>
         </thead>
         <tbody>
@@ -1462,7 +1757,7 @@ echo "No Record Found";
             SUM(asy) as total_asy_hours,
             SUM(onsite) as total_onsite_hours 
         FROM 
-        module_learning_final";
+        module_learning_final WHERE department = $department";
             $total_hour_result = mysqli_query($connection, $total_hour_query);
             $total_hour_row = mysqli_fetch_assoc($total_hour_result);
 
@@ -1485,40 +1780,55 @@ echo "No Record Found";
                         `asy`, 
                         `hours`
                     FROM 
-                        `module_learning_final`";
+                        `module_learning_final` WHERE department = $department";
 
             $query_run = mysqli_query($connection, $query);
 
             if ($query_run) {
                 while ($row = mysqli_fetch_assoc($query_run)) {
             ?>
-                    <tr>
-                        <td class="hide-id"><?php echo $row['id']; ?></td>
-                        <td><?php echo $row['module_no']; ?></td>
-                        <td><?php echo $row['week']; ?></td>
-                        <td><?php echo $row['date']; ?></td>
-                        <td><?php echo $row['teaching_activities']; ?></td>
-                        <td><?php echo $row['technology']; ?></td>
-                        <td><?php echo $row['onsite']; ?></td>
-                        <td><?php echo $row['asy']; ?></td>
+                      <tr>
+                    <td style="text-align: center;" class="hide-id"><?php echo $row['id']; ?></td>
+                    <td style="text-align: center;" class=""><?php
+                        if (strpos($row['module_no'], 'TLO') !== false || strpos($row['module_no'], "\n") !== false) {
+                            // If 'TLO' or a line break is found, replace it with <br>
+                            echo str_replace(array('', "\n"), '<br>', $row['module_no']);
+                        } else {
+                            echo $row['module_no'];
+                        }
+                        ?></td>
+                    <td style="text-align: center;"><?php echo $row['week']; ?></td>
+                    <td style="text-align: center;"><?php echo $row['date']; ?></td>
+                    <td style="" class=""><?php
+                        if (strpos($row['teaching_activities'], '•') !== false || strpos($row['teaching_activities'], "\n") !== false) {
+                            // If 'TLO' or a line break is found, replace it with <br>
+                            echo str_replace(array('', "\n"), '<br>', $row['teaching_activities']);
+                        } else {
+                            echo $row['teaching_activities'];
+                        }
+                        ?></td>
+                    <td style="text-align: center;"><?php echo $row['technology']; ?></td>
+                    <td style="text-align: center;"><?php echo ($row['onsite'] == 1) ? '/' : ''; ?></td>
+                    <td style="text-align: center;"><?php echo ($row['asy'] == 1) ? '/' : ''; ?></td>
+                    <td style="text-align: center;"><?php echo $row['hours']; ?></td>
+                    <td style="text-align: center;" class="table-button">
+                        <button type="button" class="btn btn-success editbtn_module_learning"><i class="lni lni-pencil"></i></button>
+                        <button type="button" class="btn btn-danger deletebtn_module_learning"><i class="lni lni-trash-can"></i></button>
+                    </td>
+                </tr>
 
-                        <td><?php echo $row['hours']; ?></td>
-                        <td class="table-button">
-                            <button type="button" class="btn btn-success editbtn_module_learning_final"><i class="lni lni-pencil"></i></button>
-                            <button type="button" class="btn btn-danger deletebtn_module_learning_final"><i class="lni lni-trash-can"></i></button>
-                        </td>
-                    </tr>
+
             <?php
                 }
             } else {
                 echo "No Record Found";
             }
             ?>
-            <tr>
-                <td colspan="5">TOTAL</td>
-                <td><?php echo $total_onsite_hours * $hours; ?></td>
-                <td><?php echo $total_asy_hours * $hours; ?></td>
-                <td><?php echo $total_hour; ?></td>
+             <tr style="background-color:#F4A460;">
+                <td style="text-align: center; background-color:#F4A460;" colspan="5"><b>TOTAL</b></td>
+                <td style="text-align: center; background-color:#F4A460;"><?php echo (is_numeric($total_onsite_hours) && is_numeric($hours)) ? ($total_onsite_hours * $hours) : 0; ?></td>
+                <td style="text-align: center; background-color:#F4A460;"><?php echo (is_numeric($total_asy_hours) && is_numeric($hours)) ? ($total_asy_hours * $hours) : 0; ?></td>
+                <td style="text-align: center; background-color:#F4A460;"><?php echo is_numeric($total_hour) ? $total_hour : 0; ?></td>
             </tr>
         </tbody>
     </table>
@@ -1528,10 +1838,8 @@ echo "No Record Found";
 
 
 
+
 <!--Add Modal PERCENT GRADING -->
-<button type="button" class="btn btn-primary percent_grading" data-toggle="modal" data-target="#percent_grading">
-                        ADD DATA
-                    </button>
 
                     <!-- Modal -->
  <div class="modal fade" id="percent_grading" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -1561,6 +1869,11 @@ echo "No Record Found";
                         </div>
 
 
+                        
+                    <div class="form-group">
+                        <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+                    </div>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -1575,7 +1888,7 @@ echo "No Record Found";
 
 
 
-    <!-- EDIT PERCENTAGE -->
+    <!--EDIT PERCENTAGE-->
 
 <!-- EDIT POP UP FORM (Bootstrap MODAL) -->
 <div class="modal fade" id="editmodal_percentage" tabindex="-1" role="dialog" aria-labelledby="editpercentage"
@@ -1583,7 +1896,7 @@ echo "No Record Found";
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editpercentage"> COURSE LEARNING OUTCOMES </h5>
+                    <h5 class="modal-title" id="editpercentage"> EDIT GRADING SYSTEM </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -1629,7 +1942,7 @@ echo "No Record Found";
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="onsite_reffence"> Delete On-Site References </h5>
+                    <h5 class="modal-title" id="onsite_reffence"> DELETE Grading Systems </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -1643,6 +1956,10 @@ echo "No Record Found";
 
                         <h4> Do you want to Delete this Data ??</h4>
                     </div>
+
+
+
+                    
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"> NO </button>
                         <button type="submit" name="deletedata" class="btn btn-primary"> Yes !! Delete it. </button>
@@ -1654,8 +1971,13 @@ echo "No Record Found";
     </div>
 
 
+<div class="card custom-card">
+<div class="card-body ">
 
+<button type="button" class="btn btn-primary percent_grading " data-toggle="modal" data-target="#percent_grading" style="margin-left: 18.9rem;">ADD DATA
+</button> 
 <div class="container mt-5 me-5">
+    
     <table id="datatableid" class="table table-bordered">
         <thead>
             <tr>
@@ -1673,7 +1995,7 @@ echo "No Record Found";
             }
 
     
-            $total_percent_query = "SELECT SUM(`percents`) AS total_percent FROM percent";
+            $total_percent_query = "SELECT SUM(`percents`) AS total_percent FROM percent WHERE department = $department";
             $total_percent_result = mysqli_query($connection, $total_percent_query);
             $total_percent_row = mysqli_fetch_assoc($total_percent_result);
             
@@ -1683,7 +2005,8 @@ echo "No Record Found";
 
 
             // Fetch module learning records
-            $query = "SELECT `id`, `description`, `percents` FROM `percent`";
+            $query = "SELECT `id`, `description`, `percents` FROM `percent` 
+            WHERE department = $department";
 
             $query_run = mysqli_query($connection, $query);
 
@@ -1717,6 +2040,16 @@ echo "No Record Found";
         </tbody>
     </table>
 </div>
+<span style="margin-left:4rem;"><b>Overall Final Grade</b><a> = Midterm + Final</a></span>
+<a style="margin-left:22rem;">2</a>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
 </div>
 </div>
 
@@ -1731,10 +2064,9 @@ echo "No Record Found";
 
 
 
-<span style="margin-left:4rem;"><b>Overall Final Grade</b><a> = Midterm + Final</a></span>
-<a style="margin-left:22rem;">2</a>
 
-
+<div class="card custom-policy">
+<div class="card-body">
 <div class="mt-5 text-wrap container-fluid">
 <a><b>COURSE POLICIES AND REQUIREMENTS </b></a><br>
 
@@ -1841,9 +2173,50 @@ echo "No Record Found";
 
 <b>h. Grading system.</b>
 <ol class="c">
-    <li>Enabling Assessments: 50%</li>
-    <li>Class Participation: 20%</li>
-    <li>Summative Assessments: 30%</li>
+<style>
+ul { list-style-type: lower-roman; padding: 0; }
+</style>
+
+<?php
+// Establishing a connection to your database
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "syllabus";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $database);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Assuming $_SESSION['department'] contains the department value
+$department = $_SESSION['department']; 
+
+// Query to fetch data from the database based on the department
+$sql = "SELECT * FROM percent WHERE department = $department ORDER BY id ASC";
+$result = $conn->query($sql);
+
+// HTML generation
+$html = ''; // Initialize the variable to store HTML content
+if ($result->num_rows > 0) {
+    $html .= '<ol class="c">'; // Start ordered list
+    while ($row = $result->fetch_assoc()) {
+        $html .= '<li><span><a>' . $row['description'] . "  " . $row['percents'] . '</a></span></li>';
+    }
+    $html .= '</ol>'; // End ordered list
+}
+
+// Close the database connection
+$conn->close();
+
+// Output the generated HTML
+echo $html;
+?>
+
+
 </ol>
 
 <b>i. Gradebook.</b>
@@ -1856,7 +2229,79 @@ echo "No Record Found";
 <div class="text-indent">
 
 <b>a. Schedule.</b>
-    <a>The schedule of self-care week for the second semester 2022-2023 is on April 24 to April 29. During this week, there shall be no asynchronous/synchronous meetings, F2F classes, new modules, new assessments, and deadlines.</a><br>
+<?php
+// Establishing a connection to your database
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "syllabus";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $database);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Assuming $_SESSION['department'] contains the department value
+$department = $_SESSION['department']; 
+
+// Query to fetch data from the database based on the department
+$sql = "SELECT * FROM semestral WHERE department = $department ORDER BY id ASC";
+$result = $conn->query($sql);
+
+// HTML generation
+$html = ''; // Initialize the variable to store HTML content
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $html .= '<p>a. <b>Schedule. </b>The schedule of self-care week for the ' . $row['second_call'] . ' ' . $row['year'] . ' is on ';
+    }
+}
+
+// Close the database connection
+$conn->close();
+
+// Output the generated HTML
+echo $html;
+?>
+ <?php
+// Establishing a connection to your database
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "syllabus";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $database);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Assuming $_SESSION['department'] contains the department value
+$department = $_SESSION['department']; 
+
+// Query to fetch data from the database based on the department
+$sql = "SELECT `date` FROM module_learning_final WHERE department = '$department' ORDER BY id ASC LIMIT 1";
+$result = $conn->query($sql);
+
+// HTML generation
+$html = ''; // Initialize the variable to store HTML content
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $html .= $row['date'] . '. During this week, there shall be no asynchronous/synchronous meetings, F2F classes, new modules, new assessments, and deadlines.</p>';
+    }
+}
+
+// Close the database connection
+$conn->close();
+
+// Output the generated HTML
+echo $html;
+?>
+ During this week, there shall be no asynchronous/synchronous meetings, F2F classes, new modules, new assessments, and deadlines.</a><br>
 
 <b>b. Prerogative.</b>
     <a>Students may avail of the self-care program, whether online or onsite, provided by the different units of the University.</a><br><br>
@@ -1902,7 +2347,8 @@ echo "No Record Found";
     will also be briefly discussed during the soonest synchronous meeting. </a><br><br>
 </div>
 </div>
-
+        </div>
+        </div>
 
 <!-- GRADING SYSTEM -->
 
@@ -1927,7 +2373,9 @@ echo "No Record Found";
 <!-- ADD ONSITE REFFERENCE -->
 
 <!--Add Modal Final Period Table -->
-<button type="button" class="btn btn-primary onsite_reffence_tables" data-toggle="modal" data-target="#onsite_reffence_tables">
+<div class="card custom-card">
+<div class="card-body">
+<button type="button" class="btn btn-primary onsite_reffence_tables" data-toggle="modal" data-target="#onsite_reffence_tables" style="margin-left: 8.8rem;">
                         ADD DATA
                     </button>
 
@@ -1937,7 +2385,7 @@ echo "No Record Found";
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Learning Outcomes for Final Period </h5>
+                    <h5 class="modal-title" id="exampleModalLabel" style="">Add Learning Outcomes for Final Period </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -1954,8 +2402,13 @@ echo "No Record Found";
 
                         <div class="form-group">
                         <label>Reference Material</label>
-                        <textarea name="Reference_Material" id="Reference_Material6" class="editor7" placeholder="Enter Learning Outcome" cols="50" rows="5"></textarea>
+                        <textarea name="Reference_Material" id="Reference_Material6" class="form-control 7" placeholder="Enter Learning Outcome" cols="50" rows="5"></textarea>
                     </div>
+
+                    <div class="form-group">
+                <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+            </div>
+
 
                     </div>
                     <div class="modal-footer">
@@ -2014,6 +2467,7 @@ echo "No Record Found";
     </div>
 
     <!-- DELETE ONSITE REFFERENCE --> 
+    
 
      <div class="modal fade" id="deletemodal_onsite_refference" tabindex="-1" role="dialog" aria-labelledby="onsite_reffence"
         aria-hidden="true">
@@ -2068,8 +2522,9 @@ echo "No Record Found";
      }
 
 
+     $department = $_SESSION['department'];
 
- $query = "SELECT * FROM  onsite_reffence";
+ $query = "SELECT * FROM  onsite_reffence WHERE department = $department";
  $query_run = mysqli_query($connection, $query);
 ?>  
 <table id="datatableid" class="table table-bordered">
@@ -2124,7 +2579,7 @@ echo "No Record Found";
 <!-- ADD online REFFERENCE -->
 
 <!--Add Modal Final Period Table -->
-<button type="button" class="btn btn-primary online_reffence" data-toggle="modal" data-target="#online_reffence">
+<button type="button" class="btn btn-primary online_reffence" data-toggle="modal" data-target="#online_reffence" style="margin-left: 8.8rem;">
                         ADD DATA
                     </button>
 
@@ -2151,8 +2606,13 @@ echo "No Record Found";
 
                         <div class="form-group">
                         <label>Reference Material</label>
-                        <textarea name="refference_material" id="refference_material6" class="Editor8" placeholder="Enter Reference Material" cols="50" rows="5"></textarea>
+                        <textarea name="refference_material" id="refference_material6" class="form-control 8" placeholder="Enter Reference Material" cols="50" rows="5"></textarea>
                     </div>
+
+
+                    <div class="form-group">
+                    <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+                </div>
 
                     </div>
                     <div class="modal-footer">
@@ -2264,8 +2724,8 @@ echo "No Record Found";
      }
 
 
-
- $query = "SELECT * FROM  online_refference";
+ $department = $_SESSION['department'];
+ $query = "SELECT * FROM  online_refference WHERE department = $department";
  $query_run = mysqli_query($connection, $query);
 ?>  
 <table id="datatableid" class="table table-bordered">
@@ -2315,7 +2775,108 @@ echo "No Record Found";
 
 </div>
 
-<!-- EDIT SEMESTRAL -->
+<button type="button" class="btn btn-primary add_semester float" data-toggle="modal" data-target="#add_semester" style="margin-left: 8.8rem;">
+                        ADD DATA
+                    </button>
+
+                    <!-- Modal -->
+ <div class="modal fade" id="add_semester" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Online References</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/insert_semester.php" method="POST">
+
+                    <div class="modal-body">
+                    <div class="form-group">
+    <label for="term">Term</label>
+    <select name="term" id="term1" class="form-control">
+        <option value="--select semester--" disabled selected>select semester</option>
+        <option value="1<sup>st</sup> Semester">1st Semester</option>
+        <option value="2<sup>nd</sup> Semester">2nd Semester</option>
+        <option value="Special Term">Special Term</option>
+    </select>
+</div>
+
+<select style="display:none" name="second_call" id="second_call1" class="form-control">
+    <option value=""></option>
+</select>
+
+
+<script>
+    document.getElementById('term1').addEventListener('change', function () {
+        var term = this.value;
+        var secondCallDropdown = document.getElementById('second_call1');
+        
+        // Clear existing options
+        secondCallDropdown.innerHTML = '';
+        
+        // Depending on the selected term, populate the second call options dynamically
+        if (term === '1<sup>st</sup> Semester') {
+            // Add options for 1st Semester
+            addOptions(secondCallDropdown, [
+                { value: 'first semester', text: 'first semester' },
+            ]);
+        } else if (term === '2<sup>nd</sup> Semester') {
+            // Add options for 2nd Semester
+            addOptions(secondCallDropdown, [
+                { value: 'second semester', text: 'second semester' },
+            ]);
+        } else if (term === 'Special Term') {
+            // Add options for Special Term
+            addOptions(secondCallDropdown, [
+                { value: 'special term', text: 'special term' },
+            ]);
+        }
+    });
+
+    // Function to add options to a dropdown
+    function addOptions(selectElement, options) {
+        options.forEach(function (option) {
+            var optionElement = document.createElement('option');
+            optionElement.value = option.value;
+            optionElement.textContent = option.text;
+            selectElement.appendChild(optionElement);
+        });
+    }
+</script>
+
+                    
+
+
+
+
+
+                        <div class="form-group">
+                            <label>Year</label>
+                            <input type="text" name="year" id="year1" class="form-control"
+                                placeholder="Enter Year">
+                        </div>
+
+
+                    <div class="form-group">
+                    <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+</div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="insertdata" class="btn btn-primary">Save Data</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+
 
 <!-- EDIT POP UP FORM (Bootstrap MODAL) -->
 <div class="modal fade" id="editmodal_semestral" tabindex="-1" role="dialog" aria-labelledby="edit_semestral"
@@ -2323,7 +2884,7 @@ echo "No Record Found";
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="edit_semestral"> COURSE LEARNING OUTCOMES </h5>
+                    <h5 class="modal-title" id="edit_semestral"> EDIT SEMESTER </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -2336,13 +2897,57 @@ echo "No Record Found";
                         <input type="hidden" name="update_id9" id="update_id9">
                         
                         <div class="form-group">
-                        <label for="term">term</label>
-                        <select name="term" id="term" class="form-control">
-                            <option value="1st Semester">1st Semester</option>
-                            <option value="2nd Semester">2nd Semester</option>
-                            <option value="Special Term">Special Term</option>
-                        </select>
-                    </div>
+    <label for="term">Term</label>
+    <select name="term" id="term" class="form-control">
+        <option value="--select semester--" disabled selected>select semester</option>
+        <option value="1<sup>st</sup> Semester">1st Semester</option>
+        <option value="2<sup>nd</sup> Semester">2nd Semester</option>
+        <option value="Special Term">Special Term</option>
+    </select>
+</div>
+
+<select style="display:none" name="second_call" id="second_call" class="form-control">
+    <option value=""></option>
+</select>
+
+
+<script>
+    document.getElementById('term').addEventListener('change', function () {
+        var term = this.value;
+        var secondCallDropdown = document.getElementById('second_call');
+        
+        // Clear existing options
+        secondCallDropdown.innerHTML = '';
+        
+        // Depending on the selected term, populate the second call options dynamically
+        if (term === '1<sup>st</sup> Semester') {
+            // Add options for 1st Semester
+            addOptions(secondCallDropdown, [
+                { value: 'first semester', text: 'first semester' },
+            ]);
+        } else if (term === '2<sup>nd</sup> Semester') {
+            // Add options for 2nd Semester
+            addOptions(secondCallDropdown, [
+                { value: 'second semester', text: 'second semester' },
+            ]);
+        } else if (term === 'Special Term') {
+            // Add options for Special Term
+            addOptions(secondCallDropdown, [
+                { value: 'special term', text: 'special term' },
+            ]);
+        }
+    });
+
+    // Function to add options to a dropdown
+    function addOptions(selectElement, options) {
+        options.forEach(function (option) {
+            var optionElement = document.createElement('option');
+            optionElement.value = option.value;
+            optionElement.textContent = option.text;
+            selectElement.appendChild(optionElement);
+        });
+    }
+</script>
 
                         <div class="form-group">
                             <label>Year</label>
@@ -2365,6 +2970,288 @@ echo "No Record Found";
     </div>
 
 
+    
+</div>
+
+
+
+
+<!-- SEMESTRAL -->
+<div class="container-box mt-5 header-title mb-5">
+<div style="margin-right:60rem;">
+<span ><b style="white-space: nowrap;">Prepared:</b><b><a class="course" style="white-space: nowrap;">  <?php echo ($course_departments); ?></a></b></span>
+
+<!-- SEMESTRAL -->
+<?php
+// Database connection
+$connection = mysqli_connect("localhost", "root", "", "syllabus");
+if (mysqli_connect_errno()) {
+    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+    die();
+}
+
+$department = $_SESSION['department'];
+
+$query = "SELECT * FROM semestral WHERE department = $department";
+$query_run = mysqli_query($connection, $query);
+?>
+
+<table id="datatableid">
+    <thead>
+        <tr>
+            <!-- <th scope="col">Provider</th>
+            <th scope="col">Reference Material</th>
+            <th scope="col">Action</th> -->
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        if ($query_run) {
+            while ($row = mysqli_fetch_assoc($query_run)) {
+                $id = $row['id'];
+                $term = $row['term'];
+                $year = $row['year'];
+        ?>
+                <tr>
+                    <td class="hide-id"> <?php echo $id; ?> </td>
+                    <td class="hide-id"><?php echo $term; ?></td>
+                    <td class="hide-id"><?php echo $year; ?></td>
+                    
+                <a class="term_year"><?php echo $term . ' ' . $year; ?></a><br><br>
+                    <td class="table-button">
+                        <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
+                        <button type="button" class="btn btn-success editbtn_semestral sysllabus_button m-3"><i class="lni lni-pencil"></i></button><a>EDIT SEMESTER</a>
+                        <!-- <button type="button" class="btn btn-danger deletebtn_online_refference"><i class="lni lni-trash-can"></i></button> -->
+                    </td>
+                </tr>
+        <?php
+            }
+        } else {
+            echo "<tr><td colspan='3'>No Record Found</td></tr>";
+        }
+        ?>
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- EDIT POP UP FORM (Bootstrap MODAL) -->
+<div class="modal fade" id="editmodal_signature" tabindex="-1" role="dialog" aria-labelledby="edit_signature" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="edit_signature">UPLOAD SIGNATURE</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="edit_signature_form" action="Course_Syllabus/update_signature.php" method="POST" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <input type="hidden" name="update_id22" id="update_id22">
+                    <div class="form-group">
+                        <label for="dept_signature">Dept Signature</label>
+                        <input type="file" name="dept_signature" id="dept_signature" class="form-control">
+                        <!-- Display a preview of the selected image -->
+                        <img src="#" id="preview_dept_signature" style="display:none; max-width: 100px; max-height: 100px;" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" name="updatedata" class="btn btn-primary">Update Data</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Your custom script -->
+<script>
+$(document).ready(function(){
+
+    $('#categorySelect').on('change', function(){
+        var categoryId = $(this).val();
+        $.ajax({
+            url: 'get_cities.php',
+            type: 'POST',
+            data: {catid: categoryId},
+            success: function(response){
+                $('#courseDropdown').html(response);
+            }
+        });
+    });
+
+    // Save button action (just an example)
+    $('#saveSelection').on('click', function(){
+        var category = $('#categorySelect option:selected').text();
+        var course = $('#courseSelect option:selected').text();
+        alert('Selected category: ' + category + ', course: ' + course);
+    });
+});
+</script>
+
+</body>
+</html>
+
+<!-- EDIT POP UP FORM (Bootstrap MODAL) -->
+<div class="modal fade" id="editmodal_signature_dean" tabindex="-1" role="dialog" aria-labelledby="edit_signature_dean" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="edit_signature_dean">UPLOAD SIGNATURE</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="edit_signature_dean_form" action="Course_Syllabus/update_signature_dean.php" method="POST" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <input type="hidden" name="update_id23" id="update_id23">
+                    <div class="form-group">
+                        <label for="dean_signature">Dean Signature</label>
+                        <input type="file" name="dean_signature" id="dean_signature" class="form-control">
+                        <!-- Display a preview of the selected image -->
+                        <img src="#" id="preview_dean_signature" style="display:none; max-width: 100px; max-height: 100px;" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" name="updatedata" class="btn btn-primary">Update Data</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- SEMESTRAL -->
+<?php
+ 
+
+ 
+
+ // Database connection
+ 
+ 
+ $connection = mysqli_connect("localhost","root","","syllabus");
+ if (mysqli_connect_errno()){
+     echo "Failed to connect to MySQL: " . mysqli_connect_error();
+     die();
+     }
+
+
+
+     $email = $_SESSION['email'];
+     $query1 = "SELECT 
+                 u.`first_name`, 
+                 u.`last_name`, 
+                 u.`department`, 
+                 u.`catid`, 
+                 u.`phone_number`, 
+                 u.`email`, 
+                 u.`password`, 
+                 p.`name` AS `position`,
+                 c.`id` AS `category_id`,
+                 c.`name` AS `category_name`,
+                 c.`initial` AS `category_initial`,
+                 c.`dean_name` AS `deans`,
+                 c.`dean_position` AS `deans_position`,
+                 co.`dean_signature` AS `dean_signatures`,
+                 co.`cname`,
+                 co.`course_department` AS `course_departments`,
+                 co.`id` AS `course_id`,
+                 co.`initial` AS `course_initial`,
+                 co.`department_name` AS `course_dept_name`,
+                 co.`department_position` AS `dept_position`,
+                 co.`dept_signature` AS `dept_signatures`
+             FROM 
+                 `users` AS u 
+             LEFT JOIN 
+                 `position` AS p ON u.`position` = p.`id`
+             LEFT JOIN 
+                 `category` AS c ON u.`department` = c.`id`
+             LEFT JOIN
+                 `course` AS co ON u.`catid` = co.`id`
+             WHERE 
+                 u.email = '$email'";
+ $query_run1 = mysqli_query($connection, $query1);
+?>  
+<table id="datatableid">
+<thead>
+    <tr>
+        <!-- <th scope="col">Provider</th>
+        <th scope="col">Reference Material</th>
+        <th scope="col">Action</th> -->
+    </tr>
+</thead>
+<?php
+if($query_run1)
+{
+foreach($query_run1 as $rows)
+{
+?>
+<tbody>
+  
+<tr>
+        <td class="hide-id"> <?php echo $rows['course_id']; ?> </td>
+        <td class="hide-id"><?php echo $rows['dept_signatures']; ?></td>
+        <td class="table-button">
+        <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
+
+        <button type="button" class="btn btn-success editbtn_signature m-3"><i class="lni lni-pencil"></i></button><a>UPLOAD SIGNATURE</a>
+
+    
+        </td>
+    </tr>
+
+
+
+</tbody>
+<?php           
+}
+}
+?>
+</table>
+
+
+
+
+
+
+
+
+<span>
+    <b>
+        <a class="initial">
+            <img src="<?php echo isset($dept_head_signature) ? $dept_head_signature : "No_signature"; ?>" alt="Please Upload Signature" width="100px">
+        </a>
+    </b>
+</span>
+
+
+
+
+<span><b>Approved:</b><b><a class="dept_name"><?php echo $dept_head;
+ ?></a></b></span>
+<span><a class="initial"><?php echo $dept_head_position ." , ". $course_initial; ?></a></span><br><br>
+
+
+
 
 <!-- SEMESTRAL -->
 <?php
@@ -2381,8 +3268,40 @@ echo "No Record Found";
 
 
 
- $query = "SELECT * FROM  semestral";
- $query_run = mysqli_query($connection, $query);
+     $email = $_SESSION['email'];
+     $query2 = "SELECT 
+                 u.`first_name`, 
+                 u.`last_name`, 
+                 u.`department`, 
+                 u.`catid`, 
+                 u.`phone_number`, 
+                 u.`email`, 
+                 u.`password`, 
+                 p.`name` AS `position`,
+                 c.`id` AS `category_id`,
+                 c.`name` AS `category_name`,
+                 c.`initial` AS `category_initial`,
+                 c.`dean_name` AS `deans`,
+                 c.`dean_position` AS `deans_position`,
+                 co.`dean_signature` AS `dean_signatures`,
+                 co.`cname`,
+                 co.`course_department` AS `course_departments`,
+                 co.`id` AS `course_id`,
+                 co.`initial` AS `course_initial`,
+                 co.`department_name` AS `course_dept_name`,
+                 co.`department_position` AS `dept_position`,
+                 co.`dept_signature` AS `dept_signatures`
+             FROM 
+                 `users` AS u 
+             LEFT JOIN 
+                 `position` AS p ON u.`position` = p.`id`
+             LEFT JOIN 
+                 `category` AS c ON u.`department` = c.`id`
+             LEFT JOIN
+                 `course` AS co ON u.`catid` = co.`id`
+             WHERE 
+                 u.email = '$email'";
+ $query_run2 = mysqli_query($connection, $query2);
 ?>  
 <table id="datatableid">
 <thead>
@@ -2393,23 +3312,22 @@ echo "No Record Found";
     </tr>
 </thead>
 <?php
-if($query_run)
+if($query_run2)
 {
-foreach($query_run as $row)
+foreach($query_run2 as $table_rows)
 {
 ?>
 <tbody>
   
 <tr>
-        <td class="hide-id"> <?php echo $row['id']; ?> </td>
-        <td class="hide-id"><?php echo $row['term']; ?></td>
-        <td class="hide-id"><?php echo $row['year']; ?></td>
+        <td class="hide-id"> <?php echo $rows['course_id']; ?> </td>
+        <td class="hide-id"><?php echo $table_rows['dean_signatures']; ?></td>
         <td class="table-button">
         <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
 
-        <button type="button" class="btn btn-success editbtn_semestral sysllabus_button m-3"><i class="lni lni-pencil"></i></button><a>EDIT SEMESTER</a>
+        <button type="button" class="btn btn-success editbtn_signature_dean m-3"><i class="lni lni-pencil"></i></button><a>UPLOAD SIGNATURE</a>
 
-        <!-- <button type="button" class="btn btn-danger deletebtn_online_refference"><i class="lni lni-trash-can"></i></button> -->
+    
         </td>
     </tr>
 
@@ -2419,10 +3337,6 @@ foreach($query_run as $row)
 <?php           
 }
 }
-else 
-{
-echo "No Record Found";
-}
 ?>
 </table>
 
@@ -2431,24 +3345,22 @@ echo "No Record Found";
 
 
 
-<div class="container-box mt-5 header-title mb-5">
-<span><b>Prepared:</b><b><a class="course">  <?php echo ($course_departments); ?></a></b></span>
 
 
 
-<a class="term_year"><td><?php echo $row['term']; ?> <?php echo $row['year']; ?></a></td><br><br>
-<span><b>Approved:</b><b><a class="dept_name"><?php echo $dept_head; ?></a></b></span>
-<span><a class="initial"><?php echo $dept_head_position ." , ". $course_initial; ?></a></span><br><br>
+
+
 
 
 <!-- FOR REVISED -->
+<span  style="white-space: nowrap;"><b></b><b><a class="initial"><img src="<?php echo $deans_category_signature; ?>" alt="Department Head Signature" width="100px"></a></b></span><br>
 <span><b>Endorsed:</b><b><a class="dept_name"><?php echo $category_dean; ?></a></b></span>
 <span><a class="initial"><?php echo $category_dean_position ." , ". $category_initial; ?></a></span>
 
 
-
 </div>
-
+</div>
+</div>
 <style>
     .term_year, .initial{
         margin-left: 9rem;
@@ -2462,7 +3374,8 @@ echo "No Record Found";
 
 
 <!-- MAPPING HEADER -->
-
+<div class="card custom-card">
+<div class="card-body">
 <div class="pt-5 pb-4">
         <img src="../img/logos.png" class="logos" alt="">
         
@@ -2491,8 +3404,9 @@ echo "No Record Found";
                              die();
                              }
                      
+                         $department = $_SESSION['department']; 
 
-                         $query = "SELECT * FROM course_syllabus";
+                         $query = "SELECT `id`, `course_code`, `course_tittle`, `course_Type`, `course_credit`, `learning_modality`, `pre_requisit`, `co_pre_requisit`, `professor`, `consultation_hours_date`, `consultation_hours_room`, `consultation_hours_email`, `consultation_hours_number`, `course_description`, `email`, `department` FROM `course_syllabus` WHERE department='$department'";
                          $query_run = mysqli_query($connection, $query);
             ?>  
                     <table id="datatableid">
@@ -2533,13 +3447,13 @@ echo "No Record Found";
                             
                             <td class="hide-id" style="border: 1px solid white;"><?php echo $row['course_description']; ?></td>
                                 
-                            <!-- <td>
-                                <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button>
+                            <td class="centered-btn">
+                                <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
 
-                                <button type="button" class="btn btn-success editbtn"><i class="lni lni-pencil"></i></button>
+                                <button type="button" class="btn sysllabus_button btn-success editbtn"><i class="lni lni-pencil"></i></button>
 
-                                <button type="button" class="btn btn-danger deletebtn"><i class="lni lni-trash-can"></i></button>
-                                </td> -->
+                                <!-- <button type="button" class="btn btn-danger deletebtn"><i class="lni lni-trash-can"></i></button> -->
+                                </td>
                             </tr>
                         </tbody>
                         <?php           
@@ -2551,39 +3465,78 @@ echo "No Record Found";
                 }
             ?>
                     </table>
+
+                    <?php
+            // Establish a database connection (replace 'hostname', 'username', 'password', and 'database' with your actual database credentials)
+            $mysqli = new mysqli("localhost", "root", "", "syllabus");
+
+            // Check connection
+            if ($mysqli->connect_error) {
+                die("Connection failed: " . $mysqli->connect_error);
+            }
+
+            $department = $_SESSION['department']; 
+            // Prepare SQL query
+            $sql = "SELECT `id`, `course_code`, `course_tittle`, `course_Type`, `course_credit`, `learning_modality`, `pre_requisit`, `co_pre_requisit`, `professor`, `consultation_hours_date`, `consultation_hours_room`, `consultation_hours_email`, `consultation_hours_number`, `course_description`, `email`, `department` FROM `course_syllabus` WHERE department='$department'";
+
+            // Execute query
+            $result = $mysqli->query($sql);
+
+            // Check if there are results
+            if ($result->num_rows > 0) {
+                ?>
+
+                    <?php
+                    // Loop through the result set
+                    while ($row = $result->fetch_assoc()) {
+                        ?>
            
-                    <div class="container text-left">
-    <div class=" header text-left">COURSE CODE</div>
-    <div class="">:</div>
-    <div class=""><?php echo $row['course_code']; ?></div>
+    <div class="container text-left">
+    <div class="header">COURSE CODE</div>
+    <div>:</div>
+    <div><?php echo $row['course_code']; ?></div>
   
-    <div class=" header text-left">COURSE TITLE</div>
-    <div class="">:</div>
-    <div class=""><?php echo $row['course_tittle']; ?></div>
+    <div class="header">COURSE TITLE</div>
+    <div>:</div>
+    <div><?php echo $row['course_tittle']; ?></div>
 
-    <div class=" header text-left">COURSE TYPE</div>
-    <div class="">:</div>
-    <div class=""><?php echo $row['course_Type']; ?></div>
+    <div class="header">COURSE TYPE</div>
+    <div>:</div>
+    <div><?php echo $row['course_Type']; ?></div>
    
-    <div class=" header text-left">COURSE CREDIT</div>
-    <div class="">:</div>
-    <div class=""><?php echo $row['course_credit']; ?></div>
+    <div class="header">COURSE CREDIT</div>
+    <div>:</div>
+    <div><?php echo $row['course_credit']; ?></div>
 
-    <div class=" header text-left">LEARNING MODALITY</div>
-    <div class="">:</div>
-    <div class=""><?php echo $row['learning_modality']; ?></div>
+    <div class="header">LEARNING MODALITY</div>
+    <div>:</div>
+    <div><?php echo $row['learning_modality']; ?></div>
 
-    <div class=" header text-left">PRE-REQUISITES</div>
-    <div class="">:</div>
-    <div class=""><?php echo $row['pre_requisit']; ?></div>
+    <div class="header">PRE-REQUISITES</div>
+    <div>:</div>
+    <div><?php echo $row['pre_requisit']; ?></div>
 
-    <div class=" header text-left">CO-REQUISITES</div>
-    <div class="">:</div>
-    <div class=""><?php echo $row['co_pre_requisit']; ?></div>
+    <div class="header">CO-REQUISITES</div>
+    <div>:</div>
+    <div><?php echo $row['co_pre_requisit']; ?></div>
 
-
+    
 </div>
 
+
+<?php
+        }
+        ?>
+    <?php
+} else {
+    echo "<div class='container'><br>";
+    echo "0 results";
+    echo "</div> ";
+}
+
+// Close database connection
+$mysqli->close();
+?>
 
 <button type="button" class="btn btn-primary add_databtn_mapping_table" data-toggle="modal" data-target="#mapping_table">
                         ADD DATA
@@ -2608,11 +3561,15 @@ echo "No Record Found";
 
                         <div class="form-group">
 
-                        <textarea type="text" name="learn_out_mapping" col="40" cols="50" rows="5" id="learn_out_mappings" class="Editor9"
+                        <textarea type="text" name="learn_out_mapping" col="40" cols="50" rows="5" id="learn_out_mappings" class="form-control 9"
                                 placeholder="Enter Computer Laborator"></textarea>
                         
 
                         </div>
+
+                                            <div class="form-group">
+                        <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+                    </div>
 
 
                         <div class="form-group">
@@ -2633,31 +3590,31 @@ echo "No Record Found";
                         <div class="form-group" Style="Display:flex;">
 
                         
-                        <input type="checkbox" name="pl1_s" id="pl1s" value="✓" class="form-control">
+                        <input type="checkbox" name="pl1_s" id="pl1s" value="/" class="form-control">
                         
 
-                        <input type="checkbox" name="pl2_s" id="pl2s" value="✓" class="form-control">
+                        <input type="checkbox" name="pl2_s" id="pl2s" value="/" class="form-control">
                         
 
-                        <input type="checkbox" name="pl3_s" id="pl3s" value="✓" class="form-control">
+                        <input type="checkbox" name="pl3_s" id="pl3s" value="/" class="form-control">
                     
 
-                        <input type="checkbox" name="pl4_s" id="pl4s" value="✓" class="form-control">
+                        <input type="checkbox" name="pl4_s" id="pl4s" value="/" class="form-control">
                      
 
-                        <input type="checkbox" name="pl5_s" id="pl5s" value="✓" class="form-control">
+                        <input type="checkbox" name="pl5_s" id="pl5s" value="/" class="form-control">
                     
 
-                        <input type="checkbox" name="pl6_s" id="pl6s" value="✓" class="form-control">
+                        <input type="checkbox" name="pl6_s" id="pl6s" value="/" class="form-control">
                       
 
-                        <input type="checkbox" name="pl7_s" id="pl7s" value="✓" class="form-control">
+                        <input type="checkbox" name="pl7_s" id="pl7s" value="/" class="form-control">
                     
 
-                        <input type="checkbox" name="pl8_s" id="pl8s" value="✓" class="form-control">
+                        <input type="checkbox" name="pl8_s" id="pl8s" value="/" class="form-control">
                   
 
-                        <input type="checkbox" name="pl9_s" id="pl9s" value="✓" class="form-control">
+                        <input type="checkbox" name="pl9_s" id="pl9s" value="/" class="form-control">
                        
                     </div>
 
@@ -2716,31 +3673,31 @@ echo "No Record Found";
                         <div class="form-group" Style="Display:flex;">
 
                         
-                        <input type="checkbox" name="pl1" id="pl1" value="✓" class="form-control pls">
+                        <input type="checkbox" name="pl1" id="pl1" value="/" class="form-control pls">
                         
 
-                        <input type="checkbox" name="pl2" id="pl2" value="✓" class="form-control pls">
+                        <input type="checkbox" name="pl2" id="pl2" value="/" class="form-control pls">
                         
 
-                        <input type="checkbox" name="pl3" id="pl3" value="✓" class="form-control pls">
+                        <input type="checkbox" name="pl3" id="pl3" value="/" class="form-control pls">
                     
 
-                        <input type="checkbox" name="pl4" id="pl4" value="✓" class="form-control pls">
+                        <input type="checkbox" name="pl4" id="pl4" value="/" class="form-control pls">
                      
 
-                        <input type="checkbox" name="pl5" id="pl5" value="✓" class="form-control pls">
+                        <input type="checkbox" name="pl5" id="pl5" value="/" class="form-control pls">
                     
 
-                        <input type="checkbox" name="pl6" id="pl6" value="✓" class="form-control pls">
+                        <input type="checkbox" name="pl6" id="pl6" value="/" class="form-control pls">
                       
 
-                        <input type="checkbox" name="pl7" id="pl7" value="✓" class="form-control pls">
+                        <input type="checkbox" name="pl7" id="pl7" value="/" class="form-control pls">
                     
 
-                        <input type="checkbox" name="pl8" id="pl8" value="✓" class="form-control pls">
+                        <input type="checkbox" name="pl8" id="pl8" value="/" class="form-control pls">
                   
 
-                        <input type="checkbox" name="pl9" id="pl9" value="✓" class="form-control pls">
+                        <input type="checkbox" name="pl9" id="pl9" value="/" class="form-control pls">
 
                 
                        
@@ -2809,8 +3766,8 @@ echo "No Record Found";
      }
 
 
-
- $query = "SELECT * FROM  mapping_table";
+     $department = $_SESSION['department'];
+ $query = "SELECT * FROM  mapping_table WHERE department = $department";
  $query_run = mysqli_query($connection, $query);
 ?>  
 <table id="datatableid" class="table table-bordered b-5">
@@ -2930,11 +3887,16 @@ echo "No Record Found";
                         <div class="form-group">
 
                         <label>Program Learning Outcomes</label><br>
-                        <textarea type="text" name="program_learn" col="40" cols="50" rows="5" class="Editor10"
+                        <textarea type="text" name="program_learn" col="40" cols="50" rows="5" class="form-control 10"
                                 placeholder="Enter Computer Laborator"></textarea>
                         
 
                         </div>
+
+                                            <div class="form-group">
+                        <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+                    </div>
+
 
 
                         <div class="form-group">
@@ -2945,20 +3907,20 @@ echo "No Record Found";
                     <div class="form-group">
                         
                         
-                        <input type="checkbox" name="rate1_s"value="✓">
+                        <input type="checkbox" name="rate1_s"value="/">
                         <label style="margin-left: 5px;">1</label><br>
                         
 
-                        <input type="checkbox" name="rate2_s" value="✓">
+                        <input type="checkbox" name="rate2_s" value="/">
                         <label style="margin-left: 5px;">2</label><br>
 
-                        <input type="checkbox" name="rate3_s" value="✓">
+                        <input type="checkbox" name="rate3_s" value="/">
                         <label style="margin-left: 5px;">3</label><br>
 
-                        <input type="checkbox" name="rate4_s" value="✓">
+                        <input type="checkbox" name="rate4_s" value="/">
                         <label style="margin-left: 5px;">4</label><br>
 
-                        <input type="checkbox" name="rate5_s" value="✓">
+                        <input type="checkbox" name="rate5_s" value="/">
                         <label style="margin-left: 5px;">5</label>
                       
                        
@@ -3002,19 +3964,19 @@ echo "No Record Found";
                     </div>
 
                     <div class="form-group">
-                        <input type="checkbox" name="rate1" id="rate1" value="✓">
+                        <input type="checkbox" name="rate1" id="rate1" value="/">
                         <label for="">1</label>
 
-                        <input type="checkbox" name="rate2" id="rate2" value="✓">
+                        <input type="checkbox" name="rate2" id="rate2" value="/">
                         <label for="">2</label>
 
-                        <input type="checkbox" name="rate3" id="rate3" value="✓">
+                        <input type="checkbox" name="rate3" id="rate3" value="/">
                         <label for="">3</label>
 
-                        <input type="checkbox" name="rate4" id="rate4" value="✓">
+                        <input type="checkbox" name="rate4" id="rate4" value="/">
                         <label for="">4</label>
 
-                        <input type="checkbox" name="rate5" id="rate5" value="✓">
+                        <input type="checkbox" name="rate5" id="rate5" value="/">
                         <label for="">5</label>
                     </div>
                 </div>
@@ -3086,7 +4048,8 @@ echo "No Record Found";
 
 
 
- $query = "SELECT * FROM decriptors";
+     $department = $_SESSION['department'];
+ $query = "SELECT * FROM decriptors WHERE department = $department";
  $query_run = mysqli_query($connection, $query);
 ?>  
 <table id="datatableid" class="table table-bordered b-5">
@@ -3196,8 +4159,12 @@ echo "No Record Found";
 
                         <div class="form-group">
                         <label>Descriptors (Institutional Learning Outcome)</label>
-                        <textarea name="descriptors_learn_out" id="descriptors_learn_out6" class="Editor11" placeholder="Enter Descriptors (Institutional Learning Outcome)" cols="50" rows="5"></textarea>
+                        <textarea name="descriptors_learn_out" id="descriptors_learn_out6" class="form-control 11" placeholder="Enter Descriptors (Institutional Learning Outcome)" cols="50" rows="5"></textarea>
                     </div>
+
+                                    <div class="form-group">
+                    <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+                </div>
 
                     </div>
                     <div class="modal-footer">
@@ -3304,8 +4271,9 @@ echo "No Record Found";
      }
 
 
-
- $query = "SELECT * FROM  graduates_attributes";
+     $department = $_SESSION['department'];
+ $query = "SELECT * FROM  graduates_attributes 
+ WHERE department = $department";
  $query_run = mysqli_query($connection, $query);
 ?>  
 <table id="datatableid" class="table table-bordered">
@@ -3326,8 +4294,16 @@ foreach($query_run as $row)
   
 <tr>
         <td class="hide-id"> <?php echo $row['id']; ?> </td>
+        
         <td class=""><?php echo $row['graduate_att']; ?></td>
-        <td class=""><?php echo $row['descriptors_learn_out']; ?></td>
+        <td class=""><?php
+                        if (strpos($row['descriptors_learn_out'], 'TLO') !== false || strpos($row['descriptors_learn_out'], "\n") !== false) {
+                            // If 'TLO' or a line break is found, replace it with <br>
+                            echo str_replace(array('', "\n"), '<br>', $row['descriptors_learn_out']);
+                        } else {
+                            echo $row['descriptors_learn_out'];
+                        }
+                        ?></td>
         <td class="table-button">
         <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
 
@@ -3513,39 +4489,39 @@ descriptions for the graduate attributes.</a>
 
 <script>
     $(document).ready(function () {
-
         $('.editbtn_module_learning').on('click', function () {
-
             $('#editmodal_module_learning').modal('show');
-
             $tr = $(this).closest('tr');
-
             var data = $tr.children("td").map(function () {
                 return $(this).text();
             }).get();
-
             console.log(data);
-
             $('#update_id3').val(data[0]);
             $('#module_no').val(data[1]);
-            $('#week').val(data[2]);    
-
-            // Auto check checkbox for course_Type
-            
+            $('#week').val(data[2]);
             $('#date').val(data[3]);
             $('#teaching_activities').val(data[4]);
             $('#technology').val(data[5]);
+            
+            // Handling the 'onsite' checkbox
             var onsite = data[6];
-            $('input[name="onsite"][value="' + onsite + '"]').prop('checked', true);
-
-            // Auto check checkbox for learning_modality
+            if (onsite === '/') {
+                $('input[name="onsite"]').prop('checked', true);
+            } else {
+                $('input[name="onsite"]').prop('checked', false);
+            }
+            
+            // Handling the 'asy' checkbox
             var asy = data[7];
-            $('input[name="asy"][value="' + asy + '"]').prop('checked', true);
+            if (asy === '/') {
+                $('input[name="asy"]').prop('checked', true);
+            } else {
+                $('input[name="asy"]').prop('checked', false);
+            }
 
-
+            $('#alloted_hours').val(data[8]);
         });
     });
-
 </script>
 
 
@@ -3574,13 +4550,22 @@ descriptions for the graduate attributes.</a>
             $('#1date').val(data[3]);
             $('#1teaching_activities').val(data[4]);
             $('#1technology').val(data[5]);
-            var onsite = data[6];
-            $('input[name="onsite"][value="' + onsite + '"]').prop('checked', true);
+            var onsite1 = data[6];
+            if (onsite1 === '/') {
+                $('input[name="onsite1"]').prop('checked', true);
+            } else {
+                $('input[name="onsite1"]').prop('checked', false);
+            }
+            
+            // Handling the 'asy' checkbox
+            var asy1 = data[7];
+            if (asy1 === '/') {
+                $('input[name="asy1"]').prop('checked', true);
+            } else {
+                $('input[name="asy1"]').prop('checked', false);
+            }
 
-            // Auto check checkbox for learning_modality
-            var asy = data[7];
-            $('input[name="asy"][value="' + asy + '"]').prop('checked', true);
-
+            $('#alloted_hours2').val(data[8]);
 
         });
     });
@@ -3626,8 +4611,9 @@ descriptions for the graduate attributes.</a>
             console.log(data);
 
             $('#update_id5').val(data[0]);
-            $('#final_learning_out').val(data[1]);
-            $('#final_topic_leaning_out').val(data[2]);
+            $('#comlab_6').val(data[1]);
+            $('#final_learning_out').val(data[3]);
+            $('#final_topic_leaning_out').val(data[4]);
         });
     });
 </script>
@@ -3779,6 +4765,66 @@ descriptions for the graduate attributes.</a>
 </script>
 
 
+<script>
+    $(document).ready(function () {
+        $('.editbtn_signature').on('click', function () {
+            $('#editmodal_signature').modal('show');
+            $tr = $(this).closest('tr');
+            var data = $tr.children("td").map(function () {
+                return $(this).text();
+            }).get();
+            $('#update_id22').val(data[0]);
+            // Clear any previously selected file
+            $('#dept_signature').val('');
+        });
+
+        // Preview the selected image
+        $('#dept_signature').change(function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#preview_dept_signature').attr('src', e.target.result).show();
+                }
+                reader.readAsDataURL(file);
+            } else {
+                $('#preview_dept_signature').hide();
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('.editbtn_signature_dean').on('click', function () {
+            $('#editmodal_signature_dean').modal('show');
+            $tr = $(this).closest('tr');
+            var data = $tr.children("td").map(function () {
+                return $(this).text();
+            }).get();
+            $('#update_id23').val(data[0]);
+            // Clear any previously selected file
+            $('#dean_signature').val('');
+        });
+
+        // Preview the selected image
+        $('#dean_signature').change(function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#preview_dean_signature').attr('src', e.target.result).show();
+                }
+                reader.readAsDataURL(file);
+            } else {
+                $('#preview_dean_signature').hide();
+            }
+        });
+    });
+</script>
+
+
+
 <!-- EDIT BTN FOR MAPPING TABLE PLS -->
 
 <script>
@@ -3799,24 +4845,66 @@ descriptions for the graduate attributes.</a>
             $('#update_id10').val(data[0]);
             $('#learn_out_mapping').val(data[1]);
             var pl1 = data[2];
-            $('input[name="pl1"][value="' + pl1 + '"]').prop('checked', true);
+            if (pl1 === '/'){
+                $('input[name="pl1"]').prop('checked', true);
+            }else{
+                $('input[name="pl1"]').prop('checked', false);
+            }
             var pl2 = data[3];
-            $('input[name="pl2"][value="' + pl2 + '"]').prop('checked', true);
-            var pl3 = data[4];
-            $('input[name="pl3"][value="' + pl3 + '"]').prop('checked', true);
-            var pl4 = data[5];
-            $('input[name="pl4"][value="' + pl4 + '"]').prop('checked', true);
-            var pl5 = data[6];
-            $('input[name="pl5"][value="' + pl5 + '"]').prop('checked', true);
-            var pl6 = data[7];
-            $('input[name="pl6"][value="' + pl6 + '"]').prop('checked', true);
-            var pl7 = data[8];
-            $('input[name="pl7"][value="' + pl7 + '"]').prop('checked', true);
-            var pl8 = data[9];
-            $('input[name="pl8"][value="' + pl8 + '"]').prop('checked', true);
-            var pl9 = data[10];
-            $('input[name="pl9"][value="' + pl9 + '"]').prop('checked', true);
+            if (pl2 === '/'){
+                $('input[name="pl2"]').prop('checked', true);
+            }else{
+                $('input[name="pl2"]').prop('checked', false);
+            }
 
+            var pl3 = data[4];
+            if (pl3 === '/'){
+                $('input[name="pl3"]').prop('checked', true);
+            }else{
+                $('input[name="pl3"]').prop('checked', false);
+            }
+
+            var pl4 = data[5];
+            if (pl4 === '/'){
+                $('input[name="pl4"]').prop('checked', true);
+            }else{
+                $('input[name="pl4"]').prop('checked', false);
+            }
+
+            var pl5 = data[6];
+            if (pl5 === '/'){
+                $('input[name="pl5"]').prop('checked', true);
+            }else{
+                $('input[name="pl5"]').prop('checked', false);
+            }
+
+            var pl6 = data[7];
+            if (pl6 === '/'){
+                $('input[name="pl6"]').prop('checked', true);
+            }else{
+                $('input[name="pl6"]').prop('checked', false);
+            }
+
+            var pl7 = data[8];
+            if (pl7 === '/'){
+                $('input[name="pl7"]').prop('checked', true);
+            }else{
+                $('input[name="pl7"]').prop('checked', false);
+            }
+
+            var pl8 = data[9];
+            if (pl8 === '/'){
+                $('input[name="pl8"]').prop('checked', true);
+            }else{
+                $('input[name="pl8"]').prop('checked', false);
+            }
+            
+            var pl9 = data[10];
+            if (pl9 === '/'){
+                $('input[name="pl9"]').prop('checked', true);
+            }else{
+                $('input[name="pl9"]').prop('checked', false);
+            }
             
             
             
@@ -3870,15 +4958,39 @@ descriptions for the graduate attributes.</a>
             $('#update_id11').val(data[0]);
             $('#program_learn').val(data[1]);
             var rate1 = data[2];
-            $('input[name="rate1"][value="' + rate1 + '"]').prop('checked', true);
+            if (rate1 === '/'){
+                $('input[name="rate1"]').prop('checked', true);
+            }else{
+                $('input[name="rate1"]').prop('checked', false);
+            }
+
             var rate2 = data[3];
-            $('input[name="rate2"][value="' + rate2 + '"]').prop('checked', true);
+            if (rate2 === '/'){
+                $('input[name="rate2"]').prop('checked', true);
+            }else{
+                $('input[name="rate2"]').prop('checked', false);
+            }
+
             var rate3 = data[4];
-            $('input[name="rate3"][value="' + rate3 + '"]').prop('checked', true);
+            if (rate3 === '/'){
+                $('input[name="rate3"]').prop('checked', true);
+            }else{
+                $('input[name="rate3"]').prop('checked', false);
+            }
+
             var rate4 = data[5];
-            $('input[name="rate4"][value="' + rate4 + '"]').prop('checked', true);
+            if (rate4 === '/'){
+                $('input[name="rate4"]').prop('checked', true);
+            }else{
+                $('input[name="rate4"]').prop('checked', false);
+            }
+
             var rate5 = data[6];
-            $('input[name="rate5"][value="' + rate5 + '"]').prop('checked', true);
+            if (rate5 === '/'){
+                $('input[name="rate5"]').prop('checked', true);
+            }else{
+                $('input[name="rate5"]').prop('checked', false);
+            }
             
 
 

@@ -1,15 +1,20 @@
 <?php
-session_start();
+session_start(); // Start the session
 
-// Check if the user is logged in
-if (isset($_SESSION['email']) && $_SESSION['email'] === true) {
-    // Unset user session variables
-    unset($_SESSION['email']);
-    // Destroy user session
+// Check if user is logged in
+if (isset($_SESSION["logged_in"]) && $_SESSION["logged_in"] === true) {
+    // Unset all of the session variables
+    $_SESSION = array();
+
+    // Destroy the session
     session_destroy();
-}
 
-// Redirect to login page
-header("Location: login.php");
-exit;
+    // Redirect to login page
+    header("Location: login.php");
+    exit();
+} else {
+    // If user is not logged in, redirect to login page
+    header("Location: login.php");
+    exit();
+}
 ?>

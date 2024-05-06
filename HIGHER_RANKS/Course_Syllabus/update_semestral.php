@@ -6,8 +6,9 @@ if(isset($_POST['updatedata'])) {
     
     $term = $_POST['term'];
     $year = $_POST['year'];
+    $second_call = $_POST['second_call'];
     
-    $query = "UPDATE semestral SET term='$term', year='$year' WHERE id='$id'";
+    $query = "UPDATE semestral SET term='$term', year='$year', second_call='$second_call' WHERE id='$id'";
     $query_run = mysqli_query($connection, $query);
 
     if($query_run) {

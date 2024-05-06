@@ -17,9 +17,10 @@ if(isset($_POST['insertdata']))
 {
     $graduate_att = $_POST['graduate_att'];
     $descriptors_learn_out = $_POST['descriptors_learn_out'];
+    $department = $_POST['department'];
 
-    $sql = "INSERT INTO graduates_attributes (`graduate_att`, `descriptors_learn_out`)
-    VALUES ('$graduate_att', '$descriptors_learn_out')";
+    $sql = "INSERT INTO graduates_attributes (`graduate_att`, `descriptors_learn_out`,`department`)
+    VALUES ('$graduate_att', '$descriptors_learn_out', '$department')";
 
     if ($connection->query($sql) === TRUE) {
         echo '<script> alert("Data Saved"); </script>';

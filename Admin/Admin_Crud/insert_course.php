@@ -19,13 +19,17 @@ if(isset($_POST['insertdata']))
     $cname = $_POST['cname'];
     $initial = $_POST['initial'];
     $course_department = $_POST['course_department'];
+    $department_name = $_POST['department_name'];
+    $department_position = $_POST['department_position'];
+    $dept_signature = $_POST['dept_signature'];
+    $dean_signature = $_POST['dean_signature'];
 
-    $sql = "INSERT INTO  course (`catid`, `cname`,`initial`,`course_department`)
-    VALUES ('$catid','$cname','$initial', '$course_department')";
+    $sql = "INSERT INTO  course (`catid`, `cname`,`initial`,`course_department`,`department_name`,`department_position`,`dept_signature`,`dean_signature`)
+    VALUES ('$catid','$cname','$initial', '$course_department','$department_name','$department_position','$dept_signature','$dean_signature')";
 
     if ($connection->query($sql) === TRUE) {
         echo '<script> alert("Data Saved"); </script>';
-        header('Location: ../department.php');
+        header('Location: ../course.php');
     } else {
         echo "Error: " . $sql . "<br>" . $connection->error;
     }

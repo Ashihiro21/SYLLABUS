@@ -11,8 +11,9 @@ if(isset($_POST['updatedata3'])) {
     $technology = $_POST['technology'];
     $onsite = $_POST['onsite'];
     $asy = $_POST['asy'];
+    $alloted_hours = $_POST['alloted_hours'];
     
-    $query = "UPDATE module_learning SET module_no='$module_no', week='$week', date='$date', teaching_activities='$teaching_activities' , technology='$technology', onsite='$onsite', asy='$asy'  WHERE id='$id'";
+    $query = "UPDATE module_learning SET module_no='$module_no', week='$week', date='$date', teaching_activities='$teaching_activities' , technology='$technology', onsite='$onsite', asy='$asy', hours='$alloted_hours'  WHERE id='$id'";
     $query_run = mysqli_query($connection, $query);
 
     if($query_run) {

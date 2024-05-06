@@ -8,7 +8,8 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">                                                                         
     <script src="https://kit.fontawesome.com/yourkit.js" crossorigin="anonymous"></script>
-    <title>dlsud syllabus</title>
+    <link rel="icon" type="image/png" href="../img/DLSU-D.png"/>
+    <title>SYLLABUS</title>
     <Style>
         html {
   background-color: #000; /* Adjust this color to match the dominant color in your image */
@@ -308,7 +309,6 @@ input[type="password"],input[type="email"] {
   height:auto;
 }
 /* alert message */
-body {}
 
 .fancy-alert {
     font-family: sans-serif;
@@ -459,7 +459,7 @@ body {}
         </div>
 
         <form action="login_process.php" method="POST">
-            <input type="email"  class="fadeIn second" name="email" placeholder="Email" required><br>
+            <input type="text"  class="fadeIn second" name="email" placeholder="Email" required><br>
             <input type="password"  class="fadeIn third" name="password" placeholder="Password" required><br>
             <input type="submit" class="fadeIn fourth" value="Login">
         </form>
