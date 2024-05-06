@@ -2375,7 +2375,7 @@ echo $html;
 <!--Add Modal Final Period Table -->
 <div class="card custom-card">
 <div class="card-body">
-<button type="button" class="btn btn-primary onsite_reffence_tables" data-toggle="modal" data-target="#onsite_reffence_tables" style="margin-left: 30rem;">
+<button type="button" class="btn btn-primary onsite_reffence_tables" data-toggle="modal" data-target="#onsite_reffence_tables" style="margin-left: 8.8rem;">
                         ADD DATA
                     </button>
 
@@ -2579,7 +2579,7 @@ echo "No Record Found";
 <!-- ADD online REFFERENCE -->
 
 <!--Add Modal Final Period Table -->
-<button type="button" class="btn btn-primary online_reffence" data-toggle="modal" data-target="#online_reffence" style="margin-left: 30rem;">
+<button type="button" class="btn btn-primary online_reffence" data-toggle="modal" data-target="#online_reffence" style="margin-left: 8.8rem;">
                         ADD DATA
                     </button>
 
@@ -2775,7 +2775,7 @@ echo "No Record Found";
 
 </div>
 
-<button type="button" class="btn btn-primary add_semester float" data-toggle="modal" data-target="#add_semester" style="margin-left: 30rem;">
+<button type="button" class="btn btn-primary add_semester float" data-toggle="modal" data-target="#add_semester" style="margin-left: 8.8rem;">
                         ADD DATA
                     </button>
 
