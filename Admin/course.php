@@ -52,6 +52,18 @@ function populateCetegoryDropdown() {
     .hide-id{
         display: none;
     }
+
+    .img-fluid {
+    border-radius: 10px;
+    width: 100px;
+    background-color: transparent;
+    transition: all 0.3s ease;
+}
+
+.img-fluid:hover {
+    transform: scale(1.1);
+}
+
 </style>
             
 
@@ -268,6 +280,7 @@ function populateCetegoryDropdown() {
      c.department_name, 
      c.department_position, 
      c.dept_signature, 
+     c.dean_signature, 
      cat.id AS category_id, 
      cat.name AS category_name, 
      cat.initial AS category_initial 
@@ -313,8 +326,21 @@ function populateCetegoryDropdown() {
             <td> <?= $row['department_name'];  ?> </td>
             <td> <?= $row['department_position'];  ?> </td>
                     <td>
-            <?= isset($row['dept_signature']) && !empty($row['dept_signature']) ? $row['dept_signature'] : 'No signature available'; ?>
+            <?php if (isset($row['dept_signature']) && !empty($row['dept_signature'])) : ?>
+                <img src="../HIGHER_RANKS/<?php echo $row['dept_signature']; ?>" class="img-fluid" alt="Department Signature">
+            <?php else : ?>
+                No signature available
+            <?php endif; ?>
         </td>
+                    <td>
+            <?php if (isset($row['dean_signature']) && !empty($row['dean_signature'])) : ?>
+                <img src="../HIGHER_RANKS/<?php echo $row['dean_signature']; ?>" class="img-fluid" alt="Department Signature">
+            <?php else : ?>
+                No signature available
+            <?php endif; ?>
+        </td>
+
+
 
             <td>
             <button type="button" class="btn btn-success editbtn"><i class="lni lni-pencil"></i></button>
