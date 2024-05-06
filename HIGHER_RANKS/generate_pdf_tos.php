@@ -115,12 +115,12 @@ body {
 
 
 
-table, tr, th, td{
-
+table, th, td, tr{
     border: 1px solid black;
     border-collapse: collapse;
+    width:75px;
 }
-th{
+th,tr, td{
     text-align:center
 }
 
@@ -152,7 +152,7 @@ th{
         while ($row = $result->fetch_assoc()) {
             // Properly formatted HTML output
           
-          $html .='<h4 style="text-align:center; margin-top: -1rem; font-weight:normal;">'.strtoupper($row['course_code']).'-'.strtoupper($row['course_tittle']).'</h4>';
+          $html .='<h4 style="text-align:center; margin-top: -1rem; font-weight:bold;">'.strtoupper($row['course_code']).'-'.strtoupper($row['course_tittle']).'</h4>';
         }
     } 
 
@@ -160,104 +160,57 @@ th{
     // LEARNING PLAN
     // Learning Outcomes for Midterm Period
 
-    $html .= '<tr>';
+    $html .='<tr>';
+    $html .='<th rowspan="2">% ITEM</th>';
+    $html .='<th rowspan="2" style="padding: 25px;"><p>Time</p><p>Allotment/</p><p>topic(mins)</p></th>';
+    $html .='<th rowspan="2">TOPICS</th>';
+    $html .='<th colspan="4">LEVELS</th>';
+    $html .='<th rowspan="2">No. of Items</th>';
+    $html .='</tr>';
 
-    $html .= '<th>Instructional Objectives</th>';
-    $html .= '<th>Time Spent on Topic</th>';
-    $html .= '<th>Percent of Class Time on Topic</th>';
+    $html .='<tr>';
+    $html .='<th>(34%)</th>';
+    $html .='<th>C(20%)</th>';
+    $html .='<th>AP(33%)</th>';
+    $html .='<th>AN(13%)</th>';
+    $html .='</tr>';
 
-    $html .= '<th>Number of Test Items</th>';
     
-    $html .= '<th>Lower Processes<br>';
-    $html .='<div style="text-align:left; margin-left: 24px;">';
-    $html .= '•  Knowledge<br>';
-    $html .= '•  Recall<br>';
-    $html .= '•  Identification<br>';
-    $html .= '•  Comprehension';
-    $html .='</div>';
-    $html .= '</th>';
-    $html .= '<p></p>';
-    $html .= '<th>Higher Processes<br>';
-    $html .='<div style="text-align:left; margin-left: 35px;">';
-    $html .= '•  Analysis<br>';
-    $html .= '•  Synthesis<br>';
-    $html .= '•  evaluation<br>';
-    $html .='</div>';
-    $html .= '</th>';
+    $department = $_SESSION['department']; 
 
-    $html .= '</tr>';
-
-
-    $html .= '<tr>';
-    $html .= '<td>example1';
-    $html .= '</td>';
-    $html .= '<td>example1';
-    $html .= '</td>';
-    $html .= '<td>example1';
-    $html .= '</td>';
-    $html .= '<td>example1';
-    $html .= '</td>';
-    $html .= '<td>example1';
-    $html .= '</td>';
-    $html .= '</td>';
-    $html .= '<td>example1';
-    $html .= '</td>';
-    $html .= '</tr>';
-
-    $html .= '<tr>';
-    $html .= '<td>example2';
-    $html .= '</td>';
-    $html .= '<td>example2';
-    $html .= '</td>';
-    $html .= '<td>example2';
-    $html .= '</td>';
-    $html .= '<td>example2';
-    $html .= '</td>';
-    $html .= '<td>example2';
-    $html .= '</td>';
-    $html .= '</td>';
-    $html .= '<td>example2';
-    $html .= '</td>';
-    $html .= '</tr>';
-
-    $html .= '<tr>';
-    $html .= '<td>example3';
-    $html .= '</td>';
-    $html .= '<td>example3';
-    $html .= '</td>';
-    $html .= '<td>example3';
-    $html .= '</td>';
-    $html .= '<td>example3';
-    $html .= '</td>';
-    $html .= '<td>example3';
-    $html .= '</td>';
-    $html .= '</td>';
-    $html .= '<td>example3';
-    $html .= '</td>';
-    $html .= '</tr>';
+    $sql = "SELECT * FROM module_learning WHERE department = $department ORDER BY id ASC";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $html .= '<tr>';
+            $html .= '<td>Example</td>';
+            $html .= '<td>'. ($row['hours']) * 60 .'</td>';
+            $html .= '<td>';
+            
+            // Find the position of the first occurrence of 'Module'
+            $modulePosition = strpos($row['teaching_activities'], 'Module');
+            
+            // If 'Module' is found, remove all text before it
+            if ($modulePosition !== false) {
+                $html .= substr($row['teaching_activities'], $modulePosition);
+            } else {
+                $html .= $row['teaching_activities'];
+            }
+            
+            $html .= '</td>';
+            $html .= '<td>Example</td>';
+            $html .= '<td>Example</td>';
+            $html .= '<td>Example</td>';
+            $html .= '<td>Example</td>';
+            $html .= '<td>Example</td>';
+            $html .= '</tr>';
+        }
+    }
+    
 
 
 
-
-    // $department = $_SESSION['department']; 
-
-    // $sql = "SELECT * FROM course_leaning WHERE department = $department  ORDER BY id ASC";
-    // $result = $conn->query($sql);
-    // if ($result->num_rows > 0) {
-    //     while ($row = $result->fetch_assoc()) {
-    //         $html .= '<tr>';
-    //         $html .= '<td>'. $row['comlab'] ." . ". $row['learn_out'] . '</td>';
-    //         $html .= '<td>';
-    //         if (strpos($row['topic_learn_out'], 'TLO') !== false || strpos($row['topic_learn_out'], "\n") !== false) {
-                // If 'TLO' or a line break is found, replace it with <br>
-                // $html .= str_replace(array('', "\n"), '<br>', $row['topic_learn_out']);
-    //         } else {
-    //             $html .= $row['topic_learn_out'];
-    //         }
-    //         $html .= '</td>';
-    //         $html .= '</tr>';
-    //     }
-    // }
+ 
 
     $html .= '</table>';
 
