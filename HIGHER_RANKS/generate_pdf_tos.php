@@ -207,11 +207,14 @@ th, td{
                         $substring = substr($substring, 0, $numberPosition + strlen($matches[1]));
                     }
                 }
-                
+    
                 $html .= $substring;
             } else {
                 $html .= $row['teaching_activities'];
             }
+    
+            // Concatenate $row['title'] to the side of $row['teaching_activities']
+            $html .= ' ' . $row['title'];
     
             $html .= '</td>';
             $html .= '<td>Example</td>';
@@ -222,6 +225,7 @@ th, td{
             $html .= '</tr>';
         }
     }
+    
     
     
 
