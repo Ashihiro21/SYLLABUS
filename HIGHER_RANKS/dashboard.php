@@ -204,7 +204,7 @@ td{
         
     }
     .custom-policy{
-        margin: 1.5rem;
+        margin: 13.5rem;
         border: 1px solid #6c757d; /* Corrected border color syntax */
       
         height: 100%;
@@ -2076,7 +2076,6 @@ echo "No Record Found";
 
 
 
-<div class="text-wrap container-box mt-5">
 
 
 
