@@ -365,7 +365,6 @@ if ($result->num_rows > 0) {
 
 $html .= '</table>';
 
-$html .= '</table>';
 
 $html .= '<table class="teaching_guid">';
 $html .= '<tr style="height: 150px">';
