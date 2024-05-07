@@ -78,7 +78,8 @@ $user4 = mysqli_fetch_assoc($sql4);
 $sql5 = mysqli_query($conn,"SELECT * FROM module_learning");
 $user5 = mysqli_fetch_assoc($sql5);
 
-$sql = "SELECT * FROM course_leaning";
+$sql5 = mysqli_query($conn,"SELECT * FROM module_learning" );
+$user5 = mysqli_fetch_assoc($sql5);
 
 
 
@@ -172,16 +173,20 @@ th, td{
     $html .='</tr>';
 
     $html .='<tr>';
-    $html .='<th>(34%)</th>';
-    $html .='<th>C(20%)</th>';
-    $html .='<th>AP(33%)</th>';
-    $html .='<th>AN(13%)</th>';
+    $html .='<th>K</th>';
+    $html .='<th>C</th>';
+    $html .='<th>AP</th>';
+    $html .='<th>AN</th>';
     $html .='</tr>';
 
     
     $department = $_SESSION['department']; 
 
-    $sql = "SELECT * FROM module_learning WHERE department = $department ORDER BY id ASC";
+
+
+
+
+    $sql = "SELECT `id`, `module_no`, `title`, `week`, `date`, `teaching_activities`, `technology`, `onsite`, `asy`, `hours`, `department` FROM `module_learning` WHERE department = $department ORDER BY id ASC";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
@@ -214,7 +219,7 @@ th, td{
             }
     
             // Concatenate $row['title'] to the side of $row['teaching_activities']
-            $html .= ' ' . $row['title'];
+            $html .= '<br/>' . $row['title'];
     
             $html .= '</td>';
             $html .= '<td>Example</td>';
