@@ -83,7 +83,7 @@ $sql = "SELECT * FROM course_leaning";
 
 
 
-require_once 'dompdf/autoload.inc.php'; // Include Dompdf autoload file
+require_once 'com'; // Include Dompdf autoload file
 
 use Dompdf\Dompdf;
 
@@ -365,7 +365,6 @@ if ($result->num_rows > 0) {
 
 $html .= '</table>';
 
-$html .= '</table>';
 
 $html .= '<table class="teaching_guid">';
 $html .= '<tr style="height: 150px">';
