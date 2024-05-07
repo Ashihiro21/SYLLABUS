@@ -16,6 +16,7 @@ if ($connection->connect_error) {
 if(isset($_POST['insertdata']))
 {
     $module_no = $_POST['module_no'];
+    $title = $_POST['title'];
     $week = $_POST['week'];
     $date = $_POST['date'];
     $teaching_activities = $_POST['teaching_activities'];
@@ -25,8 +26,8 @@ if(isset($_POST['insertdata']))
     $hours = $_POST['hours'];
     $department = $_POST['department'];
 
-    $sql = "INSERT INTO module_learning (`module_no`, `week` , `date` , `teaching_activities` , `technology` , `onsite` , `asy`, `hours`, `department`)
-    VALUES ('$module_no', '$week' , '$date' , '$teaching_activities' , '$technology' , '$onsite' , '$asy', '$hours', '$department')";
+    $sql = "INSERT INTO module_learning (`module_no`, `title`, `week` , `date` , `teaching_activities` , `technology` , `onsite` , `asy`, `hours`, `department`)
+    VALUES ('$module_no', '$title' , '$week' , '$date' , '$teaching_activities' , '$technology' , '$onsite' , '$asy', '$hours', '$department')";
 
     if ($connection->query($sql) === TRUE) {
         echo '<script> alert("Data Saved"); </script>';

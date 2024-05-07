@@ -1056,6 +1056,13 @@ $mysqli->close();
                         <textarea name="module_no" id="module_no1" class="form-control 1" placeholder="Module No and Learning Outcomes" cols="50" rows="5"></textarea>
                     </div>
 
+                    <div class="form-group">
+                        <label for="title1">Title</label>
+                        <input type="text" name="title" id="title1" class="form-control"
+                                placeholder="Enter Title">
+                    </div>
+
+
                         <div class="form-group">
                             <label>Week No</label>
                             <input type="text" name="week" id="week1" class="form-control"
@@ -1134,6 +1141,13 @@ $mysqli->close();
                     <textarea name="module_no" id="module_no" class="form-control" placeholder="Enter Module No and Learning Outcomes" cols="50" rows="5"></textarea>
                 </div>
 
+                <div class="form-group">
+                        <label for="title1">Title</label>
+                        <input type="text" name="title" id="title" class="form-control"
+                                placeholder="Enter Title">
+                    </div>
+
+
                         <div class="form-group">
                             <label>Week No</label>
                             <input type="text" name="week" id="week" class="form-control"
@@ -1200,6 +1214,7 @@ $mysqli->close();
             
             <tr>
                 <th style="width:5px; text-align:center"  class="" scope="col">Module No and Learning Outcomes</th>
+                <th style="text-align:center;" class="" class="" scope="col">Title</th>
                 <th style="text-align:center;" class="" class="" scope="col">Week No</th>
                 <th style="padding-left:35px;padding-right:35px; text-align:center;" class="" scope="col">Date</th>
                 <th style="text-align: center;" class="" scope="col"><p>Teaching-Learning Activities  / </p>Assessment Strategy</th>
@@ -1242,6 +1257,7 @@ $mysqli->close();
             $query = "SELECT 
                         `id`, 
                         `module_no`, 
+                        `title`, 
                         `week`, 
                         `date`, 
                         `teaching_activities`, 
@@ -1267,6 +1283,7 @@ $mysqli->close();
                             echo $row['module_no'];
                         }
                         ?></td>
+                        <td style="text-align: center;"><?php echo $row['title']; ?></td>
                     <td style="text-align: center;"><?php echo $row['week']; ?></td>
                     <td style="text-align: center;"><?php echo $row['date']; ?></td>
                     <td style="" class=""><?php
@@ -4498,13 +4515,14 @@ descriptions for the graduate attributes.</a>
             console.log(data);
             $('#update_id3').val(data[0]);
             $('#module_no').val(data[1]);
-            $('#week').val(data[2]);
-            $('#date').val(data[3]);
-            $('#teaching_activities').val(data[4]);
-            $('#technology').val(data[5]);
+            $('#title').val(data[2]);
+            $('#week').val(data[3]);
+            $('#date').val(data[4]);
+            $('#teaching_activities').val(data[5]);
+            $('#technology').val(data[6]);
             
             // Handling the 'onsite' checkbox
-            var onsite = data[6];
+            var onsite = data[7];
             if (onsite === '/') {
                 $('input[name="onsite"]').prop('checked', true);
             } else {
@@ -4512,14 +4530,14 @@ descriptions for the graduate attributes.</a>
             }
             
             // Handling the 'asy' checkbox
-            var asy = data[7];
+            var asy = data[8];
             if (asy === '/') {
                 $('input[name="asy"]').prop('checked', true);
             } else {
                 $('input[name="asy"]').prop('checked', false);
             }
 
-            $('#alloted_hours').val(data[8]);
+            $('#alloted_hours').val(data[9]);
         });
     });
 </script>

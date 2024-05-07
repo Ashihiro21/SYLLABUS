@@ -189,17 +189,30 @@ th, td{
             $html .= '<td>Example</td>';
             $html .= '<td>'. ($row['hours']) * 60 .'</td>';
             $html .= '<td>';
-            
+    
             // Find the position of the first occurrence of 'Module'
             $modulePosition = strpos($row['teaching_activities'], 'Module');
-            
-            // If 'Module' is found, remove all text before it
+    
+            // If 'Module' is found
             if ($modulePosition !== false) {
-                $html .= substr($row['teaching_activities'], $modulePosition);
+                // Get the substring starting from 'Module' to the end of the string
+                $substring = substr($row['teaching_activities'], $modulePosition);
+    
+                // Find the position of the first occurrence of a number after 'Module'
+                preg_match('/Module\D+(\d+)/', $substring, $matches);
+                if (isset($matches[1])) {
+                    $numberPosition = strpos($substring, $matches[1]);
+                    // If a number is found after 'Module', trim the substring to that position
+                    if ($numberPosition !== false) {
+                        $substring = substr($substring, 0, $numberPosition + strlen($matches[1]));
+                    }
+                }
+                
+                $html .= $substring;
             } else {
                 $html .= $row['teaching_activities'];
             }
-            
+    
             $html .= '</td>';
             $html .= '<td>Example</td>';
             $html .= '<td>Example</td>';
@@ -209,6 +222,7 @@ th, td{
             $html .= '</tr>';
         }
     }
+    
     
 
 
