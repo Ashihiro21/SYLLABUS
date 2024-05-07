@@ -83,7 +83,7 @@ $sql = "SELECT * FROM course_leaning";
 
 
 
-require_once 'com'; // Include Dompdf autoload file
+require_once 'dompdf/autoload.inc.php'; // Include Dompdf autoload file
 
 use Dompdf\Dompdf;
 
