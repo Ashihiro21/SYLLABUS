@@ -161,101 +161,6 @@ th, td{
         }
     } 
 
-    $html .='<table>';
-    // LEARNING PLAN
-    // Learning Outcomes for Midterm Period
-
-    $html .='<tr style="margin:0px; padding:0px;">';
-    $html .='<th style="width:70px;" " rowspan="2">% ITEM</th>';
-    $html .='<th rowspan="2"><p>Time</p><p>Allotment/</p><p>topic(mins)</p></th>';
-    $html .='<th rowspan="2">TOPICS</th>';
-    $html .='<th colspan="4">LEVELS</th>';
-    $html .='<th rowspan="2">No. of Items</th>';
-    $html .='</tr>';
-
-    $html .='<tr>';
-    $html .='<th>K</th>';
-    $html .='<th>C</th>';
-    $html .='<th>AP</th>';
-    $html .='<th>AN</th>';
-    $html .='</tr>';
-
-    
-    $department = $_SESSION['department']; 
-
-
-
-
-
-    $sql = "SELECT `id`, `module_no`, `title`, `week`, `date`, `teaching_activities`, `technology`, `onsite`, `asy`, `hours`, `department` FROM `module_learning` WHERE department = $department ORDER BY id ASC";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $html .= '<tr>';
-            $html .= '<td>Example</td>';
-            $html .= '<td>'. ($row['hours']) * 60 .'</td>';
-            $html .= '<td>';
-    
-            // Find the position of the first occurrence of 'Module'
-            $modulePosition = strpos($row['teaching_activities'], 'Module');
-    
-            // If 'Module' is found
-            if ($modulePosition !== false) {
-                // Get the substring starting from 'Module' to the end of the string
-                $substring = substr($row['teaching_activities'], $modulePosition);
-    
-                // Find the position of the first occurrence of a number after 'Module'
-                preg_match('/Module\D+(\d+)/', $substring, $matches);
-                if (isset($matches[1])) {
-                    $numberPosition = strpos($substring, $matches[1]);
-                    // If a number is found after 'Module', trim the substring to that position
-                    if ($numberPosition !== false) {
-                        $substring = substr($substring, 0, $numberPosition + strlen($matches[1]));
-                    }
-                }
-    
-                $html .= $substring;
-            } else {
-                $html .= $row['teaching_activities'];
-            }
-    
-            // Concatenate $row['title'] to the side of $row['teaching_activities']
-            $html .= '<br/>' . $row['title'];
-    
-            $html .= '</td>';
-            $html .= '<td>Example</td>';
-            $html .= '<td>Example</td>';
-            $html .= '<td>Example</td>';
-            $html .= '<td>Example</td>';
-            $html .= '<td>Example</td>';
-            $html .= '</tr>';
-        }
-    }
-    
-    
-    
-    
-    
-    
-    $html .= '</table>';
-    
-   
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $database = "syllabus";
-    
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $database);
-    
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-    
-    $department = $_SESSION['department']; 
-    
-    // Example words array
     $knowledge = [
         "Define",
         "Recall",
@@ -269,16 +174,24 @@ th, td{
         "Summarize",
         "Paraphrase",
         "Interpret",
-        "Classify"  
+        "Classify",  
+        "Understand",  
+        "Comprehend",  
+        "Grasp",  
+        "Absorb",  
+        "Digest",  
     ];
-
+    
     
     $apply = [
         "Apply",
         "Implement",
         "Use",
         "Solve",
-        "Demonstrate"  
+        "Utilize" , 
+        "Employ" , 
+        "Execute" , 
+        "Employ"
     ];
     
     $analysis = [
@@ -286,8 +199,11 @@ th, td{
         "Compare",
         "Contrast",
         "Differentiate",
-        "Investigate"  
+        "Break down",
+    
+
     ];
+    
     // Initialize counts for matches
     $higherMatches = 0;
     $lowerMatches = 0;
@@ -377,77 +293,333 @@ th, td{
         }
     }
     
-    // Calculate percentages
-    $higherPercent = ($higherMatches / count($knowledge)) * 100;
-    $lowerPercent = ($lowerMatches / count($comprehension)) * 100;
-    $applyPercent = ($applyMatches / count($apply)) * 100;
-    $analysisPercent = ($analysisMatches / count($analysis)) * 100;
-    
-    $html .= '<div class="center">';
-    $html .= '<table>';
-    $html .= '<tr>';
-    $html .= '<th>K (' . round($higherPercent, 2) . '%)</th>';
-    $html .= '<th>C (' . round($lowerPercent, 2) . '%)</th>';
-    $html .= '<th>AP (' . round($applyPercent, 2) . '%)</th>';
-    $html .= '<th>AN (' . round($analysisPercent, 2) . '%)</th>';
-    $html .= '<th>No.of Items</th>';
+    // Start building HTML table
+    $html = '<table style="border:1px solid black;">';
+    $html .= '<tr style="margin:0px; padding:0px;">';
+    $html .= '<th style="width:70px;" rowspan="2">% ITEM</th>';
+    $html .= '<th rowspan="2"><p>Time</p><p>Allotment/</p><p>topic(mins)</p></th>';
+    $html .= '<th rowspan="2">TOPICS</th>';
+    $html .= '<th colspan="4">LEVELS</th>';
+    $html .= '<th rowspan="2">No. of Items</th>';
     $html .= '</tr>';
-    $html .= '<tr>';
     
-   // Initialize total count variable
-    $totalCount = 0;
-
-   // Define an array of filtered arrays
-$filteredArrays = [
-    'filteredWords' => $filteredWords,
-    'filteredColors' => $filteredColors,
-    'filteredApply' => $filteredApply,
-    'filteredAnalysis' => $filteredAnalysis
-];
-
-// Initialize total count
-$totalCount = 0;
-
-// Get array keys
-$keys = array_keys($filteredArrays);
-
-// Initialize index
-$i = 0;
-
-// Start the loop
-while ($i < count($filteredArrays)) {
-    $key = $keys[$i];
-    $filteredArray = $filteredArrays[$key];
-
-    $html .= '<td>';
-    if (!empty($filteredArray)) {
-        $html .= '<p>' . count($filteredArray) . '</p>'; // Display count of filtered elements
-        // Add count to total
-        $totalCount += count($filteredArray);
-        // Check if $key is 'filteredColors' and $higherMatches is 0
-        if ($key === 'filteredColors' && $higherMatches == 0) {
-            $html .= '<p class="footer">Add More Higher Level to Make higher Level.</p>';
+    $html .= '<tr>';
+    $html .= '<th>K</th>';
+    $html .= '<th>C</th>';
+    $html .= '<th>AP</th>';
+    $html .= '<th>AN</th>';
+    $html .= '</tr>';
+    
+    $department = $_SESSION['department']; 
+    
+    $sql = "SELECT 
+        ML.`id` AS ml_id,
+        ML.`module_no` AS ml_module_no,
+        ML.`title` AS ml_title,
+        ML.`week` AS ml_week,
+        ML.`date` AS ml_date,
+        ML.`teaching_activities` AS ml_teaching_activities,
+        ML.`technology` AS ml_technology,
+        ML.`onsite` AS ml_onsite,
+        ML.`asy` AS ml_asy,
+        ML.`hours` AS ml_hours,
+        ML.`department` AS ml_department,
+        CL.`id` AS cl_id,
+        CL.`comlab` AS cl_comlab,
+        CL.`learn_out` AS cl_learn_out,
+        CL.`topic_learn_out` AS cl_topic_learn_out
+        FROM 
+        `module_learning` AS ML
+        LEFT JOIN 
+        `course_leaning` AS CL ON ML.`department` = CL.`department`
+        WHERE 
+        ML.`department` = $department
+        GROUP BY 
+        ml_module_no, ml_hours, ml_department
+        ORDER BY 
+        ml_id ASC";
+    
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        $rowCount = 0; // Initialize row count
+        while ($row = $result->fetch_assoc()) {
+            $rowCount++; // Increment row count
+            // Skip first and last row
+            if ($rowCount === 1 || $rowCount === $result->num_rows) {
+                continue;
+            }
+            $html .= '<tr>';
+            $html .= '<td>Example</td>';
+            $html .= '<td>'. ($row['ml_hours']) * 60 .'</td>';
+            $html .= '<td>';
+    
+            // Find the position of the first occurrence of 'Module'
+            $modulePosition = strpos($row['ml_teaching_activities'], 'Module');
+    
+            // If 'Module' is found
+            if ($modulePosition !== false) {
+                // Get the substring starting from 'Module' to the end of the string
+                $substring = substr($row['ml_teaching_activities'], $modulePosition);
+    
+                // Find the position of the first occurrence of a number after 'Module'
+                preg_match('/Module\D+(\d+)/', $substring, $matches);
+                if (isset($matches[1])) {
+                    $numberPosition = strpos($substring, $matches[1]);
+                    // If a number is found after 'Module', trim the substring to that position
+                    if ($numberPosition !== false) {
+                        $substring = substr($substring, 0, $numberPosition + strlen($matches[1]));
+                    }
+                }
+    
+                $html .= $substring;
+            } else {
+                $html .= $row['ml_teaching_activities'];
+            }
+    
+            // Concatenate $row['title'] to the side of $row['teaching_activities']
+            $html .= '<br/>' . $row['ml_title'];
+    
+            $html .= '</td>';
+    
+            // Output learning outcomes based on matches
+            $html .= '<td>';
+            $html .= implode('<br/>', array_slice($filteredWords, 0, 2)); // Output first two matching words from $knowledge
+            $html .= '</td>';
+            $html .= '<td>';
+            $html .= implode('<br/>', array_slice($filteredColors, 0, 2)); // Output first two matching words from $comprehension
+            $html .= '</td>';
+            $html .= '<td>';
+            $html .= implode('<br/>', array_slice($filteredApply, 0, 2)); // Output first two matching words from $apply
+            $html .= '</td>';
+            $html .= '<td>';
+            $html .= implode('<br/>', array_slice($filteredAnalysis, 0, 2)); // Output first two matching words from $analysis
+            $html .= '</td>';
+    
+            $html .= '<td>Example</td>';
+            $html .= '</tr>';
         }
-    } else {
-        $html .= '<p>0</p>';
     }
-    $html .= '</td>';
-
-    // Increment index
-    $i++;
-}
-
-// Add total count of all filtered elements to another table cell
-    $html .= '<td>';
-    $html .= '<p>' . $totalCount . '</p>';
-    $html .= '</td>';
-
-    $html .= '</tr>';
-    $html .= '</table>';
-    $html .= '</div>';
     
-    // Close connection
-    $conn->close();
+    $html .= '</table>';
+
+
+
+
+
+
+
+
+
+    
+   
+//     $servername = "localhost";
+//     $username = "root";
+//     $password = "";
+//     $database = "syllabus";
+    
+//     // Create connection
+//     $conn = new mysqli($servername, $username, $password, $database);
+    
+//     // Check connection
+//     if ($conn->connect_error) {
+//         die("Connection failed: " . $conn->connect_error);
+//     }
+    
+//     $department = $_SESSION['department']; 
+    
+//     // Example words array
+//     $knowledge = [
+//         "Define",
+//         "Recall",
+//         "Recognize",
+//         "List",
+//         "Memorize"
+//     ];
+    
+//     $comprehension = [
+//         "Explain",
+//         "Summarize",
+//         "Paraphrase",
+//         "Interpret",
+//         "Classify"  
+//     ];
+
+    
+//     $apply = [
+//         "Apply",
+//         "Implement",
+//         "Use",
+//         "Solve",
+//         "Demonstrate"  
+//     ];
+    
+//     $analysis = [
+//         "Analyze",
+//         "Compare",
+//         "Contrast",
+//         "Differentiate",
+//         "Investigate"  
+//     ];
+//     // Initialize counts for matches
+//     $higherMatches = 0;
+//     $lowerMatches = 0;
+//     $applyMatches = 0;
+//     $analysisMatches = 0;
+    
+//     $filteredWords = [];
+//     foreach ($knowledge as $word) {
+//         $sql = "SELECT `topic_learn_out` FROM `course_leaning` WHERE `topic_learn_out` LIKE '%$word%' and department='$department'";
+//         $result = $conn->query($sql);
+//         if ($result && $result->num_rows > 0) {
+//             while($row = $result->fetch_assoc()) {
+//                 // Extract individual words
+//                 $sentence = $row['topic_learn_out'];
+//                 $words = explode(" ", $sentence); // Split sentence into words
+//                 foreach ($words as $singleWord) {
+//                     if (stripos($singleWord, $word) !== false) { // Check if word exists in single word
+//                         $filteredWords[] = $singleWord; // Store only the word
+//                         $higherMatches++;
+//                         break; // Stop further processing of words in this sentence
+//                     }
+//                 }
+//             }
+//         }
+//     }
+    
+//     // Filter colors from database based on the colors array
+//     $filteredColors = [];
+//     foreach ($comprehension as $color) {
+//         $sql = "SELECT `topic_learn_out` FROM `course_leaning` WHERE `topic_learn_out` LIKE '%$color%' and department='$department'";
+//         $result = $conn->query($sql);
+//         if ($result && $result->num_rows > 0) {
+//             while($row = $result->fetch_assoc()) {
+//                 // Extract individual words
+//                 $sentence = $row['topic_learn_out'];
+//                 $words = explode(" ", $sentence); // Split sentence into words
+//                 foreach ($words as $singleWord) {
+//                     if (stripos($singleWord, $color) !== false) { // Check if color exists in single word
+//                         $filteredColors[] = $singleWord; // Store only the word
+//                         $lowerMatches++;
+//                         break; // Stop further processing of words in this sentence
+//                     }
+//                 }
+//             }
+//         }
+//     }
+    
+//     // Filter words from database based on the $apply array
+//     $filteredApply = [];
+//     foreach ($apply as $applyWord) {
+//         $sql = "SELECT `topic_learn_out` FROM `course_leaning` WHERE `topic_learn_out` LIKE '%$applyWord%' and department='$department'";
+//         $result = $conn->query($sql);
+//         if ($result && $result->num_rows > 0) {
+//             while ($row = $result->fetch_assoc()) {
+//                 // Extract individual words
+//                 $sentence = $row['topic_learn_out'];
+//                 $words = explode(" ", $sentence); // Split sentence into words
+//                 foreach ($words as $singleWord) {
+//                     if (stripos($singleWord, $applyWord) !== false) { // Check if word exists in single word
+//                         $filteredApply[] = $singleWord; // Store only the word
+//                         $applyMatches++;
+//                         break; // Stop further processing of words in this sentence
+//                     }
+//                 }
+//             }
+//         }
+//     }
+    
+//     // Filter words from database based on the $analysis array
+//     $filteredAnalysis = [];
+//     foreach ($analysis as $analysisWord) {
+//         $sql = "SELECT `topic_learn_out` FROM `course_leaning` WHERE `topic_learn_out` LIKE '%$analysisWord%' and department='$department'";
+//         $result = $conn->query($sql);
+//         if ($result && $result->num_rows > 0) {
+//             while ($row = $result->fetch_assoc()) {
+//                 // Extract individual words
+//                 $sentence = $row['topic_learn_out'];
+//                 $words = explode(" ", $sentence); // Split sentence into words
+//                 foreach ($words as $singleWord) {
+//                     if (stripos($singleWord, $analysisWord) !== false) { // Check if word exists in single word
+//                         $filteredAnalysis[] = $singleWord; // Store only the word
+//                         $analysisMatches++;
+//                         break; // Stop further processing of words in this sentence
+//                     }
+//                 }
+//             }
+//         }
+//     }
+    
+//     // Calculate percentages
+//     $higherPercent = ($higherMatches / count($knowledge)) * 100;
+//     $lowerPercent = ($lowerMatches / count($comprehension)) * 100;
+//     $applyPercent = ($applyMatches / count($apply)) * 100;
+//     $analysisPercent = ($analysisMatches / count($analysis)) * 100;
+    
+//     $html .= '<div class="center">';
+//     $html .= '<table>';
+//     $html .= '<tr>';
+//     $html .= '<th>K (' . round($higherPercent, 2) . '%)</th>';
+//     $html .= '<th>C (' . round($lowerPercent, 2) . '%)</th>';
+//     $html .= '<th>AP (' . round($applyPercent, 2) . '%)</th>';
+//     $html .= '<th>AN (' . round($analysisPercent, 2) . '%)</th>';
+//     $html .= '<th>No.of Items</th>';
+//     $html .= '</tr>';
+//     $html .= '<tr>';
+    
+//    // Initialize total count variable
+//     $totalCount = 0;
+
+//    // Define an array of filtered arrays
+// $filteredArrays = [
+//     'filteredWords' => $filteredWords,
+//     'filteredColors' => $filteredColors,
+//     'filteredApply' => $filteredApply,
+//     'filteredAnalysis' => $filteredAnalysis
+// ];
+
+// // Initialize total count
+// $totalCount = 0;
+
+// // Get array keys
+// $keys = array_keys($filteredArrays);
+
+// // Initialize index
+// $i = 0;
+
+// // Start the loop
+// while ($i < count($filteredArrays)) {
+//     $key = $keys[$i];
+//     $filteredArray = $filteredArrays[$key];
+
+//     $html .= '<td>';
+//     if (!empty($filteredArray)) {
+//         $html .= '<p>' . count($filteredArray) . '</p>'; // Display count of filtered elements
+//         // Add count to total
+//         $totalCount += count($filteredArray);
+//         // Check if $key is 'filteredColors' and $higherMatches is 0
+//         if ($key === 'filteredColors' && $higherMatches == 0) {
+//             $html .= '<p class="footer">Add More Higher Level to Make higher Level.</p>';
+//         }
+//     } else {
+//         $html .= '<p>0</p>';
+//     }
+//     $html .= '</td>';
+
+//     // Increment index
+//     $i++;
+// }
+
+// // Add total count of all filtered elements to another table cell
+//     $html .= '<td>';
+//     $html .= '<p>' . $totalCount . '</p>';
+//     $html .= '</td>';
+
+//     $html .= '</tr>';
+//     $html .= '</table>';
+//     $html .= '</div>';
+    
+//     // Close connection
+//     $conn->close();
 
     
     
