@@ -69,7 +69,7 @@ if ($result->num_rows > 0) {
 } 
 
 
-
+ 
 
 require_once 'dompdf/autoload.inc.php'; // Include Dompdf autoload file
 
@@ -93,29 +93,158 @@ $html = '
 </head>
 
 <style>
-table, td, th{
+body {
+    margin: 20px;
+    box-sizing: border-box;
+}
+.header{
+    font-weight:bold;
+}
+
+table{
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+table, th, td, tr{
+    border: 1px solid black;
     border-collapse: collapse;
-    text-align: left;
-    border: 2px solid black;
-    border-collapse: collapse;
-    padding: 5px;
 }
-
-.center {
-    margin: 0 auto;
-    width: 95%;
+th, td{
+    text-align:center;
+    padding:5px;
 }
-th,h1, .footer, h2{
-    text-align: center;
-}
-
-
 </style>
 
 <body>
 
-<h1>HIGHER AND LOWER LEVEL REPORT</h1>
-<h2>Learning Outcomes for Midterm Period</h2>';
+<img style="margin-left: 16rem; margin-top: 1rem;" src="../img/logos.png" alt="Image" width="190">
+<h4 style="text-align:center; margin-top: 1rem;">DE LA SALLE UNIVERSITY-DASMARINAS</h4>
+<h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($category_name).'</h4>
+<h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($course_departments).'</h4>
+
+<h4 style="text-align:center;">HIGHER AND LOWER</h4>';
+
+$department = $_SESSION['department'];
+// Using prepared statement to prevent SQL injection
+$sql = "SELECT `id`, `course_code`, `course_tittle`, `course_Type`, `course_credit`, `learning_modality`, `pre_requisit`, `co_pre_requisit`, `professor`, `consultation_hours_date`, `consultation_hours_room`, `consultation_hours_email`, `consultation_hours_number`, `course_description`, `email`, `department` FROM `course_syllabus` WHERE department=?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $department);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        // Properly formatted HTML output
+      
+      $html .='<h4 style="text-align:center; margin-top: -1rem; font-weight:bold;">'.strtoupper($row['course_code']).'-'.strtoupper($row['course_tittle']).'</h4>';
+    }
+} 
+
+
+
+$sql = "SELECT `id`, `module_no`, `title`, `week`, `date`, `teaching_activities`, `technology`, `onsite`, `asy`, `hours`, `department` FROM `module_learning` WHERE `department` = $department GROUP BY module_no, hours, department ORDER BY id ASC";
+
+$html .= '<table>';
+
+
+$html .= '<tr>';
+$html .= '<th>% ITEM</th>';
+$html .= '<th>Time
+Allotment/
+topic(mins)</th>';
+$html .= '<th>TOPICS</th>';
+$html .= '<th>LEVEL K</th>';
+$html .= '</tr>';
+
+$department = $_SESSION['department']; 
+$sql = "SELECT 
+ML.`id` AS ml_id,
+ML.`module_no` AS ml_module_no,
+ML.`title` AS ml_title,
+ML.`week` AS ml_week,
+ML.`date` AS ml_date,
+ML.`teaching_activities` AS ml_teaching_activities,
+ML.`technology` AS ml_technology,
+ML.`onsite` AS ml_onsite,
+ML.`asy` AS ml_asy,
+ML.`hours` AS ml_hours,
+ML.`department` AS ml_department,
+CL.`id` AS cl_id,
+CL.`comlab` AS cl_comlab,
+CL.`learn_out` AS cl_learn_out,
+CL.`topic_learn_out` AS cl_topic_learn_out
+FROM 
+`module_learning` AS ML
+LEFT JOIN 
+`course_leaning` AS CL ON ML.`department` = CL.`department`
+WHERE 
+ML.`department` = $department
+GROUP BY 
+ml_module_no, ml_hours, ml_department
+ORDER BY 
+ml_id ASC";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+    $rowCount = 0; // Initialize row count
+
+    while ($row = $result->fetch_assoc()) {
+        $rowCount++; // Increment row count
+        // Skip first and last row
+        if ($rowCount === 1 || $rowCount === $result->num_rows) {
+            continue;
+        }
+
+        
+        $html .= '<tr>';
+        $html .= '<td>Example</td>';
+        $html .= '<td>'. ($row['ml_hours']) * 60 .'</td>';
+        $html .= '<td>';
+
+        // Find the position of the first occurrence of 'Module'
+        $modulePosition = strpos($row['ml_teaching_activities'], 'Module');
+
+        // If 'Module' is found
+        if ($modulePosition !== false) {
+            // Get the substring starting from 'Module' to the end of the string
+            $substring = substr($row['ml_teaching_activities'], $modulePosition);
+
+            // Find the position of the first occurrence of a number after 'Module'
+            preg_match('/Module\D+(\d+)/', $substring, $matches);
+            if (isset($matches[1])) {
+                $numberPosition = strpos($substring, $matches[1]);
+                // If a number is found after 'Module', trim the substring to that position
+                if ($numberPosition !== false) {
+                    $substring = substr($substring, 0, $numberPosition + strlen($matches[1]));
+                }
+            }
+
+            $html .= $substring;
+        } else {
+            $html .= $row['ml_teaching_activities'];
+        }
+
+        // Concatenate $row['title'] to the side of $row['teaching_activities']
+        $html .= '<br/>' . $row['ml_title'];
+
+        $html .= '</td>';
+
+        $html .= '<td>'. ($row['ml_module_no']).'</td>';
+        $html .= '</tr>';
+    }
+}
+
+$html .= '</table>';
+
+
+
+
+
+
+
+
+
+
 
 
 // Database connection configuration
@@ -135,7 +264,7 @@ if ($conn->connect_error) {
 $department = $_SESSION['department']; 
 
 // Example words array
-$higherArray = [
+$knowlegeArray = [
     "Define",
     "Recall",
     "Recognize",
@@ -143,116 +272,151 @@ $higherArray = [
     "Memorize"
 ];
 
-$lowerArray = [
+$compressionArray = [
     "Explain",
     "Summarize",
     "Paraphrase",
     "Interpret",
-    "Classify"  
+    "Classify" 
+];
+
+$applyArray = [
+    "Apply",
+    "Implement",
+    "Use",
+    "Solve",
+    "Demonstrate"
+];
+
+$analysisArray = [
+    "Analyze",
+    "Compare",
+    "Contrast",
+    "Differentiate",
+    "Investigate"  
 ];
 
 // Initialize counts for matches
-$higherMatches = 0;
-$lowerMatches = 0;
+$knowledgeMatches = 0;
+$compressionMatches = 0;
+$applyMatches = 0;
+$analysisMatches = 0;
 
 // Filter words from database based on the words array
-$filteredWords = [];
-foreach ($higherArray as $word) {
-    $sql = "SELECT `id`, `clo_number`, `course_learn_out` FROM `practice` WHERE `course_learn_out` LIKE '%$word%'";
+$filteredknowledge = [];
+foreach ($knowlegeArray as $knowlege) {
+    $sql = "SELECT `id`, `topic_learn_out` FROM `course_leaning` WHERE `topic_learn_out` LIKE '%$knowlege%' and department='$department'";
     $result = $conn->query($sql);
     if ($result && $result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
-            $filteredWords[] = $row;
-            $higherMatches++;
+            $filteredknowledge[] = $row;
+            $knowledgeMatches++;
         }
     }
 }
 
 // Filter colors from database based on the colors array
-$filteredColors = [];
-foreach ($lowerArray as $color) {
-    $sql = "SELECT `id`, `clo_number`, `course_learn_out` FROM `practice` WHERE `course_learn_out` LIKE '%$color%'";
+$filteredcompression = [];
+foreach ($compressionArray as $compression) {
+    $sql = "SELECT `id`, `topic_learn_out` FROM `course_leaning` WHERE `topic_learn_out` LIKE '%$compression%' and department='$department'";
     $result = $conn->query($sql);
     if ($result && $result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
-            $filteredColors[] = $row;
-            $lowerMatches++;
+            $filteredcompression[] = $row;
+            $compressionMatches++;
         }
     }
 }
+
+// Filter colors from database based on the colors array
+$filteredapply = [];
+foreach ($applyArray as $apply) {
+    $sql = "SELECT `id`, `topic_learn_out` FROM `course_leaning` WHERE `topic_learn_out` LIKE '%$apply%' and department='$department'";
+    $result = $conn->query($sql);
+    if ($result && $result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            $filteredapply[] = $row;
+            $applyMatches++;
+        }
+    }
+}
+
+// Filter colors from database based on the colors array
+$filteredanalysis = [];
+foreach ($analysisArray as $analysis) {
+    $sql = "SELECT `id`, `topic_learn_out` FROM `course_leaning` WHERE `topic_learn_out` LIKE '%$analysis%' and department='$department'";
+    $result = $conn->query($sql);
+    if ($result && $result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            $filteredanalysis[] = $row;
+            $analysisMatches++;
+        }
+    }
+}
+
+
+
+
+
 
 // Calculate percentages
-$higherPercent = ($higherMatches / count($higherArray)) * 100;
-$lowerPercent = ($lowerMatches / count($lowerArray)) * 100;
+$knowlegePercent = ($knowledgeMatches / count($knowlegeArray)) * 100;
+$compressionPercent = ($compressionMatches / count($compressionArray)) * 100;
+$applyPercent = ($applyMatches / count($applyArray)) * 100;
+$analysisPercent = ($analysisMatches / count($analysisArray)) * 100;
 
-$html = '<div class="center">';
-$html .= '<table style="border: 1px solid black;">';
-$html .= '<tr style="border: 1px solid black;">';
-$html .= '<th style="border: 1px solid black;">ID</th>';
-$html .= '<th style="border: 1px solid black;">Higher Level (' . round($higherPercent, 2) . '%)</th>';
-$html .= '<th style="border: 1px solid black;">Lower Level (' . round($lowerPercent, 2) . '%)</th>';
+$totalCount = $knowledgeMatches + $compressionMatches + $applyMatches + $analysisMatches;
+
+$html .= '<div class="center">';
+$html .= '<table>';
+$html .= '<tr>';
+$html .= '<th colspan="4">LEVELS</th>';
+$html .= '<th rowspan="2">No. of Items</th>'; // Added total column
+$html .= '</tr>';
+$html .= '<tr>';
+$html .= '<th>K</th>';
+$html .= '<th>C</th>';
+$html .= '<th>AP</th>';
+$html .= '<th>AN</th>';
+
 $html .= '</tr>';
 
-// Merge filtered results and sort by ID
-$mergedResults = array_merge($filteredWords, $filteredColors);
-usort($mergedResults, function($a, $b) {
-    return $a['id'] - $b['id'];
-});
 
-foreach ($mergedResults as $result) {
-    $filteredWord = "";
-    foreach ($higherArray as $word) {
-        if (stripos($result['course_learn_out'], $word) !== false) {
-            $filteredWord = $word;
-            break;
-        }
-    }
-    foreach ($lowerArray as $color) {
-        if (stripos($result['course_learn_out'], $color) !== false) {
-            $filteredWord = $color;
-            break;
-        }
-    }
 
-    $html .= '<tr style="border: 1px solid black;">';
-    $html .= '<td style="border: 1px solid black;">' . $result['id'] . '</td>';
-    $html .= '<td style="border: 1px solid black;">' . $filteredWord . '</td>';
-    $html .= '</tr>';
-}
 
+$html .= '<tr>';
+
+$html .= '<td>';
+$html .= '<p>' . $knowledgeMatches . '</p>';
+$html .= '</td>';
+
+$html .= '<td>';
+$html .= '<p>' . $compressionMatches . '</p>';
+$html .= '</td>';
+
+$html .= '<td>';
+$html .= '<p>' . $applyMatches . '</p>';
+$html .= '</td>';
+
+$html .= '<td>';
+$html .= '<p>' . $analysisMatches . '</p>';
+$html .= '</td>';
+
+$html .= '<td>';
+$html .= '<p>' . $totalCount . '</p>'; // Display total count
+$html .= '</td>';
+
+$html .= '</tr>';
 $html .= '</table>';
-
-// Check if $lowerArray has more matches than $higherArray
-if ($lowerMatches >= $higherMatches) {
-    $html .= '<p class="footer">Add More Higher Level to Make higher Level.</p>';
-}
-
 $html .= '</div>';
+
+
 
 // Close connection
 $conn->close();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 $html .= '</body>';
 $html .= '</html>';
-
-
-// Close connection
 
 $dompdf->loadHtml($html);
 

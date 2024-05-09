@@ -113,9 +113,12 @@ th,h1, .footer, h2{
 </style>
 
 <body>
+<img style="margin-left: 16rem; margin-top: 1rem;" src="../img/logos.png" alt="Image" width="190">
+<h4 style="text-align:center; margin-top: 1rem;">DE LA SALLE UNIVERSITY-DASMARINAS</h4>
+<h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($category_name).'</h4>
+<h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($course_departments).'</h4>
 
-<h1>HIGHER AND LOWER LEVEL REPORT</h1>
-<h2>Learning Outcomes for Midterm Period</h2>';
+<h4 style="text-align:center;">HIGHER AND LOWER</h4>';
 
 
 // Database connection configuration
@@ -233,27 +236,38 @@ $html .= '<th>Lower Level (' . round($lowerPercent, 2) . '%)</th>';
 $html .= '</tr>';
 $html .= '<tr>';
 
+$html .= '<tr>';
+$html .= '<td>Example</td>';
+$html .= '<td>'. ($row['hours']) * 60 .'</td>';
 $html .= '<td>';
-if (!empty($filteredWords)) {
-    foreach ($filteredWords as $word) {
-        $html .= '<p>' . $word['comlab'] . '. ' . $word['learn_out'] . '</p>';
+
+// Find the position of the first occurrence of 'Module'
+$modulePosition = strpos($row['teaching_activities'], 'Module');
+
+// If 'Module' is found
+if ($modulePosition !== false) {
+    // Get the substring starting from 'Module' to the end of the string
+    $substring = substr($row['teaching_activities'], $modulePosition);
+
+    // Find the position of the first occurrence of a number after 'Module'
+    preg_match('/Module\D+(\d+)/', $substring, $matches);
+    if (isset($matches[1])) {
+        $numberPosition = strpos($substring, $matches[1]);
+        // If a number is found after 'Module', trim the substring to that position
+        if ($numberPosition !== false) {
+            $substring = substr($substring, 0, $numberPosition + strlen($matches[1]));
+        }
     }
+
+    $html .= $substring;
 } else {
-    $html .= '<p>No Higher Level found.</p>';
+    $html .= $row['teaching_activities'];
 }
+
+// Concatenate $row['title'] to the side of $row['teaching_activities']
+$html .= '<br/>' . $row['title'];
+
 $html .= '</td>';
-$html .= '<td>';
-if (!empty($filteredColors)) {
-    foreach ($filteredColors as $color) {
-        $html .= '<p>' . $color['comlab'] . '. ' . $color['learn_out'] . '</p>';
-    }
-} else {
-    $html .= '<p>No Lower Level found.</p>';
-}
-$html .= '</td>';
-$html .= '</tr>';
-$html .= '</table>';
-$html .= '</div>';
 
 // Check if $lowerArray has more matches than $higherArray
 if ($lowerMatches >= $higherMatches) {

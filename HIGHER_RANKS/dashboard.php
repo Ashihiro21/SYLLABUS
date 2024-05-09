@@ -929,7 +929,14 @@ $mysqli->close();
                             <td class="hide-id"> <?php echo $row['id']; ?> </td>
                             <td><?php echo $row['comlab']; ?></td>
                             <td><?php echo "."; ?></td>
-                            <td><?php echo $row['learn_out']; ?></td>
+                            <td class=""><?php
+                        if (strpos($row['learn_out'], 'CLO') !== false || strpos($row['learn_out'], "\n") !== false) {
+                            // If 'TLO' or a line break is found, replace it with <br>
+                            echo str_replace(array('', "\n"), '<br>', $row['learn_out']);
+                        } else {
+                            echo $row['learn_out'];
+                        }
+                        ?></td>
                             <td class="hide-id"><?php echo $row['topic_learn_out']; ?></td>
                             <td class="table-button">
                             <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
@@ -998,7 +1005,14 @@ $mysqli->close();
                       
                     <tr>
                             <td class="hide-id"> <?php echo $row['id']; ?> </td>
-                            <td class=""><?php echo $row['comlab']; ?><?php echo "."; ?><?php echo $row['learn_out']; ?></td>
+                            <td class=""><?php
+                        if (strpos($row['learn_out'], 'TLO') !== false || strpos($row['learn_out'], "\n") !== false) {
+                            // If 'TLO' or a line break is found, replace it with <br>
+                            echo str_replace(array('', "\n"), '<br>', $row['learn_out']);
+                        } else {
+                            echo $row['learn_out'];
+                        }
+                        ?></td>
                             <td class=""><?php
                         if (strpos($row['topic_learn_out'], 'TLO') !== false || strpos($row['topic_learn_out'], "\n") !== false) {
                             // If 'TLO' or a line break is found, replace it with <br>
