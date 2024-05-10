@@ -172,12 +172,12 @@ if ($result->num_rows > 0) {
         $html .= '<td>';
 
         // Find the position of the first occurrence of 'Module'
-        $modulePosition = strpos($row['teaching_activities'], 'Module');
+        $modulePosition = strpos($row['module_no'], 'Module');
 
         // If 'Module' is found
         if ($modulePosition !== false) {
             // Get the substring starting from 'Module' to the end of the string
-            $substring = substr($row['teaching_activities'], $modulePosition);
+            $substring = substr($row['module_no'], $modulePosition);
 
             // Find the position of the first occurrence of a number after 'Module'
             preg_match('/Module\D+(\d+)/', $substring, $matches);
@@ -191,7 +191,7 @@ if ($result->num_rows > 0) {
 
             $html .= $substring;
         } else {
-            $html .= $row['teaching_activities'];
+            $html .= $row['module_no'];
         }
 
         // Concatenate $row['title'] to the side of $row['teaching_activities']
