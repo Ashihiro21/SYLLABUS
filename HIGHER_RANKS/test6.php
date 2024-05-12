@@ -14,29 +14,66 @@
   <!-- Centered table and button -->
   <div class="row justify-content-center mb-4">
     <div class="col-md-6 text-center">
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Column 1</th>
-            <th>Column 2</th>
-            <th>Column 3</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Data 1</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-          </tr>
-        </tbody>
-      </table>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Course Learning outcomes</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+          
+                </tr>
+            </tbody>
+        </table>
     </div>
-  </div>
-  <div class="row justify-content-center">
+</div>
+
+<!-- Centered button to trigger modal -->
+<div class="row justify-content-center">
     <div class="col-md-6 text-center">
-      <button class="btn btn-primary" data-toggle="modal" data-target="#centeredModal">Add New Column</button>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#addDataModal">Add New Data</button>
     </div>
-  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="addDataModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Add Data</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <!-- Text field for input -->
+                <div class="form-group">
+                    <label for="newDataInput">Input Data:</label>
+                    <input type="text" class="form-control" id="newDataInput" placeholder="Enter your data">
+                </div>
+            </div>
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="saveData()">Save Data</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function saveData() {
+        var newData = document.getElementById("newDataInput").value;
+        var table = document.querySelector(".table");
+        var newRow = table.insertRow(-1); // Insert new row at the end of the table
+        var cell = newRow.insertCell(-1); // Insert new cell in the new row
+        cell.innerHTML = newData; // Set the content of the cell to the new data
+        $('#addDataModal').modal('hide'); // Hide the modal after saving data
+    }
+</script>
+
 
   <table class="table table-bordered mt-4" id="mainTable">
     <thead>
@@ -73,7 +110,7 @@
 </div>
 
 <!-- Centered Modal -->
-<div class="modal fade" id="centeredModal" tabindex="-1" role="dialog" aria-labelledby="centeredModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="centeredModal" tabindex="-1" role="dialog" aria-labelledby="centeredModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -94,7 +131,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 <!-- Modal -->
 <div class="modal" id="myModal">
