@@ -260,6 +260,9 @@ $compressionResults = searchDatabase($conn, $compressionArray, "topic_learn_out"
 $applyResults = searchDatabase($conn, $applyArray, "topic_learn_out");
 $analysisResults = searchDatabase($conn, $analysisArray, "topic_learn_out");
 
+// Count the total number of items in the knowledgeResults array
+$totalKnowledgeItems = count($knowledgeResults);
+
 // Close connection
 $conn->close();
 
@@ -271,7 +274,7 @@ echo "<th style='Padding:5px;' rowspan='2'>Module No</th>";
 echo "<th style='Padding:5px;' colspan='4'>LEVELS</th>";
 echo "<th style='width:150px;' rowspan='2'>Total</th>";
 echo "<tr>";
-echo "<th style='width:250px; Padding:5px;'>K</th>";
+echo "<th style='width:250px; Padding:5px;'>K ($totalKnowledgeItems)</th>"; // Include the total count of knowledge items
 echo "<th style='width:250px; Padding:5px;'>C</th>";
 echo "<th style='width:250px; Padding:5px;'>AP</th>";
 echo "<th style='width:250px; Padding:5px;'>AN</th>";
