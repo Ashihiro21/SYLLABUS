@@ -167,17 +167,63 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Add your PHP code for database connection and insertion -->
+<?php
+// Database configuration
+$servername = "localhost"; // Change this to your database server name
+$username = "root"; // Change this to your database username
+$password = ""; // Change this to your database password
+$dbname = "sample_db"; // Change this to your database name
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Check if form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['newDataInput'])) {
+    $newData = $_POST['newDataInput'];
+    // SQL to insert data into course_learning table
+    $sql = "INSERT INTO course_learning (learning_outcome) VALUES ('$newData')";
+    
+    if ($conn->query($sql) === TRUE) {
+        echo "New record created successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
+
+// Close connection
+$conn->close();
+?>
 
 <script>
   function updateTopicOutcome() {
     var inputValue = document.getElementById("dataInput").value;
-    var newRow = document.createElement("tr");
-    newRow.innerHTML = `
-      <td>${inputValue}</td>
-      <td><button class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>
-    `;
-    document.querySelector("#topicOutcome table tbody").appendChild(newRow);
-    $('#myModal').modal('hide');
+    // AJAX request to save data into database
+    $.ajax({
+        type: "POST",
+        url: "save_data.php", // Change this to your PHP file name
+        data: { newDataInput: inputValue },
+        success: function(response) {
+            // If data is successfully saved, create a new row in the table
+            var newRow = document.createElement("tr");
+            newRow.innerHTML = `
+              <td>${inputValue}</td>
+              <td><button class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>
+            `;
+            document.querySelector("#topicOutcome table tbody").appendChild(newRow);
+            $('#myModal').modal('hide');
+            alert("Data saved successfully");
+        },
+        error: function(xhr, status, error) {
+            alert("An error occurred: " + xhr.status + " " + error);
+            // Handle errors if needed
+        }
+    });
   }
 
   function deleteRow(button) {
@@ -193,6 +239,7 @@
     $('#centeredModal').modal('hide');
   }
 </script>
+
 
 </body>
 </html>
