@@ -988,57 +988,65 @@ $mysqli->close();
                      $query_run = mysqli_query($connection, $query);
         ?>  
                 <table id="datatableid" class="table table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">Course Learning Outcomes</th>
+            <th scope="col">Topic Learning Outcomes</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <?php
+    if($query_run) {
+        foreach($query_run as $row) {
+    ?>
+    <tbody>
+        <tr>
+            <td class="hide-id"><?php echo $row['id']; ?></td>
+            <td>
+                <?php
+                if (strpos($row['learn_out'], 'TLO') !== false || strpos($row['learn_out'], "\n") !== false) {
+                    echo str_replace(array('', "\n"), '<br>', $row['learn_out']);
+                } else {
+                    echo $row['learn_out'];
+                }
+                ?>
+            </td>
+            <td>
+                <?php
+                if (strpos($row['topic_learn_out'], 'TLO') !== false || strpos($row['topic_learn_out'], "\n") !== false) {
+                    echo str_replace(array('', "\n"), '<br>', $row['topic_learn_out']);
+                } else {
+                    echo $row['topic_learn_out'];
+                }
+                ?>
+                <table class="nested-table">
                     <thead>
                         <tr>
-                            <th scope="col">Course Learning Outcomes</th>
-                            <th scope="col">Topic Learning Outcomes</th>
-                            <th scope="col">Action</th>
+                            <th>TLO No.</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
-                    <?php
-            if($query_run)
-            {
-                foreach($query_run as $row)
-                {
-        ?>
                     <tbody>
-                      
-                    <tr>
-                            <td class="hide-id"> <?php echo $row['id']; ?> </td>
-                            <td class=""><?php
-                        if (strpos($row['learn_out'], 'TLO') !== false || strpos($row['learn_out'], "\n") !== false) {
-                            // If 'TLO' or a line break is found, replace it with <br>
-                            echo str_replace(array('', "\n"), '<br>', $row['learn_out']);
-                        } else {
-                            echo $row['learn_out'];
-                        }
-                        ?></td>
-                            <td class=""><?php
-                        if (strpos($row['topic_learn_out'], 'TLO') !== false || strpos($row['topic_learn_out'], "\n") !== false) {
-                            // If 'TLO' or a line break is found, replace it with <br>
-                            echo str_replace(array('', "\n"), '<br>', $row['topic_learn_out']);
-                        } else {
-                            echo $row['topic_learn_out'];
-                        }
-                        ?></td>
-                            <td class="table-button">
-                            <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
-
-                            <button type="button" class="btn btn-success editbtn_learning_out_table"><i class="lni lni-pencil"></i></button>
-
-                            <!-- <button type="button" class="btn btn-danger deletebtn_learning_out_table"><i class="lni lni-trash-can"></i></button> -->
-                            </td>
-                        </tr>
+                        <td></td>
+                    <td class="table-button">
+                <button type="button" class="btn btn-success editbtn_learning_out_table"><i class="lni lni-pencil"></i></button>
+            </td>
                     </tbody>
-                    <?php           
-                }
-            }
-            else 
-            {
-                echo "No Record Found";
-            }
-        ?>
                 </table>
+            </td>
+            <td class="table-button">
+                <button type="button" class="btn btn-success editbtn_learning_out_table"><i class="lni lni-pencil"></i></button>
+            </td>
+        </tr>
+    </tbody>
+    <?php
+            }
+        } else {
+            echo "No Record Found";
+        }
+    ?>
+</table>
+
 
            
 
