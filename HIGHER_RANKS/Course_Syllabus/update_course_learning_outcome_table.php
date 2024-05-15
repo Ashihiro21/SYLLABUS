@@ -15,6 +15,7 @@ if(isset($_POST['updatedatatable'])) {
     } else {
         echo '<script> alert("Data Not Updated"); </script>';
     }
+    
 }
 
 ?>

@@ -1013,7 +1013,7 @@ $mysqli->close();
             </td>
             <td>
                
-                <table class="nested-table">
+                <table id="nesteddatatableid" class="nested-table">
                     <thead>
                         <tr>
                             <th>TLO No.</th>
@@ -1047,17 +1047,8 @@ $mysqli->close();
         }
     ?>
 </table>
-
-
-           
-
-                    </div>
-
-
-
-                    <button type="button" class="btn btn-primary add_databtn" data-toggle="modal" data-target="#addmodal_module_learning">
-                        ADD DATA
-                    </button>
+ </div>
+  <button type="button" class="btn btn-primary add_databtn" data-toggle="modal" data-target="#addmodal_module_learning">ADD DATA</button>
 
                     <!-- Modal module_learning-->
  <div class="modal fade" id="addmodal_module_learning" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
