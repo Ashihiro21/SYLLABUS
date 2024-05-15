@@ -1012,13 +1012,7 @@ $mysqli->close();
                 ?>
             </td>
             <td>
-                <?php
-                if (strpos($row['topic_learn_out'], 'TLO') !== false || strpos($row['topic_learn_out'], "\n") !== false) {
-                    echo str_replace(array('', "\n"), '<br>', $row['topic_learn_out']);
-                } else {
-                    echo $row['topic_learn_out'];
-                }
-                ?>
+               
                 <table class="nested-table">
                     <thead>
                         <tr>
@@ -1027,10 +1021,17 @@ $mysqli->close();
                         </tr>
                     </thead>
                     <tbody>
-                        <td></td>
+                        <td> <?php
+                if (strpos($row['topic_learn_out'], 'TLO') !== false || strpos($row['topic_learn_out'], "\n") !== false) {
+                    echo str_replace(array('', "\n"), '<br>', $row['topic_learn_out']);
+                } else {
+                    echo $row['topic_learn_out'];
+                }
+                ?></td>
                     <td class="table-button">
                 <button type="button" class="btn btn-success editbtn_learning_out_table"><i class="lni lni-pencil"></i></button>
             </td>
+            
                     </tbody>
                 </table>
             </td>
