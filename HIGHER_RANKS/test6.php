@@ -203,27 +203,13 @@ $conn->close();
 <script>
   function updateTopicOutcome() {
     var inputValue = document.getElementById("dataInput").value;
-    // AJAX request to save data into database
-    $.ajax({
-        type: "POST",
-        url: "save_data.php", // Change this to your PHP file name
-        data: { newDataInput: inputValue },
-        success: function(response) {
-            // If data is successfully saved, create a new row in the table
-            var newRow = document.createElement("tr");
-            newRow.innerHTML = `
-              <td>${inputValue}</td>
-              <td><button class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>
-            `;
-            document.querySelector("#topicOutcome table tbody").appendChild(newRow);
-            $('#myModal').modal('hide');
-            alert("Data saved successfully");
-        },
-        error: function(xhr, status, error) {
-            alert("An error occurred: " + xhr.status + " " + error);
-            // Handle errors if needed
-        }
-    });
+    var newRow = document.createElement("tr");
+    newRow.innerHTML = `
+      <td>${inputValue}</td>
+      <td><button class="btn btn-danger" onclick="deleteRow(this)">Delete</button></td>
+    `;
+    document.querySelector("#topicOutcome table tbody").appendChild(newRow);
+    $('#myModal').modal('hide');
   }
 
   function deleteRow(button) {
@@ -239,7 +225,6 @@ $conn->close();
     $('#centeredModal').modal('hide');
   }
 </script>
-
 
 </body>
 </html>

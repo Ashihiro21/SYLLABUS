@@ -1012,54 +1012,27 @@ $mysqli->close();
                 ?>
             </td>
             <td>
-                <?php
-                 $department = $_SESSION['department'];
-                 $query = "SELECT `id`, `comlab`, `learn_out`, `topic_learn_out`, `department` FROM `course_leaning` WHERE department = $department";
-                 $query_run = mysqli_query($connection, $query);
-
-                ?>
-                <table class="nested-table">
+               
+                <table id="nesteddatatableid" class="nested-table">
                     <thead>
                         <tr>
                             <th>TLO No.</th>
                             <th>Action</th>
                         </tr>
                     </thead>
-                    </thead>
-                        <?php
-                        if($query_run)
-                        {
-                        foreach($query_run as $row)
-                        {
-                        ?>
                     <tbody>
-                        <td><tr>
-        <td class="hide-id"> <?php echo $row['id']; ?> </td>
-        <td class=""><?php
-                        if (strpos($row['topic_learn_out'], 'TLO') !== false || strpos($row['topic_learn_out'], "\n") !== false) {
-                            // If 'TLO' or a line break is found, replace it with <br>
-                            echo str_replace(array('', "\n"), '<br>', $row['topic_learn_out']);
-                        } else {
-                            echo $row['topic_learn_out'];
-                        }
-                        ?></td>
-        <td class="table-button">
-        <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
-
-        <button type="button" class="btn btn-success editbtn_learning_out_final_period_table"><i class="lni lni-pencil"></i></button>
-
-        <button type="button" class="btn btn-danger deletebtn_learning_out_final_period_table"><i class="lni lni-trash-can"></i></button>
-        </td>
-    </tr></td>
-            </tbody>
-                <?php           
+                        <td> <?php
+                if (strpos($row['topic_learn_out'], 'TLO') !== false || strpos($row['topic_learn_out'], "\n") !== false) {
+                    echo str_replace(array('', "\n"), '<br>', $row['topic_learn_out']);
+                } else {
+                    echo $row['topic_learn_out'];
                 }
-                }
-                else 
-                {
-                echo "No Record Found";
-                }
-                ?>
+                ?></td>
+                    <td class="table-button">
+                <button type="button" class="btn btn-success editbtn_learning_out_table"><i class="lni lni-pencil"></i></button>
+            </td>
+            
+                    </tbody>
                 </table>
             </td>
             <td class="table-button">
@@ -1074,17 +1047,8 @@ $mysqli->close();
         }
     ?>
 </table>
-
-
-           
-
-                    </div>
-
-
-
-                    <button type="button" class="btn btn-primary add_databtn" data-toggle="modal" data-target="#addmodal_module_learning">
-                        ADD DATA
-                    </button>
+ </div>
+  <button type="button" class="btn btn-primary add_databtn" data-toggle="modal" data-target="#addmodal_module_learning">ADD DATA</button>
 
                     <!-- Modal module_learning-->
  <div class="modal fade" id="addmodal_module_learning" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
