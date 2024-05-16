@@ -26,9 +26,10 @@ if(isset($_POST['insertdata']))
     $pl8 = $_POST['pl8_s'];
     $pl9 = $_POST['pl9_s'];
     $department = $_POST['department'];
+    $catid = $_POST['catid'];
 
-    $sql = "INSERT INTO mapping_table (`learn_out_mapping`, `pl1` , `pl2` , `pl3` , `pl4` , `pl5` , `pl6` , `pl7` , `pl8` , `pl9`, `department`)
-    VALUES ('$learn_out_mapping', '$pl1' , '$pl2' , '$pl3' , '$pl4' , '$pl5' , '$pl6' , '$pl7' , '$pl8' , '$pl9', '$department')";
+    $sql = "INSERT INTO mapping_table (`learn_out_mapping`, `pl1` , `pl2` , `pl3` , `pl4` , `pl5` , `pl6` , `pl7` , `pl8` , `pl9`, `department`, `catid`)
+    VALUES ('$learn_out_mapping', '$pl1' , '$pl2' , '$pl3' , '$pl4' , '$pl5' , '$pl6' , '$pl7' , '$pl8' , '$pl9', '$department', '$catid')";
 
     if ($connection->query($sql) === TRUE) {
         echo '<script> alert("Data Saved"); </script>';

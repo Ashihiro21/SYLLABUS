@@ -24,9 +24,10 @@ if(isset($_POST['insertdata']))
     $asy = $_POST['asy'];
     $hours = $_POST['hours'];
     $department = $_POST['department'];
+    $catid = $_POST['catid'];
 
-    $sql = "INSERT INTO module_learning_final (`module_no`, `week` , `date` , `teaching_activities` , `technology` , `onsite` , `asy`, `hours`, `department`)
-    VALUES ('$module_no', '$week' , '$date' , '$teaching_activities' , '$technology' , '$onsite' , '$asy', '$hours', '$department')";
+    $sql = "INSERT INTO module_learning_final (`module_no`, `week` , `date` , `teaching_activities` , `technology` , `onsite` , `asy`, `hours`, `department`,`catid`)
+    VALUES ('$module_no', '$week' , '$date' , '$teaching_activities' , '$technology' , '$onsite' , '$asy', '$hours', '$department','$catid')";
 
     if ($connection->query($sql) === TRUE) {
         echo '<script> alert("Data Saved"); </script>';

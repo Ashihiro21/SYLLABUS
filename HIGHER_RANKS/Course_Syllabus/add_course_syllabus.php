@@ -30,9 +30,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $consultation_hours_number = $connection->real_escape_string($_POST["consultation_hours_number"]);
     $course_description = $connection->real_escape_string($_POST["course_description"]);
     $department = $connection->real_escape_string($_POST["department"]);
+    $catid = $connection->real_escape_string($_POST["catid"]);
 
     // Attempt to insert data into database
-    $sql = "INSERT INTO course_syllabus (course_code, course_tittle, course_Type, course_credit, learning_modality, pre_requisit, co_pre_requisit, professor, consultation_hours_date, consultation_hours_room, consultation_hours_email, consultation_hours_number, course_description, department) VALUES ('$course_code', '$course_tittle', '$course_Type', '$course_credit', '$learning_modality', '$pre_requisit', '$co_pre_requisit', '$professor', '$consultation_hours_date', '$consultation_hours_room', '$consultation_hours_email', '$consultation_hours_number', '$course_description','$department')";
+    $sql = "INSERT INTO course_syllabus (course_code, course_tittle, course_Type, course_credit, learning_modality, pre_requisit, co_pre_requisit, professor, consultation_hours_date, consultation_hours_room, consultation_hours_email, consultation_hours_number, course_description, department, catid) VALUES ('$course_code', '$course_tittle', '$course_Type', '$course_credit', '$learning_modality', '$pre_requisit', '$co_pre_requisit', '$professor', '$consultation_hours_date', '$consultation_hours_room', '$consultation_hours_email', '$consultation_hours_number', '$course_description','$department','$catid')";
 
     if ($connection->query($sql) === TRUE) {
         echo '<script> alert("Data Saved"); </script>';

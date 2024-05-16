@@ -19,9 +19,10 @@ if(isset($_POST['insertdata']))
     $final_learning_out = $_POST['final_learning_out'];
     $final_topic_leaning_out = $_POST['final_topic_leaning_out'];
     $department = $_POST['department'];
+    $catid = $_POST['catid'];
 
-    $sql = "INSERT INTO  laerning_final (`comlab`,`final_learning_out`, `final_topic_leaning_out`, `department`)
-    VALUES ('$comlab','$final_learning_out', '$final_topic_leaning_out', '$department')";
+    $sql = "INSERT INTO  laerning_final (`comlab`,`final_learning_out`, `final_topic_leaning_out`, `department`, `catid`)
+    VALUES ('$comlab','$final_learning_out', '$final_topic_leaning_out', '$department', '$catid')";
 
     if ($connection->query($sql) === TRUE) {
         echo '<script> alert("Data Saved"); </script>';

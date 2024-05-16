@@ -18,9 +18,10 @@ if(isset($_POST['insertdata']))
     $description = $_POST['description'];
     $percent = $_POST['percent'];
     $department= $_POST['department'];
+    $catid= $_POST['catid'];
 
-    $sql = "INSERT INTO percent (`description`, `percents`, `department`)
-    VALUES ('$description', '$percent', '$department')";
+    $sql = "INSERT INTO percent (`description`, `percents`, `department`, `catid`)
+    VALUES ('$description', '$percent', '$department', '$catid')";
 
     if ($connection->query($sql) === TRUE) {
         echo '<script> alert("Data Saved"); </script>';

@@ -19,9 +19,10 @@ if(isset($_POST['insertdata']))
     $year = $_POST['year'];
     $second_call = $_POST['second_call'];
     $department = $_POST['department'];
+    $catid = $_POST['catid'];
 
-    $sql = "INSERT INTO semestral (`term`, `year`, `department`, `second_call`)
-    VALUES ('$term', '$year', '$department', '$second_call')";
+    $sql = "INSERT INTO semestral (`term`, `year`, `department`, `second_call`, `catid`)
+    VALUES ('$term', '$year', '$department', '$second_call', '$catid')";
 
     if ($connection->query($sql) === TRUE) {
         echo '<script> alert("Data Saved"); </script>';

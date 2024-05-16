@@ -22,10 +22,11 @@ if(isset($_POST['insertdata']))
     $rate4 = $_POST['rate4_s'];
     $rate5 = $_POST['rate5_s'];
     $department = $_POST['department'];
+    $catid = $_POST['catid'];
     
 
-    $sql = "INSERT INTO decriptors (`program_learn`, `rate1` , `rate2` , `rate3` , `rate4` , `rate5`,`department`)
-    VALUES ('$program_learn', '$rate1' , '$rate2' , '$rate3' , '$rate4' , '$rate5', '$department')";
+    $sql = "INSERT INTO decriptors (`program_learn`, `rate1` , `rate2` , `rate3` , `rate4` , `rate5`,`department`,`catid`)
+    VALUES ('$program_learn', '$rate1' , '$rate2' , '$rate3' , '$rate4' , '$rate5', '$department','$catid')";
 
     if ($connection->query($sql) === TRUE) {
         echo '<script> alert("Data Saved"); </script>';
