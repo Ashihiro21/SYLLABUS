@@ -26,6 +26,7 @@ $sql = "SELECT
             c.initial AS category_initial,
             c.dean_name AS category_dean,
             c.dean_position AS category_dean_position,
+            c.logo AS category_logo,
             co.dean_signature AS deans_category_signature,
             co.cname,
             co.course_department AS course_department,
@@ -72,6 +73,7 @@ if ($result->num_rows > 0) {
     $dept_head_position = $row['dept_head_position'];
     $dept_head_signature = $row['dept_head_signature'];
     $deans_category_signature = $row['deans_category_signature'];
+    $categories_logo = $row['category_logo'];
 } else {
     $position = "Position not found";
 }
@@ -216,7 +218,16 @@ td{
         writing-mode: vertical-lr;
     }
 
- 
+    .inline-images {
+        display: flex;
+        align-items: center;
+        margin-left: 40%;
+    }
+
+    .img-inline {
+        display: inline-block;
+        vertical-align: middle;
+    }
 
     
 
@@ -241,8 +252,13 @@ td{
     <div class="card-body">
 
     <div class="pt-5 pb-4">
-        <img src="../img/logos.png" class="logos" alt="">
-    </div>
+    <span class="inline-images">
+        <a><img src="../img/DLSU-D.png" width="150" alt=""></a>
+        <a><img src="../Admin/uploads/<?php echo isset($categories_logo) ? $categories_logo : 'No_signature'; ?>" alt="Please Upload Signature" width="150" class="img-inline"></a>
+    </span>
+</div>
+
+
     
     <div class="text-center">
     <h4>DE LA SALLE UNIVERSITY-DASMARINAS</h4>
@@ -3461,10 +3477,11 @@ foreach($query_run2 as $table_rows)
 <div class="card custom-card">
 <div class="card-body">
 <div class="pt-5 pb-4">
-        <img src="../img/logos.png" class="logos" alt="">
-        
-   
-    </div>
+    <span class="inline-images">
+        <a><img src="../img/DLSU-D.png" width="150" alt=""></a>
+        <a><img src="../Admin/uploads/<?php echo isset($categories_logo) ? $categories_logo : 'No_signature'; ?>" alt="Please Upload Signature" width="150" class="img-inline"></a>
+    </span>
+</div>
     <div class="text-center">
     <h4>DE LA SALLE UNIVERSITY-DASMARINAS</h4>
     <h4><?php echo strtoupper($category_name);?> </h4>
@@ -3939,10 +3956,11 @@ $mysqli->close();
 <!-- GRADUATE ATTRIBUTES -->
 
 <div class="pt-5 pb-4">
-        <img src="../img/logos.png" class="logos" alt="">
-        
-   
-    </div>
+    <span class="inline-images">
+        <a><img src="../img/DLSU-D.png" width="150" alt=""></a>
+        <a><img src="../Admin/uploads/<?php echo isset($categories_logo) ? $categories_logo : 'No_signature'; ?>" alt="Please Upload Signature" width="150" class="img-inline"></a>
+    </span>
+</div>
     <div class="text-center">
     <h4>DE LA SALLE UNIVERSITY-DASMARINAS</h4>
     <h4><?php echo strtoupper($category_name);?> </h4>
@@ -4213,10 +4231,11 @@ echo "No Record Found";
 <!-- GRADUATE ATTRIBUTE -->
 
 <div class="pt-5 pb-4">
-        <img src="../img/logos.png" class="logos" alt="">
-        
-   
-    </div>
+    <span class="inline-images">
+        <a><img src="../img/DLSU-D.png" width="150" alt=""></a>
+        <a><img src="../Admin/uploads/<?php echo isset($categories_logo) ? $categories_logo : 'No_signature'; ?>" alt="Please Upload Signature" width="150" class="img-inline"></a>
+    </span>
+</div>
     <div class="text-center">
     <h4>DE LA SALLE UNIVERSITY-DASMARINAS</h4>
     <h4><?php echo strtoupper($category_name);?> </h4>
