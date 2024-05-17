@@ -21,8 +21,12 @@
 
 
 <div class="container-fluid">
-<h1>Category</h1>
-
+    <h1>Category</h1>
+    
+    
+    <button type="button" class="btn btn-primary add_databtn_final mb-2" data-toggle="modal" data-target="#addmodal">
+                            ADD DATA
+                        </button>
 
         <!-- Modal module_learning-->
         <div class="modal fade" id="addmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -36,7 +40,7 @@
                     </button>
                 </div>
 
-                <form action="Admin_Crud/insert_category.php" method="POST">
+                <form action="Admin_Crud/insert_category.php" method="POST" enctype="multipart/form-data">
 
                     <div class="modal-body">
                     <div class="form-group">
@@ -54,6 +58,12 @@
                         <div class="form-group">
                             <label>Dean Name</label>
                             <input type="text" name="dean_name" id="dean_name1" class="form-control"
+                                placeholder="Enter Dean Name">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Add Logo</label>
+                            <input type="file" name="logo" id="logo1" class="form-control"
                                 placeholder="Enter Dean Name">
                         </div>
                      
@@ -75,52 +85,60 @@
 
 
     <!-- EDIT POP UP FORM LEARNING MODULE TABLE (Bootstrap MODAL) -->
- <div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel1"> Category  </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+    <div class="modal fade" id="editmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1">Category</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
 
-                <form action="Admin_Crud/edit_category.php" method="POST">
+            <form action="Admin_Crud/edit_category.php" method="POST" enctype="multipart/form-data">
 
-                    <div class="modal-body">
-                        
+                <div class="modal-body">
                     <input type="hidden" name="update_id" id="update_id">
 
-                   
                     <div class="form-group">
                         <label for="name">Category Name</label>
                         <input name="name" id="name" class="form-control" placeholder="Enter Category Name">
                     </div>
 
-                        <div class="form-group">
-                            <label>Category Initial</label>
-                            <input type="text" name="initial" id="initial" class="form-control"
-                                placeholder="Enter Initial">
-                        </div>
+                    <div class="form-group">
+                        <label>Category Initial</label>
+                        <input type="text" name="initial" id="initial" class="form-control"
+                            placeholder="Enter Initial">
+                    </div>
 
-                        <div class="form-group">
-                            <label>Dean Name</label>
-                            <input type="text" name="dean_name" id="dean_name" class="form-control"
-                                placeholder="Enter Dean Name">
-                        </div>
+                    <div class="form-group">
+                        <label>Dean Name</label>
+                        <input type="text" name="dean_name" id="dean_name" class="form-control"
+                            placeholder="Enter Dean Name">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Current Logo</label><br>
+                        <img id="current_logo" src="" class="img-fluid w-50 mb-2" alt="Current Logo">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Add New Logo</label>
+                        <input type="file" name="logo" id="logo" class="form-control">
+                    </div>
 
                 </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" name="updatedata" class="btn btn-primary">Update Data</button>
-                    </div>
-                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" name="updatedata" class="btn btn-primary">Update Data</button>
+                </div>
+            </form>
 
-            </div>
         </div>
     </div>
-    
+</div>
+
 
  <!-- DELETE POP UP FORM  FOR LEARNING MODULE(Bootstrap MODAL) -->
  <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -155,10 +173,6 @@
 
    
 
-<button type="button" class="btn btn-primary add_databtn_final mb-2" data-toggle="modal" data-target="#addmodal">
-                        ADD DATA
-                    </button>
-
 
 <?php
  
@@ -187,6 +201,7 @@
             <th >Category Name</th>
             <th>Category Initial</th>
             <th>Dean Name</th>
+            <th>College Logo</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -200,6 +215,13 @@
             <td class="w-50"> <?= $row['name']; ?> </td>
             <td> <?= $row['initial'];  ?> </td>
             <td> <?= $row['dean_name'];  ?> </td>
+            <td>
+            <?php if (isset($row['logo']) && !empty($row['logo'])) : ?>
+                <img src="../Admin/uploads/<?php echo $row['logo']; ?>" class="img-fluid w-75" class="img-fluid" alt="Department Signature">
+            <?php else : ?>
+                No Logo Available
+            <?php endif; ?>
+        </td>
             <td>
             <button type="button" class="btn btn-success editbtn"><i class="lni lni-pencil"></i></button>
             <button type="button" class="btn btn-danger deletebtn"><i class="lni lni-trash-can"></i></button>
@@ -264,10 +286,7 @@ $(document).ready(function() {
 
 <script>
     $(document).ready(function () {
-
         $('.editbtn').on('click', function () {
-
-
             $('#editmodal').modal('show');
 
             $tr = $(this).closest('tr');
@@ -276,14 +295,19 @@ $(document).ready(function() {
                 return $(this).text();
             }).get();
 
+            var logoSrc = $tr.find('img').attr('src');
+
             console.log(data);
 
             $('#update_id').val(data[0]);
             $('#name').val(data[1]);
-            $('#initial').val(data[2]); // Corrected index
-            $('#dean_name').val(data[3]); // Corrected index
+            $('#initial').val(data[2]);
+            $('#dean_name').val(data[3]);
+            $('#current_logo').attr('src', logoSrc);
+            $('#logo').val(''); // Reset file input
         });
     });
+
 </script>
 
 
