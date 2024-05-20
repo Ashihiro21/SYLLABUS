@@ -255,7 +255,7 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $html .= '<tr>';
-        $html .= '<td>'. $row['comlab'] ." . ". $row['learn_out'] . '</td>';
+        $html .= '<td>'. $row['learn_out'] . '</td>';
         $html .= '<td>';
         if (strpos($row['topic_learn_out'], 'TLO') !== false || strpos($row['topic_learn_out'], "\n") !== false) {
             // If 'TLO' or a line break is found, replace it with <br>
@@ -350,7 +350,7 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $html .= '<tr>';
-        $html .= '<td>'. $row['comlab'] ." . ". $row['final_learning_out'] . '</td>';
+        $html .= '<td>'. $row['final_learning_out'] . '</td>';
         $html .= '<td>';
         if (strpos($row['final_topic_leaning_out'], 'TLO') !== false || strpos($row['final_topic_leaning_out'], "\n") !== false) {
             // If 'TLO' or a line break is found, replace it with <br>

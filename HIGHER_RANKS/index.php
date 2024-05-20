@@ -197,7 +197,7 @@ if ($result->num_rows > 0) {
 $conn->close();
 ?>
     <span><p style='font-weight: bold;'>COURSE LEARNING OUTCOMES:</a><b><a style="padding-left: 100px; padding-right: 2rem;"></p></b></a></span>
-    <span><a style=''>By the end of this course, students are expected to:</a></span>
+    <span><a>By the end of this course, students are expected to:</a></span>
 
 
 <br>
@@ -242,7 +242,7 @@ if ($result->num_rows > 0) {
     // Output data of each row
     while($row = $result->fetch_assoc()) {
         echo "<tr>
-                <td style='padding-bottom:10px;'>" . $row["comlab"]." . ". $row["learn_out"]."</td>
+                <td style='padding-bottom:10px;'>".$row["learn_out"]."</td>
             </tr>";
     }
     
@@ -301,7 +301,7 @@ if ($result->num_rows > 0) {
     // Output data of each row
     while ($row = $result->fetch_assoc()) {
         echo "<tr>
-                <td style='border: 1px solid #dddddd;text-align: left; padding: 8px;'>" . $row["comlab"] . " . " . $row["learn_out"] . "</td>
+                <td style='border: 1px solid #dddddd;text-align: left; padding: 8px;'>" . $row["learn_out"] . "</td>
                 <td style='border: 1px solid #dddddd;text-align: left; padding: 8px;'>";
     
         if (strpos($row['topic_learn_out'], 'TLO') !== false || strpos($row['topic_learn_out'], "\n") !== false) {
@@ -500,7 +500,7 @@ if ($result->num_rows > 0) {
     // Output data of each row
     while ($row = $result->fetch_assoc()) {
         echo "<tr>
-                <td style='border: 1px solid #dddddd;text-align: left; padding: 8px;'>" . $row["comlab"] .'.'. $row["final_learning_out"] . "</td>
+                <td style='border: 1px solid #dddddd;text-align: left; padding: 8px;'>".$row["final_learning_out"]."</td>
                 <td style='border: 1px solid #dddddd;text-align: left; padding: 8px;'>";
     
         if (strpos($row['final_topic_leaning_out'], 'TLO') !== false || strpos($row['final_topic_leaning_out'], "\n") !== false) {
