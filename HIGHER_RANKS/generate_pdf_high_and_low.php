@@ -27,6 +27,7 @@ $sql = "SELECT
             co.`cname`,
             co.`course_department` AS `course_departments`,
             co.`initial` AS `course_initial`,
+            c.logo AS category_logo,
             co.`department_name` AS `course_dept_name`,
             co.`department_position` AS `dept_position`,
             co.`dept_signature` AS `dept_signatures`
@@ -66,6 +67,7 @@ if ($result->num_rows > 0) {
         $dept_head_position = $row['dept_position'];
         $dept_head_signature = $row['dept_signatures'];
         $deans_category_signature = $row['dean_signatures'];
+        $categories_logo = $row['category_logo'];
     }
 } 
 
@@ -109,12 +111,25 @@ table, td, th{
 th,h1, .footer, h2{
     text-align: center;
 }
+.inline-images {
+    display: flex;
+    align-items: center;
+    margin-left: 35%;
+}
+
+.img-inline {
+    display: inline-block;
+    vertical-align: middle;
+}
 
 
 </style>
 
 <body>
-<img style="margin-left: 16rem; margin-top: 1rem;" src="../img/logos.png" alt="Image" width="190">
+<span class="inline-images">
+<a><img src="../img/DLSU-D.png" style="margin-top:1rem;" width="100" class="mt-5" alt=""></a>
+<a><img class="img-inline" style="margin-left:7rem; margin-top:1rem;" src="../Admin/uploads/'. $categories_logo . '" alt="Image" width="100"></a>
+</span>
 <h4 style="text-align:center; margin-top: 1rem;">DE LA SALLE UNIVERSITY-DASMARINAS</h4>
 <h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($category_name).'</h4>
 <h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($course_departments).'</h4>

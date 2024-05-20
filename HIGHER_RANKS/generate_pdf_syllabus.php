@@ -23,6 +23,7 @@ $sql = "SELECT
             c.`initial` AS `category_initial`,
             c.`dean_name` AS `deans`,
             c.`dean_position` AS `deans_position`,
+            c.logo AS category_logo,
             co.`dean_signature` AS `dean_signatures`,
             co.`cname`,
             co.`course_department` AS `course_departments`,
@@ -65,6 +66,7 @@ if ($result->num_rows > 0) {
         $dept_head_position = $row['dept_position'];
         $dept_head_signature = $row['dept_signatures'];
         $deans_category_signature = $row['dean_signatures'];
+        $categories_logo = $row['category_logo'];
     }
 } 
 
@@ -174,14 +176,27 @@ table, tr, th, td{
   left: 9px;
   transform: rotate(45deg);
 }
+.inline-images {
+    display: flex;
+    align-items: center;
+    margin-left: 30%;
+}
 
+.img-inline {
+    display: inline-block;
+    vertical-align: middle;
+}
 
 
 </style>
 
 <body>
-<img style="margin-left: 16rem; margin-top: 1rem;" src="../img/logos.png" alt="Image" width="190">
 
+<span class="inline-images">
+        <a><img src="../img/DLSU-D.png" style="margin-top:1rem;" width="100" class="mt-5" alt=""></a>
+        <a><img class="img-inline" style="margin-left:7rem; margin-top:1rem;" src="../Admin/uploads/'. $categories_logo . '" alt="Image" width="100"></a>
+        </span>
+    
     <h4 style="text-align:center; margin-top: 1rem;">DE LA SALLE UNIVERSITY-DASMARINAS</h4>
     <h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($category_name).'</h4>
     <h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($course_departments).'</h4>
@@ -791,7 +806,10 @@ $html .='&nbsp;&nbsp;&nbsp;&nbsp;<span style=""><b><p style="padding-left:140px;
 '</p></td>';
 
 
-$html .='<img style="margin-left: 16rem; margin-top: 1rem;" src="../img/logos.png" alt="Image" width="190">';
+$html .='<span class="inline-images">
+<a><img src="../img/DLSU-D.png" style="margin-top:1rem;" width="100" class="mt-5" alt=""></a>
+<a><img class="img-inline" style="margin-left:7rem; margin-top:1rem;" src="../Admin/uploads/'. $categories_logo . '" alt="Image" width="100"></a>
+</span>';
 
 $html .= '<h4 style="text-align:center; margin-top: 1rem;">DE LA SALLE UNIVERSITY-DASMARINAS</h4>';
 $html .=  '<h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($category_name).'</h4>';
@@ -885,7 +903,10 @@ learning outcome (CLO)</p>';
 
 
 
-$html .='<img style="margin-left: 16rem; margin-top: 1rem;" src="../img/logos.png" alt="Image" width="190">';
+$html .='<span class="inline-images">
+<a><img src="../img/DLSU-D.png" style="margin-top:1rem;" width="100" class="mt-5" alt=""></a>
+<a><img class="img-inline" style="margin-left:7rem; margin-top:1rem;" src="../Admin/uploads/'. $categories_logo . '" alt="Image" width="100"></a>
+</span>';
 $html .= '<h4 style="text-align:center; margin-top: 1rem;">DE LA SALLE UNIVERSITY-DASMARINAS</h4>';
 $html .=  '<h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($category_name).'</h4>';
 $html .=   '<h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($course_departments).'</h4';
@@ -937,7 +958,10 @@ graduates.
 
 
 
-$html .='<img style="margin-left: 16rem; margin-top: 1rem;" src="../img/logos.png" alt="Image" width="190">';
+$html .='<span class="inline-images">
+<a><img src="../img/DLSU-D.png" style="margin-top:1rem;" width="100" class="mt-5" alt=""></a>
+<a><img class="img-inline" style="margin-left:7rem; margin-top:1rem;" src="../Admin/uploads/'. $categories_logo . '" alt="Image" width="100"></a>
+</span>';
 $html .= '<h4 style="text-align:center; margin-top: 1rem;">DE LA SALLE UNIVERSITY-DASMARINAS</h4>';
 $html .=  '<h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($category_name).'</h4>';
 $html .=   '<h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($course_departments).'</h4';
