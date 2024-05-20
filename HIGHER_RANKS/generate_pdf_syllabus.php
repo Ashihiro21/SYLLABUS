@@ -49,7 +49,7 @@ if ($result->num_rows > 0) {
         $first_name = $row['first_name'];
         $last_name = $row['last_name'];
         $_SESSION['department'] = $row['department']; 
-        $courses = $row['catid'];
+        $_SESSION['catid'] = $row['catid']; 
         $phone_number = $row['phone_number'];
         $email = $row['email'];
         $password = $row['password'];
@@ -68,7 +68,8 @@ if ($result->num_rows > 0) {
     }
 } 
 
-$department = $_SESSION['department']; 
+$department = $_SESSION['department'];
+$catid = $_SESSION['catid'];  
 $sql = mysqli_query($conn,"SELECT * FROM course_syllabus");
 $user = mysqli_fetch_assoc($sql);
 
@@ -189,10 +190,12 @@ table, tr, th, td{
  
     
     $department = $_SESSION['department'];
+    $catid = $_SESSION['catid']; 
+    $catid = $_SESSION['catid'];
     // Using prepared statement to prevent SQL injection
-    $sql = "SELECT `id`, `course_code`, `course_tittle`, `course_Type`, `course_credit`, `learning_modality`, `pre_requisit`, `co_pre_requisit`, `professor`, `consultation_hours_date`, `consultation_hours_room`, `consultation_hours_email`, `consultation_hours_number`, `course_description`, `email`, `department` FROM `course_syllabus` WHERE department=?";
+    $sql = "SELECT `id`, `course_code`, `course_tittle`, `course_Type`, `course_credit`, `learning_modality`, `pre_requisit`, `co_pre_requisit`, `professor`, `consultation_hours_date`, `consultation_hours_room`, `consultation_hours_email`, `consultation_hours_number`, `course_description`, `email`, `department` FROM `course_syllabus` WHERE department=? and catid=?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $department);
+    $stmt->bind_param("ss", $department,$catid);
     $stmt->execute();
     $result = $stmt->get_result();
     
@@ -225,13 +228,23 @@ table, tr, th, td{
     $html .= '<h4 style="margin-top: 1rem;">COURSE LEARNING OUTCOMES:</h4>';
     $html .= '<a style="">By the end of this course, students are expected to:</a><br><br>';
     
-    $department = $_SESSION['department']; 
+    $department = $_SESSION['department'];
+    $catid = $_SESSION['catid'];  
+    $catid = $_SESSION['catid'];
     // Fetch and display course learning outcomes
-    $sql = "SELECT * FROM course_leaning WHERE department = $department ORDER BY id ASC";
+    $sql = "SELECT * FROM course_leaning WHERE department = $department and catid = $catid ORDER BY id ASC";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            $html .= '<a>'. $row['comlab'] ." . ". $row['learn_out'] . '</a><br><br>';
+            if (strpos($row['learn_out'], 'CLO') !== false || strpos($row['learn_out'], "\n") !== false) {
+                // If a line break is found, replace it with <br>
+                $output = str_replace("\n", '<br>', $row['learn_out']);
+            } else {
+                $output = $row['learn_out'];
+            }
+            $html .= '<a>' . $output . '</a><br><br>';
+            
+            
         }
     }
 
@@ -248,14 +261,15 @@ $html .= '<th>Course Learning Outcomes</th>';
 $html .= '<th>Topic Learning Outcomes</th>';
 $html .= '</tr>';
 
-$department = $_SESSION['department']; 
+$department = $_SESSION['department'];
+$catid = $_SESSION['catid'];  
 
 $sql = "SELECT * FROM course_leaning WHERE department = $department  ORDER BY id ASC";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $html .= '<tr>';
-        $html .= '<td>'. $row['learn_out'] . '</td>';
+        $html .= '<td>'. $row['comlab'] ." . ". $row['learn_out'] . '</td>';
         $html .= '<td>';
         if (strpos($row['topic_learn_out'], 'TLO') !== false || strpos($row['topic_learn_out'], "\n") !== false) {
             // If 'TLO' or a line break is found, replace it with <br>
@@ -281,15 +295,16 @@ $html .= '<th height="15%"><p style="transform: rotate(-90deg); white-space: now
 $html .= '<th height="15%"><p style="transform: rotate(-90deg); white-space: nowrap; width: 1px;">Alloted Hours</p></th>';
 $html .= '</tr>';
 
-$department = $_SESSION['department']; 
-$sql = "SELECT * FROM module_learning WHERE department = $department";
+$department = $_SESSION['department'];
+$catid = $_SESSION['catid'];  
+$sql = "SELECT * FROM module_learning WHERE department = $department and catid = $catid";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     $total_hour_query = "SELECT 
         SUM(hours) as total_hours, 
         SUM(asy) as total_asy_hours,
         SUM(onsite) as total_onsite_hours 
-    FROM module_learning WHERE department = $department";
+    FROM module_learning WHERE department = $department and catid = $catid";
     $total_hour_result = mysqli_query($conn, $total_hour_query);
     $total_hour_row = mysqli_fetch_assoc($total_hour_result);
     
@@ -344,13 +359,14 @@ $html .= '<th>Course Learning Outcomes</th>';
 $html .= '<th>Topic Learning Outcomes</th>';
 $html .= '</tr>';
 
-$department = $_SESSION['department']; 
-$sql = "SELECT * FROM laerning_final WHERE department = $department ORDER BY id ASC";
+$department = $_SESSION['department'];
+$catid = $_SESSION['catid'];  
+$sql = "SELECT * FROM laerning_final WHERE department = $department and catid = $catid ORDER BY id ASC";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $html .= '<tr>';
-        $html .= '<td>'. $row['final_learning_out'] . '</td>';
+        $html .= '<td>'. $row['comlab'] ." . ". $row['final_learning_out'] . '</td>';
         $html .= '<td>';
         if (strpos($row['final_topic_leaning_out'], 'TLO') !== false || strpos($row['final_topic_leaning_out'], "\n") !== false) {
             // If 'TLO' or a line break is found, replace it with <br>
@@ -378,15 +394,16 @@ $html .= '<th height="15%"><p style="transform: rotate(-90deg); white-space: now
 $html .= '</tr>';
 
 
-$department = $_SESSION['department']; 
-$sql = "SELECT * FROM module_learning_final WHERE department = $department ORDER BY id ASC";
+$department = $_SESSION['department'];
+$catid = $_SESSION['catid'];  
+$sql = "SELECT * FROM module_learning_final WHERE department = $department and catid = $catid ORDER BY id ASC";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     $total_hour_query = "SELECT 
         SUM(hours) as total_hours, 
         SUM(asy) as total_asy_hours,
         SUM(onsite) as total_onsite_hours 
-    FROM module_learning_final WHERE department = $department";
+    FROM module_learning_final WHERE department = $department and catid = $catid";
     $total_hour_result = mysqli_query($conn, $total_hour_query);
     $total_hour_row = mysqli_fetch_assoc($total_hour_result);
     
@@ -445,11 +462,12 @@ $html .= '</style>';
 $html .= '<table class="tables">';
 
 
-$department = $_SESSION['department']; 
-$sql = "SELECT * FROM percent WHERE department = $department ORDER BY  id ASC";
+$department = $_SESSION['department'];
+$catid = $_SESSION['catid'];  
+$sql = "SELECT * FROM percent WHERE department = $department and catid = $catid ORDER BY  id ASC";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
-    $total_percent_query = "SELECT SUM(`percents`) AS total_percent FROM percent WHERE department = $department";
+    $total_percent_query = "SELECT SUM(`percents`) AS total_percent FROM percent WHERE department = $department and catid = $catid";
     $total_percent_result = mysqli_query($conn, $total_percent_query);
     $total_percent_row = mysqli_fetch_assoc($total_percent_result);
             
@@ -574,8 +592,9 @@ $html .= 'ul { list-style-type: lower-roman; padding: 0; }'; // Apply CSS to set
 $html .= '</style>';
 
 
-$department = $_SESSION['department']; 
-$sql = "SELECT * FROM percent WHERE department = $department ORDER  BY id ASC";
+$department = $_SESSION['department'];
+$catid = $_SESSION['catid'];  
+$sql = "SELECT * FROM percent WHERE department = $department and catid = $catid ORDER  BY id ASC";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     $html .= '<ul>'; // Start unordered list
@@ -604,9 +623,10 @@ $html .='</div>';
 
 $html .='<div class="container-2" style="margin-left: 7rem;margin-bottom: -2rem;  overflow-wrap: break-word;">';
 
-$department = $_SESSION['department']; 
+$department = $_SESSION['department'];
+$catid = $_SESSION['catid'];  
 // Fetch and display course learning outcomes
-$sql = "SELECT * FROM semestral WHERE department = $department ORDER BY id ASC";
+$sql = "SELECT * FROM semestral WHERE department = $department and catid = $catid ORDER BY id ASC";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -617,7 +637,8 @@ if ($result->num_rows > 0) {
 
 
 
-$department = $_SESSION['department']; 
+$department = $_SESSION['department'];
+$catid = $_SESSION['catid'];  
 // Fetch and display course learning outcomes
 $sql = "SELECT `date` FROM module_learning_final WHERE department = '$department' ORDER BY id ASC LIMIT 1";
 $result = $conn->query($sql);
@@ -691,9 +712,10 @@ $html .= '<th width="170px">Provider</th>';
 $html .= '<th>Reference Material</th>';
 $html .= '</tr>';
 
-$department = $_SESSION['department']; 
+$department = $_SESSION['department'];
+$catid = $_SESSION['catid'];  
 
-$sql = "SELECT * FROM `onsite_reffence` WHERE department = $department  ORDER BY id ASC";
+$sql = "SELECT * FROM `onsite_reffence` WHERE department = $department and catid = $catid  ORDER BY id ASC";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -722,8 +744,9 @@ $html .= '</tr>';
 
 
 
-$department = $_SESSION['department']; 
-$sql = "SELECT * FROM `online_refference` WHERE department = $department ORDER BY id ASC";
+$department = $_SESSION['department'];
+$catid = $_SESSION['catid'];  
+$sql = "SELECT * FROM `online_refference` WHERE department = $department and catid = $catid ORDER BY id ASC";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -740,9 +763,10 @@ $html .= '</table>';
 $html .='&nbsp;&nbsp;&nbsp;&nbsp;<span style=""><b>Prepared:</b><b><a style="padding-left:30px;" class="course">'.$course_departments.'</a></b></span>';
 
 
-$department = $_SESSION['department']; 
+$department = $_SESSION['department'];
+$catid = $_SESSION['catid'];  
 // Fetch and display course learning outcomes
-$sql = "SELECT * FROM semestral WHERE department = $department";
+$sql = "SELECT * FROM semestral WHERE department = $department and catid = $catid";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -777,8 +801,9 @@ $html .=   '<h4 style="text-align:center; margin-top: -1rem;">MAPPING TABLE FOR 
 
    
 $department = $_SESSION['department'];
+$catid = $_SESSION['catid']; 
 // Using prepared statement to prevent SQL injection
-$sql = "SELECT `id`, `course_code`, `course_tittle`, `course_Type`, `course_credit`, `learning_modality`, `pre_requisit`, `co_pre_requisit`, `professor`, `consultation_hours_date`, `consultation_hours_room`, `consultation_hours_email`, `consultation_hours_number`, `course_description`, `email`, `department` FROM `course_syllabus` WHERE department=?";
+$sql = "SELECT `id`, `course_code`, `course_tittle`, `course_Type`, `course_credit`, `learning_modality`, `pre_requisit`, `co_pre_requisit`, `professor`, `consultation_hours_date`, `consultation_hours_room`, `consultation_hours_email`, `consultation_hours_number`, `course_description`, `email`, `department` FROM `course_syllabus` WHERE department=? and catid = $catid";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $department);
 $stmt->execute();
@@ -827,8 +852,9 @@ if ($result->num_rows > 0) {
     
    
     
-$department = $_SESSION['department']; 
-$sql = "SELECT * FROM mapping_table WHERE department = $department";
+$department = $_SESSION['department'];
+$catid = $_SESSION['catid'];  
+$sql = "SELECT * FROM mapping_table WHERE department = $department and catid = $catid";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
 
@@ -879,8 +905,9 @@ $html .= '</tr>'; // Closing the data row
 
 
 
-$department = $_SESSION['department']; 
-$sql = "SELECT * FROM decriptors WHERE department = $department";
+$department = $_SESSION['department'];
+$catid = $_SESSION['catid'];  
+$sql = "SELECT * FROM decriptors WHERE department = $department and catid = $catid";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
 
@@ -926,8 +953,9 @@ $html .= '</tr>'; // Closing the data row
 
 
 
-$department = $_SESSION['department']; 
-$sql = "SELECT * FROM graduates_attributes WHERE department = $department";
+$department = $_SESSION['department'];
+$catid = $_SESSION['catid'];  
+$sql = "SELECT * FROM graduates_attributes WHERE department = $department and catid = $catid";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
 
