@@ -145,8 +145,10 @@ $sql = "SELECT * FROM course_leaning";
 
 <button class="btn btn-primary" style="margin-left:1rem;" onclick="Export2Word('exportContent','html-content-with-image')">Download as Word</button>
 <div id="exportContent">
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style=""><img src="http://localhost/Github/SYLLABUS/HIGHER_RANKS/logos.jpeg" alt="" width="180" height="90">
-</a><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><img src="http://localhost/Github/SYLLABUS/HIGHER_RANKS/DLSU-D.png" alt="" width="100" height="100">
+</a>
+<img src="http://localhost/Github/SYLLABUS/ADMIN/uploads/<?php echo isset($categories_logo) ? $categories_logo : 'No_signature'; ?>" alt="" width="100" height="100">
+</a>
 <div style="text-align:center; font-weight:bold">
 <a style="text-align:center;">DE LA SALLE UNIVERSITY-DASMARINAS</a><br>
     <a style="text-align:center';"><?php echo strtoupper($category_name);?> </a><br>
@@ -1158,7 +1160,10 @@ $conn->close();
 
 
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style=""><img src="http://localhost/Github/SYLLABUS/HIGHER_RANKS/logos.jpeg" alt="" width="180" height="90">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><img src="http://localhost/Github/SYLLABUS/HIGHER_RANKS/DLSU-D.png" alt="" width="100" height="100">
+</a>
+<img src="http://localhost/Github/SYLLABUS/ADMIN/uploads/<?php echo isset($categories_logo) ? $categories_logo : 'No_signature'; ?>" alt="" width="100" height="100">
+</a>
 <div style="text-align:center; font-weight:bold">
 <a style="text-align:center;">DE LA SALLE UNIVERSITY-DASMARINAS</a><br>
     <a style="text-align:center';"><?php echo strtoupper($category_name);?> </a><br>
@@ -1322,7 +1327,10 @@ learning outcome (CLO)</p><br><br>
 
 
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style=""><img src="http://localhost/Github/SYLLABUS/HIGHER_RANKS/logos.jpeg" alt="" width="180" height="90">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><img src="http://localhost/Github/SYLLABUS/HIGHER_RANKS/DLSU-D.png" alt="" width="100" height="100">
+</a>
+<img src="http://localhost/Github/SYLLABUS/ADMIN/uploads/<?php echo isset($categories_logo) ? $categories_logo : 'No_signature'; ?>" alt="" width="100" height="100">
+</a>
 
 
 <div style="text-align:center; font-weight:bold">
@@ -1426,7 +1434,10 @@ $conn->close();
 
 
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style=""><img src="http://localhost/Github/SYLLABUS/HIGHER_RANKS/logos.jpeg" alt="" width="180" height="90"><br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><img src="http://localhost/Github/SYLLABUS/HIGHER_RANKS/DLSU-D.png" alt="" width="100" height="100">
+</a>
+<img src="http://localhost/Github/SYLLABUS/ADMIN/uploads/<?php echo isset($categories_logo) ? $categories_logo : 'No_signature'; ?>" alt="" width="100" height="100">
+</a><br><br>
    
     
 <div style="text-align:center; font-weight:bold">
