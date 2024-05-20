@@ -1111,7 +1111,9 @@ $query_run = mysqli_query($connection, $query);
                 <form id="addForm">
                     <div class="mb-3">
                         <label for="addTloNumber" class="form-label">TLO Number</label>
-                       
+                       <!-- Add Modal HTML -->
+                        <input type="text" class="form-control" id="id" name="id" value="dito ka gawa ng session"> 
+
                         <input type="text" class="form-control" id="addTloNumber" name="tloNumber">
                        
                     </div>
