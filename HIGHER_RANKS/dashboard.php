@@ -996,21 +996,6 @@ $mysqli->close();
 </div>
 
 <div class="container mt-5">
-
-<?php
-// Database connection
-$connection = mysqli_connect("localhost","root","","syllabus");
-if (mysqli_connect_errno()){
-    echo "Failed to connect to MySQL: " . mysqli_connect_error();
-    die();
-}
-
-$department = $_SESSION['department'];
-$catid = $_SESSION['catid'];
-$query = "SELECT `id`, `comlab`, `learn_out`, `topic_learn_out`, `department` FROM `course_leaning` WHERE department='$department' AND catid='$catid'";
-$query_run = mysqli_query($connection, $query);
-?>
-
 <table id="datatableid" class="table table-bordered">
     <thead>
         <tr>
@@ -1019,13 +1004,13 @@ $query_run = mysqli_query($connection, $query);
             <th scope="col">Action</th>
         </tr>
     </thead>
-    <?php
-    if($query_run) {
-        $counter = 0;
-        foreach($query_run as $row) {
-            $nestedTableId = "nestedtableid_" . $counter;
-    ?>
     <tbody>
+        <?php
+        if($query_run) {
+            $counter = 0;
+            foreach($query_run as $row) {
+                $nestedTableId = "nestedtableid_" . $counter;
+        ?>
         <tr>
             <td class="hide-id"><?php echo $row['id']; ?></td>
             <td>
@@ -1057,7 +1042,7 @@ $query_run = mysqli_query($connection, $query);
                                 ?>
                             </td>
                             <td class="table-button">
-                                <button type="button" class="btn btn-success editbtn_learning_out_table" onclick="openEditModal(this, '<?php echo $nestedTableId; ?>')"><i class="lni lni-pencil"></i></button>
+                                <button type="button" class="btn btn-success editbtn_learning_out_table" onclick="openEditModal(this, '<?php echo $nestedTableId; ?>', '<?php echo $row['id']; ?>')"><i class="lni lni-pencil"></i>edit</button>
                             </td>
                         </tr>
                     </tbody>
@@ -1067,14 +1052,14 @@ $query_run = mysqli_query($connection, $query);
                 <button type="button" class="btn btn-success" onclick="openAddModal('<?php echo $nestedTableId; ?>')"><i class="lni lni-plus"></i> Add Data</button>
             </td>
         </tr>
-    </tbody>
-    <?php
-            $counter++;
+        <?php
+                $counter++;
+            }
+        } else {
+            echo "No Record Found";
         }
-    } else {
-        echo "No Record Found";
-    }
-    ?>
+        ?>
+    </tbody>
 </table>
 </div>
 
@@ -1091,6 +1076,7 @@ $query_run = mysqli_query($connection, $query);
                     <div class="mb-3">
                         <label for="editTloNumber" class="form-label">TLO Number</label>
                         <input type="text" class="form-control" id="editTloNumber" name="tloNumber">
+                        <input type="hidden" id="editId" name="id">
                     </div>
                     <button type="button" class="btn btn-warning" onclick="saveEdit()">Save changes</button>
                 </form>
@@ -1111,11 +1097,7 @@ $query_run = mysqli_query($connection, $query);
                 <form id="addForm">
                     <div class="mb-3">
                         <label for="addTloNumber" class="form-label">TLO Number</label>
-                       <!-- Add Modal HTML -->
-                        <input type="text" class="form-control" id="id" name="id" value="dito ka gawa ng session"> 
-
                         <input type="text" class="form-control" id="addTloNumber" name="tloNumber">
-                       
                     </div>
                     <button type="button" class="btn btn-warning" onclick="saveAdd()">Add</button>
                 </form>
@@ -1126,13 +1108,17 @@ $query_run = mysqli_query($connection, $query);
 
 <script>
     let currentNestedTableId = '';
+    let currentId = '';
 
-    function openEditModal(button, nestedTableId) {
+    function openEditModal(button, nestedTableId, id) {
         currentNestedTableId = nestedTableId;
+        currentId = id;
         var row = button.closest('tr');  // Get the closest row to the button
-        var tloNumber = row.cells[0].innerText;
+        var tloNumber = row.cells[0].innerText;  // Get the TLO number from the first cell
+
         // Populate the modal fields
         document.getElementById('editTloNumber').value = tloNumber;
+        document.getElementById('editId').value = currentId;
 
         // Show the modal
         var editModal = new bootstrap.Modal(document.getElementById('editModal'));
@@ -1143,33 +1129,30 @@ $query_run = mysqli_query($connection, $query);
     }
 
     function saveEdit() {
-    var rowIndex = document.getElementById('editForm').getAttribute('data-row');
-    var nestedTable = document.getElementById(currentNestedTableId);
-    var row = nestedTable.rows[rowIndex];
+        var rowIndex = document.getElementById('editForm').getAttribute('data-row');
+        var nestedTable = document.getElementById(currentNestedTableId);
+        var row = nestedTable.rows[rowIndex];
 
-    var tloNumber = document.getElementById('editTloNumber').value;
-    var id = row.cells[0].innerText; // Get the ID of the row
+        var tloNumber = document.getElementById('editTloNumber').value;
+        var id = document.getElementById('editId').value;
 
-    // Update the table row with the new data
-    row.cells[0].innerText = tloNumber;
+        // Update the table row with the new data
+        row.cells[0].innerText = tloNumber;
 
-    // Hide the modal
-    var editModal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
-    editModal.hide();
-
-    // Send the updated data to the server using AJAX
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
-            // Optionally update the UI based on the response
-        }
-    };
-    xhttp.open("POST", "edit_tlo.php", true);
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send("id=" + id + "&tloNumber=" + encodeURIComponent(tloNumber));
-}
-
+        // Send the updated data to the server using AJAX
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "Course_Syllabus/edit_tlo.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log(xhr.responseText);
+                // Hide the modal
+                var editModal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
+                editModal.hide();
+            }
+        };
+        xhr.send("id=" + id + "&tloNumber=" + tloNumber);
+    }
 
     function openAddModal(nestedTableId) {
         currentNestedTableId = nestedTableId;
@@ -1182,32 +1165,36 @@ $query_run = mysqli_query($connection, $query);
     function saveAdd() {
         var tloNumber = document.getElementById('addTloNumber').value;
 
-        // AJAX request
+        // Add a new row to the nested table
+        var nestedTable = document.getElementById(currentNestedTableId);
+        var newRow = nestedTable.insertRow();
+        var newCell1 = newRow.insertCell(0);
+        var newCell2 = newRow.insertCell(1);
+
+        newCell1.innerText = tloNumber;
+        newCell2.innerHTML = '<button type="button" class="btn btn-success editbtn_learning_out_table" onclick="openEditModal(this, \'' + currentNestedTableId + '\')"><i class="lni lni-pencil"></i></button>';
+
+        // Hide the modal
+        var addModal = bootstrap.Modal.getInstance(document.getElementById('addModal'));
+        addModal.hide();
+
+        // Send the new data to the server using AJAX
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "Course_Syllabus/add_tlo.php", true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                // Response from server
                 console.log(xhr.responseText);
-                // Add a new row to the nested table
-                var nestedTable = document.getElementById(currentNestedTableId);
-                var newRow = nestedTable.insertRow();
-                var newCell1 = newRow.insertCell(0);
-                var newCell2 = newRow.insertCell(1);
-                newCell1.innerText = tloNumber;
-                newCell2.innerHTML = '<button type="button" class="btn btn-success editbtn_learning_out_table" onclick="openEditModal(this, \'' + currentNestedTableId + '\')"><i class="lni lni-pencil"></i></button>';
-                // Hide the modal
-                var addModal = bootstrap.Modal.getInstance(document.getElementById('addModal'));
-                addModal.hide();
+                if (xhr.responseText.trim() === 'success') {
+                    console.log("Data inserted successfully.");
+                } else {
+                    console.log("Error inserting data.");
+                }
             }
         };
-        // Send the request to the server
-        xhr.send("id=<?php echo $row['id']; ?>&tloNumber=" + tloNumber);
+        xhr.send("tloNumber=" + tloNumber);
     }
 </script>
-
-
 <!-- end course table modals  -->
   <button type="button" class="btn btn-primary add_databtn" data-toggle="modal" data-target="#addmodal_module_learning">ADD DATA</button>
 

@@ -11,9 +11,9 @@ if (isset($_POST['id']) && isset($_POST['tloNumber'])) {
     $department = $_SESSION['department'];
     $catid = $_SESSION['catid'];
 
-    $query = "UPDATE course_leaning SET learn_out = '$tloNumber' WHERE id = '$id' AND department='$department' AND catid='$catid'";
+    $query = "UPDATE course_leaning SET topic_learn_out = '$tloNumber' WHERE id = '$id' AND department='$department' AND catid='$catid'";
     if (mysqli_query($connection, $query)) {
-        echo "Record updated successfully";
+        echo "success";
     } else {
         echo "Error updating record: " . mysqli_error($connection);
     }
