@@ -23,6 +23,7 @@ if(isset($_POST['insertdata']))
     $department_position = $_POST['department_position'];
     $dept_signature = $_POST['dept_signature'];
     $dean_signature = $_POST['dean_signature'];
+    $commitee_signature = $_POST['commitee_signature'];
 
     $sql = "INSERT INTO  course (`catid`, `cname`,`initial`,`course_department`,`department_name`,`department_position`,`dept_signature`,`dean_signature`)
     VALUES ('$catid','$cname','$initial', '$course_department','$department_name','$department_position','$dept_signature','$dean_signature')";

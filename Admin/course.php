@@ -127,8 +127,7 @@ function populateCetegoryDropdown() {
                         </div>
 
                         <div class="form-group">
-                            <label>Department Position</label>
-                            <input type="text" name="department_position" id="department_position1" value="Chair" class="form-control"
+                            <input type="hidden" name="department_position" id="department_position1" value="Chair" class="form-control"
                                 placeholder="Enter Department Position">
                         </div>
 
@@ -139,6 +138,11 @@ function populateCetegoryDropdown() {
 
                         <div class="form-group">
                             <input type="hidden" name="dean_signature" id="dean_signature1" value="No Signature" class="form-control"
+                                placeholder="Enter Department Position">
+                        </div>
+
+                        <div class="form-group">
+                            <input type="hidden" name="commitee_signature" id="commitee_signature1" value="No Signature" class="form-control"
                                 placeholder="Enter Department Position">
                         </div>
 
@@ -202,8 +206,8 @@ function populateCetegoryDropdown() {
 
 
                     <div class="form-group">
-                            <label>Department Chair Name</label>
-                            <input type="text" name="department_position" id="edit_department_position" value="Chair" class="form-control"
+                          
+                            <input type="hidden" name="department_position" id="edit_department_position" value="Chair" class="form-control"
                                 placeholder="Enter Department Chair Name">
                         </div>
 
@@ -281,6 +285,7 @@ function populateCetegoryDropdown() {
      c.department_position, 
      c.dept_signature, 
      c.dean_signature, 
+     c.commitee_signature, 
      cat.id AS category_id, 
      cat.name AS category_name, 
      cat.initial AS category_initial 
@@ -309,6 +314,8 @@ function populateCetegoryDropdown() {
             <th>Department Chair</th>
             <th>Department Position</th>
             <th>Department Chair Signature</th>
+            <th>College Dean Signature</th>
+            <th>Commitee Signature</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -335,6 +342,14 @@ function populateCetegoryDropdown() {
                     <td>
             <?php if (isset($row['dean_signature']) && !empty($row['dean_signature'])) : ?>
                 <img src="../HIGHER_RANKS/<?php echo $row['dean_signature']; ?>" class="img-fluid" alt="Department Signature">
+            <?php else : ?>
+                No signature available
+            <?php endif; ?>
+        </td>
+
+        <td>
+            <?php if (isset($row['commitee_signature']) && !empty($row['commitee_signature'])) : ?>
+                <img src="../HIGHER_RANKS/<?php echo $row['commitee_signature']; ?>" class="img-fluid" alt="Department Signature">
             <?php else : ?>
                 No signature available
             <?php endif; ?>
