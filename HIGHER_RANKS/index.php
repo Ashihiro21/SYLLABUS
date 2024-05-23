@@ -30,7 +30,8 @@ $sql = "SELECT
             co.`initial` AS `course_initial`,
             co.`department_name` AS `course_dept_name`,
             co.`department_position` AS `dept_position`,
-            co.`dept_signature` AS `dept_signatures`
+            co.`dept_signature` AS `dept_signatures`,
+            co.`commitee_signature` AS `commitee_signatures`
         FROM 
             `users` AS u 
         LEFT JOIN 
@@ -66,6 +67,7 @@ if ($result->num_rows > 0) {
         $dept_head = $row['course_dept_name'];
         $dept_head_position = $row['dept_position'];
         $dept_head_signature = $row['dept_signatures'];
+        $commitee_signatures = $row['commitee_signatures'];
         $deans_category_signature = $row['dean_signatures'];
     }
 } 
@@ -1529,7 +1531,7 @@ $conn->close();
 
 <br><br><br>
 
-
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img style="padding-left:15px; padding-top:-15px;" src="http://localhost/Github/SYLLABUS/HIGHER_RANKS/<?php echo $commitee_signatures ?>" class="course" alt="Department Head Signature"></p>
     <p>____________________________</p>
 <p style="font-style: italic; margin-top: -10px; margin-left: 10px;">
   Approved in <?= date("F") ." ".date("Y") ?> during a multi-sectoral committee specifically convened for the purpose of coming up with descriptions for the graduate attributes.

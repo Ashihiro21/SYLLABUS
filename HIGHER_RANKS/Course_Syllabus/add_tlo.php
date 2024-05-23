@@ -1,40 +1,35 @@
 <?php
-session_start();
-$connection = mysqli_connect("localhost", "root", "", "syllabus");
-if (!$connection) {
-    die("Connection failed: " . mysqli_connect_error());
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "syllabus";
+
+// Create connection
+$connection = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($connection->connect_error) {
+    die("Connection failed: " . $connection->connect_error);
 }
 
-if (isset($_POST['tloNumber'])) {
-    $tloNumber = mysqli_real_escape_string($connection, $_POST['tloNumber']);
-<<<<<<< Updated upstream
-    $department = $_SESSION['department'];
-    $catid = $_SESSION['catid'];
-=======
-    $id = mysqli_real_escape_string($connection, $_POST['id']);
+if(isset($_POST['insertdata']))
+{
 
-    // Check if a row with the given ID exists
-    $query = "SELECT * FROM course_leaning WHERE id = '$id'";
-    $result = mysqli_query($connection, $query);
+    $tloNumber = $_POST['tloNumber'];
+    $catid = $_POST['catid'];
+    $department = $_POST['department'];
 
-    if (mysqli_num_rows($result) > 0) {
-        // If a row with the given ID exists, insert the data into the `learn_out` column
-        $query = "UPDATE course_leaning SET learn_out = CONCAT(learn_out, '\n', '$tloNumber') WHERE id = '$id'";
+    $sql = "INSERT INTO course_leaning (`topic_learn_out`,`catid`,`department`)
+    VALUES ('$tloNumber','$catid','$department')";
+
+    if ($connection->query($sql) === TRUE) {
+        echo '<script> alert("Data Saved"); </script>';
+        header('Location: ../dashboard.php');
     } else {
-        // If a row with the given ID does not exist, insert the data into the `topic_learn_out` column
-        $query = "INSERT INTO course_leaning (`topic_learn_out`) VALUES ('$tloNumber')";
+        echo "Error: " . $sql . "<br>" . $connection->error;
     }
->>>>>>> Stashed changes
-
-    $query = "INSERT INTO course_leaning (topic_learn_out, department, catid) VALUES ('$tloNumber', '$department', '$catid')";
-    if (mysqli_query($connection, $query)) {
-        echo "success";
-    } else {
-        echo "Error: " . mysqli_error($connection);
-    }
-} else {
-    echo "Invalid input";
 }
 
-mysqli_close($connection);
+$connection->close();
 ?>

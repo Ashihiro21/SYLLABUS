@@ -30,7 +30,8 @@ $sql = "SELECT
             co.`initial` AS `course_initial`,
             co.`department_name` AS `course_dept_name`,
             co.`department_position` AS `dept_position`,
-            co.`dept_signature` AS `dept_signatures`
+            co.`dept_signature` AS `dept_signatures`,
+            co.`commitee_signature` AS `commitee_signatures`
         FROM 
             `users` AS u 
         LEFT JOIN 
@@ -66,6 +67,7 @@ if ($result->num_rows > 0) {
         $dept_head_position = $row['dept_position'];
         $dept_head_signature = $row['dept_signatures'];
         $deans_category_signature = $row['dean_signatures'];
+        $commitee_dept_signature = $row['commitee_signatures'];
         $categories_logo = $row['category_logo'];
     }
 } 
@@ -1004,7 +1006,8 @@ $html .= '</td>';
 }
 
 $html .= '</table>';
-$html .= '<p style="border-top:1px solid black; width:235px; margin-top: 85px; margin-left: 10px;"></p>';
+$html .= '<p><img style="padding-left:65px; padding-top:10px;" src="' . $commitee_dept_signature . '" " class="course" alt="Department Head Signature"></p>';
+$html .= '<p style="border-top:1px solid black; width:235px; margin-top: 15px; margin-left: 10px;"></p>';
 $html .= '<p style="font-style:italic; margin-left: 10px; ">Approved in </a>'. date("F") ." ".date("Y").' <a>during a multi-sectoral committee specifically convened for the purpose of coming up with 
 descriptions for the graduate attributes. 
 </p>';

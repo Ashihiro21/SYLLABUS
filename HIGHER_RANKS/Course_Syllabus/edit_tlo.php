@@ -5,17 +5,15 @@ if (!$connection) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-if (isset($_POST['id']) && isset($_POST['tloNumber'])) {
-    $id = mysqli_real_escape_string($connection, $_POST['id']);
+if (isset($_POST['tloNumber'], $_POST['id'])) {
     $tloNumber = mysqli_real_escape_string($connection, $_POST['tloNumber']);
-    $department = $_SESSION['department'];
-    $catid = $_SESSION['catid'];
+    $id = mysqli_real_escape_string($connection, $_POST['id']);
 
-    $query = "UPDATE course_leaning SET topic_learn_out = '$tloNumber' WHERE id = '$id' AND department='$department' AND catid='$catid'";
+    $query = "UPDATE course_leaning SET topic_learn_out = '$tloNumber' WHERE id = '$id'";
     if (mysqli_query($connection, $query)) {
         echo "success";
     } else {
-        echo "Error updating record: " . mysqli_error($connection);
+        echo "Error: " . mysqli_error($connection);
     }
 } else {
     echo "Invalid input";
