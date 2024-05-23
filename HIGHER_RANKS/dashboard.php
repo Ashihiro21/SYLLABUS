@@ -2640,7 +2640,7 @@ echo $html;
     submissions to avoid copyright infringement and/or plagiarism. 
     </a><br>
     <a>c. Giving of password to Schoolbook and Office 365 is strictly prohibited. Likewise, 
-    accessing Schoolbook and Office 365 account other than the students’ personal account 
+    accessing Schoolbook and Office 365 account other than the students personal account 
     is also strictly prohibited. Violating students will be reported to the Student Welfare and 
     Formation Office (SWAFO). 
     </a><br>
@@ -2695,7 +2695,7 @@ echo $html;
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel" style="">Add Learning Outcomes for Final Period </h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Add Learning Outcomes for Final Period </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
