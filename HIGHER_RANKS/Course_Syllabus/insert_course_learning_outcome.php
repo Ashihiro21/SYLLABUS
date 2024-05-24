@@ -17,11 +17,12 @@ if(isset($_POST['insertdata']))
 {
     $comlab = $_POST['comlab'];
     $learn_out = $_POST['learn_out'];
+    $topic_learn_out = $_POST['topic_learn_out'];
     $department = $_POST['department'];
     $catid = $_POST['catid'];
 
-    $sql = "INSERT INTO course_leaning (`comlab`, `learn_out`,`department`,`catid`)
-    VALUES ('$comlab', '$learn_out', '$department', '$catid')";
+    $sql = "INSERT INTO course_leaning (`comlab`, `learn_out`,`topic_learn_out`,`department`,`catid`)
+    VALUES ('$comlab', '$learn_out','$topic_learn_out', '$department', '$catid')";
 
     if ($connection->query($sql) === TRUE) {
         echo '<script> alert("Data Saved"); </script>';

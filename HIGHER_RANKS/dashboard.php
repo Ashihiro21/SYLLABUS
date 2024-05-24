@@ -387,7 +387,7 @@ td{
     <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
 </div>
                     <div class="form-group">
-    <input type="text" id="catid" name="catid" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['catid']) ? $_SESSION['catid'] : ''; ?>">
+    <input type="hidden" id="catid" name="catid" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['catid']) ? $_SESSION['catid'] : ''; ?>">
 </div>
 
 
@@ -440,7 +440,7 @@ td{
 
                         <div class="form-group">
                         <label for="learn_out">Course Learning Outcome</label>
-                        <textarea name="learn_out" id="learn_out" placeholder="Enter Course Learning Outcome" cols="50" rows="5"></textarea>
+                        <textarea class="form-control" name="learn_out" id="learn_out" placeholder="Enter Course Learning Outcome" cols="50" rows="5"></textarea>
                     </div>
 
 
@@ -900,7 +900,10 @@ $mysqli->close();
 
                     
                         <label for="learn_out">Course Learning Outcomes</label><br>
-                        <textarea name="learn_out" id="learn_out" rows="15" cols="50" class="form-control" placeholder="Course Learning Outcomes"></textarea>
+                        <textarea name="learn_out" id="learn_out" rows="5" cols="50" class="form-control" placeholder="Course Learning Outcomes"></textarea>
+
+                        <label for="topic_learn_out">Topic Learning Outcomes</label><br>
+                        <textarea name="topic_learn_out" id="topic_learn_out" rows="5" cols="50" class="form-control" placeholder="Topic Learning Outcomes"></textarea>
                 
 
                                             <div class="form-group">
@@ -908,7 +911,7 @@ $mysqli->close();
                     </div>
 
                     <div class="form-group">
-                        <input type="text" id="catid" name="catid" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['catid']) ? $_SESSION['catid'] : ''; ?>">
+                        <input type="hidden" id="catid" name="catid" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['catid']) ? $_SESSION['catid'] : ''; ?>">
                     </div>
 
                     </div>
@@ -1019,13 +1022,7 @@ $mysqli->close();
                         }
                         ?></td>
                             <td class="hide-id"><?php echo $row['topic_learn_out']; ?></td>
-                            <td class="table-button">
-                            <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
 
-                            <button type="button" class="btn btn-success editbtn_learning_out"><i class="lni lni-pencil"></i></button>
-
-                            <button type="button" class="btn btn-danger deletebtn_learning_out"><i class="lni lni-trash-can"></i></button>
-                            </td>
                         </tr>
                     </tbody>
                     <?php           
@@ -1037,7 +1034,78 @@ $mysqli->close();
             }
         ?>
                </table>
-</div>
+
+    
+            </div>
+
+
+
+
+                    <div class="container mt-1" style="margin-left:-4.1rem;">
+
+                    <?php
+                    
+
+                    // Database connection
+                    
+                    
+                    $connection = mysqli_connect("localhost","root","","syllabus");
+                    if (mysqli_connect_errno()){
+                        echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                        die();
+                        }
+
+
+                        $department = $_SESSION['department'];
+                        $catid = $_SESSION['catid']; 
+                        $query = "SELECT * FROM laerning_final WHERE department='$department' AND catid='$catid'";
+                    $query_run = mysqli_query($connection, $query);
+                    ?>  
+                    <table id="datatableid">
+                    <thead>
+                        <!-- <tr>
+                            <th scope="col">description</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Action</th>
+                        </tr> -->
+                    </thead>
+                    <?php
+                    if($query_run)
+                    {
+                    foreach($query_run as $row)
+                    {
+                    ?>
+                    <tbody>
+                    
+                        <tr>
+                            <td class="hide-id"> <?php echo $row['id']; ?> </td>
+                            <td><?php echo $row['comlab']; ?></td>
+                            <td><?php echo "."; ?></td>
+                            <td class=""><?php
+                        if (strpos($row['final_learning_out'], 'CLO') !== false || strpos($row['final_learning_out'], "\n") !== false) {
+                            // If 'TLO' or a line break is found, replace it with <br>
+                            echo str_replace(array('', "\n"), '<br>', $row['final_learning_out']);
+                        } else {
+                            echo $row['final_learning_out'];
+                        }
+                        ?></td>
+                            <td class="hide-id"><?php echo $row['final_topic_leaning_out']; ?></td>
+
+                        </tr>
+                    </tbody>
+                    <?php           
+                    }
+                    }
+                    else 
+                    {
+                    echo "No Record Found";
+                    }
+                    ?>
+                    </table>
+                    </div>
+
+
+                    
 
 <div class="container-fluid header-title"><br>
     <b><a>LEARNING PLAN</a></b><br>
@@ -1132,12 +1200,23 @@ echo "No Record Found";
 
                     <div class="modal-body">
 
-                        <input type="text" name="update_id1" id="update_id1">
+                        <input type="hidden" name="update_id1" id="update_id1">
+
+                        <div class="form-group">
+                            <label> Computer Laboratory </label>
+                            <input type="text" name="comlab" id="comlab1" class="form-control"
+                                placeholder="Enter Computer Laboratory">
+                        </div>
+
+                        <div class="form-group">
+                        <label for="learn_out">Course Learning Outcome</label>
+                        <textarea class="form-control" name="learn_out" id="learn_out1" placeholder="Enter Course Learning Outcome" cols="50" rows="5"></textarea>
+                    </div>
 
 
                         <div class="form-group">
                         <label>Topic Learning Outcomes</label>
-                        <textarea name="topic_learn_out" id="topic_learn_out" class="form-control" placeholder="Enter Learning Outcome" cols="50" rows="5"></textarea>
+                        <textarea name="topic_learn_out" id="topic_learn_out1" class="form-control" placeholder="Enter Learning Outcome" cols="50" rows="5"></textarea>
                     </div>
 
 
@@ -1207,7 +1286,7 @@ echo "No Record Found";
                 </div>
 
                 <div class="form-group">
-                    <input type="text" id="catid" name="catid" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['catid']) ? $_SESSION['catid'] : ''; ?>">
+                    <input type="hidden" id="catid" name="catid" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['catid']) ? $_SESSION['catid'] : ''; ?>">
                 </div>
                         
                         <div class="form-group">
@@ -1500,14 +1579,14 @@ echo "No Record Found";
 
                         <div class="form-group">
                             <label> Computer Laboratory </label>
-                            <input type="text" name="comlab" id="comlab_6" class="form-control"
-                                placeholder="Enter Computer Laboratory">
+                            <textarea type="text" name="comlab" id="comlab_6" class="form-control"
+                                placeholder="Enter Computer Laboratory"></textarea>
                         </div>
 
                         <div class="form-group">
                             <label> Course Learning Outcomes  </label>
-                            <input type="text" name="final_learning_out" id="final_learning_out" class="form-control"
-                                placeholder="Enter Course Learning Outcomes">
+                            <textarea type="text" name="final_learning_out" id="final_learning_out" class="form-control"
+                                placeholder="Enter Course Learning Outcomes" cols="50" rows="5"></textarea>
                         </div>
 
                         <div class="form-group">
@@ -1564,8 +1643,8 @@ echo "No Record Found";
 
                     <div class="form-group">
                             <label> Course Learning Outcomes  </label>
-                            <input type="text" name="final_learning_out" id="final_learning_out6" class="form-control"
-                                placeholder="Enter Course Learning Outcomes">
+                            <textarea type="text" name="final_learning_out" id="final_learning_out6" class="form-control"
+                                placeholder="Enter Course Learning Outcomes" cols="50" rows="5"></textarea>
                         </div>
 
                         <div class="form-group">
@@ -1578,7 +1657,7 @@ echo "No Record Found";
             </div>
 
             <div class="form-group">
-    <input type="text" id="catid" name="catid" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['catid']) ? $_SESSION['catid'] : ''; ?>">
+    <input type="hidden" id="catid" name="catid" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['catid']) ? $_SESSION['catid'] : ''; ?>">
 </div>
 
                     </div>
@@ -1749,7 +1828,7 @@ echo "No Record Found";
                 </div>
 
                 <div class="form-group">
-    <input type="text" id="catid" name="catid" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['catid']) ? $_SESSION['catid'] : ''; ?>">
+    <input type="hidden" id="catid" name="catid" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['catid']) ? $_SESSION['catid'] : ''; ?>">
 </div>
 
 
@@ -2571,7 +2650,7 @@ echo $html;
 
             
             <div class="form-group">
-                <input type="text" id="catid" name="catid" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['catid']) ? $_SESSION['catid'] : ''; ?>">
+                <input type="hidden" id="catid" name="catid" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['catid']) ? $_SESSION['catid'] : ''; ?>">
             </div>
 
 
@@ -2782,7 +2861,7 @@ echo "No Record Found";
 
                 
             <div class="form-group">
-                <input type="text" id="catid" name="catid" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['catid']) ? $_SESSION['catid'] : ''; ?>">
+                <input type="hidden" id="catid" name="catid" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['catid']) ? $_SESSION['catid'] : ''; ?>">
             </div>
 
                     </div>
@@ -3038,7 +3117,7 @@ echo "No Record Found";
 
                                 
                     <div class="form-group">
-                        <input type="text" id="catid" name="catid" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['catid']) ? $_SESSION['catid'] : ''; ?>">
+                        <input type="hidden" id="catid" name="catid" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['catid']) ? $_SESSION['catid'] : ''; ?>">
                     </div>
 
                     </div>
@@ -3784,7 +3863,7 @@ $mysqli->close();
 
                     
                     <div class="form-group">
-                        <input type="text" id="catid" name="catid" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['catid']) ? $_SESSION['catid'] : ''; ?>">
+                        <input type="hidden" id="catid" name="catid" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['catid']) ? $_SESSION['catid'] : ''; ?>">
                     </div>
 
 
@@ -4118,7 +4197,7 @@ $mysqli->close();
 
                     
             <div class="form-group">
-                <input type="text" id="catid" name="catid" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['catid']) ? $_SESSION['catid'] : ''; ?>">
+                <input type="hidden" id="catid" name="catid" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['catid']) ? $_SESSION['catid'] : ''; ?>">
             </div>
 
 
@@ -4394,7 +4473,7 @@ echo "No Record Found";
 
                 
                 <div class="form-group">
-                    <input type="text" id="catid" name="catid" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['catid']) ? $_SESSION['catid'] : ''; ?>">
+                    <input type="hidden" id="catid" name="catid" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['catid']) ? $_SESSION['catid'] : ''; ?>">
                 </div>
 
                     </div>
@@ -4771,7 +4850,9 @@ descriptions for the graduate attributes.</a>
             console.log(data);
 
             $('#update_id1').val(data[0]);
-            $('#topic_learn_out').val(data[4]);
+            $('#comlab1').val(data[1]);
+            $('#learn_out1').val(data[3]);
+            $('#topic_learn_out1').val(data[4]);
         });
     });
 </script>

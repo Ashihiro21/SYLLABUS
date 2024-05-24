@@ -251,16 +251,7 @@ if ($result->num_rows > 0) {
     // Output data of each row
     while($row = $result->fetch_assoc()) {
         echo "<tr>
-        <td'>";
-    
-        if (strpos($row['learn_out'], 'CLO') !== false || strpos($row['learn_out'], "\n") !== false) {
-            // If 'TLO' or a line break is found, replace it with <br>
-            echo str_replace(array('', "\n"), '<br>', $row['learn_out']);
-        } else {
-            echo $row['learn_out'];
-        }
-    
-        echo "</td><br><br>
+        <td>" . $row["comlab"] ." . ". $row["learn_out"] . "</td>
             </tr>";
     }
     
@@ -319,17 +310,12 @@ if ($result->num_rows > 0) {
     // Output data of each row
     while ($row = $result->fetch_assoc()) {
         echo "<tr>
-        <td style='border: 1px solid #dddddd;text-align: left; padding: 8px;'>";
-    
-        if (strpos($row['learn_out'], 'CLO') !== false || strpos($row['learn_out'], "\n") !== false) {
-            // If 'TLO' or a line break is found, replace it with <br>
-            echo str_replace(array('', "\n"), '<br>', $row['learn_out']);
-        } else {
-            echo $row['learn_out'];
-        }
-    
-        echo "</td>
                 <td style='border: 1px solid #dddddd;text-align: left; padding: 8px;'>";
+        
+        echo $row["comlab"] . " . " . $row["learn_out"];
+        
+        echo "</td>
+        <td style='border: 1px solid #dddddd;text-align: left; padding: 8px;'>";
     
         if (strpos($row['topic_learn_out'], 'TLO') !== false || strpos($row['topic_learn_out'], "\n") !== false) {
             // If 'TLO' or a line break is found, replace it with <br>
@@ -343,6 +329,7 @@ if ($result->num_rows > 0) {
     }
     
     
+    
     // Close table
     echo "</table>";
 } else {
@@ -353,7 +340,7 @@ if ($result->num_rows > 0) {
 $conn->close();
 
 ?>
-<br><br><br><br>
+<br><br>
 
 <!-- TEACHING ASSESMENT GUIDE WITH COMPUTATION -->
 <?php
@@ -531,7 +518,7 @@ if ($result->num_rows > 0) {
     // Output data of each row
     while ($row = $result->fetch_assoc()) {
         echo "<tr>
-                <td style='border: 1px solid #dddddd;text-align: left; padding: 8px;'>".$row["final_learning_out"]."</td>
+                <td style='border: 1px solid #dddddd;text-align: left; padding: 8px;'>".$row["comlab"]." . ".$row["final_learning_out"]."</td>
                 <td style='border: 1px solid #dddddd;text-align: left; padding: 8px;'>";
     
         if (strpos($row['final_topic_leaning_out'], 'TLO') !== false || strpos($row['final_topic_leaning_out'], "\n") !== false) {
