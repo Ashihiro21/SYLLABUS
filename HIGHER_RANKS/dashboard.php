@@ -1045,264 +1045,114 @@ $mysqli->close();
 </div>
 
 <div class="container mt-5">
-<table id="datatableid" class="table table-bordered">
-    <thead>
-        <tr>
-            <th scope="col">Course Learning Outcomes</th>
-            <th scope="col">Topic Learning Outcomes</th>
-            <th scope="col">Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php
-        if($query_run) {
-            $counter = 0;
-            foreach($query_run as $row) {
-                $nestedTableId = "nestedtableid_" . $counter;
-        ?>
-        <tr>
-            <td class="hide-id"><?php echo $row['id']; ?></td>
-            <td>
-                <?php
-                if (strpos($row['learn_out'], 'TLO') !== false || strpos($row['learn_out'], "\n") !== false) {
-                    echo str_replace(array('', "\n"), '<br>', $row['learn_out']);
-                } else {
-                    echo $row['learn_out'];
-                }
-                ?>
-            </td>
-            <td>
-    <table id="<?php echo $nestedTableId; ?>" class="nested-table">
-        <thead>
-            <tr>
-                <th>TLO No.</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>
-                    <?php
-                    if (strpos($row['topic_learn_out'], 'TLO') !== false || strpos($row['topic_learn_out'], "\n") !== false) {
-                        echo str_replace(array('', "\n"), '<br>', $row['topic_learn_out']);
-                    } else {
-                        echo $row['topic_learn_out'];
-                    }
-                    ?>
-                </td>
-                <td class="table-button">
-                    <button type="button" class="btn btn-success editbtn_learning_out_table" onclick="openEditModal(this, '<?php echo $nestedTableId; ?>', '<?php echo $row['id']; ?>')">
-                        <i class="lni lni-pencil"></i> Edit
-                    </button>
-                </td>
-                </tr>
-                <tr>
-                <td>
-                    <?php
-                    if (strpos($row['topic_learn_out2'], 'TLO') !== false || strpos($row['topic_learn_out2'], "\n") !== false) {
-                        echo str_replace(array('', "\n"), '<br>', $row['topic_learn_out2']);
-                    } else {
-                        echo $row['topic_learn_out2'];
-                    }
-                    ?>
-                </td>
-                <td class="table-button">
-                    <button type="button" class="btn btn-success editbtn_learning_out_table" onclick="openEditModal(this, '<?php echo $nestedTableId; ?>', '<?php echo $row['id']; ?>')">
-                        <i class="lni lni-pencil"></i> Edit
-                    </button>
-                </td>
-            </tr>
-                <tr>
-                <td>
-                    <?php
-                    if (strpos($row['topic_learn_out3'], 'TLO') !== false || strpos($row['topic_learn_out3'], "\n") !== false) {
-                        echo str_replace(array('', "\n"), '<br>', $row['topic_learn_out3']);
-                    } else {
-                        echo $row['topic_learn_out3'];
-                    }
-                    ?>
-                </td>
-                <td class="table-button">
-                    <button type="button" class="btn btn-success editbtn_learning_out_table" onclick="openEditModal(this, '<?php echo $nestedTableId; ?>', '<?php echo $row['id']; ?>')">
-                        <i class="lni lni-pencil"></i> Edit
-                    </button>
-                </td>
-            </tr>
-                <tr>
-                <td>
-                    <?php
-                    if (strpos($row['topic_learn_out4'], 'TLO') !== false || strpos($row['topic_learn_out4'], "\n") !== false) {
-                        echo str_replace(array('', "\n"), '<br>', $row['topic_learn_out4']);
-                    } else {
-                        echo $row['topic_learn_out4'];
-                    }
-                    ?>
-                </td>
-                <td class="table-button">
-                    <button type="button" class="btn btn-success editbtn_learning_out_table" onclick="openEditModal(this, '<?php echo $nestedTableId; ?>', '<?php echo $row['id']; ?>')">
-                        <i class="lni lni-pencil"></i> Edit
-                    </button>
-                </td>
-            </tr>
-                <tr>
-                <td>
-                    <?php
-                    if (strpos($row['topic_learn_out5'], 'TLO') !== false || strpos($row['topic_learn_out5'], "\n") !== false) {
-                        echo str_replace(array('', "\n"), '<br>', $row['topic_learn_out5']);
-                    } else {
-                        echo $row['topic_learn_out5'];
-                    }
-                    ?>
-                </td>
-                <td class="table-button">
-                    <button type="button" class="btn btn-success editbtn_learning_out_table" onclick="openEditModal(this, '<?php echo $nestedTableId; ?>', '<?php echo $row['id']; ?>')">
-                        <i class="lni lni-pencil"></i> Edit
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</td>
-<td class="table-button">
-<button type="button" class="btn btn-success add_databtn_tlo" data-toggle="modal" data-target="#studentaddmodal_tlo">
-                        ADD DATA
-                    </button>
-</td>
+<?php
+ 
 
-        </tr>
-        <?php
-                $counter++;
-            }
-        } else {
-            echo "No Record Found";
-        }
-        ?>
-    </tbody>
+ // Database connection
+ 
+ 
+ $connection = mysqli_connect("localhost","root","","syllabus");
+ if (mysqli_connect_errno()){
+     echo "Failed to connect to MySQL: " . mysqli_connect_error();
+     die();
+     }
+
+
+     $department = $_SESSION['department'];
+     $catid = $_SESSION['catid']; 
+ $query = "SELECT * FROM  course_leaning WHERE department='$department' AND catid='$catid'";
+ $query_run = mysqli_query($connection, $query);
+?>  
+<table id="datatableid" class="table table-bordered">
+<thead>
+    <tr>
+        <th colspan="3">Course Learning Outcomes</th>
+        <th scope="col">Topic Learning Outcomes</th>
+        <th scope="col">Action</th>
+    </tr>
+</thead>
+<?php
+if($query_run)
+{
+foreach($query_run as $row)
+{
+?>
+<tbody>
+  
+<tr>
+        <td class="hide-id"> <?php echo $row['id']; ?> </td>
+        <td style="border-right:1px solid white;"><?php echo $row['comlab']; ?></td>
+        <td style="border-left:1px solid white;border-right:1px solid white; padding-left:0px;padding-right:0px;"><?php echo "."; ?></td>
+        <td class=""><?php echo $row['learn_out']; ?></td>
+        <td class=""><?php
+                        if (strpos($row['topic_learn_out'], 'TLO') !== false || strpos($row['topic_learn_out'], "\n") !== false) {
+                            // If 'TLO' or a line break is found, replace it with <br>
+                            echo str_replace(array('', "\n"), '<br>', $row['topic_learn_out']);
+                        } else {
+                            echo $row['topic_learn_out'];
+                        }
+                        ?></td>
+        <td class="table-button">
+        <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
+
+        <button type="button" class="btn btn-success editbtn_learning_out_table"><i class="lni lni-pencil"></i></button>
+
+        </td>
+    </tr>
+
+
+
+</tbody>
+<?php           
+}
+}
+else 
+{
+echo "No Record Found";
+}
+?>
 </table>
 </div>
 
-<!-- Edit Modal HTML -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Edit TLO</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="editForm">
-                    <div class="mb-3">
-                        <label for="editTloNumber" class="form-label">TLO Number</label>
-                        <input type="text" class="form-control" id="editTloNumber" name="tloNumber">
-                        <input type="hidden" id="editId" name="id">
+
+
+ <!-- EDIT POP UP for Final Period Table (Bootstrap MODAL) -->
+ <div class="modal fade" id="editmodal_learn_out_table" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel6"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel6"> Topic Learning Outcomes1  </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/update_course_learning_outcome_table.php" method="POST">
+
+                    <div class="modal-body">
+
+                        <input type="text" name="update_id1" id="update_id1">
+
+
+                        <div class="form-group">
+                        <label>Topic Learning Outcomes</label>
+                        <textarea name="topic_learn_out" id="topic_learn_out" class="form-control" placeholder="Enter Learning Outcome" cols="50" rows="5"></textarea>
                     </div>
-                    <button type="button" class="btn btn-warning" onclick="saveEdit()">Save changes</button>
+
+
+
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="updatedatatable" class="btn btn-primary">Update Data</button>
+                    </div>
                 </form>
+
             </div>
         </div>
     </div>
-</div>
-
-<!-- Add Modal HTML -->
-<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addModalLabel">Add New TLO</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="addForm">
-                    <div class="mb-3">
-                        <label for="addTloNumber" class="form-label">TLO Number</label>
-                        <input type="text" class="form-control" id="addTloNumber" name="tloNumber">
-                    </div>
-                    <button type="button" class="btn btn-warning" onclick="saveAdd()">Add</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    let currentNestedTableId = '';
-    let currentId = '';
-
-    function openEditModal(button, nestedTableId, id) {
-        currentNestedTableId = nestedTableId;
-        currentId = id;
-        var row = button.closest('tr');
-        var tloNumber = row.cells[0].innerText.trim();
-
-        document.getElementById('editTloNumber').value = tloNumber;
-        document.getElementById('editId').value = currentId;
-
-        var editModal = new bootstrap.Modal(document.getElementById('editModal'));
-        editModal.show();
-
-        document.getElementById('editForm').setAttribute('data-row', row.rowIndex);
-    }
-
-    function saveEdit() {
-        var rowIndex = document.getElementById('editForm').getAttribute('data-row');
-        var nestedTable = document.getElementById(currentNestedTableId);
-        var row = nestedTable.rows[rowIndex];
-
-        var tloNumber = document.getElementById('editTloNumber').value;
-        var id = document.getElementById('editId').value;
-
-        row.cells[0].innerText = tloNumber;
-
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "Course_Syllabus/edit_tlo.php", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                console.log(xhr.responseText);
-                var editModal = bootstrap.Modal.getInstance(document.getElementById('editModal'));
-                editModal.hide();
-            }
-        };
-        xhr.send("id=" + id + "&tloNumber=" + encodeURIComponent(tloNumber));
-    }
-
-    function openAddModal(nestedTableId) {
-        currentNestedTableId = nestedTableId;
-
-        var addModal = new bootstrap.Modal(document.getElementById('addModal'));
-        addModal.show();
-    }
-
-    function saveAdd() {
-        var tloNumber = document.getElementById('addTloNumber').value;
-
-        var nestedTable = document.getElementById(currentNestedTableId);
-        var newRow = nestedTable.insertRow();
-        var newCell1 = newRow.insertCell(0);
-        var newCell2 = newRow.insertCell(1);
-
-        newCell1.innerText = tloNumber;
-        newCell2.innerHTML = '<button type="button" class="btn btn-success editbtn_learning_out_table" onclick="openEditModal(this, \'' + currentNestedTableId + '\', \'\')"><i class="lni lni-pencil"></i></button>';
-
-        var addModal = bootstrap.Modal.getInstance(document.getElementById('addModal'));
-        addModal.hide();
-
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "Course_Syllabus/add_tlo.php", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                console.log(xhr.responseText);
-                if (xhr.responseText.trim() === 'success') {
-                    console.log("Data inserted successfully.");
-                } else {
-                    console.log("Error inserting data.");
-                }
-            }
-        };
-        xhr.send("tloNumber=" + encodeURIComponent(tloNumber));
-    }
-</script>
 
 <!-- end course table modals  -->
   <button type="button" class="btn btn-primary add_databtn" data-toggle="modal" data-target="#addmodal_module_learning">ADD DATA</button>
@@ -4921,7 +4771,7 @@ descriptions for the graduate attributes.</a>
             console.log(data);
 
             $('#update_id1').val(data[0]);
-            $('#topic_learn_out').val(data[2]);
+            $('#topic_learn_out').val(data[4]);
         });
     });
 </script>

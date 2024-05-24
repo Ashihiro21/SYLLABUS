@@ -87,6 +87,15 @@ require_once '../Database/connection.php';
                         <span class="title">Position</span>
                     </a>
                 </li>
+
+                <li>
+                    <a href="syllabus_status.php">
+                        <span class="icon">
+                        <ion-icon name="folder-outline"></ion-icon>
+                        </span>
+                        <span class="title">Syllabus Status</span>
+                    </a>
+                </li>
 <!-- 
                 <li>
                     <a href="#">

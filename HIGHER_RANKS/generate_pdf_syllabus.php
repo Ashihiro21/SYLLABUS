@@ -281,7 +281,7 @@ $html .= '</tr>';
 $department = $_SESSION['department'];
 $catid = $_SESSION['catid'];  
 
-$sql = "SELECT * FROM course_leaning WHERE department = $department  ORDER BY id ASC";
+$sql = "SELECT * FROM course_leaning WHERE department = $department and catid = $catid  ORDER BY id ASC";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
