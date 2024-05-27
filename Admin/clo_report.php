@@ -116,11 +116,11 @@ $conn->close();
             <img src="../Admin/uploads/<?php echo isset($results[0]['logo']) ? $results[0]['logo'] : 'No_signature'; ?>" alt="Department Logo">
         </div>
         <h4>DE LA SALLE UNIVERSITY-DASMARINAS</h4>
-        <h3><?php echo $department; ?></h3>
+        <h3><?php echo strtoupper($department); ?></h3>
         <?php if (!empty($midtermHigherResults[$department])): ?>
             <?php foreach ($midtermHigherResults[$department] as $result): ?>
-                <h4><?php echo $result['cname']; ?></h4>
-                <h4><?php echo $result['course_department']; ?></h4>
+                <h4><?php echo strtoupper($result['cname']); ?></h4>
+                <h4><?php echo strtoupper($result['course_department']); ?></h4>
                 <table>
                     <tr>
                         <th>Higher Level (<?php echo round($midtermHigherPercent, 2); ?>%)</th>
@@ -160,11 +160,11 @@ $conn->close();
             <img src="../Admin/uploads/<?php echo isset($results[0]['logo']) ? $results[0]['logo'] : 'No_signature'; ?>" alt="Department Logo">
         </div>
         <h4>DE LA SALLE UNIVERSITY-DASMARINAS</h4>
-        <h3><?php echo $department; ?></h3>
+        <h3><?php echo strtoupper($department); ?></h3>
         <?php if (!empty($finalHigherResults[$department])): ?>
             <?php foreach ($finalHigherResults[$department] as $result): ?>
-                <h4><?php echo $result['cname']; ?></h4>
-                <h4><?php echo $result['course_department']; ?></h4>
+                <h4><?php echo strtoupper($result['cname']); ?></h4>
+                <h4><?php echo strtoupper($result['course_department']); ?></h4>
                 <table>
                     <tr>
                         <th>Higher Level (<?php echo round($finalHigherPercent, 2); ?>%)</th>
