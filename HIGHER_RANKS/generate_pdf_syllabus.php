@@ -257,7 +257,26 @@ table, tr, th, td{
                 // If a line break is found, replace it with <br>
                 $output = str_replace("\n", '<br>', $row['learn_out']);
             } else {
-                $output = $row['learn_out'];
+                $output =$row['comlab'] .'.'. $row['learn_out'];
+            }
+            $html .= '<a>' . $output . '</a><br><br>';
+            
+            
+        }
+    }
+
+    $department = $_SESSION['department'];
+    $catid = $_SESSION['catid'];  
+    // Fetch and display course learning outcomes
+    $sql = "SELECT * FROM  laerning_final WHERE department = $department and catid = $catid ORDER BY id ASC";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            if (strpos($row['final_learning_out'], 'CLO') !== false || strpos($row['final_learning_out'], "\n") !== false) {
+                // If a line break is found, replace it with <br>
+                $output = str_replace("\n", '<br>', $row['final_learning_out']);
+            } else {
+                $output = $row['comlab'] .'.'. $row['final_learning_out'];
             }
             $html .= '<a>' . $output . '</a><br><br>';
             
