@@ -72,7 +72,7 @@ function filterLearningOutcomes($conn, $array, $table, $column) {
         $result = $conn->query($sql);
         if ($result && $result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
-                $filteredResults[] = $row;
+                $filteredResults[$row['name']][] = $row;
                 $matches++;
             }
         }
@@ -94,76 +94,79 @@ $conn->close();
 ?>
 
 <h1>Higher and Lower for Department</h1>
+
 <h2>Learning Outcomes for Midterm Period</h2>
 <div class="center">
-<table>
-<tr>
-    <th>Higher Level (<?php echo round($midtermHigherPercent, 2); ?>%)</th>
-    <th>Lower Level (<?php echo round($midtermLowerPercent, 2); ?>%)</th>
-</tr>
-<tr>
-<td>
-<?php
-if (!empty($midtermHigherResults)) {
-    foreach ($midtermHigherResults as $result) {
-        echo '<p><strong>Department:</strong> ' . $result['name'] . ' (' . $result['initial'] . ')<br>';
-        echo '<strong>Outcome:</strong> ' . $result['comlab'] . '. ' . $result['learn_out'] . '</p>';
-    }
-} else {
-    echo '<p>No Higher Level found.</p>';
-}
-?>
-</td>
-<td>
-<?php
-if (!empty($midtermLowerResults)) {
-    foreach ($midtermLowerResults as $result) {
-        echo '<p><strong>Department:</strong> ' . $result['name'] . ' (' . $result['initial'] . ')<br>';
-        echo '<strong>Outcome:</strong> ' . $result['comlab'] . '. ' . $result['learn_out'] . '</p>';
-    }
-} else {
-    echo '<p>No Lower Level found.</p>';
-}
-?>
-</td>
-</tr>
-</table>
+    <?php foreach ($midtermHigherResults as $department => $results): ?>
+        <h3><?php echo $department; ?></h3>
+        <table>
+            <tr>
+                <th>Higher Level (<?php echo round($midtermHigherPercent, 2); ?>%)</th>
+                <th>Lower Level (<?php echo round($midtermLowerPercent, 2); ?>%)</th>
+            </tr>
+            <tr>
+                <td>
+                    <?php
+                    if (!empty($midtermHigherResults[$department])) {
+                        foreach ($midtermHigherResults[$department] as $result) {
+                            echo '<p><strong>Outcome:</strong> ' . $result['comlab'] . '. ' . $result['learn_out'] . '</p>';
+                        }
+                    } else {
+                        echo '<p>No Higher Level found.</p>';
+                    }
+                    ?>
+                </td>
+                <td>
+                    <?php
+                    if (!empty($midtermLowerResults[$department])) {
+                        foreach ($midtermLowerResults[$department] as $result) {
+                            echo '<p><strong>Outcome:</strong> ' . $result['comlab'] . '. ' . $result['learn_out'] . '</p>';
+                        }
+                    } else {
+                        echo '<p>No Lower Level found.</p>';
+                    }
+                    ?>
+                </td>
+            </tr>
+        </table>
+    <?php endforeach; ?>
 </div>
 
 <h2>Learning Outcomes for Final Period</h2>
 <div class="center">
-<table>
-<tr>
-    <th>Higher Level (<?php echo round($finalHigherPercent, 2); ?>%)</th>
-    <th>Lower Level (<?php echo round($finalLowerPercent, 2); ?>%)</th>
-</tr>
-<tr>
-<td>
-<?php
-if (!empty($finalHigherResults)) {
-    foreach ($finalHigherResults as $result) {
-        echo '<p><strong>Department:</strong> ' . $result['name'] . ' (' . $result['initial'] . ')<br>';
-        echo '<strong>Outcome:</strong> ' . $result['comlab'] . '. ' . $result['final_learning_out'] . '</p>';
-    }
-} else {
-    echo '<p>No Higher Level found.</p>';
-}
-?>
-</td>
-<td>
-<?php
-if (!empty($finalLowerResults)) {
-    foreach ($finalLowerResults as $result) {
-        echo '<p><strong>Department:</strong> ' . $result['name'] . ' (' . $result['initial'] . ')<br>';
-        echo '<strong>Outcome:</strong> ' . $result['comlab'] . '. ' . $result['final_learning_out'] . '</p>';
-    }
-} else {
-    echo '<p>No Lower Level found.</p>';
-}
-?>
-</td>
-</tr>
-</table>
+    <?php foreach ($finalHigherResults as $department => $results): ?>
+        <h3><?php echo $department; ?></h3>
+        <table>
+            <tr>
+                <th>Higher Level (<?php echo round($finalHigherPercent, 2); ?>%)</th>
+                <th>Lower Level (<?php echo round($finalLowerPercent, 2); ?>%)</th>
+            </tr>
+            <tr>
+                <td>
+                    <?php
+                    if (!empty($finalHigherResults[$department])) {
+                        foreach ($finalHigherResults[$department] as $result) {
+                            echo '<p><strong>Outcome:</strong> ' . $result['comlab'] . '. ' . $result['final_learning_out'] . '</p>';
+                        }
+                    } else {
+                        echo '<p>No Higher Level found.</p>';
+                    }
+                    ?>
+                </td>
+                <td>
+                    <?php
+                    if (!empty($finalLowerResults[$department])) {
+                        foreach ($finalLowerResults[$department] as $result) {
+                            echo '<p><strong>Outcome:</strong> ' . $result['comlab'] . '. ' . $result['final_learning_out'] . '</p>';
+                        }
+                    } else {
+                        echo '<p>No Lower Level found.</p>';
+                    }
+                    ?>
+                </td>
+            </tr>
+        </table>
+    <?php endforeach; ?>
 </div>
 
 </body>
