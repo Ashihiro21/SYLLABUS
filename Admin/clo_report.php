@@ -5,14 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<style>
-    table, th, td, tr{
-        border: 2px solid black;
-        padding: 20px;
-        border-collapse: collapse;
-        text-align: center;
-    }
-</style>
 <body>
 
 <?php
@@ -45,151 +37,104 @@ $lowerArray = [
     "Define", "List", "Memorize", "State"
 ];
 
-// Function to filter learning outcomes per department
-function filterLearningOutcomesByDepartment($conn, $array, $table, $column) {
-    $results = [];
-    $sql = "SELECT DISTINCT d.department, c.id, c.name, c.initial, c.dean_name, c.dean_position, c.logo 
-            FROM $table d 
-            LEFT JOIN category c ON d.department = c.id";
-    $result = $conn->query($sql);
+// Function to filter learning outcomes
+function filterLearningOutcomes($conn, $array, $table, $column) {
+    $matches = 0;
+    $filteredResults = [];
 
-    if ($result && $result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $departmentId = $row['department'];
-            $departmentName = $row['name'];
-
-            $higherMatches = 0;
-            $lowerMatches = 0;
-            $filteredHigherResults = [];
-            $filteredLowerResults = [];
-
-            foreach ($array['higher'] as $word) {
-                $sql = "SELECT `comlab`, `$column` FROM `$table` 
-                        WHERE `$column` LIKE '%$word%' 
-                        AND `department` = '$departmentId' 
-                        AND `catid` IS NOT NULL";
-                $subResult = $conn->query($sql);
-                if ($subResult && $subResult->num_rows > 0) {
-                    while ($subRow = $subResult->fetch_assoc()) {
-                        $filteredHigherResults[] = $subRow;
-                        $higherMatches++;
-                    }
-                }
+    foreach ($array as $word) {
+        $sql = "SELECT `comlab`, `$column` FROM `$table` WHERE `$column` LIKE '%$word%' AND `department` IS NOT NULL AND `catid` IS NOT NULL";
+        $result = $conn->query($sql);
+        if ($result && $result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $filteredResults[] = $row;
+                $matches++;
             }
-
-            foreach ($array['lower'] as $word) {
-                $sql = "SELECT `comlab`, `$column` FROM `$table` 
-                        WHERE `$column` LIKE '%$word%' 
-                        AND `department` = '$departmentId' 
-                        AND `catid` IS NOT NULL";
-                $subResult = $conn->query($sql);
-                if ($subResult && $subResult->num_rows > 0) {
-                    while ($subRow = $subResult->fetch_assoc()) {
-                        $filteredLowerResults[] = $subRow;
-                        $lowerMatches++;
-                    }
-                }
-            }
-
-            $higherPercent = ($higherMatches / count($array['higher'])) * 100;
-            $lowerPercent = ($lowerMatches / count($array['lower'])) * 100;
-
-            $results[$departmentName] = [
-                'higher' => $filteredHigherResults,
-                'higherPercent' => $higherPercent,
-                'lower' => $filteredLowerResults,
-                'lowerPercent' => $lowerPercent,
-                'details' => $row
-            ];
         }
     }
 
-    return $results;
+    $percent = ($matches / count($array)) * 100;
+    return [$filteredResults, $percent];
 }
 
-// Learning outcome arrays
-$learningOutcomeArray = ['higher' => $higherArray, 'lower' => $lowerArray];
-
 // Get filtered results for midterm period
-$midtermResults = filterLearningOutcomesByDepartment($conn, $learningOutcomeArray, 'course_leaning', 'learn_out');
+list($midtermHigherResults, $midtermHigherPercent) = filterLearningOutcomes($conn, $higherArray, 'course_leaning', 'learn_out');
+list($midtermLowerResults, $midtermLowerPercent) = filterLearningOutcomes($conn, $lowerArray, 'course_leaning', 'learn_out');
 
 // Get filtered results for final period
-$finalResults = filterLearningOutcomesByDepartment($conn, $learningOutcomeArray, 'laerning_final', 'final_learning_out');
+list($finalHigherResults, $finalHigherPercent) = filterLearningOutcomes($conn, $higherArray, 'laerning_final', 'final_learning_out');
+list($finalLowerResults, $finalLowerPercent) = filterLearningOutcomes($conn, $lowerArray, 'laerning_final', 'final_learning_out');
 
 $conn->close();
 ?>
 
 <h2>Learning Outcomes for Midterm Period</h2>
+<div class="center">
+<table>
+<tr>
+    <th>Higher Level (<?php echo round($midtermHigherPercent, 2); ?>%)</th>
+    <th>Lower Level (<?php echo round($midtermLowerPercent, 2); ?>%)</th>
+</tr>
+<tr>
+<td>
 <?php
-foreach ($midtermResults as $department => $data) {
-    $details = $data['details'];
-    echo "<h3>Department: {$details['name']} ({$details['initial']})</h3>";
-    echo '<div class="center">';
-    echo '<table>';
-    echo '<tr>';
-    echo '<th>Higher Level (' . round($data['higherPercent'], 2) . '%)</th>';
-    echo '<th>Lower Level (' . round($data['lowerPercent'], 2) . '%)</th>';
-    echo '</tr>';
-    echo '<tr>';
-    echo '<td>';
-    if (!empty($data['higher'])) {
-        foreach ($data['higher'] as $result) {
-            echo '<p>' . $result['comlab'] . '. ' . $result['learn_out'] . '</p>';
-        }
-    } else {
-        echo '<p>No Higher Level found.</p>';
+if (!empty($midtermHigherResults)) {
+    foreach ($midtermHigherResults as $result) {
+        echo '<p>' . $result['comlab'] . '. ' . $result['learn_out'] . '</p>';
     }
-    echo '</td>';
-    echo '<td>';
-    if (!empty($data['lower'])) {
-        foreach ($data['lower'] as $result) {
-            echo '<p>' . $result['comlab'] . '. ' . $result['learn_out'] . '</p>';
-        }
-    } else {
-        echo '<p>No Lower Level found.</p>';
-    }
-    echo '</td>';
-    echo '</tr>';
-    echo '</table>';
-    echo '</div>';
+} else {
+    echo '<p>No Higher Level found.</p>';
 }
 ?>
+</td>
+<td>
+<?php
+if (!empty($midtermLowerResults)) {
+    foreach ($midtermLowerResults as $result) {
+        echo '<p>' . $result['comlab'] . '. ' . $result['learn_out'] . '</p>';
+    }
+} else {
+    echo '<p>No Lower Level found.</p>';
+}
+?>
+</td>
+</tr>
+</table>
+</div>
 
 <h2>Learning Outcomes for Final Period</h2>
+<div class="center">
+<table>
+<tr>
+    <th>Higher Level (<?php echo round($finalHigherPercent, 2); ?>%)</th>
+    <th>Lower Level (<?php echo round($finalLowerPercent, 2); ?>%)</th>
+</tr>
+<tr>
+<td>
 <?php
-foreach ($finalResults as $department => $data) {
-    $details = $data['details'];
-    echo "<h3>Department: {$details['name']} ({$details['initial']})</h3>";
-    echo '<div class="center">';
-    echo '<table>';
-    echo '<tr>';
-    echo '<th>Higher Level (' . round($data['higherPercent'], 2) . '%)</th>';
-    echo '<th>Lower Level (' . round($data['lowerPercent'], 2) . '%)</th>';
-    echo '</tr>';
-    echo '<tr>';
-    echo '<td>';
-    if (!empty($data['higher'])) {
-        foreach ($data['higher'] as $result) {
-            echo '<p>' . $result['comlab'] . '. ' . $result['final_learning_out'] . '</p>';
-        }
-    } else {
-        echo '<p>No Higher Level found.</p>';
+if (!empty($finalHigherResults)) {
+    foreach ($finalHigherResults as $result) {
+        echo '<p>' . $result['comlab'] . '. ' . $result['final_learning_out'] . '</p>';
     }
-    echo '</td>';
-    echo '<td>';
-    if (!empty($data['lower'])) {
-        foreach ($data['lower'] as $result) {
-            echo '<p>' . $result['comlab'] . '. ' . $result['final_learning_out'] . '</p>';
-        }
-    } else {
-        echo '<p>No Lower Level found.</p>';
-    }
-    echo '</td>';
-    echo '</tr>';
-    echo '</table>';
-    echo '</div>';
+} else {
+    echo '<p>No Higher Level found.</p>';
 }
 ?>
+</td>
+<td>
+<?php
+if (!empty($finalLowerResults)) {
+    foreach ($finalLowerResults as $result) {
+        echo '<p>' . $result['comlab'] . '. ' . $result['final_learning_out'] . '</p>';
+    }
+} else {
+    echo '<p>No Lower Level found.</p>';
+}
+?>
+</td>
+</tr>
+</table>
+</div>
 
 </body>
 </html>

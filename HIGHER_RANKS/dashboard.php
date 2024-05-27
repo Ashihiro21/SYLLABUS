@@ -990,7 +990,7 @@ $mysqli->close();
                 
                          $department = $_SESSION['department'];
                          $catid = $_SESSION['catid']; 
-                         $query = "SELECT * FROM course_leaning WHERE department='$department' AND catid='$catid'";
+                         $query = "SELECT * FROM course_leaning WHERE department='$department' AND catid='$catid' ORDER BY id ASC";
                      $query_run = mysqli_query($connection, $query);
         ?>  
                 <table id="datatableid">
@@ -1058,7 +1058,7 @@ $mysqli->close();
 
                         $department = $_SESSION['department'];
                         $catid = $_SESSION['catid']; 
-                        $query = "SELECT * FROM laerning_final WHERE department='$department' AND catid='$catid'";
+                        $query = "SELECT * FROM laerning_final WHERE department='$department' AND catid='$catid' ORDER BY id ASC";
                     $query_run = mysqli_query($connection, $query);
                     ?>  
                     <table id="datatableid">
