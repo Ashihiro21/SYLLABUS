@@ -96,6 +96,15 @@ require_once '../Database/connection.php';
                         <span class="title">Syllabus Status</span>
                     </a>
                 </li>
+
+                <li>
+                    <a href="clo_report.php">
+                        <span class="icon">
+                        <ion-icon name="folder-outline"></ion-icon>
+                        </span>
+                        <span class="title">Clo Reports</span>
+                    </a>
+                </li>
 <!-- 
                 <li>
                     <a href="#">
