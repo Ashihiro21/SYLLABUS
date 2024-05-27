@@ -265,6 +265,55 @@ if ($result->num_rows > 0) {
 $conn->close();
 ?>
 
+<?php
+
+    
+
+    
+// Database connection details
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "syllabus";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$department = $_SESSION['department'];
+$catid = $_SESSION['catid'];
+
+$sql = "SELECT `id`, `comlab`, `final_learning_out`   FROM `laerning_final` WHERE department = $department AND catid=$catid";
+
+// Execute query
+$result = $conn->query($sql);
+
+// Check if any rows were returned
+if ($result->num_rows > 0) {
+    // Output table header
+    echo "<table>";
+    
+    // Output data of each row
+    while($row = $result->fetch_assoc()) {
+        echo "<tr>
+        <td>" . $row["comlab"] ." . ". $row["final_learning_out"] . "</td>
+            </tr>";
+    }
+    
+    // Close table
+    echo "</table>";
+} else {
+    echo "No Results";
+}
+
+// Close connection
+$conn->close();
+?>
+
 
 <!-- LEARNING PLAN -->
 
