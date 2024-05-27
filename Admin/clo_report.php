@@ -105,15 +105,15 @@ list($finalLowerResults, $finalLowerPercent) = filterLearningOutcomes($conn, $lo
 $conn->close();
 ?>
 
-<h1>Higher and Lower for Department</h1>
+<H1>HIGHER AND LOWER FOR DEPARTMENT AND COURSE</H1>
 
 
-<h2>Learning Outcomes for Midterm Period</h2>
+<H2>LEARNING OUTCOMES FOR MIDTERM PERIOD</H2>
 <div class="center">
     <?php foreach ($midtermHigherResults as $department => $results): ?>
         <div class="department-logo">
             <a><img src="../img/DLSU-D.png" width="50" alt=""></a>    
-            <img src="../Admin/uploads/<?php echo isset($results[0]['logo']) ? $results[0]['logo'] : 'No_signature'; ?>" alt="Department Logo">
+            <img src="../Admin/uploads/<?php echo isset($results[0]['logo']) ? $results[0]['logo'] : 'No_signature'; ?>" alt="College Logo">
         </div>
         <h4>DE LA SALLE UNIVERSITY-DASMARINAS</h4>
         <h3><?php echo strtoupper($department); ?></h3>
@@ -152,12 +152,12 @@ $conn->close();
     <?php endforeach; ?>
 </div>
 
-<h2>Learning Outcomes for Final Period</h2>
+<H2>LEARNING OUTCOMES FOR FINAL PERIOD</H2>
 <div class="center">
     <?php foreach ($finalHigherResults as $department => $results): ?>
         <div class="department-logo">
             <a><img src="../img/DLSU-D.png" width="50" alt=""></a>    
-            <img src="../Admin/uploads/<?php echo isset($results[0]['logo']) ? $results[0]['logo'] : 'No_signature'; ?>" alt="Department Logo">
+            <img src="../Admin/uploads/<?php echo isset($results[0]['logo']) ? $results[0]['logo'] : 'No_signature'; ?>" alt="College Logo">
         </div>
         <h4>DE LA SALLE UNIVERSITY-DASMARINAS</h4>
         <h3><?php echo strtoupper($department); ?></h3>
