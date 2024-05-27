@@ -1,3 +1,5 @@
+<?php include_once 'index.php';?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,7 +32,7 @@
             margin-top: 15px;
         }
         .department-logo img {
-            max-height: 50px;
+            max-height: 150px;
             margin-left: 10px;
         }
     </style>
@@ -112,10 +114,10 @@ $conn->close();
 <div class="center">
     <?php foreach ($midtermHigherResults as $department => $results): ?>
         <div class="department-logo">
-            <a><img src="../img/DLSU-D.png" width="50" alt=""></a>    
+            <a><img src="../img/DLSU-D.png" width="150" alt=""></a>    
             <img src="../Admin/uploads/<?php echo isset($results[0]['logo']) ? $results[0]['logo'] : 'No_signature'; ?>" alt="College Logo">
         </div>
-        <h4>DE LA SALLE UNIVERSITY-DASMARINAS</h4>
+        <h3>DE LA SALLE UNIVERSITY-DASMARINAS</h3>
         <h3><?php echo strtoupper($department); ?></h3>
         <?php if (!empty($midtermHigherResults[$department])): ?>
             <?php foreach ($midtermHigherResults[$department] as $result): ?>
@@ -156,10 +158,10 @@ $conn->close();
 <div class="center">
     <?php foreach ($finalHigherResults as $department => $results): ?>
         <div class="department-logo">
-            <a><img src="../img/DLSU-D.png" width="50" alt=""></a>    
+            <a><img src="../img/DLSU-D.png" width="150" alt=""></a>    
             <img src="../Admin/uploads/<?php echo isset($results[0]['logo']) ? $results[0]['logo'] : 'No_signature'; ?>" alt="College Logo">
         </div>
-        <h4>DE LA SALLE UNIVERSITY-DASMARINAS</h4>
+        <h3>DE LA SALLE UNIVERSITY-DASMARINAS</h3>
         <h3><?php echo strtoupper($department); ?></h3>
         <?php if (!empty($finalHigherResults[$department])): ?>
             <?php foreach ($finalHigherResults[$department] as $result): ?>
