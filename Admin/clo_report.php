@@ -13,11 +13,12 @@
         table {
             width: 100%;
             border-collapse: collapse;
+            text-align: center;
         }
         th, td {
             border: 1px solid black;
             padding: 8px;
-            text-align: left;
+            text-align: center;
         }
         h2, h1, h3, h4 {
             text-align: center;
@@ -26,6 +27,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            margin-top: 15px;
         }
         .department-logo img {
             max-height: 50px;
@@ -104,19 +106,21 @@ $conn->close();
 ?>
 
 <h1>Higher and Lower for Department</h1>
-<h4>DE LA SALLE UNIVERSITY-DASMARINAS</h4>
+
 
 <h2>Learning Outcomes for Midterm Period</h2>
 <div class="center">
     <?php foreach ($midtermHigherResults as $department => $results): ?>
-        <h3><?php echo $department; ?></h3>
         <div class="department-logo">
+            <a><img src="../img/DLSU-D.png" width="50" alt=""></a>    
             <img src="../Admin/uploads/<?php echo isset($results[0]['logo']) ? $results[0]['logo'] : 'No_signature'; ?>" alt="Department Logo">
         </div>
+        <h4>DE LA SALLE UNIVERSITY-DASMARINAS</h4>
+        <h3><?php echo $department; ?></h3>
         <?php if (!empty($midtermHigherResults[$department])): ?>
             <?php foreach ($midtermHigherResults[$department] as $result): ?>
                 <h4><?php echo $result['cname']; ?></h4>
-                
+                <h4><?php echo $result['course_department']; ?></h4>
                 <table>
                     <tr>
                         <th>Higher Level (<?php echo round($midtermHigherPercent, 2); ?>%)</th>
@@ -140,9 +144,6 @@ $conn->close();
                             ?>
                         </td>
                     </tr>
-                    <tr>
-                        <td colspan="2"><strong>Department:</strong> <?php echo $result['course_department']; ?></td>
-                    </tr>
                 </table>
             <?php endforeach; ?>
         <?php else: ?>
@@ -154,14 +155,16 @@ $conn->close();
 <h2>Learning Outcomes for Final Period</h2>
 <div class="center">
     <?php foreach ($finalHigherResults as $department => $results): ?>
-        <h3><?php echo $department; ?></h3>
         <div class="department-logo">
+            <a><img src="../img/DLSU-D.png" width="50" alt=""></a>    
             <img src="../Admin/uploads/<?php echo isset($results[0]['logo']) ? $results[0]['logo'] : 'No_signature'; ?>" alt="Department Logo">
         </div>
+        <h4>DE LA SALLE UNIVERSITY-DASMARINAS</h4>
+        <h3><?php echo $department; ?></h3>
         <?php if (!empty($finalHigherResults[$department])): ?>
             <?php foreach ($finalHigherResults[$department] as $result): ?>
                 <h4><?php echo $result['cname']; ?></h4>
-                
+                <h4><?php echo $result['course_department']; ?></h4>
                 <table>
                     <tr>
                         <th>Higher Level (<?php echo round($finalHigherPercent, 2); ?>%)</th>
@@ -184,9 +187,6 @@ $conn->close();
                             }
                             ?>
                         </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><strong>Department:</strong> <?php echo $result['course_department']; ?></td>
                     </tr>
                 </table>
             <?php endforeach; ?>
