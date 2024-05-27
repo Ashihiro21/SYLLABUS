@@ -4,6 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .center {
+            margin: auto;
+            width: 80%;
+            padding: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        h2,h1{
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 
@@ -43,7 +62,13 @@ function filterLearningOutcomes($conn, $array, $table, $column) {
     $filteredResults = [];
 
     foreach ($array as $word) {
-        $sql = "SELECT `comlab`, `$column` FROM `$table` WHERE `$column` LIKE '%$word%' AND `department` IS NOT NULL AND `catid` IS NOT NULL";
+        $sql = "
+        SELECT cl.`comlab`, cl.`$column`, cat.`name`, cat.`initial`, cat.`dean_name`, cat.`dean_position`, cat.`logo`
+        FROM `$table` AS cl
+        LEFT JOIN `category` AS cat ON cl.`department` = cat.`id`
+        WHERE cl.`$column` LIKE '%$word%' AND cl.`department` IS NOT NULL AND cl.`catid` IS NOT NULL
+        GROUP BY cl.`department`, cl.`$column`";
+        
         $result = $conn->query($sql);
         if ($result && $result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
@@ -68,6 +93,7 @@ list($finalLowerResults, $finalLowerPercent) = filterLearningOutcomes($conn, $lo
 $conn->close();
 ?>
 
+<h1>Higher and Lower for Department</h1>
 <h2>Learning Outcomes for Midterm Period</h2>
 <div class="center">
 <table>
@@ -80,7 +106,8 @@ $conn->close();
 <?php
 if (!empty($midtermHigherResults)) {
     foreach ($midtermHigherResults as $result) {
-        echo '<p>' . $result['comlab'] . '. ' . $result['learn_out'] . '</p>';
+        echo '<p><strong>Department:</strong> ' . $result['name'] . ' (' . $result['initial'] . ')<br>';
+        echo '<strong>Outcome:</strong> ' . $result['comlab'] . '. ' . $result['learn_out'] . '</p>';
     }
 } else {
     echo '<p>No Higher Level found.</p>';
@@ -91,7 +118,8 @@ if (!empty($midtermHigherResults)) {
 <?php
 if (!empty($midtermLowerResults)) {
     foreach ($midtermLowerResults as $result) {
-        echo '<p>' . $result['comlab'] . '. ' . $result['learn_out'] . '</p>';
+        echo '<p><strong>Department:</strong> ' . $result['name'] . ' (' . $result['initial'] . ')<br>';
+        echo '<strong>Outcome:</strong> ' . $result['comlab'] . '. ' . $result['learn_out'] . '</p>';
     }
 } else {
     echo '<p>No Lower Level found.</p>';
@@ -114,7 +142,8 @@ if (!empty($midtermLowerResults)) {
 <?php
 if (!empty($finalHigherResults)) {
     foreach ($finalHigherResults as $result) {
-        echo '<p>' . $result['comlab'] . '. ' . $result['final_learning_out'] . '</p>';
+        echo '<p><strong>Department:</strong> ' . $result['name'] . ' (' . $result['initial'] . ')<br>';
+        echo '<strong>Outcome:</strong> ' . $result['comlab'] . '. ' . $result['final_learning_out'] . '</p>';
     }
 } else {
     echo '<p>No Higher Level found.</p>';
@@ -125,7 +154,8 @@ if (!empty($finalHigherResults)) {
 <?php
 if (!empty($finalLowerResults)) {
     foreach ($finalLowerResults as $result) {
-        echo '<p>' . $result['comlab'] . '. ' . $result['final_learning_out'] . '</p>';
+        echo '<p><strong>Department:</strong> ' . $result['name'] . ' (' . $result['initial'] . ')<br>';
+        echo '<strong>Outcome:</strong> ' . $result['comlab'] . '. ' . $result['final_learning_out'] . '</p>';
     }
 } else {
     echo '<p>No Lower Level found.</p>';
