@@ -220,7 +220,7 @@ $lowerMatches = 0;
 // Filter words from database based on the words array
 $filteredWords = [];
 foreach ($higherArray as $word) {
-    $sql = "SELECT `learn_out` FROM `course_leaning` WHERE `learn_out` LIKE '%$word%' and department='$department' and catid = $catid";
+    $sql = "SELECT `comlab`,`learn_out` FROM `course_leaning` WHERE `learn_out` LIKE '%$word%' and department='$department' and catid = $catid";
     $result = $conn->query($sql);
     if ($result && $result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
@@ -233,7 +233,7 @@ foreach ($higherArray as $word) {
 // Filter colors from database based on the colors array
 $filteredColors = [];
 foreach ($lowerArray as $color) {
-    $sql = "SELECT `learn_out` FROM `course_leaning` WHERE `learn_out` LIKE '%$color%' and department='$department' and catid = $catid";
+    $sql = "SELECT `comlab`,`learn_out` FROM `course_leaning` WHERE `learn_out` LIKE '%$color%' and department='$department' and catid = $catid";
     $result = $conn->query($sql);
     if ($result && $result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
@@ -260,7 +260,7 @@ $html .= '<tr>';
 $html .= '<td>';
 if (!empty($filteredWords)) {
     foreach ($filteredWords as $word) {
-        $html .= '<p>' . $word['learn_out'] . '</p>';
+        $html .= '<p>' . $word['comlab'] .'.'. $word['learn_out'] . '</p>';
     }
 } else {
     $html .= '<p>No Higher Level found.</p>';
@@ -269,7 +269,7 @@ $html .= '</td>';
 $html .= '<td>';
 if (!empty($filteredColors)) {
     foreach ($filteredColors as $color) {
-        $html .= '<p>'. $color['learn_out'] . '</p>';
+        $html .= '<p>'. $color['comlab'] .'.'. $color['learn_out'] . '</p>';
     }
 } else {
     $html .= '<p>No Lower Level found.</p>';
@@ -286,7 +286,6 @@ if ($lowerMatches >= $higherMatches) {
 
 // Close connection
 $conn->close();
-
 
 
 // FINAL PERIOD
@@ -372,7 +371,7 @@ $lowerMatches = 0;
 // Filter words from database based on the words array
 $filteredWords = [];
 foreach ($higherArray as $word) {
-    $sql = "SELECT `final_learning_out` FROM `laerning_final` WHERE `final_learning_out` LIKE '%$word%' and department='$department' and catid = $catid";
+    $sql = "SELECT `comlab`,`final_learning_out` FROM `laerning_final` WHERE `final_learning_out` LIKE '%$word%' and department='$department' and catid = $catid";
     $result = $conn->query($sql);
     if ($result && $result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
@@ -385,7 +384,7 @@ foreach ($higherArray as $word) {
 // Filter colors from database based on the colors array
 $filteredColors = [];
 foreach ($lowerArray as $color) {
-    $sql = "SELECT `final_learning_out` FROM `laerning_final` WHERE `final_learning_out` LIKE '%$color%' and department='$department' and catid = $catid";
+    $sql = "SELECT `comlab`,`final_learning_out` FROM `laerning_final` WHERE `final_learning_out` LIKE '%$color%' and department='$department' and catid = $catid";
     $result = $conn->query($sql);
     if ($result && $result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
@@ -412,7 +411,7 @@ $html .= '<tr>';
 $html .= '<td>';
 if (!empty($filteredWords)) {
     foreach ($filteredWords as $word) {
-        $html .= '<p>' . $word['final_learning_out'] . '</p>';
+        $html .= '<p>' . $word['comlab'] .'.'. $word['final_learning_out'] . '</p>';
     }
 } else {
     $html .= '<p>No Higher Level found.</p>';
@@ -421,7 +420,7 @@ $html .= '</td>';
 $html .= '<td>';
 if (!empty($filteredColors)) {
     foreach ($filteredColors as $color) {
-        $html .= '<p>'. $color['final_learning_out'] . '</p>';
+        $html .= '<p>'. $color['comlab'] .'.'. $color['final_learning_out'] . '</p>';
     }
 } else {
     $html .= '<p>No Lower Level found.</p>';
