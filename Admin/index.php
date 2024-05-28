@@ -102,7 +102,16 @@ require_once '../Database/connection.php';
                         <span class="icon">
                         <ion-icon name="folder-outline"></ion-icon>
                         </span>
-                        <span class="title">Clo Reports</span>
+                        <span class="title">CLO Reports</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="tlo_report.php">
+                        <span class="icon">
+                        <ion-icon name="folder-outline"></ion-icon>
+                        </span>
+                        <span class="title">TLO Reports</span>
                     </a>
                 </li>
 <!-- 
