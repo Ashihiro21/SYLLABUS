@@ -11,20 +11,7 @@
             <form action="update_user_details.php" method="POST">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="first_name">First Name</label>
-                        <input type="text" class="form-control" id="first_name" name="first_name" value="<?php echo $first_name; ?>">
-                    </div>
-                    <div class="form-group">
-                        <label for="last_name">Last Name</label>
-                        <input type="text" class="form-control" id="last_name" name="last_name" value="<?php echo $last_name; ?>">
-                    </div>
-                    <div class="form-group">
-                        <label for="phone_number">Phone Number</label>
-                        <input type="text" class="form-control" id="phone_number" name="phone_number" value="<?php echo $phone_number; ?>">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" value="<?php echo $email; ?>">
+                        <input type="hidden" class="form-control" id="email" name="email" value="<?php echo $email; ?>">
                     </div>
                     <div class="form-group">
                         <label for="department">Department</label>
@@ -67,18 +54,12 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="submit" class="btn btn-primary">Proceed</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-
-<!-- Add Edit Button -->
-<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editModal">
-  Edit Details
-</button>
-
 <!-- Include jQuery and Bootstrap JS for the modal functionality -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>

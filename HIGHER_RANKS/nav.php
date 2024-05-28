@@ -234,7 +234,6 @@ td {
 }
 .dropdown-items:hover{
     color: black;
-    width: 5rem;
     cursor: pointer;
 }
 #position{
@@ -258,10 +257,8 @@ td {
                 <div class="dropdown-menu" style="width:15rem; margin-right: 5rem; margin-top:1rem;">
                     <a class="dropdown-items" id="position"><?php echo $position; ?></a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-items" href="#">Link 2</a><br>
-                    <a class="dropdown-items" href="#">Another link</a><br>
                     <a class="dropdown-items" <button type="button"  data-toggle="modal" data-target="#editModal">
-                        Edit Details
+                        Proceed to another Department or Course
                     </button></a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-items" href="logout.php">Logout</a>
