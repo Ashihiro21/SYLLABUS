@@ -6,7 +6,7 @@
     <div class="pt-5 pb-4">
     <span class="inline-images">
         <a><img src="../img/DLSU-D.png" width="150" alt=""></a>
-        <a><img src="../Admin/uploads/<?php echo isset($categories_logo) ? $categories_logo : 'No_signature'; ?>" alt="Please Upload Signature" width="150" class="img-inline"></a>
+        <a><img src="../Admin/uploads/<?php echo isset($categories_logo) ? $categories_logo : 'No_signature'; ?>" alt="" width="150" class="img-inline"></a>
     </span>
 </div>
 
@@ -3407,7 +3407,7 @@ foreach($query_run2 as $table_rows)
 <div class="pt-5 pb-4">
     <span class="inline-images">
         <a><img src="../img/DLSU-D.png" width="150" alt=""></a>
-        <a><img src="../Admin/uploads/<?php echo isset($categories_logo) ? $categories_logo : 'No_signature'; ?>" alt="Please Upload Signature" width="150" class="img-inline"></a>
+        <a><img src="../Admin/uploads/<?php echo isset($categories_logo) ? $categories_logo : 'No_signature'; ?>" alt="" width="150" class="img-inline"></a>
     </span>
 </div>
     <div class="text-center">
@@ -3886,7 +3886,7 @@ $mysqli->close();
 <div class="pt-5 pb-4">
     <span class="inline-images">
         <a><img src="../img/DLSU-D.png" width="150" alt=""></a>
-        <a><img src="../Admin/uploads/<?php echo isset($categories_logo) ? $categories_logo : 'No_signature'; ?>" alt="Please Upload Signature" width="150" class="img-inline"></a>
+        <a><img src="../Admin/uploads/<?php echo isset($categories_logo) ? $categories_logo : 'No_signature'; ?>" alt="" width="150" class="img-inline"></a>
     </span>
 </div>
     <div class="text-center">
@@ -4161,7 +4161,7 @@ echo "No Record Found";
 <div class="pt-5 pb-4">
     <span class="inline-images">
         <a><img src="../img/DLSU-D.png" width="150" alt=""></a>
-        <a><img src="../Admin/uploads/<?php echo isset($categories_logo) ? $categories_logo : 'No_signature'; ?>" alt="Please Upload Signature" width="150" class="img-inline"></a>
+        <a><img src="../Admin/uploads/<?php echo isset($categories_logo) ? $categories_logo : 'No_signature'; ?>" alt="" width="150" class="img-inline"></a>
     </span>
 </div>
     <div class="text-center">
@@ -4486,7 +4486,7 @@ foreach($query_run2 as $table_rows)
 
 
 <!-- FOR REVISED -->
-<span  style="white-space: nowrap;"><b></b><b><a class="initial_1"><img src="<?php echo $commitee_dept_signature; ?>" alt="Department Head Signature" width="100px"></a></b></span><br>
+<span  style="white-space: nowrap;"><b></b><b><a class="initial_1"><img src="<?php echo $commitee_dept_signature; ?>" alt="Department Commitee Signature" width="100px"></a></b></span><br>
 
 <p>__________________________________</p>
 
