@@ -9,34 +9,29 @@ nav {
 
 nav span {
     display: inline-block; /* Make the span element inline-block */
-    color: #fff; /* Text color */
+    color: white; /* Text color */
     font-size: 28px; /* Font size */
 }
 
 nav a {
-    color: #fff; /* Link color */
+    color: white; /* Link color */
     text-decoration: none; /* Remove underline */
-    margin-left: 20px; /* Add space between links */
+    margin-left: 20px; 
 }
 
-nav a:hover {
-    text-decoration: none; /* Add underline on hover */
-    color: white;
-    
-}
 
-nav p {
-    margin: 0; /* Remove margin */
-}
+/* nav p {
+    margin: 0;
+} */
 
 h4{
     font-weight: bold;
 }
 
 
-a .percent{
+/* a .percent{
     margin-left: 20rem;
-}
+} */
 
 .description{
     margin: 5rem;
