@@ -178,7 +178,7 @@ function fetchModuleData($conn) {
     $query = "SELECT `id`, `module_no`, `title`, `hours`, `department`, `catid` FROM `module_learning` WHERE 
     `department` = $department and `catid` = $catid
     GROUP BY 
-    module_no, hours, department";
+    module_no, hours, department ORDER BY `id` ASC";
     
     // Execute query
     $result = $conn->query($query);
@@ -261,101 +261,137 @@ if ($conn->connect_error) {
 }
 
 // Perform searches and store results
-$moduleData = fetchModuleData($conn);
+$hoursResult = fetchModuleData($conn);
+$module_noResult = fetchModuleData($conn);
+$titleResult = fetchModuleData($conn);
 $knowledgeResults = searchDatabase($conn, $knowledgeArray, "topic_learn_out");
 $compressionResults = searchDatabase($conn, $compressionArray, "topic_learn_out");
 $applyResults = searchDatabase($conn, $applyArray, "topic_learn_out");
 $analysisResults = searchDatabase($conn, $analysisArray, "topic_learn_out");
 
-// Count the total number of items in the knowledgeResults array
+// Count the total number of items in each result array
 $totalKnowledgeItems = count($knowledgeResults);
+$totalCompressionItems = count($compressionResults);
+$totalApplyItems = count($applyResults);
+$totalAnalysisItems = count($analysisResults);
 
 // Close connection
 $conn->close();
 
 echo $cname;
 
-// Display results in a table
-echo "<table border='2' style='border-collapse:collapse; text-align:center; padding:5px;'>";
-echo "<tr>";
-echo "<th style='width:150px;' rowspan='2'>Hours</th>";
-echo "<th style='Padding:5px;' rowspan='2'>Module No</th>";
-echo "<th style='Padding:5px;' colspan='4'>LEVELS</th>";
-echo "<th style='width:150px;' rowspan='2'>Total</th>";
-echo "<tr>";
-echo "<th style='width:250px; Padding:5px;'>K ($totalKnowledgeItems)</th>"; // Include the total count of knowledge items
-echo "<th style='width:250px; Padding:5px;'>C</th>";
-echo "<th style='width:250px; Padding:5px;'>AP</th>";
-echo "<th style='width:250px; Padding:5px;'>AN</th>";
-echo "</tr>";
-echo "</tr>";
-
-$maxCount = max(count($moduleData), count($knowledgeResults), count($compressionResults), count($applyResults), count($analysisResults));
-
-$totalHours = 0;
-$totalKnowledge = 0;
-$totalCompression = 0;
-$totalApplication = 0;
-$totalAnalysis = 0;
-
-// Iterate over each array and sum up the counts
-$totalHours = count($moduleData);
-$totalKnowledge = count($knowledgeResults);
-$totalCompression = count($compressionResults);
-$totalApplication = count($applyResults);
-$totalAnalysis = count($analysisResults);
-
-$totalCount = $totalHours + $totalKnowledge + $totalCompression + $totalApplication + $totalAnalysis;
-
-echo "Total count of all results: $totalCount";
-
-for ($i = 0; $i < $maxCount; $i++) {
+// Only display the table if there are module_no results
+if (!empty($module_noResult)) {
+    // Display results in a table
+    echo "<table border='2' style='border-collapse:collapse; text-align:center; padding:5px;'>";
     echo "<tr>";
-    echo "<td style='padding: 5px;'>";
-    if (isset($moduleData[$i])) {
-        $totalHours = ($moduleData[$i]['hours']) * 60;
-        echo $totalHours;
-    } else {
-        echo "0";
-    }
-    echo "</td>";
-    echo "<td style='padding: 5px;'>";
-    if (isset($moduleData[$i])) {
-        echo $moduleData[$i]['module_no']."<br>".$moduleData[$i]['title'];
-    } else {
-        echo "0";
-    }
-    echo "<td style='padding: 5px;'>";
-    if (isset($knowledgeResults[$i])) {
-        echo $knowledgeResults[$i]['topic_learn_out'];
-    } else {
-        echo "0";
-    }
-    echo "</td>";
-    echo "<td style='padding: 5px;'>";
-    if (isset($compressionResults[$i])) {
-        echo $compressionResults[$i]['topic_learn_out'];
-    } else {
-        echo "0";
-    }
-    echo "</td>";
-    echo "<td style='padding: 5px;'>";
-    if (isset($applyResults[$i])) {
-        echo $applyResults[$i]['topic_learn_out'];
-    } else {
-        echo "0";
-    }
-    echo "</td>";
-    echo "<td style='padding: 5px;'>";
-    if (isset($analysisResults[$i])) {
-        echo $analysisResults[$i]['topic_learn_out'];
-    } else {
-        echo "0";
-    }
-    echo "</td>";
-    echo "<td style='padding:5px;'>Waiting</td>";
+    echo "<th style='width:150px;' rowspan='2'>Hours</th>";
+    echo "<th style='Padding:5px;' rowspan='2'>Module No</th>";
+    echo "<th style='Padding:5px;' colspan='4'>LEVELS</th>";
+    echo "<th style='width:150px;' rowspan='2'>Total</th>";
     echo "</tr>";
-}
+    echo "<tr>";
+    echo "<th style='width:250px; Padding:5px;'>K ($totalKnowledgeItems)</th>"; // Include the total count of knowledge items
+    echo "<th style='width:250px; Padding:5px;'>C ($totalCompressionItems)</th>"; // Include the total count of compression items
+    echo "<th style='width:250px; Padding:5px;'>AP ($totalApplyItems)</th>"; // Include the total count of application items
+    echo "<th style='width:250px; Padding:5px;'>AN ($totalAnalysisItems)</th>"; // Include the total count of analysis items
+    echo "</tr>";
 
-echo "</table>";
+    $maxCount = max(count($hoursResult), count($module_noResult), count($titleResult), count($knowledgeResults), count($compressionResults), count($applyResults), count($analysisResults));
+
+    $totalHours = 0;
+    $totalKnowledge = 0;
+    $totalCompression = 0;
+    $totalApplication = 0;
+    $totalAnalysis = 0;
+
+    // Iterate over each array and sum up the counts
+    $totalHours = count($hoursResult);
+    $totalKnowledge = count($knowledgeResults);
+    $totalCompression = count($compressionResults);
+    $totalApplication = count($applyResults);
+    $totalAnalysis = count($analysisResults);
+
+    $totalCount = $totalKnowledge + $totalCompression + $totalApplication + $totalAnalysis;
+
+    echo "Total count of all results: $totalCount";
+
+    // Loop to generate table rows, stopping before the last row
+    for ($i = 0; $i < $maxCount - 1; $i++) { // Adjusted the loop to stop before the last row
+        $knowledgeCount = 0;
+        $compressionCount = 0;
+        $applyCount = 0;
+        $analysisCount = 0;
+
+        echo "<tr>";
+        echo "<td style='padding: 5px;'>";
+        if (isset($hoursResult[$i])) {
+            $totalHours = ($hoursResult[$i]['hours']) * 60;
+            echo $totalHours;
+        } else {
+            echo "0";
+        }
+        echo "</td>";
+        echo "<td style='padding: 5px;'>";
+        if (isset($module_noResult[$i])) {
+            echo $module_noResult[$i]['module_no']."<br>".$titleResult[$i]['title'];
+        } else {
+            echo "0";
+        }
+        echo "</td>";
+        echo "<td style='padding: 5px;'>";
+        if (isset($knowledgeResults[$i])) {
+            foreach ($knowledgeArray as $keyword) {
+                if (stripos($knowledgeResults[$i]['topic_learn_out'], $keyword) !== false) {
+                    $knowledgeCount++;
+                }
+            }
+            echo $knowledgeCount > 0 ? $knowledgeCount : "0";
+        } else {
+            echo "0";
+        }
+        echo "</td>";
+        echo "<td style='padding: 5px;'>";
+        if (isset($compressionResults[$i])) {
+            foreach ($compressionArray as $keyword) {
+                if (stripos($compressionResults[$i]['topic_learn_out'], $keyword) !== false) {
+                    $compressionCount++;
+                }
+            }
+            echo $compressionCount > 0 ? $compressionCount : "0";
+        } else {
+            echo "0";
+        }
+        echo "</td>";
+        echo "<td style='padding: 5px;'>";
+        if (isset($applyResults[$i])) {
+            foreach ($applyArray as $keyword) {
+                if (stripos($applyResults[$i]['topic_learn_out'], $keyword) !== false) {
+                    $applyCount++;
+                }
+            }
+            echo $applyCount > 0 ? $applyCount : "0";
+        } else {
+            echo "0";
+        }
+        echo "</td>";
+        echo "<td style='padding: 5px;'>";
+        if (isset($analysisResults[$i])) {
+            foreach ($analysisArray as $keyword) {
+                if (stripos($analysisResults[$i]['topic_learn_out'], $keyword) !== false) {
+                    $analysisCount++;
+                }
+            }
+            echo $analysisCount > 0 ? $analysisCount : "0";
+        } else {
+            echo "0";
+        }
+        echo "<td style='padding:5px;'>".($knowledgeCount + $compressionCount + $applyCount + $analysisCount)."</td>";
+        echo "</tr>";
+    }
+
+    echo "</table>";
+} else {
+    echo "No modules found.";
+}
 ?>

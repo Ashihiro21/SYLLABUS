@@ -763,7 +763,6 @@ $mysqli->close();
                         }
                         ?></td>
                             <td class="hide-id"><?php echo $row['topic_learn_out']; ?></td>
-
                         </tr>
                     </tbody>
                     <?php           
@@ -831,7 +830,7 @@ $mysqli->close();
                         }
                         ?></td>
                             <td class="hide-id"><?php echo $row['final_topic_leaning_out']; ?></td>
-
+                           
                         </tr>
                     </tbody>
                     <?php           
@@ -906,6 +905,8 @@ foreach($query_run as $row)
 
         <button type="button" class="btn btn-success editbtn_learning_out_table"><i class="lni lni-pencil"></i></button>
 
+        <button type="button" class="btn btn-danger deletebtn_learning_out"><i class="lni lni-trash-can"></i></button>
+                      
         </td>
     </tr>
 
