@@ -34,7 +34,8 @@ $sql = "SELECT
             co.department_name AS dept_head,
             co.department_position AS dept_head_position,
             co.dept_signature AS dept_head_signature,
-            co.commitee_signature AS dept_commitee_signature
+            co.commitee_signature AS dept_commitee_signature,
+            co.`commitee_comment` AS `commitee_comments`
         FROM 
             users AS u 
         LEFT JOIN 
@@ -62,7 +63,7 @@ if ($result->num_rows > 0) {
     $phone_number = $row['phone_number'];
     $email = $row['email'];
     $password = $row['password'];
-    $position = $row['position'];
+    $_SESSION['position'] = $row['position'];
     $category_name = $row['category_name'];
     $category_initial = $row['category_initial'];
     $cname = $row['cname'];
@@ -75,6 +76,7 @@ if ($result->num_rows > 0) {
     $dept_head_signature = $row['dept_head_signature'];
     $deans_category_signature = $row['deans_category_signature'];
     $commitee_dept_signature = $row['dept_commitee_signature'];
+    $commitee_commnet = $row['commitee_comments'];
     $categories_logo = $row['category_logo'];
 } else {
     $position = "Position not found";
@@ -255,6 +257,7 @@ td {
                     Dropdown button
                 </button>
                 <div class="dropdown-menu" style="width:15rem; margin-right: 5rem; margin-top:1rem;">
+                     <?php $position = $_SESSION['position']; ?>
                     <a class="dropdown-items" id="position"><?php echo $position; ?></a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-items" <button type="button"  data-toggle="modal" data-target="#editModal">

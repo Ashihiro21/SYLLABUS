@@ -23,10 +23,24 @@
     <div class="container-fluid">
 
 
-   
-    <button type="button" class="btn btn-primary float" data-toggle="modal" data-target="#addmodal">
-  Add Course
-</button>
+    <? 
+    
+    $position = $_SESSION['position'];
+
+    ?>
+    <?php if ($position == 'Department Chair') {
+        echo '
+        <button type="button" class="btn btn-primary float" data-toggle="modal" data-target="#addmodal">
+            Add Course
+        </button>';
+    } else {
+        echo '
+        <button type="button" class="btn btn-primary float" data-toggle="modal" data-target="#addmodal" disabled>
+            Add Course
+        </button>';
+    }
+    ?>
+
 
     <div class="modal fade" id="addmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -449,7 +463,7 @@
                              echo "Failed to connect to MySQL: " . mysqli_connect_error();
                              die();
                              }
-                     
+                        $position = $_SESSION['position'];
                          $department = $_SESSION['department'];
                          $catid = $_SESSION['catid'];  
                          $catid = $_SESSION['catid']; 
@@ -497,8 +511,17 @@
                                 
                             <td class="centered-btn">
                                 <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
+                              
+                              
+                               
+                                <?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+                                    echo '<button type="button" class="btn sysllabus_button btn-success editbtn"><i class="lni lni-pencil"></i></button>';
+                                } else{
+                                    echo '<button disabled type="button" class="btn sysllabus_button btn-success editbtn"><i class="lni lni-pencil"></i></button>';
+                                }
 
-                                <button type="button" class="btn sysllabus_button btn-success editbtn"><i class="lni lni-pencil"></i></button>
+                                ?>
+                                
 
                                 <!-- <button type="button" class="btn btn-danger deletebtn"><i class="lni lni-trash-can"></i></button> -->
                                 </td>
@@ -522,7 +545,7 @@
             if ($mysqli->connect_error) {
                 die("Connection failed: " . $mysqli->connect_error);
             }
-
+            $position = $_SESSION['position'];
             $department = $_SESSION['department'];
             $catid = $_SESSION['catid']; 
             $catid = $_SESSION['catid'];  
@@ -613,10 +636,20 @@ $mysqli->close();
                         </div>
                         </div>
                         
-                        
-                    <button type="button" class="btn btn-primary add_databtn" data-toggle="modal" data-target="#studentaddmodal">
+                     
+                  <?php $position = $_SESSION['position'];?>
+                <?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value      
+                    echo '<button type="button" class="btn btn-primary add_databtn" data-toggle="modal" data-target="#studentaddmodal">
                         ADD DATA
-                    </button>
+                    </button>';
+
+                }else{
+                    echo '<button disabled type="button" class="btn btn-primary add_databtn" data-toggle="modal" data-target="#studentaddmodal">
+                        ADD DATA
+                    </button>';
+                }
+
+                ?>
 
                     <!-- Modal -->
  <div class="modal fade" id="studentaddmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -902,11 +935,17 @@ foreach($query_run as $row)
                         ?></td>
         <td class="table-button">
         <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
+       <?php $position = $_SESSION['position']; ?>
+        <?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+        echo'<button type="button" class="btn btn-success editbtn_learning_out_table"><i class="lni lni-pencil"></i></button>
 
-        <button type="button" class="btn btn-success editbtn_learning_out_table"><i class="lni lni-pencil"></i></button>
+        <button type="button" class="btn btn-danger deletebtn_learning_out"><i class="lni lni-trash-can"></i></button>';
+        }else{
+            echo'<button disabled type="button" class="btn btn-success editbtn_learning_out_table"><i class="lni lni-pencil"></i></button>
 
-        <button type="button" class="btn btn-danger deletebtn_learning_out"><i class="lni lni-trash-can"></i></button>
-                      
+            <button disabled type="button" class="btn btn-danger deletebtn_learning_out"><i class="lni lni-trash-can"></i></button>';
+        }
+            ?>           
         </td>
     </tr>
 
@@ -974,9 +1013,22 @@ echo "No Record Found";
             </div>
         </div>
     </div>
+    <?php
+    $position = $_SESSION['position'];
+    ?>
 
+<?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+            echo '
 <!-- end course table modals  -->
-  <button type="button" class="btn btn-primary add_databtn" data-toggle="modal" data-target="#addmodal_module_learning">ADD DATA</button>
+  <button type="button" class="btn btn-primary add_databtn" data-toggle="modal" data-target="#addmodal_module_learning">ADD DATA</button>';
+
+}else{
+    echo '
+    <!-- end course table modals  -->
+      <button disabled type="button" class="btn btn-primary add_databtn" data-toggle="modal" data-target="#addmodal_module_learning">ADD DATA</button>';
+}
+
+?>
 
                     <!-- Modal module_learning-->
  <div class="modal fade" id="addmodal_module_learning" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -1183,6 +1235,7 @@ echo "No Record Found";
             
             $department = $_SESSION['department'];
             $catid = $_SESSION['catid']; 
+        
             // Calculate total hours
             $total_hour_query = "SELECT `hours`,`asy`,`onsite`,
             SUM(hours) as total_hours, 
@@ -1247,8 +1300,18 @@ echo "No Record Found";
                     <td style="text-align: center;"><?php echo ($row['asy'] == 1) ? '/' : ''; ?></td>
                     <td style="text-align: center;"><?php echo $row['hours']; ?></td>
                     <td style="text-align: center;" class="table-button">
-                        <button type="button" class="btn btn-success editbtn_module_learning"><i class="lni lni-pencil"></i></button>
-                        <button type="button" class="btn btn-danger deletebtn_module_learning"><i class="lni lni-trash-can"></i></button>
+                    
+                    <?php
+                    $position = $_SESSION['position'];
+                    ?>
+                    <?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+                    echo '<button type="button" class="btn btn-success editbtn_module_learning"><i class="lni lni-pencil"></i></button>
+                        <button type="button" class="btn btn-danger deletebtn_module_learning"><i class="lni lni-trash-can"></i></button>';
+                    }else{
+                        echo '<button disabled type="button" class="btn btn-success editbtn_module_learning"><i class="lni lni-pencil"></i></button>
+                        <button disabled type="button" class="btn btn-danger deletebtn_module_learning"><i class="lni lni-trash-can"></i></button>';
+                    }
+                ?>
                     </td>
                 </tr>
 
@@ -1355,12 +1418,24 @@ echo "No Record Found";
     </div>
 
 
-
-
+<?php
+    $position = $_SESSION['position'];
+?>
+<?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+            echo '
   <!--Add Modal Final Period Table -->
 <button type="button" class="btn btn-primary add_databtn_final" data-toggle="modal" data-target="#studentaddmodal15">
                         ADD DATA
-                    </button>
+                    </button>';
+}else{
+    echo '
+    <!--Add Modal Final Period Table -->
+  <button disabled type="button" class="btn btn-primary add_databtn_final" data-toggle="modal" data-target="#studentaddmodal15">
+                          ADD DATA
+                      </button>';
+}
+
+?>
 
                     <!-- Modal -->
  <div class="modal fade" id="studentaddmodal15" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -1475,10 +1550,21 @@ foreach($query_run as $row)
                         ?></td>
         <td class="table-button">
         <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
+        <?php
+        $position = $_SESSION['position'];
+        ?>
+    <?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+                echo '
+            <button type="button" class="btn btn-success editbtn_learning_out_final_period_table"><i class="lni lni-pencil"></i></button>
 
-        <button type="button" class="btn btn-success editbtn_learning_out_final_period_table"><i class="lni lni-pencil"></i></button>
+            <button type="button" class="btn btn-danger deletebtn_learning_out_final_period_table"><i class="lni lni-trash-can"></i></button>';
+    }else{
+        echo '
+        <button disabled type="button" class="btn btn-success editbtn_learning_out_final_period_table"><i class="lni lni-pencil"></i></button>
 
-        <button type="button" class="btn btn-danger deletebtn_learning_out_final_period_table"><i class="lni lni-trash-can"></i></button>
+        <button disabled type="button" class="btn btn-danger deletebtn_learning_out_final_period_table"><i class="lni lni-trash-can"></i></button>';
+    }
+    ?>
         </td>
     </tr>
 
@@ -1498,10 +1584,21 @@ echo "No Record Found";
 
 
 </div>
-
+<?php
+$position = $_SESSION['position'];
+?>
+<?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+            echo '
 <button type="button" class="btn btn-primary add_databtn_final" data-toggle="modal" data-target="#addmodal_module_learning_final">
                         ADD DATA
-                    </button>
+                    </button>';
+}else{
+    echo '
+    <button disabled type="button" class="btn btn-primary add_databtn_final" data-toggle="modal" data-target="#addmodal_module_learning_final">
+                            ADD DATA
+                        </button>';
+}
+?>
 
                     <!-- Modal module_learning-->
  <div class="modal fade" id="addmodal_module_learning_final" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -1786,8 +1883,19 @@ echo "No Record Found";
                     <td style="text-align: center;"><?php echo ($row['asy'] == 1) ? '/' : ''; ?></td>
                     <td style="text-align: center;"><?php echo $row['hours']; ?></td>
                     <td style="text-align: center;" class="table-button">
+                    <?php
+                    $position = $_SESSION['position'];
+                    ?>
+            <?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+                        echo '
                         <button type="button" class="btn btn-success editbtn_module_learning"><i class="lni lni-pencil"></i></button>
-                        <button type="button" class="btn btn-danger deletebtn_module_learning"><i class="lni lni-trash-can"></i></button>
+                        <button type="button" class="btn btn-danger deletebtn_module_learning"><i class="lni lni-trash-can"></i></button>';
+            }else{
+                echo '
+                <button disabled type="button" class="btn btn-success editbtn_module_learning"><i class="lni lni-pencil"></i></button>
+                <button disabled type="button" class="btn btn-danger deletebtn_module_learning"><i class="lni lni-trash-can"></i></button>';
+            }
+            ?>
                     </td>
                 </tr>
 
@@ -1952,9 +2060,22 @@ echo "No Record Found";
 
 <div class="card custom-card">
 <div class="card-body ">
-
+<?php
+$position = $_SESSION['position'];
+?>
+<?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+            echo '
 <button type="button" class="btn btn-primary percent_grading " data-toggle="modal" data-target="#percent_grading" style="margin-left: 18.9rem;">ADD DATA
-</button> 
+</button>';
+
+}else{
+    echo '
+    <button disabled type="button" class="btn btn-primary percent_grading " data-toggle="modal" data-target="#percent_grading" style="margin-left: 18.9rem;">ADD DATA
+    </button>';
+    
+}
+
+?>
 <div class="container mt-5 me-5">
     
     <table id="datatableid" class="table table-bordered">
@@ -2001,8 +2122,21 @@ echo "No Record Found";
                         <td><?php echo $row['percents']; ?></td>
                         
                         <td class="table-button">
+                        <?php
+                        $position = $_SESSION['position'];
+                        ?>
+            <?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+                        echo '
                             <button type="button" class="btn btn-success editbtn_percentage"><i class="lni lni-pencil"></i></button>
-                            <button type="button" class="btn btn-danger deletebtn_percentage"><i class="lni lni-trash-can"></i></button>
+                            <button type="button" class="btn btn-danger deletebtn_percentage"><i class="lni lni-trash-can"></i></button>';
+
+            }else{
+                echo '
+                <button disabled type="button" class="btn btn-success editbtn_percentage"><i class="lni lni-pencil"></i></button>
+                <button disabled type="button" class="btn btn-danger deletebtn_percentage"><i class="lni lni-trash-can"></i></button>';
+                        }
+
+                        ?>
                         </td>
                     </tr>
             <?php
@@ -2356,9 +2490,23 @@ echo $html;
 <!--Add Modal Final Period Table -->
 <div class="card custom-card">
 <div class="card-body">
+        <?
+    $position = $_SESSION['position'];
+    ?>
+<?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+            echo '
 <button type="button" class="btn btn-primary onsite_reffence_tables" data-toggle="modal" data-target="#onsite_reffence_tables" style="margin-left: 8.8rem;">
                         ADD DATA
-                    </button>
+                    </button>';
+
+}else{
+    echo '
+    <button disabled type="button" class="btn btn-primary onsite_reffence_tables" data-toggle="modal" data-target="#onsite_reffence_tables" style="margin-left: 8.8rem;">
+                            ADD DATA
+                        </button>';
+}
+
+?>
 
                     <!-- Modal -->
  <div class="modal fade" id="onsite_reffence_tables" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -2566,9 +2714,22 @@ echo "No Record Found";
 <!-- ADD online REFFERENCE -->
 
 <!--Add Modal Final Period Table -->
+<?php
+$position = $_SESSION['position'];
+?>
+<?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+            echo '
 <button type="button" class="btn btn-primary online_reffence" data-toggle="modal" data-target="#online_reffence" style="margin-left: 8.8rem;">
                         ADD DATA
-                    </button>
+                    </button>';
+}else{
+    echo '
+    <button disabled type="button" class="btn btn-primary online_reffence" data-toggle="modal" data-target="#online_reffence" style="margin-left: 8.8rem;">
+                            ADD DATA
+                        </button>';
+}?>
+
+
 
                     <!-- Modal -->
  <div class="modal fade" id="online_reffence" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -2767,10 +2928,22 @@ echo "No Record Found";
 
 
 </div>
-
+<?php
+$position = $_SESSION['position'];
+?>
+<?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+            echo '
 <button type="button" class="btn btn-primary add_semester float" data-toggle="modal" data-target="#add_semester" style="margin-left: 8.8rem;">
                         ADD DATA
-                    </button>
+                    </button>';
+}else{
+    echo '
+    <button disabled type="button" class="btn btn-primary add_semester float" data-toggle="modal" data-target="#add_semester" style="margin-left: 8.8rem;">
+                            ADD DATA
+                        </button>';
+}
+
+?>
 
                     <!-- Modal -->
  <div class="modal fade" id="add_semester" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -3018,8 +3191,21 @@ $query_run = mysqli_query($connection, $query);
                     
                 <a class="term_year"><?php echo $term . ' ' . $year; ?></a><br><br>
                     <td class="table-button">
+                    <?php
+                    $position = $_SESSION['position'];
+                    ?>
+                <?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+                            echo '
                         <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
-                        <button type="button" class="btn btn-success editbtn_semestral sysllabus_button m-3"><i class="lni lni-pencil"></i></button><a>EDIT SEMESTER</a>
+                        <button type="button" class="btn btn-success editbtn_semestral sysllabus_button m-3"><i class="lni lni-pencil"></i></button><a>EDIT SEMESTER</a>';
+
+                }{
+                    echo '
+                    <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
+                    <button disabled type="button" class="btn btn-success editbtn_semestral sysllabus_button m-3"><i class="lni lni-pencil"></i></button><a>EDIT SEMESTER</a>';
+                }
+
+                ?>
                         <!-- <button type="button" class="btn btn-danger deletebtn_online_refference"><i class="lni lni-trash-can"></i></button> -->
                     </td>
                 </tr>
@@ -3136,24 +3322,31 @@ $(document).ready(function(){
 
 
 <!-- EDIT POP UP FORM (Bootstrap MODAL) -->
-<div class="modal fade" id="editmodal_signature_commitee" tabindex="-1" role="dialog" aria-labelledby="edit_signature_commitee" aria-hidden="true">
+<div class="modal fade" id="editmodal_status_commitee" tabindex="-1" role="dialog" aria-labelledby="edit_status_commitee" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="edit_signature_commitee">UPLOAD SIGNATURE</h5>
+                <h5 class="modal-title" id="edit_status_commitee">EDIT APPROVAL</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="edit_signature_commitee_form" action="Course_Syllabus/update_signature_commitee.php" method="POST" enctype="multipart/form-data">
+            <form id="edit_status_commitee_form" action="Course_Syllabus/update_signature_commitee.php" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
                     <input type="hidden" name="update_id45" id="update_id45">
                     <div class="form-group">
-                        <label for="commitee_signature">commitee Signature</label>
-                        <input type="file" name="commitee_signature" id="commitee_signature" class="form-control">
-                        <!-- Display a preview of the selected image -->
-                        <img src="#" id="preview_commitee_signature" style="display:none; max-width: 100px; max-height: 100px;" />
+                        <label for="commitee_signature">Committee Approval</label>
+                        <select name="commitee_signature" id="commitee_signature" class="form-control">
+                            <option value="" disabled>Select Status</option>
+                            <!-- Add available options here -->
+                            <option value="Approve">Approve</option>
+                            <option value="Disapprove">Disapprove</option>
+                            <option value="Pending">Pending</option>
+                            <!-- You can add more options as needed -->
+                        </select>
                     </div>
+                    <label>Commitee Comments</label>
+                        <textarea name="commitee_comment" id="commitee_comment6" class="form-control 7" placeholder="Enter Commitee Comments" cols="50" rows="5"></textarea>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -3241,9 +3434,17 @@ foreach($query_run1 as $rows)
         <td class="hide-id"><?php echo $rows['dept_signatures']; ?></td>
         <td class="table-button">
         <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
-
-        <button type="button" class="btn btn-success editbtn_signature m-3"><i class="lni lni-pencil"></i></button><a>UPLOAD SIGNATURE</a>
-
+        <?php
+        $position = $_SESSION['position'];
+        ?>
+        <?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+            echo '
+        <button type="button" class="btn btn-success editbtn_signature m-3"><i class="lni lni-pencil"></i></button><a>UPLOAD SIGNATURE</a>';
+        }else{
+            echo '
+            <button disabled type="button" class="btn btn-success editbtn_signature m-3"><i class="lni lni-pencil"></i></button><a>UPLOAD SIGNATURE</a>';
+        }
+        ?>
     
         </td>
     </tr>
@@ -3353,8 +3554,21 @@ foreach($query_run2 as $table_rows)
         <td class="hide-id"><?php echo $table_rows['dean_signatures']; ?></td>
         <td class="table-button">
         <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
-
-        <button type="button" class="btn btn-success editbtn_signature_dean m-3"><i class="lni lni-pencil"></i></button><a>UPLOAD SIGNATURE</a>
+        <?php
+        $position = $_SESSION['position'];
+        ?>
+        <?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+            echo '
+        <button type="button" class="btn btn-success editbtn_signature_dean m-3"><i class="lni lni-pencil"></i></button><a>UPLOAD SIGNATURE</a>';
+        
+        }else{
+            echo '
+            <button disabled type="button" class="btn btn-success editbtn_signature_dean m-3"><i class="lni lni-pencil"></i></button><a>UPLOAD SIGNATURE</a>';
+        }
+        
+        
+        
+        ?>
 
     
         </td>
@@ -3480,9 +3694,14 @@ foreach($query_run2 as $table_rows)
                                 
                             <td class="centered-btn">
                                 <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
+                                <?php $position = $_SESSION['position'];?>
+                              <?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+                                    echo '<button type="button" class="btn sysllabus_button btn-success editbtn"><i class="lni lni-pencil"></i></button>';
+                                } else{
+                                    echo '<button disabled type="button" class="btn sysllabus_button btn-success editbtn"><i class="lni lni-pencil"></i></button>';
+                                }
 
-                                <button type="button" class="btn sysllabus_button btn-success editbtn"><i class="lni lni-pencil"></i></button>
-
+                                ?>
                                 <!-- <button type="button" class="btn btn-danger deletebtn"><i class="lni lni-trash-can"></i></button> -->
                                 </td>
                             </tr>
@@ -3569,10 +3788,22 @@ foreach($query_run2 as $table_rows)
 // Close database connection
 $mysqli->close();
 ?>
-
+<?php
+$position = $_SESSION['position'];
+?>
+<?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+            echo '
 <button type="button" class="btn btn-primary add_databtn_mapping_table" data-toggle="modal" data-target="#mapping_table">
                         ADD DATA
-                    </button>
+                    </button>';
+}else{
+    echo '
+    <button disabled type="button" class="btn btn-primary add_databtn_mapping_table" data-toggle="modal" data-target="#mapping_table">
+                            ADD DATA
+                        </button>';
+}
+
+?>
 
                     <!-- Modal -->
  <div class="modal fade" id="mapping_table" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -3850,11 +4081,27 @@ $mysqli->close();
             <td class="text-center"><?php echo $row['pl8']; ?></td>
             <td class="text-center"><?php echo $row['pl9']; ?></td>
             <td class="table-button">
-            <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
+           
+            <?php
+            $position = $_SESSION['position'];
+
+            ?>
+
+            <?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+            echo '
 
             <button type="button" class="btn btn-success editbtn_mapping_tablepls"><i class="lni lni-pencil"></i></button>
 
-            <button type="button" class="btn btn-danger deletebtn_mapping_tablepls"><i class="lni lni-trash-can"></i></button>
+            <button type="button" class="btn btn-danger deletebtn_mapping_tablepls"><i class="lni lni-trash-can"></i></button>';
+            }else{
+                echo '
+
+            <button disabled type="button" class="btn btn-success editbtn_mapping_tablepls"><i class="lni lni-pencil"></i></button>
+
+            <button disabled type="button" class="btn btn-danger deletebtn_mapping_tablepls"><i class="lni lni-trash-can"></i></button>';
+            }
+
+            ?>
             </td>
         </tr>
 
@@ -3902,9 +4149,21 @@ $mysqli->close();
 
 
 <!-- ADD MODAL GRADUATE ATTRIBUTES -->
+<?php
+$position = $_SESSION['position'];
+?>
+<?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+            echo '
 <button type="button" class="btn btn-primary add_databtn_decriptors" data-toggle="modal" data-target="#decriptors">
                         ADD DATA
-                    </button>
+                    </button>';
+}else{
+    echo '
+    <button disabled type="button" class="btn btn-primary add_databtn_decriptors" data-toggle="modal" data-target="#decriptors">
+                            ADD DATA
+                        </button>';
+}
+?>
 
                     <!-- Modal -->
  <div class="modal fade" id="decriptors" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -4129,10 +4388,22 @@ foreach($query_run as $row)
 
         <td class="table-button">
         <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
-
+        <?php
+        $position = $_SESSION['position'];
+        ?>
+        <?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+            echo '
         <button type="button" class="btn btn-success editbtn_decriptors"><i class="lni lni-pencil"></i></button>
 
-        <button type="button" class="btn btn-danger deletebtn_decriptors"><i class="lni lni-trash-can"></i></button>
+        <button type="button" class="btn btn-danger deletebtn_decriptors"><i class="lni lni-trash-can"></i></button>';
+        }else{
+            echo '
+            <button disabled type="button" class="btn btn-success editbtn_decriptors"><i class="lni lni-pencil"></i></button>
+    
+            <button disabled type="button" class="btn btn-danger deletebtn_decriptors"><i class="lni lni-trash-can"></i></button>';
+        }
+
+        ?>
         </td>
     </tr>
 
@@ -4179,9 +4450,23 @@ echo "No Record Found";
 <!-- ADD online REFFERENCE -->
 
 <!--Add Modal Final Period Table -->
+<?php
+$position = $_SESSION['position'];
+?>
+<?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+            echo '
 <button type="button" class="btn btn-primary graduate_attribute" data-toggle="modal" data-target="#graduate_attribute">
                         ADD DATA
-                    </button>
+                    </button>';
+
+}else{
+    echo '
+<button disabled type="button" class="btn btn-primary graduate_attribute" data-toggle="modal" data-target="#graduate_attribute">
+                        ADD DATA
+                    </button>';
+}
+
+?>
 
                     <!-- Modal -->
  <div class="modal fade" id="graduate_attribute" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -4359,10 +4644,21 @@ foreach($query_run as $row)
                         ?></td>
         <td class="table-button">
         <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
-
+        <?php
+        $position = $_SESSION['position'];
+        ?>
+        <?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+            echo '
         <button type="button" class="btn btn-success editbtn_graduate_attributes"><i class="lni lni-pencil"></i></button>
 
-        <button type="button" class="btn btn-danger deletebtn_graduate_attributes"><i class="lni lni-trash-can"></i></button>
+        <button type="button" class="btn btn-danger deletebtn_graduate_attributes"><i class="lni lni-trash-can"></i></button>';
+        }else{
+            echo '
+            <button disabled type="button" class="btn btn-success editbtn_graduate_attributes"><i class="lni lni-pencil"></i></button>
+    
+            <button disabled type="button" class="btn btn-danger deletebtn_graduate_attributes"><i class="lni lni-trash-can"></i></button>';
+        }
+        ?>
         </td>
     </tr>
 
@@ -4386,90 +4682,83 @@ echo "No Record Found";
 
 
 
-<!-- SEMESTRAL -->
 <?php
- 
+// Start the session
 
- // Database connection
- 
- 
- $connection = mysqli_connect("localhost","root","","syllabus");
- if (mysqli_connect_errno()){
-     echo "Failed to connect to MySQL: " . mysqli_connect_error();
-     die();
-     }
+// Database connection
+$connection = mysqli_connect("localhost", "root", "", "syllabus");
+if (mysqli_connect_errno()) {
+    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+    die();
+}
 
+$email = $_SESSION['email'];
+$position = $_SESSION['position']; // Get the position from the session
 
-
-     $email = $_SESSION['email'];
-     $query2 = "SELECT 
-                 u.`first_name`, 
-                 u.`last_name`, 
-                 u.`department`, 
-                 u.`catid`, 
-                 u.`phone_number`, 
-                 u.`email`, 
-                 u.`password`, 
-                 p.`name` AS `position`,
-                 c.`id` AS `category_id`,
-                 c.`name` AS `category_name`,
-                 c.`initial` AS `category_initial`,
-                 c.`dean_name` AS `deans`,
-                 c.`dean_position` AS `deans_position`,
-                 co.`dean_signature` AS `dean_signatures`,
-                 co.`cname`,
-                 co.`course_department` AS `course_departments`,
-                 co.`id` AS `course_id`,
-                 co.`initial` AS `course_initial`,
-                 co.`department_name` AS `course_dept_name`,
-                 co.`department_position` AS `dept_position`,
-                 co.`dept_signature` AS `dept_signatures`,
-                 co.`commitee_signature` AS `commitee_signatures`
-             FROM 
-                 `users` AS u 
-             LEFT JOIN 
-                 `position` AS p ON u.`position` = p.`id`
-             LEFT JOIN 
-                 `category` AS c ON u.`department` = c.`id`
-             LEFT JOIN
-                 `course` AS co ON u.`catid` = co.`id`
-             WHERE 
-                 u.email = '$email'";
- $query_run2 = mysqli_query($connection, $query2);
+$query2 = "SELECT 
+             u.`first_name`, 
+             u.`last_name`, 
+             u.`department`, 
+             u.`catid`, 
+             u.`phone_number`, 
+             u.`email`, 
+             u.`password`, 
+             p.`name` AS `position`,
+             c.`id` AS `category_id`,
+             c.`name` AS `category_name`,
+             c.`initial` AS `category_initial`,
+             c.`dean_name` AS `deans`,
+             c.`dean_position` AS `deans_position`,
+             co.`dean_signature` AS `dean_signatures`,
+             co.`cname`,
+             co.`course_department` AS `course_departments`,
+             co.`id` AS `course_id`,
+             co.`initial` AS `course_initial`,
+             co.`department_name` AS `course_dept_name`,
+             co.`department_position` AS `dept_position`,
+             co.`dept_signature` AS `dept_signatures`,
+             co.`commitee_signature` AS `commitee_signatures`,
+             co.`commitee_comment` AS `commitee_comments`
+         FROM 
+             `users` AS u 
+         LEFT JOIN 
+             `position` AS p ON u.`position` = p.`id`
+         LEFT JOIN 
+             `category` AS c ON u.`department` = c.`id`
+         LEFT JOIN
+             `course` AS co ON u.`catid` = co.`id`
+         WHERE 
+             u.email = '$email'";
+$query_run2 = mysqli_query($connection, $query2);
 ?>  
+
 <table id="datatableid">
 <thead>
     <tr>
-        <!-- <th scope="col">Provider</th>
-        <th scope="col">Reference Material</th>
-        <th scope="col">Action</th> -->
+        <!-- Add your table headers here -->
     </tr>
 </thead>
 <?php
-if($query_run2)
-{
-foreach($query_run2 as $table_rows)
-{
+if ($query_run2) {
+    foreach ($query_run2 as $table_rows) {
 ?>
 <tbody>
-  
-<tr>
-        <td class="hide-id"> <?php echo $rows['course_id']; ?> </td>
+    <tr>
+        <td class="hide-id"> <?php echo $table_rows['course_id']; ?> </td>
         <td class="hide-id"><?php echo $table_rows['commitee_signatures']; ?></td>
+        <td class="hide-id"><?php echo $table_rows['commitee_comments']; ?></td>
         <td class="table-button">
-        <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
-
-        <button type="button" class="btn btn-success editbtn_signature_committee m-3"><i class="lni lni-pencil"></i></button><a>UPLOAD SIGNATURE</a>
-
-    
+        <?php if ($position == 'Curriculum Committee')  { // Change 'curriculum committee' to the appropriate value
+            echo '<button type="button" class="btn btn-success editbtn_signature_committee m-3"><i class="lni lni-pencil"></i></button><a>APPROVAL</a>';
+        } else {
+            echo '<button type="button" class="btn btn-success editbtn_signature_committee m-3" disabled><i class="lni lni-pencil"></i></button><a>APPROVAL</a>';
+        }
+        ?>
         </td>
     </tr>
-
-
-
 </tbody>
-<?php           
-}
+<?php
+    }
 }
 ?>
 </table>
@@ -4486,8 +4775,10 @@ foreach($query_run2 as $table_rows)
 
 
 
+
 <!-- FOR REVISED -->
-<span  style="white-space: nowrap;"><b></b><b><a class="initial_1"><img src="<?php echo $commitee_dept_signature; ?>" alt="Department Commitee Signature" width="100px"></a></b></span><br>
+<span  style="white-space: nowrap;"><b></b><b><a class="initial_1"><?php echo $commitee_dept_signature; ?></a></b></span><br>
+<span  style="white-space: nowrap;"><b></b><b><a class="initial_1"><?php echo $commitee_commnet; ?></a></b></span><br>
 
 <p>__________________________________</p>
 
@@ -4990,29 +5281,20 @@ descriptions for the graduate attributes.</a>
 
 <script>
     $(document).ready(function () {
+
         $('.editbtn_signature_committee').on('click', function () {
-            $('#editmodal_signature_commitee').modal('show');
+            $('#editmodal_status_commitee').modal('show');
             $tr = $(this).closest('tr');
+
             var data = $tr.children("td").map(function () {
                 return $(this).text();
             }).get();
-            $('#update_id45').val(data[0]);
-            // Clear any previously selected file
-            $('#commitee_signature').val('');
-        });
 
-        // Preview the selected image
-        $('#commitee_signature').change(function () {
-            const file = this.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#preview_commitee_signature').attr('src', e.target.result).show();
-                }
-                reader.readAsDataURL(file);
-            } else {
-                $('#preview_commitee_signature').hide();
-            }
+            console.log(data);
+
+            $('#update_id45').val(data[0]);
+            $('#commitee_signature').val(data[1]);
+            $('#commitee_comment6').val(data[2]);
         });
     });
 </script>
