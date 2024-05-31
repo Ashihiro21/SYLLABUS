@@ -785,6 +785,28 @@ $(document).ready(function () {
 
 
 
+$(document).ready(function () {
+
+    $('.editbtn_course_policies').on('click', function () {
+
+        $('#editmodal_course_policies').modal('show');
+
+        $tr = $(this).closest('tr');
+
+        var data = $tr.children("td").map(function () {
+            return $(this).text();
+        }).get();
+
+        console.log(data);
+
+        $('#update_id51').val(data[0]);
+        $('#title').val(data[1]);
+        $('#description').val(data[2]);
+    });
+});
+
+
+
 // <!-- DELETE BTN FOR PERCENTAGE -->
 
 

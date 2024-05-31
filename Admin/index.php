@@ -114,6 +114,15 @@ require_once '../Database/connection.php';
                         <span class="title">TLO Reports</span>
                     </a>
                 </li>
+
+                <li>
+                    <a href="course_syllabus.php">
+                        <span class="icon">
+                        <ion-icon name="folder-outline"></ion-icon>
+                        </span>
+                        <span class="title">Course Policies</span>
+                    </a>
+                </li>
 <!-- 
                 <li>
                     <a href="#">

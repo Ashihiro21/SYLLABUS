@@ -241,6 +241,9 @@ td {
 #position{
     cursor: default;
 }
+.course_policies{
+    padding-top: -105px;
+}
 </style>
 <body>
     <nav>
@@ -260,23 +263,23 @@ td {
                      <?php $position = $_SESSION['position']; ?>
                     <a class="dropdown-items" id="position"><?php echo $position; ?></a>
                     <div class="dropdown-divider"></div>
-                                    <?php
-                $position = $_SESSION['position'];
-                ?>
+                            <?php
+        $position = $_SESSION['position'];
+        ?>
 
-                <?php if ($position == 'Dean') { ?>
-                    <a class="dropdown-items" href="#">
-                        <button type="button" data-toggle="modal" data-target="#editModal">
-                            Proceed to another Department or Course
-                        </button>
-                    </a>
-                <?php } else { ?>
-                    <a class="dropdown-items" style="display:none;" href="#">
-                        <button type="button" data-toggle="modal" data-target="#editModal">
-                            Proceed to another Department or Course
-                        </button>
-                    </a>
-                <?php } ?>
+        <?php if ($position == 'Dean') { ?>
+            <a class="dropdown-items" href="#">
+                <button type="button" data-toggle="modal" data-target="#editModal">
+                    Proceed to another Department or Course
+                </button>
+            </a>
+        <?php } else { ?>
+            <a class="dropdown-items" style="display:none;" href="#">
+                <button type="button" data-toggle="modal" data-target="#editModal">
+                    Proceed to another Department or Course
+                </button>
+            </a>
+        <?php } ?>
 
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-items" href="logout.php">Logout</a>

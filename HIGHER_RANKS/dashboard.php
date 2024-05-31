@@ -2120,6 +2120,51 @@ $position = $_SESSION['position'];
 
 
 
+      <!-- EDIT POP UP FORM FINAL (Bootstrap MODAL) -->
+<div class="modal fade" id="editmodal_course_policies" tabindex="-1" role="dialog" aria-labelledby="editcourse_policies"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editcourse_policies"> EDIT GRADING SYSTEM </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/update_course_policies.php" method="POST">
+
+                    <div class="modal-body">
+
+                        <input type="hidden" name="update_id51" id="update_id51">
+
+                        <div class="form-group">
+                            <label> Title </label>
+                            <input type="text" name="title" id="title" class="form-control"
+                                placeholder="Enter Title">
+                        </div>
+
+                        <div class="form-group">
+                            <label> Description </label>
+                            <input type="text" name="description" id="description" class="form-control"
+                                placeholder="Enter Description">
+                        </div>
+
+
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="updatedata" class="btn btn-primary">Update Data</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+
 
     <!-- DELETE PERCENTAGE --> 
 
@@ -2420,286 +2465,123 @@ $position = $_SESSION['position'];
 <div class="card custom-policy">
 <div class="card-body">
 <div class="mt-5 text-wrap container-fluid">
-<a><b>COURSE POLICIES AND REQUIREMENTS </b></a><br>
+<a><b>COURSE POLICIES AND REQUIREMENTS </b></a><br><br><br>
 
-<b>1. Office365 Activation.</b> <a>Please ensure that your Office365 account is working. Your Office365 
-    account is needed to access both Schoolbook and MS Teams where your asynchronous and 
-    synchronous classes will be held.</a><br><br>
-<b>2. Enrollment in an E-Class.</b> <a>You will automatically be enrolled in your e-class which is based on 
-    your enrollment data.</a><br><br>
-<b>3. Traditional Blended Learning Model</b>    <a>This course adopts the traditional blended learning model. 
-    This means that there will be a mix of face-to-face and asynchronous classes. Majority of teaching-learning activities and assessments are undertaken onsite. The total number of onsite classes shall 
-    be 50% of the number of hours allotted for the whole semester.</a><br><br>
-<b>4. Online Asynchronous Sessions. </b><br>
-<br>
-
-<div class="text-indent">
-  
-<b>a. Schoolbook (SB)</b>
-    <a>Schoolbook shall be the only platform for asynchronous sessions.</a><br>
-
-<b>b. Modules</b>
-    <a>Modules are self-paced learning resources for asynchronous sessions. These can be accessed in Schoolbook.</a><br>
-
-<b>c. References</b>
-    <a>Each page section may contain uploaded references. These learning resources may be downloaded.</a><br>
-
-<b>d. Asynchronous Activities</b>
-    <a>You are expected to read the modules as soon as they are uploaded. The learning content of the modules complements the online synchronous and face-to-face sessions.</a><br>
-
-<b>e. Asynchronous Engagement</b>
-    <a>Your activities in the course can be tracked by your professor. This includes the time you spend in reading the lessons and answering the assessments.</a><br>
-
-<b>f. Schoolbook Forum</b>
-    <a>All general concerns about the lessons and assessments in asynchronous sessions must be posted in the Schoolbook Forum. Response shall be made by your teacher within 48 hours.</a><br>
-
-<b>g. Schoolbook Messaging</b>
-    <a>This shall be the mode of communication for private and/or confidential communications. Response shall be made by your teacher within 48 hours upon receipt of the same unless it falls on weekends or holidays, which shall be handled promptly the following working day.</a><br>
-
-
-</div>
-
-<br>
-    
-<b>5. Onsite / Face-to-face (F2F) Sessions. </b><br><br>
-
-<div class="text-indent">
-
-<b>a. Face-to-face engagement.</b>
-    <a>Your engagement in face-to-face classes is graded based on your class participation.</a><br>
-
-<b>b. Classroom.</b>
-    <a>F2F classes shall be held at the classroom indicated in your Certificate of Registration. Should there be changes in the classroom venue, information will be given in advance.</a><br>
-
-<b>c. Gospel Reading and Prayer.</b>
-    <a>Each F2F session shall start with a Gospel reading and prayer. Your teacher may assign you, in advance, to do this.</a><br>
-
-<b>d. F2F Meeting Schedule.</b>
-    <a>The meeting schedule shall follow the time indicated in your official registration. The dates of F2F meetings are identified in the learning plan.</a><br>
-
-<b>e. Attendance.</b>
-    <a>Attendance in F2F meetings is required. Absence beyond 20% of the total number of F2F meetings will automatically be given a 0.0 grade in the subject.</a><br>
-
-<b>f. Tardiness.</b>
-    <a>A student who comes in 1-30 minutes after the start of the face-to-face meeting is considered late. Three tardy attendances are equivalent to 1 absence.</a><br>
-
-<b>g. Absence.</b>
-    <a>A student is considered absent 30 minutes after the official class schedule.</a><br>
-
-<b>h. Excuse from F2F classes.</b>
-    <a>Students are excused from F2F classes based on the provisions in the latest version of the Student Handbook.</a><br>
-
-<b>i. Uniform.</b>
-    <a>Wearing of prescribed uniform could be worn on Mondays, Thursdays, and Fridays, while Wednesdays and Saturdays are designated as wash days. Wearing of corporate attire could be worn every Tuesdays. Civilian attire should follow the policy on dress code as stipulated in the latest version of the Student Handbook.</a><br><br>
-
-</div>
-
-<b>6. Assessment and Grading System.</b><br><br>
-
-<div class="text-indent">
-
-<b>a. Formative assessments.</b>
-    <a>These are ungraded assessments. These may be considered as practice assessments that lead towards achieving outcomes without fear of receiving a failing grade.</a><br>
-
-<b>b. Enabling assessments.</b>
-    <a>These will comprise most of your graded assessments. These are designed to achieve topic learning outcomes that lead towards achieving the course learning outcomes. A maximum of two enabling assessments shall be allowed during the week. Please pay attention to the duration and number of attempts. As a general rule, quiz-type enabling assessments shall be open for only a minimum of 24 hours, while output-based enabling assessments shall be open for at least 6 days.</a><br>
-
-<b>c. No. of Attempts.</b>
-    <a>All enabling assessments, if given onsite, shall have 1 attempt only. For online enabling assessments, there shall be a maximum of 2 attempts. Summative assessments shall be given onsite and shall have 1 attempt only.</a><br>
-
-<b>d. Summative assessments.</b>
-<ol class="c">
-    <li>There shall be two summative assessments (midterm and final exams) for the entire semester. These are designed to achieve the course learning outcomes.</li>
-    <li>Summative assessment shall be given onsite.</li>
-    <li>Output-based summative assessment shall be given to students at least fifteen days prior to scheduled Summative Exam Week.</li>
-</ol>
-
-<b>e. Lifeline.</b>
-    <a>Only students with (1) valid reasons as stated in the Student Handbook and IRR, and (2) given their proof of excuse on or before the next synchronous/F2F session, shall be given a lifeline on the enabling and summative assessments.</a><br>
-
-<b>f. Rubric.</b>
-    <a>All online non-quiz or non-discrete types of assessments (essay, drop box, output-based, etc.) shall have a rubric or criteria for rating the students’ tasks. A student may refuse to answer these types of assessments in the absence of a rubric or criteria for grading, and the assessment shall be deemed invalid and shall not be part of the student’s grades.</a><br>
-
-<b>g. Grading.</b>
-    <a>All online assessments should be checked and graded by the teacher before the submission of midterm and final grades.</a><br>
-
-<b>h. Grading system.</b>
-<ol class="c">
-<style>
-ul { list-style-type: lower-roman; padding: 0; }
-</style>
 
 <?php
-// Establishing a connection to your database
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "syllabus";
+                     
+           
+                     // Database connection
+                     
+                     
+                     $connection = mysqli_connect("localhost","root","","syllabus");
+                     if (mysqli_connect_errno()){
+                         echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                         die();
+                         }
+                 
+                
+                         $department = $_SESSION['department'];
+                         $catid = $_SESSION['catid']; 
+                         $query = "SELECT * FROM course_policies";
+                     $query_run = mysqli_query($connection, $query);
+        ?>  
+                <table id="datatableid">
+                    <thead>
+                        <!-- <tr>
+                            <th scope="col">description</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Action</th>
+                        </tr> -->
+                    </thead>
+                    <?php
+            if($query_run)
+            {
+                foreach($query_run as $row)
+                {
+        ?>
+                    <tbody>
+                      
+                    <tr>
+    <td class="hide-id"> <?php echo $row['id']; ?> </td>
+    <td class="">
+    <?php
+$description = $row['description'];
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $database);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+// Replace 'CLO' and newline characters with <br>
+if (strpos($description, 'CLO') !== false || strpos($description, "\n") !== false) {
+    $description = str_replace(array('CLO', "\n"), '<br>', $description);
 }
 
-// Assuming $_SESSION['department'] contains the department value
-$department = $_SESSION['department'];
-$catid = $_SESSION['catid'];  
+function indentText($text) {    
+    $lines = explode('<br>', $text); // Split the text by <br> tags
+    foreach ($lines as &$line) {
+        if (preg_match('/^\s*\d+\./', $line)) {
+            // Add indentation if the line starts with a numeral followed by a period
+            $line = '<div class="course_policies" style="padding-left: 10px;">' . $line . '</div>';
+        } elseif (preg_match('/^\s*[a-z]+\./', $line) && !preg_match('/^\s*(i|ii|iii|iv|v|vi|vii|viii|ix|x)\./', $line)) {
+            // Add indentation if the line starts with a lowercase letter followed by a period
+            // and does not start with a lowercase Roman numeral followed by a period
+            $line = '<div class="course_policies" style="padding-left: 60px;">' . $line . '</div>';
+        } elseif (preg_match('/^\s*(i|ii|iii|iv|v|vi|vii|viii|x)\./', $line)) {
+            // Add more indentation if the line starts with a lowercase Roman numeral followed by a period
+            $line = '<div class="course_policies" style="padding-left: 80px;">' . $line . '</div>';
+            // Remove bold formatting from all words following the lowercase Roman numeral
+            $line = '<div class="course_policies" style="padding-left: 80px;">' . preg_replace('/<strong>(.*?)<\/strong>/', '$1', $line) . '</div>';
+        } else {
+            // No indentation for other lines
+            $line = '<div class="course_policies">' . $line . '</div>';
+        }
 
-// Query to fetch data from the database based on the department
-$sql = "SELECT * FROM percent WHERE department='$department' AND catid='$catid' ORDER BY id ASC";
-$result = $conn->query($sql);
+        // Bold only the text before the first dot
+       // Bold only the text before the first dot, excluding 9. and 10.
+        $line = preg_replace_callback('/(<div class="course_policies"[^>]*>\s*(?:[a-z]+\.\s*|\d+\.\s*|i+\.\s*))(?!9\.|10\.)(.*?\.)\s*/i', function($matches) {
+            return $matches[1] . '<strong>' . $matches[2] . '</strong> ';
+        }, $line);
 
-// HTML generation
-$html = ''; // Initialize the variable to store HTML content
-if ($result->num_rows > 0) {
-    $html .= '<ol class="c">'; // Start ordered list
-    while ($row = $result->fetch_assoc()) {
-        $html .= '<li><span><a>' . $row['description'] . "  " . $row['percents'] . '</a></span></li>';
     }
-    $html .= '</ol>'; // End ordered list
+    return implode('<br>', $lines);
 }
 
-// Close the database connection
-$conn->close();
 
-// Output the generated HTML
-echo $html;
+
+
+// Apply the indentText function to the description
+echo indentText($description);
 ?>
 
 
-</ol>
+    </td>
 
-<b>i. Gradebook.</b>
-    <a>Students can see the breakdown of grades in their Assessment tab.</a><br><br>
-
-    </div>
-
-<b>7. Self-Care</b><br><br>
-
-<div class="text-indent">
-
-<b>a. Schedule.</b>
-<?php
-// Establishing a connection to your database
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "syllabus";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $database);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Assuming $_SESSION['department'] contains the department value
-$department = $_SESSION['department'];
-$catid = $_SESSION['catid'];  
-
-// Query to fetch data from the database based on the department
-$sql = "SELECT * FROM semestral WHERE department='$department' AND catid='$catid' ORDER BY id ASC";
-$result = $conn->query($sql);
-
-// HTML generation
-$html = ''; // Initialize the variable to store HTML content
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $html .= '<p>a. <b>Schedule. </b>The schedule of self-care week for the ' . $row['second_call'] . ' ' . $row['year'] . ' is on ';
-    }
-}
-
-// Close the database connection
-$conn->close();
-
-// Output the generated HTML
-echo $html;
-?>
- <?php
-// Establishing a connection to your database
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "syllabus";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $database);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Assuming $_SESSION['department'] contains the department value
-$department = $_SESSION['department'];
-$catid = $_SESSION['catid'];  
-
-// Query to fetch data from the database based on the department
-$sql = "SELECT `date` FROM module_learning_final WHERE department = '$department' ORDER BY id ASC LIMIT 1";
-$result = $conn->query($sql);
-
-// HTML generation
-$html = ''; // Initialize the variable to store HTML content
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $html .= $row['date'] . '. During this week, there shall be no asynchronous/synchronous meetings, F2F classes, new modules, new assessments, and deadlines.</p>';
-    }
-}
-
-// Close the database connection
-$conn->close();
-
-// Output the generated HTML
-echo $html;
-?>
- During this week, there shall be no asynchronous/synchronous meetings, F2F classes, new modules, new assessments, and deadlines.</a><br>
-
-<b>b. Prerogative.</b>
-    <a>Students may avail of the self-care program, whether online or onsite, provided by the different units of the University.</a><br><br>
-
-    </div>
-
-<b>8. Data Privacy. </b><br><br>
-
-<div class="text-indent">
-
-<b>a. Access to the MS Teams.</b>
-        <a>Only students who are officially enrolled shall be part of the MS Teams and have access to all the resources including the recording. Students are not allowed to download the recordings. Screen recording is not allowed.</a><br>
     
-    <b>b. Guests.</b>
-        <a>Inviting people that are not part of the class in synchronous meetings is strictly prohibited, unless approved by the subject teacher.</a><br><br>
 
-        </div>
+</tr>
 
-<b>9.  Copyright and Plagiarism. </b><br><br>
 
-<div class="text-indent">
 
-    <a>a. Using of any illegally obtained software and other technology tools is strictly prohibited.</a><br>
-    <a>b. Students are encouraged to use their original photos, videos, and other resources. 
-    Otherwise, students can use royalty-free resources or embed the sources in their 
-    submissions to avoid copyright infringement and/or plagiarism. 
-    </a><br>
-    <a>c. Giving of password to Schoolbook and Office 365 is strictly prohibited. Likewise, 
-    accessing Schoolbook and Office 365 account other than the students personal account 
-    is also strictly prohibited. Violating students will be reported to the Student Welfare and 
-    Formation Office (SWAFO). 
-    </a><br>
-    <a>d. This subject shall abide by the policies pertaining to intellectual property, copyright, 
-    and plagiarism as stipulated in the latest edition of the Student Handbook. 
-    </a><br>
-    <a>e. Any plagiarized work, whether in part or full, shall mean a grade of 0.0 for the 
-    assessment.</a><br><br>
 
-    </div>
 
-    <a>10. This course shall abide by any institutional policies that may be released after the approval of this 
-    syllabus. Any such policy shall be posted within the e-class at the forums section, news feed. It 
-    will also be briefly discussed during the soonest synchronous meeting. </a><br><br>
+
+
+
+
+
+
+                    </tbody>
+                    <?php           
+                }
+            }
+            else 
+            {
+                echo "No Record Found";
+            }
+        ?>
+               </table>
+
+
+
+
+   
 </div>
 </div>
         </div>
@@ -3167,7 +3049,7 @@ foreach($query_run as $row)
         <button type="button" class="btn btn-success editbtn_online_refference"><i class="lni lni-pencil"></i></button>
 
         <button type="button" class="btn btn-danger deletebtn_online_refference"><i class="lni lni-trash-can"></i></button>';
-            }{
+            }else{
                 echo '
                 <button disabled type="button" class="btn btn-success editbtn_online_refference"><i class="lni lni-pencil"></i></button>
         
@@ -3468,7 +3350,7 @@ $query_run = mysqli_query($connection, $query);
 
                 }else{
                     echo '
-                    <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
+                    <!-- <button disabled type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
                     <button disabled type="button" class="btn btn-success editbtn_semestral sysllabus_button m-3"><i class="lni lni-pencil"></i></button><a>EDIT SEMESTER</a>';
 
                 }
