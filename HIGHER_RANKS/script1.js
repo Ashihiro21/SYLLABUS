@@ -762,6 +762,29 @@ $(document).ready(function () {
 });
 
 
+
+$(document).ready(function () {
+
+    $('.final_editbtn_percentage').on('click', function () {
+
+        $('#final_editmodal_percentage').modal('show');
+
+        $tr = $(this).closest('tr');
+
+        var data = $tr.children("td").map(function () {
+            return $(this).text();
+        }).get();
+
+        console.log(data);
+
+        $('#update_id50').val(data[0]);
+        $('#final_description').val(data[1]);
+        $('#final_percents').val(data[2]);
+    });
+});
+
+
+
 // <!-- DELETE BTN FOR PERCENTAGE -->
 
 
@@ -783,6 +806,29 @@ $(document).ready(function () {
 
         });
     });
+
+
+// <!-- DELETE BTN FOR PERCENTAGE -->
+
+
+$(document).ready(function () {
+
+    $('.final_deletebtn_percentage').on('click', function () {
+
+        $('#final_deletemodal_percentage').modal('show');
+
+        $tr = $(this).closest('tr');
+
+        var data = $tr.children("td").map(function () {
+            return $(this).text();
+        }).get();
+
+        console.log(data);
+
+        $('#delete_id50').val(data[0]);
+
+    });
+});
 
 
 

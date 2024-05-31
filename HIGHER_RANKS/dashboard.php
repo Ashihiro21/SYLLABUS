@@ -28,7 +28,7 @@
     $position = $_SESSION['position'];
 
     ?>
-    <?php if ($position == 'Department Chair') {
+    <?php if ($position == 'Subject Coordinator') {
         echo '
         <button type="button" class="btn btn-primary float" data-toggle="modal" data-target="#addmodal">
             Add Course
@@ -514,7 +514,7 @@
                               
                               
                                
-                                <?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+                                <?php if ($position == 'Subject Coordinator')  { // Change 'curriculum committee' to the appropriate value
                                     echo '<button type="button" class="btn sysllabus_button btn-success editbtn"><i class="lni lni-pencil"></i></button>';
                                 } else{
                                     echo '<button disabled type="button" class="btn sysllabus_button btn-success editbtn"><i class="lni lni-pencil"></i></button>';
@@ -638,7 +638,7 @@ $mysqli->close();
                         
                      
                   <?php $position = $_SESSION['position'];?>
-                <?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value      
+                <?php if ($position == 'Subject Coordinator')  { // Change 'curriculum committee' to the appropriate value      
                     echo '<button type="button" class="btn btn-primary add_databtn" data-toggle="modal" data-target="#studentaddmodal">
                         ADD DATA
                     </button>';
@@ -727,7 +727,7 @@ $mysqli->close();
                     </div>
 
                     <div class="form-group">
-                        <input type="text" id="catid" name="catid" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['catid']) ? $_SESSION['catid'] : ''; ?>">
+                        <input type="hidden" id="catid" name="catid" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['catid']) ? $_SESSION['catid'] : ''; ?>">
                     </div>
 
                     </div>
@@ -936,7 +936,7 @@ foreach($query_run as $row)
         <td class="table-button">
         <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
        <?php $position = $_SESSION['position']; ?>
-        <?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+        <?php if ($position == 'Subject Coordinator')  { // Change 'curriculum committee' to the appropriate value
         echo'<button type="button" class="btn btn-success editbtn_learning_out_table"><i class="lni lni-pencil"></i></button>
 
         <button type="button" class="btn btn-danger deletebtn_learning_out"><i class="lni lni-trash-can"></i></button>';
@@ -1017,7 +1017,7 @@ echo "No Record Found";
     $position = $_SESSION['position'];
     ?>
 
-<?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+<?php if ($position == 'Subject Coordinator')  { // Change 'curriculum committee' to the appropriate value
             echo '
 <!-- end course table modals  -->
   <button type="button" class="btn btn-primary add_databtn" data-toggle="modal" data-target="#addmodal_module_learning">ADD DATA</button>';
@@ -1304,7 +1304,7 @@ echo "No Record Found";
                     <?php
                     $position = $_SESSION['position'];
                     ?>
-                    <?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+                    <?php if ($position == 'Subject Coordinator')  { // Change 'curriculum committee' to the appropriate value
                     echo '<button type="button" class="btn btn-success editbtn_module_learning"><i class="lni lni-pencil"></i></button>
                         <button type="button" class="btn btn-danger deletebtn_module_learning"><i class="lni lni-trash-can"></i></button>';
                     }else{
@@ -1421,7 +1421,7 @@ echo "No Record Found";
 <?php
     $position = $_SESSION['position'];
 ?>
-<?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+<?php if ($position == 'Subject Coordinator')  { // Change 'curriculum committee' to the appropriate value
             echo '
   <!--Add Modal Final Period Table -->
 <button type="button" class="btn btn-primary add_databtn_final" data-toggle="modal" data-target="#studentaddmodal15">
@@ -1553,7 +1553,7 @@ foreach($query_run as $row)
         <?php
         $position = $_SESSION['position'];
         ?>
-    <?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+    <?php if ($position == 'Subject Coordinator')  { // Change 'curriculum committee' to the appropriate value
                 echo '
             <button type="button" class="btn btn-success editbtn_learning_out_final_period_table"><i class="lni lni-pencil"></i></button>
 
@@ -1587,7 +1587,7 @@ echo "No Record Found";
 <?php
 $position = $_SESSION['position'];
 ?>
-<?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+<?php if ($position == 'Subject Coordinator')  { // Change 'curriculum committee' to the appropriate value
             echo '
 <button type="button" class="btn btn-primary add_databtn_final" data-toggle="modal" data-target="#addmodal_module_learning_final">
                         ADD DATA
@@ -1886,7 +1886,7 @@ $position = $_SESSION['position'];
                     <?php
                     $position = $_SESSION['position'];
                     ?>
-            <?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+            <?php if ($position == 'Subject Coordinator')  { // Change 'curriculum committee' to the appropriate value
                         echo '
                         <button type="button" class="btn btn-success editbtn_module_learning"><i class="lni lni-pencil"></i></button>
                         <button type="button" class="btn btn-danger deletebtn_module_learning"><i class="lni lni-trash-can"></i></button>';
@@ -1958,7 +1958,59 @@ $position = $_SESSION['position'];
 
                     
             <div class="form-group">
-                <input type="text" id="catid" name="catid" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['catid']) ? $_SESSION['catid'] : ''; ?>">
+                <input type="hidden" id="catid" name="catid" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['catid']) ? $_SESSION['catid'] : ''; ?>">
+            </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="insertdata" class="btn btn-primary">Save Data</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!--Add Modal PERCENT GRADING FINAL -->
+
+                    <!-- Modal -->
+ <div class="modal fade" id="final_percent_grading" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Grading System </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/insert_final_percentage.php" method="POST">
+
+                    <div class="modal-body">
+                    <div class="form-group">
+                            <label> Description  </label>
+                            <input type="text" name="final_description" id="description50" class="form-control"
+                                placeholder="Enter Description">
+                        </div>
+
+                        <div class="form-group">
+                            <label> Percent  </label>
+                            <input type="text" name="final_percent" id="percent50" class="form-control"
+                                placeholder="Enter Percent">
+                        </div>
+
+
+                        
+                    <div class="form-group">
+                        <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
+                    </div>
+
+                    
+            <div class="form-group">
+                <input type="hidden" id="catid" name="catid" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['catid']) ? $_SESSION['catid'] : ''; ?>">
             </div>
 
                     </div>
@@ -2022,6 +2074,53 @@ $position = $_SESSION['position'];
 
 
 
+
+    <!-- EDIT POP UP FORM FINAL (Bootstrap MODAL) -->
+<div class="modal fade" id="final_editmodal_percentage" tabindex="-1" role="dialog" aria-labelledby="final_editpercentage"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="final_editpercentage"> EDIT GRADING SYSTEM </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/update_final_percentage.php" method="POST">
+
+                    <div class="modal-body">
+
+                        <input type="hidden" name="update_id50" id="update_id50">
+
+                        <div class="form-group">
+                            <label> Description </label>
+                            <input type="text" name="final_description" id="final_description" class="form-control"
+                                placeholder="Enter Description">
+                        </div>
+
+                        <div class="form-group">
+                            <label> Percent </label>
+                            <input type="text" name="final_percents" id="final_percents" class="form-control"
+                                placeholder="Enter Percent">
+                        </div>
+
+
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="updatedata" class="btn btn-primary">Update Data</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
     <!-- DELETE PERCENTAGE --> 
 
     <div class="modal fade" id="deletemodal_percentage" tabindex="-1" role="dialog" aria-labelledby="onsite_reffence"
@@ -2058,19 +2157,56 @@ $position = $_SESSION['position'];
     </div>
 
 
+    <!-- DELETE PERCENTAGE --> 
+
+    <div class="modal fade" id="final_deletemodal_percentage" tabindex="-1" role="dialog" aria-labelledby="onsite_reffence"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="onsite_reffence"> DELETE Grading Systems </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Course_Syllabus/delete_final_percentage.php" method="POST">
+
+                    <div class="modal-body">
+
+                        <input type="hidden" name="delete_id50" id="delete_id50">
+
+                        <h4> Do you want to Delete this Data ??</h4>
+                    </div>
+
+
+
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"> NO </button>
+                        <button type="submit" name="deletedata" class="btn btn-primary"> Yes !! Delete it. </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
 <div class="card custom-card">
+
+<div style="display:flex;">
 <div class="card-body ">
 <?php
 $position = $_SESSION['position'];
 ?>
-<?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+<?php if ($position == 'Subject Coordinator')  { // Change 'curriculum committee' to the appropriate value
             echo '
-<button type="button" class="btn btn-primary percent_grading " data-toggle="modal" data-target="#percent_grading" style="margin-left: 18.9rem;">ADD DATA
+<button type="button" class="btn btn-primary percent_grading" data-toggle="modal" data-target="#percent_grading" style="margin-left: 18.9rem;">ADD DATA
 </button>';
 
 }else{
     echo '
-    <button disabled type="button" class="btn btn-primary percent_grading " data-toggle="modal" data-target="#percent_grading" style="margin-left: 18.9rem;">ADD DATA
+    <button disabled type="button" class="btn btn-primary percent_grading" data-toggle="modal" data-target="#percent_grading" style="margin-left: 18.9rem;">ADD DATA
     </button>';
     
 }
@@ -2081,7 +2217,7 @@ $position = $_SESSION['position'];
     <table id="datatableid" class="table table-bordered">
         <thead>
             <tr>
-                <th colspan="3" scope="col">GRADING SYSTEM</th>
+                <th colspan="3" scope="col">GRADING SYSTEM MIDTERM</th>
                 
             </tr>
         </thead>
@@ -2125,7 +2261,7 @@ $position = $_SESSION['position'];
                         <?php
                         $position = $_SESSION['position'];
                         ?>
-            <?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+            <?php if ($position == 'Subject Coordinator')  { // Change 'curriculum committee' to the appropriate value
                         echo '
                             <button type="button" class="btn btn-success editbtn_percentage"><i class="lni lni-pencil"></i></button>
                             <button type="button" class="btn btn-danger deletebtn_percentage"><i class="lni lni-trash-can"></i></button>';
@@ -2145,23 +2281,127 @@ $position = $_SESSION['position'];
                 echo "No Record Found";
             }
             ?>
+
+            
             <tr>
                 <td colspan="5">TOTAL <a style="margin-left:8rem;"><?php echo  $total_percent; ?></a>%</td>
                 
                
             </tr>
+
+            
         </tbody>
     </table>
+
+    
+</div>
+
+
+</div>
+
+<div class="card-body ">
+<?php
+$position = $_SESSION['position'];
+?>
+<?php if ($position == 'Subject Coordinator')  { // Change 'curriculum committee' to the appropriate value
+            echo '
+<button type="button" class="btn btn-primary final_percent_grading " data-toggle="modal" data-target="#final_percent_grading" style="margin-left: 18.9rem;">ADD DATA
+</button>';
+
+}else{
+    echo '
+    <button disabled type="button" class="btn btn-primary final_percent_grading " data-toggle="modal" data-target="#final_percent_grading" style="margin-left: 18.9rem;">ADD DATA
+    </button>';
+    
+}
+
+?>
+<div class="container mt-5 me-5">
+    
+    <table id="datatableid" class="table table-bordered">
+        <thead>
+            <tr>
+                <th colspan="3" scope="col">GRADING SYSTEM FINAL</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            // Database connection
+            $connection = mysqli_connect("localhost", "root", "", "syllabus");
+            if (mysqli_connect_errno()) {
+                echo "Failed to connect to MySQL: " . mysqli_connect_error();
+                die();
+            }
+
+    
+            $final_total_percent_query = "SELECT SUM(`final_percents`) AS final_total_percent FROM final_percent WHERE department='$department' AND catid='$catid'";
+            $final_total_percent_result = mysqli_query($connection, $final_total_percent_query);
+            $final_total_percent_row = mysqli_fetch_assoc($final_total_percent_result);
+            
+            $final_total_percent = $final_total_percent_row['final_total_percent'];
+            
+     
+
+
+            // Fetch module learning records
+            $query = "SELECT `id`, `final_description`, `final_percents` FROM `final_percent` 
+            WHERE department='$department' AND catid='$catid'";
+
+            $query_run = mysqli_query($connection, $query);
+
+            if ($query_run) {
+                while ($row = mysqli_fetch_assoc($query_run)) {
+            ?>
+                    <tr>
+                        <td class="hide-id"><?php echo $row['id']; ?></td>
+                        <td><?php echo $row['final_description']; ?></td>
+                 
+                       
+
+                        <td><?php echo $row['final_percents']; ?></td>
+                        
+                        <td class="table-button">
+                        <?php
+                        $position = $_SESSION['position'];
+                        ?>
+            <?php if ($position == 'Subject Coordinator')  { // Change 'curriculum committee' to the appropriate value
+                        echo '
+                            <button type="button" class="btn btn-success final_editbtn_percentage"><i class="lni lni-pencil"></i></button>
+                            <button type="button" class="btn btn-danger final_deletebtn_percentage"><i class="lni lni-trash-can"></i></button>';
+
+            }else{
+                echo '
+                <button disabled type="button" class="btn btn-success final_editbtn_percentage"><i class="lni lni-pencil"></i></button>
+                <button disabled type="button" class="btn btn-danger final_deletebtn_percentage"><i class="lni lni-trash-can"></i></button>';
+                        }
+
+                        ?>
+                        </td>
+                    </tr>
+            <?php
+                }
+            } else {
+                echo "No Record Found";
+            }
+            ?>
+
+            
+            <tr>
+                <td colspan="5">TOTAL <a style="margin-left:8rem;"><?php echo  $final_total_percent; ?></a>%</td>
+                
+               
+            </tr>
+
+            
+        </tbody>
+    </table>
+
+</div>   
+</div>
 </div>
 <span style="margin-left:4rem;"><b>Overall Final Grade</b><a> = Midterm + Final</a></span>
 <a style="margin-left:22rem;">2</a>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
 
 </div>
 </div>
@@ -2493,7 +2733,7 @@ echo $html;
         <?
     $position = $_SESSION['position'];
     ?>
-<?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+<?php if ($position == 'Subject Coordinator')  { // Change 'curriculum committee' to the appropriate value
             echo '
 <button type="button" class="btn btn-primary onsite_reffence_tables" data-toggle="modal" data-target="#onsite_reffence_tables" style="margin-left: 8.8rem;">
                         ADD DATA
@@ -2689,7 +2929,7 @@ foreach($query_run as $row)
 
             ?>
 
-            <?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+            <?php if ($position == 'Subject Coordinator')  { // Change 'curriculum committee' to the appropriate value
             echo '
         <button type="button" class="btn btn-success editbtn_onsite_reffence"><i class="lni lni-pencil"></i></button>
 
@@ -2730,7 +2970,7 @@ echo "No Record Found";
 <?php
 $position = $_SESSION['position'];
 ?>
-<?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+<?php if ($position == 'Subject Coordinator')  { // Change 'curriculum committee' to the appropriate value
             echo '
 <button type="button" class="btn btn-primary online_reffence" data-toggle="modal" data-target="#online_reffence" style="margin-left: 8.8rem;">
                         ADD DATA
@@ -2922,7 +3162,7 @@ foreach($query_run as $row)
 
             ?>
 
-            <?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+            <?php if ($position == 'Subject Coordinator')  { // Change 'curriculum committee' to the appropriate value
             echo '
         <button type="button" class="btn btn-success editbtn_online_refference"><i class="lni lni-pencil"></i></button>
 
@@ -2958,7 +3198,7 @@ echo "No Record Found";
 <?php
 $position = $_SESSION['position'];
 ?>
-<?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+<?php if ($position == 'Subject Coordinator')  { // Change 'curriculum committee' to the appropriate value
             echo '
 <button type="button" class="btn btn-primary add_semester float" data-toggle="modal" data-target="#add_semester" style="margin-left: 8.8rem;">
                         ADD DATA
@@ -3221,15 +3461,16 @@ $query_run = mysqli_query($connection, $query);
                     <?php
                     $position = $_SESSION['position'];
                     ?>
-                <?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+                <?php if ($position == 'Subject Coordinator')  { // Change 'curriculum committee' to the appropriate value
                             echo '
                         <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
                         <button type="button" class="btn btn-success editbtn_semestral sysllabus_button m-3"><i class="lni lni-pencil"></i></button><a>EDIT SEMESTER</a>';
 
-                }{
+                }else{
                     echo '
                     <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
                     <button disabled type="button" class="btn btn-success editbtn_semestral sysllabus_button m-3"><i class="lni lni-pencil"></i></button><a>EDIT SEMESTER</a>';
+
                 }
 
                 ?>
@@ -3464,7 +3705,7 @@ foreach($query_run1 as $rows)
         <?php
         $position = $_SESSION['position'];
         ?>
-        <?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+        <?php if ($position == 'Subject Coordinator')  { // Change 'curriculum committee' to the appropriate value
             echo '
         <button type="button" class="btn btn-success editbtn_signature m-3"><i class="lni lni-pencil"></i></button><a>UPLOAD SIGNATURE</a>';
         }else{
@@ -3584,7 +3825,7 @@ foreach($query_run2 as $table_rows)
         <?php
         $position = $_SESSION['position'];
         ?>
-        <?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+        <?php if ($position == 'Subject Coordinator')  { // Change 'curriculum committee' to the appropriate value
             echo '
         <button type="button" class="btn btn-success editbtn_signature_dean m-3"><i class="lni lni-pencil"></i></button><a>UPLOAD SIGNATURE</a>';
         
@@ -3722,7 +3963,7 @@ foreach($query_run2 as $table_rows)
                             <td class="centered-btn">
                                 <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
                                 <?php $position = $_SESSION['position'];?>
-                              <?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+                              <?php if ($position == 'Subject Coordinator')  { // Change 'curriculum committee' to the appropriate value
                                     echo '<button type="button" class="btn sysllabus_button btn-success editbtn"><i class="lni lni-pencil"></i></button>';
                                 } else{
                                     echo '<button disabled type="button" class="btn sysllabus_button btn-success editbtn"><i class="lni lni-pencil"></i></button>';
@@ -3818,7 +4059,7 @@ $mysqli->close();
 <?php
 $position = $_SESSION['position'];
 ?>
-<?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
+<?php if ($position == 'Subject Coordinator')  { // Change 'curriculum committee' to the appropriate value
             echo '
 <button type="button" class="btn btn-primary add_databtn_mapping_table" data-toggle="modal" data-target="#mapping_table">
                         ADD DATA
@@ -4156,554 +4397,12 @@ $position = $_SESSION['position'];
 
 
 
-<!-- GRADUATE ATTRIBUTES -->
 
-<div class="pt-5 pb-4">
-    <span class="inline-images">
-        <a><img src="../img/DLSU-D.png" width="150" alt=""></a>
-        <a><img src="../Admin/uploads/<?php echo isset($categories_logo) ? $categories_logo : 'No_signature'; ?>" alt="" width="150" class="img-inline"></a>
-    </span>
-</div>
-    <div class="text-center">
-    <h4>DE LA SALLE UNIVERSITY-DASMARINAS</h4>
-    <h4><?php echo strtoupper($category_name);?> </h4>
-    <h4><?php echo strtoupper($course_departments);?> </h4>
-    <p class="pb-3"></p>
-    <h4>GRADUATE ATTRIBUTES (DESCRIPTORS/INSTITUTIONAL LEARNING OUTCOMES) – </h4>
-    <h4>PROGRAM LEARNING OUTCOME MAPPING TABLE FOR </h4>
-    <h4><?php echo strtoupper($cname);?></h4>
-    </div>
 
 
-<!-- ADD MODAL GRADUATE ATTRIBUTES -->
-<?php
-$position = $_SESSION['position'];
-?>
-<?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
-            echo '
-<button type="button" class="btn btn-primary add_databtn_decriptors" data-toggle="modal" data-target="#decriptors">
-                        ADD DATA
-                    </button>';
-}else{
-    echo '
-    <button disabled type="button" class="btn btn-primary add_databtn_decriptors" data-toggle="modal" data-target="#decriptors">
-                            ADD DATA
-                        </button>';
-}
-?>
 
-                    <!-- Modal -->
- <div class="modal fade" id="decriptors" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Course Learning Outcome </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
 
-                <form action="Course_Syllabus/insert_decriptors.php" method="POST">
 
-                    <div class="modal-body">
-                   
-
-                        <div class="form-group">
-
-                        <label>Program Learning Outcomes</label><br>
-                        <textarea type="text" name="program_learn" col="40" cols="50" rows="5" class="form-control 10"
-                                placeholder="Enter Computer Laborator"></textarea>
-                        
-
-                        </div>
-
-                                            <div class="form-group">
-                        <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
-                    </div>
-
-
-                    
-            <div class="form-group">
-                <input type="hidden" id="catid" name="catid" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['catid']) ? $_SESSION['catid'] : ''; ?>">
-            </div>
-
-
-
-                        <div class="form-group">
-                     
-                        
-                    </div>
-                    
-                    <div class="form-group">
-                        
-                        
-                        <input type="checkbox" name="rate1_s"value="/">
-                        <label style="margin-left: 5px;">1</label><br>
-                        
-
-                        <input type="checkbox" name="rate2_s" value="/">
-                        <label style="margin-left: 5px;">2</label><br>
-
-                        <input type="checkbox" name="rate3_s" value="/">
-                        <label style="margin-left: 5px;">3</label><br>
-
-                        <input type="checkbox" name="rate4_s" value="/">
-                        <label style="margin-left: 5px;">4</label><br>
-
-                        <input type="checkbox" name="rate5_s" value="/">
-                        <label style="margin-left: 5px;">5</label>
-                      
-                       
-                    </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" name="insertdata" class="btn btn-primary">Save Data</button>
-                    </div>
-                </form>
-
-            </div>
-        </div>
-    </div>
-
-
-
-
-<!-- EDIT POP UP FORM (Bootstrap MODAL) -->
-<div class="modal fade" id="editmodal_decriptors" tabindex="-1" role="dialog" aria-labelledby="editdecriptors" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editdecriptors"> COURSE LEARNING OUTCOMES </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-
-            <form action="Course_Syllabus/update_decriptors.php" method="POST">
-
-                <div class="modal-body">
-
-                    <input type="hidden" name="update_id11" id="update_id11">
-
-                    <div class="form-group">
-                        <label> Computer Laboratory </label>
-                        <textarea type="text" name="program_learn" col="40" cols="50" rows="5" id="program_learn" class="form-control"
-                            placeholder="Enter Computer Laborator"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <input type="checkbox" name="rate1" id="rate1" value="/">
-                        <label for="">1</label>
-
-                        <input type="checkbox" name="rate2" id="rate2" value="/">
-                        <label for="">2</label>
-
-                        <input type="checkbox" name="rate3" id="rate3" value="/">
-                        <label for="">3</label>
-
-                        <input type="checkbox" name="rate4" id="rate4" value="/">
-                        <label for="">4</label>
-
-                        <input type="checkbox" name="rate5" id="rate5" value="/">
-                        <label for="">5</label>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" name="updatedata" class="btn btn-primary">Update Data</button>
-                </div>
-            </form>
-
-        </div>
-    </div>
-</div>
-
-    <!-- DELETE MAPPING TABLE PLS --> 
-
-    <div class="modal fade" id="deletemodal_decriptors" tabindex="-1" role="dialog" aria-labelledby="decriptors"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="decriptors"> Delete On-Site References </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <form action="Course_Syllabus/delete_decriptors.php" method="POST">
-
-                    <div class="modal-body">
-
-                        <input type="hidden" name="delete_id11" id="delete_id11">
-
-                        <h4> Do you want to Delete this Data ??</h4>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal"> NO </button>
-                        <button type="submit" name="deletedata" class="btn btn-primary"> Yes !! Delete it. </button>
-                    </div>
-                </form>
-
-            </div>
-        </div>
-    </div>
-
-
-
-
-<!-- GRADUATES ATTRIBUTES -->
-
-
-    
-
-
-<div class="container mt-5">
-
-
-
-<?php
- 
-
- // Database connection
- 
- 
- $connection = mysqli_connect("localhost","root","","syllabus");
- if (mysqli_connect_errno()){
-     echo "Failed to connect to MySQL: " . mysqli_connect_error();
-     die();
-     }
-
-
-
-     $department = $_SESSION['department'];
-     $catid = $_SESSION['catid']; 
- $query = "SELECT * FROM decriptors WHERE department='$department' AND catid='$catid'";
- $query_run = mysqli_query($connection, $query);
-?>  
-<table id="datatableid" class="table table-bordered b-5">
-<thead>
-    <tr>
-        <th class="text-center" scope="col">Program Learning Outcomes</th>
-        <th class="text-center"  scope="col">1</th>
-        <th class="text-center"  scope="col">2</th>
-        <th class="text-center"  scope="col">3</th>
-        <th class="text-center"  scope="col">4</th>
-        <th class="text-center"  scope="col">5</th>
-        <th class="text-center"  scope="col">ACTION</th>
-    </tr>
-</thead>
-<?php
-if($query_run)
-{
-foreach($query_run as $row)
-{
-?>
-<tbody>
-  
-<tr>
-        <td class="hide-id"> <?php echo $row['id']; ?> </td>
-        <td class=""><?php echo $row['program_learn']; ?></td>
-        <td class=""><?php echo $row['rate1']; ?></td>
-        <td class=""><?php echo $row['rate2']; ?></td>
-        <td class=""><?php echo $row['rate3']; ?></td>
-        <td class=""><?php echo $row['rate4']; ?></td>
-        <td class=""><?php echo $row['rate5']; ?></td>
-
-        <td class="table-button">
-        <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
-        <?php
-        $position = $_SESSION['position'];
-        ?>
-        <?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
-            echo '
-        <button type="button" class="btn btn-success editbtn_decriptors"><i class="lni lni-pencil"></i></button>
-
-        <button type="button" class="btn btn-danger deletebtn_decriptors"><i class="lni lni-trash-can"></i></button>';
-        }else{
-            echo '
-            <button disabled type="button" class="btn btn-success editbtn_decriptors"><i class="lni lni-pencil"></i></button>
-    
-            <button disabled type="button" class="btn btn-danger deletebtn_decriptors"><i class="lni lni-trash-can"></i></button>';
-        }
-
-        ?>
-        </td>
-    </tr>
-
-
-
-</tbody>
-<?php           
-}
-}
-else 
-{
-echo "No Record Found";
-}
-?>
-</table>
-
-</div>
-
-
-
-
-
-
-
-<!-- GRADUATE ATTRIBUTE -->
-
-<div class="pt-5 pb-4">
-    <span class="inline-images">
-        <a><img src="../img/DLSU-D.png" width="150" alt=""></a>
-        <a><img src="../Admin/uploads/<?php echo isset($categories_logo) ? $categories_logo : 'No_signature'; ?>" alt="" width="150" class="img-inline"></a>
-    </span>
-</div>
-    <div class="text-center">
-    <h4>DE LA SALLE UNIVERSITY-DASMARINAS</h4>
-    <h4><?php echo strtoupper($category_name);?> </h4>
-    <h4><?php echo strtoupper($course_departments);?> </h4>
-    <p class="pb-3"></p>
-    <h4>GRADUATES ATTRIBUTES AND INSTITUTIONAL LEARNING OUTCOMES (ILOs)</h4>
-    </div>
-
-
-
-
-<!-- ADD online REFFERENCE -->
-
-<!--Add Modal Final Period Table -->
-<?php
-$position = $_SESSION['position'];
-?>
-<?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
-            echo '
-<button type="button" class="btn btn-primary graduate_attribute" data-toggle="modal" data-target="#graduate_attribute">
-                        ADD DATA
-                    </button>';
-
-}else{
-    echo '
-<button disabled type="button" class="btn btn-primary graduate_attribute" data-toggle="modal" data-target="#graduate_attribute">
-                        ADD DATA
-                    </button>';
-}
-
-?>
-
-                    <!-- Modal -->
- <div class="modal fade" id="graduate_attribute" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Online References</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <form action="Course_Syllabus/insert_graduate_attribute.php" method="POST">
-
-                    <div class="modal-body">
-                    <div class="form-group">
-                            <label> Graduate Attribute (GA)  </label>
-                            <input type="text" name="graduate_att" id="graduate_att6" class="form-control"
-                                placeholder="Enter Graduate Attribute (GA)">
-                        </div>
-
-                        <div class="form-group">
-                        <label>Descriptors (Institutional Learning Outcome)</label>
-                        <textarea name="descriptors_learn_out" id="descriptors_learn_out6" class="form-control 11" placeholder="Enter Descriptors (Institutional Learning Outcome)" cols="50" rows="5"></textarea>
-                    </div>
-
-                                    <div class="form-group">
-                    <input type="hidden" id="department" name="department" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['department']) ? $_SESSION['department'] : ''; ?>">
-                </div>
-
-                
-                <div class="form-group">
-                    <input type="hidden" id="catid" name="catid" class="form-control" style="width: 450px;" placeholder="Enter Course Description" value="<?php echo isset($_SESSION['catid']) ? $_SESSION['catid'] : ''; ?>">
-                </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" name="insertdata" class="btn btn-primary">Save Data</button>
-                    </div>
-                </form>
-
-            </div>
-        </div>
-    </div>
-
-
-    <!-- EDIT POP UP FORM (Bootstrap MODAL) -->
-<div class="modal fade" id="editmodal_graduate_attributes" tabindex="-1" role="dialog" aria-labelledby="editgraduate_attributes"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editgraduate_attributes"> COURSE LEARNING OUTCOMES </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <form action="Course_Syllabus/update_graduate_attributes.php" method="POST">
-
-                    <div class="modal-body">
-
-                        <input type="hidden" name="update_id12" id="update_id12">
-
-                        <div class="form-group">
-                            <label> Graduate Attribute (GA) </label>
-                            <input type="text" name="graduate_att" id="graduate_att" class="form-control"
-                                placeholder="Enter Graduate Attribute (GA)">
-                        </div>
-
-                        <div class="form-group">
-                        <label for="descriptors_learn_out">Descriptors (Institutional Learning Outcome)</label>
-                        <textarea  name="descriptors_learn_out" id="descriptors_learn_out" class="form-control" placeholder="Enter Descriptors (Institutional Learning Outcome)" cols="50" rows="5"></textarea>
-                    </div>
-
-
-                        
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" name="updatedata" class="btn btn-primary">Update Data</button>
-                    </div>
-                </form>
-
-            </div>
-        </div>
-    </div>
-
-
-      <!-- DELETE GRADUATE ATTRIBUTES --> 
-
-      <div class="modal fade" id="deletemodal_graduate_attributes" tabindex="-1" role="dialog" aria-labelledby="gradute_attributes"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="gradute_attributes"> Delete On-Site References </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <form action="Course_Syllabus/delete_graduate_attributes.php" method="POST">
-
-                    <div class="modal-body">
-
-                        <input type="hidden" name="delete_id12" id="delete_id12">
-
-                        <h4> Do you want to Delete this Data ??</h4>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal"> NO </button>
-                        <button type="submit" name="deletedata" class="btn btn-primary"> Yes !! Delete it. </button>
-                    </div>
-                </form>
-
-            </div>
-        </div>
-    </div>
-
-
-<div class="container mt-5">
-
-
-
-
-<?php
- 
-
- // Database connection
- 
- 
- $connection = mysqli_connect("localhost","root","","syllabus");
- if (mysqli_connect_errno()){
-     echo "Failed to connect to MySQL: " . mysqli_connect_error();
-     die();
-     }
-
-
-     $department = $_SESSION['department'];
-     $catid = $_SESSION['catid']; 
- $query = "SELECT * FROM  graduates_attributes 
- WHERE department='$department' AND catid='$catid'";
- $query_run = mysqli_query($connection, $query);
-?>  
-<table id="datatableid" class="table table-bordered">
-<thead>
-    <tr>
-        <th scope="col">Graduate Attribute (GA)</th>
-        <th scope="col">Descriptors (Institutional Learning Outcome)</th>
-        <th scope="col">Action</th>
-    </tr>
-</thead>
-<?php
-if($query_run)
-{
-foreach($query_run as $row)
-{
-?>
-<tbody>
-  
-<tr>
-        <td class="hide-id"> <?php echo $row['id']; ?> </td>
-        
-        <td class=""><?php echo $row['graduate_att']; ?></td>
-        <td class=""><?php
-                        if (strpos($row['descriptors_learn_out'], 'TLO') !== false || strpos($row['descriptors_learn_out'], "\n") !== false) {
-                            // If 'TLO' or a line break is found, replace it with <br>
-                            echo str_replace(array('', "\n"), '<br>', $row['descriptors_learn_out']);
-                        } else {
-                            echo $row['descriptors_learn_out'];
-                        }
-                        ?></td>
-        <td class="table-button">
-        <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
-        <?php
-        $position = $_SESSION['position'];
-        ?>
-        <?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
-            echo '
-        <button type="button" class="btn btn-success editbtn_graduate_attributes"><i class="lni lni-pencil"></i></button>
-
-        <button type="button" class="btn btn-danger deletebtn_graduate_attributes"><i class="lni lni-trash-can"></i></button>';
-        }else{
-            echo '
-            <button disabled type="button" class="btn btn-success editbtn_graduate_attributes"><i class="lni lni-pencil"></i></button>
-    
-            <button disabled type="button" class="btn btn-danger deletebtn_graduate_attributes"><i class="lni lni-trash-can"></i></button>';
-        }
-        ?>
-        </td>
-    </tr>
-
-
-
-</tbody>
-<?php           
-}
-}
-else 
-{
-echo "No Record Found";
-}
-?>
-</table>
-
-
-</div>
 
 
 
@@ -4775,7 +4474,7 @@ if ($query_run2) {
         <td class="hide-id"><?php echo $table_rows['commitee_signatures']; ?></td>
         <td class="hide-id"><?php echo $table_rows['commitee_comments']; ?></td>
         <td class="table-button">
-        <?php if ($position == 'Curriculum Committee')  { // Change 'curriculum committee' to the appropriate value
+        <?php if ($position == 'Curriculum Committee' || $position == 'Dean' || $position == 'Department Chair' )  { // Change 'curriculum committee' to the appropriate value
             echo '<button type="button" class="btn btn-success editbtn_signature_committee m-3"><i class="lni lni-pencil"></i></button><a>APPROVAL</a>';
         } else {
             echo '<button type="button" class="btn btn-success editbtn_signature_committee m-3" disabled><i class="lni lni-pencil"></i></button><a>APPROVAL</a>';
