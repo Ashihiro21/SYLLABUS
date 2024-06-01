@@ -3385,19 +3385,26 @@ $query_run = mysqli_query($connection, $query);
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="edit_signature">UPLOAD SIGNATURE</h5>
+                <h5 class="modal-title" id="edit_signature">APPROVAL</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <form id="edit_signature_form" action="Course_Syllabus/update_signature.php" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
-                    <input type="hidden" name="update_id22" id="update_id22">
+                    <input type="text" name="update_id22" id="update_id22">
                     <div class="form-group">
-                        <label for="dept_signature">Dept Signature</label>
-                        <input type="file" name="dept_signature" id="dept_signature" class="form-control">
-                        <!-- Display a preview of the selected image -->
-                        <img src="#" id="preview_dept_signature" style="display:none; max-width: 100px; max-height: 100px;" />
+                        <label for="chair_signature">Dept Signature</label>
+                        <select name="chair_signature" id="chair_signature" class="form-control">
+                            <option value="" disabled>Select Status</option>
+                            <!-- Add available options here -->
+                            <option value="Approve">Approve</option>
+                            <option value="Disapprove">Disapprove</option>
+                            <option value="Pending">Pending</option>
+                            <!-- You can add more options as needed -->
+                        </select>
+                        <label>Chair Comments</label>
+                        <textarea name="department_chair_comments" id="department_chair_comments" class="form-control 7" placeholder="Enter Chair Comments" cols="50" rows="5"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -3446,19 +3453,26 @@ $(document).ready(function(){
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="edit_signature_dean">UPLOAD SIGNATURE</h5>
+                <h5 class="modal-title" id="edit_signature_dean">APPROVAL</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <form id="edit_signature_dean_form" action="Course_Syllabus/update_signature_dean.php" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
-                    <input type="hidden" name="update_id23" id="update_id23">
+                    <input type="" name="update_id23" id="update_id23">
                     <div class="form-group">
                         <label for="dean_signature">Dean Signature</label>
-                        <input type="file" name="dean_signature" id="dean_signature" class="form-control">
-                        <!-- Display a preview of the selected image -->
-                        <img src="#" id="preview_dean_signature" style="display:none; max-width: 100px; max-height: 100px;" />
+                        <select name="dean_signature" id="dean_signature" class="form-control">
+                            <option value="" disabled>Select Status</option>
+                            <!-- Add available options here -->
+                            <option value="Endorsed">Endorsed</option>
+                            <option value="Disapprove">Disapprove</option>
+                            <option value="Pending">Pending</option>
+                            <!-- You can add more options as needed -->
+                        </select>
+                        <label>Dean Comments</label>
+                        <textarea name="department_dean_comments" id="department_dean_comments6" class="form-control 7" placeholder="Enter Dean Comments" cols="50" rows="5"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -3550,7 +3564,8 @@ $(document).ready(function(){
                  co.`initial` AS `course_initial`,
                  co.`department_name` AS `course_dept_name`,
                  co.`department_position` AS `dept_position`,
-                 co.`dept_signature` AS `dept_signatures`
+                 co.`dept_signature` AS `dept_signatures`,
+                 co.`chair_comment` AS `chair_comments`
              FROM 
                  `users` AS u 
              LEFT JOIN 
@@ -3582,17 +3597,18 @@ foreach($query_run1 as $rows)
 <tr>
         <td class="hide-id"> <?php echo $rows['course_id']; ?> </td>
         <td class="hide-id"><?php echo $rows['dept_signatures']; ?></td>
+        <td class="hide-id"><?php echo $rows['chair_comments']; ?></td>
         <td class="table-button">
         <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
         <?php
         $position = $_SESSION['position'];
         ?>
-        <?php if ($position == 'Subject Coordinator')  { // Change 'curriculum committee' to the appropriate value
+        <?php if ($position == 'Department Chair')  { // Change 'curriculum committee' to the appropriate value
             echo '
-        <button type="button" class="btn btn-success editbtn_signature m-3"><i class="lni lni-pencil"></i></button><a>UPLOAD SIGNATURE</a>';
+        <button type="button" class="btn btn-success editbtn_signature m-3"><i class="lni lni-pencil"></i></button><a>APPROVAL</a>';
         }else{
             echo '
-            <button disabled type="button" class="btn btn-success editbtn_signature m-3"><i class="lni lni-pencil"></i></button><a>UPLOAD SIGNATURE</a>';
+            <button disabled type="button" class="btn btn-success editbtn_signature m-3"><i class="lni lni-pencil"></i></button><a>APPROVAL</a>';
         }
         ?>
     
@@ -3615,18 +3631,11 @@ foreach($query_run1 as $rows)
 
 
 
-<span>
-    <b>
-        <a class="initial">
-            <img src="<?php echo isset($dept_head_signature) ? $dept_head_signature : "No_signature"; ?>" alt="Please Upload Signature" width="100px">
-        </a>
-    </b>
-</span>
+
+<span  style="white-space: nowrap;"><a class="initial_1"><?php echo $dept_commennt; ?></a></span><br>
 
 
-
-
-<span><b>Approved:</b><b><a class="dept_name"><?php echo $dept_head;
+<span><b><?php echo isset($dept_head_signature) ? $dept_head_signature : "No_signature"; ?>:</b><b><a class="dept_name"><?php echo $dept_head;
  ?></a></b></span>
 <span><a class="initial"><?php echo $dept_head_position ." , ". $course_initial; ?></a></span><br><br>
 
@@ -3670,7 +3679,9 @@ foreach($query_run1 as $rows)
                  co.`initial` AS `course_initial`,
                  co.`department_name` AS `course_dept_name`,
                  co.`department_position` AS `dept_position`,
-                 co.`dept_signature` AS `dept_signatures`
+                 co.`dept_signature` AS `dept_signatures`,
+                 co.`dean_signature` AS `dean_signatures`,
+                 co.`dean_comment` AS `dean_comments`
              FROM 
                  `users` AS u 
              LEFT JOIN 
@@ -3702,18 +3713,19 @@ foreach($query_run2 as $table_rows)
 <tr>
         <td class="hide-id"> <?php echo $rows['course_id']; ?> </td>
         <td class="hide-id"><?php echo $table_rows['dean_signatures']; ?></td>
+        <td class="hide-id"><?php echo $table_rows['dean_comments']; ?></td>
         <td class="table-button">
         <!-- <button type="button" class="btn btn-info viewbtn"><i class="lni lni-eye"></i></button> -->
         <?php
         $position = $_SESSION['position'];
         ?>
-        <?php if ($position == 'Subject Coordinator')  { // Change 'curriculum committee' to the appropriate value
+        <?php if ($position == 'Dean')  { // Change 'curriculum committee' to the appropriate value
             echo '
-        <button type="button" class="btn btn-success editbtn_signature_dean m-3"><i class="lni lni-pencil"></i></button><a>UPLOAD SIGNATURE</a>';
+        <button type="button" class="btn btn-success editbtn_signature_dean m-3"><i class="lni lni-pencil"></i></button><a>APPROVAL</a>';
         
         }else{
             echo '
-            <button disabled type="button" class="btn btn-success editbtn_signature_dean m-3"><i class="lni lni-pencil"></i></button><a>UPLOAD SIGNATURE</a>';
+            <button disabled type="button" class="btn btn-success editbtn_signature_dean m-3"><i class="lni lni-pencil"></i></button><a>APPROVAL</a>';
         }
         
         
@@ -3743,11 +3755,9 @@ foreach($query_run2 as $table_rows)
 
 
 
-
-
 <!-- FOR REVISED -->
-<span  style="white-space: nowrap;"><b></b><b><a class="initial"><img src="<?php echo $deans_category_signature; ?>" alt="Department Head Signature" width="100px"></a></b></span><br>
-<span><b>Endorsed:</b><b><a class="dept_name"><?php echo $category_dean; ?></a></b></span>
+<span  style="white-space: nowrap;"><a class="initial_1"><?php echo $dean_comment; ?></a></span><br>
+<span><b><?php echo $deans_category_signature ?>:</b><b><a class="dept_name"><?php echo $category_dean; ?></a></b></span>
 <span><a class="initial"><?php echo $category_dean_position ." , ". $category_initial; ?></a></span>
 
 
@@ -4356,7 +4366,7 @@ if ($query_run2) {
         <td class="hide-id"><?php echo $table_rows['commitee_signatures']; ?></td>
         <td class="hide-id"><?php echo $table_rows['commitee_comments']; ?></td>
         <td class="table-button">
-        <?php if ($position == 'Curriculum Committee' || $position == 'Dean' || $position == 'Department Chair' )  { // Change 'curriculum committee' to the appropriate value
+        <?php if ($position == 'Curriculum Committee')  { // Change 'curriculum committee' to the appropriate value
             echo '<button type="button" class="btn btn-success editbtn_signature_committee m-3"><i class="lni lni-pencil"></i></button><a>APPROVAL</a>';
         } else {
             echo '<button type="button" class="btn btn-success editbtn_signature_committee m-3" disabled><i class="lni lni-pencil"></i></button><a>APPROVAL</a>';

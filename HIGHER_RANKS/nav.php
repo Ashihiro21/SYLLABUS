@@ -35,7 +35,9 @@ $sql = "SELECT
             co.department_position AS dept_head_position,
             co.dept_signature AS dept_head_signature,
             co.commitee_signature AS dept_commitee_signature,
-            co.`commitee_comment` AS `commitee_comments`
+            co.`commitee_comment` AS `commitee_comments`,
+            co.`chair_comment` AS `chair_comments`,
+            co.`dean_comment` AS `dean_comments`
         FROM 
             users AS u 
         LEFT JOIN 
@@ -77,6 +79,8 @@ if ($result->num_rows > 0) {
     $deans_category_signature = $row['deans_category_signature'];
     $commitee_dept_signature = $row['dept_commitee_signature'];
     $commitee_commnet = $row['commitee_comments'];
+    $dept_commennt = $row['chair_comments'];
+    $dean_comment = $row['dean_comments'];
     $categories_logo = $row['category_logo'];
 } else {
     $position = "Position not found";

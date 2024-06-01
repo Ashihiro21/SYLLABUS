@@ -419,60 +419,43 @@ $(document).ready(function () {
 
 
 $(document).ready(function () {
+
     $('.editbtn_signature').on('click', function () {
         $('#editmodal_signature').modal('show');
         $tr = $(this).closest('tr');
         var data = $tr.children("td").map(function () {
             return $(this).text();
         }).get();
-        $('#update_id22').val(data[0]);
-        // Clear any previously selected file
-        $('#dept_signature').val('');
-    });
 
-    // Preview the selected image
-    $('#dept_signature').change(function () {
-        const file = this.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                $('#preview_dept_signature').attr('src', e.target.result).show();
-            }
-            reader.readAsDataURL(file);
-        } else {
-            $('#preview_dept_signature').hide();
-        }
+        console.log(data);
+
+        $('#update_id22').val(data[0]);
+        $('#chair_signature').val(data[1]);
+        $('#chair_comments6').val(data[2]);
     });
 });
+
+
 
 
 
 $(document).ready(function () {
-    $('.editbtn_signature_dean').on('click', function () {
-        $('#editmodal_signature_dean').modal('show');
+
+    $('.editbtn_signature').on('click', function () {
+        $('#editmodal_signature').modal('show');
         $tr = $(this).closest('tr');
         var data = $tr.children("td").map(function () {
             return $(this).text();
         }).get();
-        $('#update_id23').val(data[0]);
-        // Clear any previously selected file
-        $('#dean_signature').val('');
-    });
 
-    // Preview the selected image
-    $('#dean_signature').change(function () {
-        const file = this.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                $('#preview_dean_signature').attr('src', e.target.result).show();
-            }
-            reader.readAsDataURL(file);
-        } else {
-            $('#preview_dean_signature').hide();
-        }
+        console.log(data);
+
+        $('#update_id23').val(data[0]);
+        $('#dean_signature').val(data[1]);
+        $('#department_dean_comments6').val(data[2]);
     });
 });
+
 
 
 
