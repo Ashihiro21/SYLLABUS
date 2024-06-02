@@ -778,13 +778,9 @@ if ($result->num_rows > 0) {
                 <td style='text-align: left;'>" . $row["percents"] . "</td>
                 </tr>";
             }
-            
-            
-    echo"<td style='' colspan='2'> <a>____________________________________</a></td>";
-
     echo "<tr style=''>
-    <td style='text-align: left; padding: 8px;'><p style='font-weight:bold;'>TOTAL <p></td>
-    <td style='text-align: left;'><p style='font-weight:bold;'>". ($total_percent) . "<p> </td>
+    <td style='text-align: left;'><p style=''>Total<p></td>
+    <td style='text-align: left;'><p style=''>". ($total_percent) . "%<p></td>
     </tr>";
     // Close table
     echo "</table>";
@@ -795,228 +791,156 @@ if ($result->num_rows > 0) {
 // Close connection
 $conn->close();
 ?>
-<br><br>
+<br>
+<?php
 
 
-<span><b>Overall Final Grade</b> = <a style="text-decoration-line: underline;">Midterm + Final</a></span><br>
+    
+// Database connection details
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "syllabus";
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a>2</a>
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$department = $_SESSION['department'];
+$catid = $_SESSION['catid'];
 
+$total_percent_query = "SELECT SUM(`percents`) AS total_percent FROM percent WHERE department = $department AND catid=$catid";
+$total_percent_result = mysqli_query($conn, $total_percent_query);
+$total_percent_row = mysqli_fetch_assoc($total_percent_result);
+        
+$total_percent = $total_percent_row['total_percent'];
+
+// Fetch module learning records
+
+// SQL query
+$sql = "SELECT `description`, `percents` FROM `percent` WHERE department = $department AND catid=$catid";
+
+// Execute query
+$result = $conn->query($sql);
+// Check if any rows were returned
+if ($result->num_rows > 0) {
+    // Output table header
+    echo "<table style='width: 50%;
+    border-collapse: collapse; border:none;'>";
+    
+    // Output data of each row
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>
+                <td style='text-align: left;'>" . $row["description"] . "</td>
+                <td style='text-align: left;'>" . $row["percents"] . "</td>
+                </tr>";
+            }
+    echo "<tr style=''>
+    <td style='text-align: left;'><p style=''>Total<p></td>
+    <td style='text-align: left;'><p style=''>". ($total_percent) . "%<p></td>
+    </tr>";
+    // Close table
+    echo "</table>";
+} else {
+    echo "No Results";
+}
+
+// Close connection
+$conn->close();
+?>
+
+<br>
+
+<span>Overall Final Grade = [(Midterm grade) + (Final term grade)] / 2</a></span><br>
 
 
 <div id="coursePolicies" style="text-align: justify; text-justify: inter-word;">
     <p style="font-weight:bold"> COURSE POLICIES AND REQUIREMENTS </p><br>
-    <ol>
-        <li>
-            <p><strong>Office365 Activation:</strong> Please ensure that your Office365 account is working. Your Office365 account is needed to access both Schoolbook and MS Teams where your asynchronous and synchronous classes will be held.</p>
-        </li>
-        <br>
-        <li>
-            <p><strong>Enrollment in an E-Class:</strong> You will automatically be enrolled in your e-class which is based on your enrollment data.</p>
-        </li>
-        <br>
-        <li>
-            <p><strong>Traditional Blended Learning Model:</strong> This course adopts the traditional blended learning model. This means that there will be a mix of face-to-face and asynchronous classes. The majority of teaching-learning activities and assessments are undertaken onsite. The total number of onsite classes shall be 50% of the number of hours allotted for the whole semester.</p>
-        </li>
-        <br>
-        <li>
-            <p><strong>Online Asynchronous Sessions:</strong></p>
-            <br>
-            <ol type="a">
-                <li><strong>Schoolbook (SB).</strong> Schoolbook shall be the only platform for asynchronous sessions.</li>
-                <li><strong>Modules.</strong> Modules are self-paced learning resources for asynchronous sessions. These can be accessed in Schoolbook.</li>
-                <li><strong>References.</strong> Each page section may contain uploaded references. These learning resources may be downloaded.</li>
-                <li><strong>Asynchronous Activities.</strong> You are expected to read the modules as soon as they are uploaded. The learning content of the modules complements the online synchronous and face-to-face sessions.</li>
-                <li><strong>Asynchronous Engagement.</strong> Your activities in the course can be tracked by your professor. This includes the time you spend in reading the lessons and answering the assessments.</li>
-                <li><strong>Schoolbook Forum.</strong> All general concerns about the lessons and assessments in asynchronous sessions must be posted in the Schoolbook Forum. Response shall be made by your teacher within 48 hours.</li>
-                <li><strong>Schoolbook Messaging.</strong> This shall be the mode of communication for private and/or confidential communications. Response shall be made by your teacher within 48 hours upon receipt of the same unless it falls on weekends or holidays, which shall be handled promptly the following working day.</li>
-            </ol>
-        </li>
-        <br>
-        <li>
-          
-            <p><strong>Onsite / Face-to-face (F2F) Sessions:</strong></p><br>
-            <ol type="a">
-                <li><strong>Face-to-face engagement.</strong> Your engagement in face-to-face classes is graded based on your class participation.</li>
-                <li>Classroom. F2F classes shall be held at the classroom indicated in your Certificate of Registration. Should there be changes in the classroom venue, information will be given in advance.</li>
-                <li><strong>Gospel Reading and Prayer.</strong> Each F2F session shall start with a Gospel reading and prayer. Your teacher may assign you, in advance, to do this.</li>
-                <li><strong>F2F Meeting Schedule.</strong> The meeting schedule shall follow the time indicated in your official registration. The dates of F2F meetings are identified in the learning plan.</li>
-                <li><strong>Attendance.</strong> Attendance in F2F meetings is required. Absence beyond 20% of the total number of F2F meetings will automatically be given a 0.0 grade in the subject.</li>
-                <li><strong>Tardiness.</strong> A student who came in 1-30 minutes after the start of the face-to-face meeting is considered late. Three tardy attendance is equivalent to 1 absence.</li>
-                <li><strong>Absence.</strong> A student is considered absent 30 minutes after the official class schedule.</li>
-                <li><strong>Excuse from F2F classes.</strong> Students are excused in the F2F classes based on the provisions in the latest version of the Student Handbook.</li>
-                <li><strong>Uniform.</strong> Wearing of prescribed uniform could be worn on Mondays, Thursdays, and Fridays, while Wednesdays and Saturdays are designated as wash days. Wearing of corporate attire could be worn every Tuesday. Civilian attire should follow the policy on dress code as stipulated in the latest version of the Student Handbook.</li>
-            </ol>
-        </li>
-        <br>
-        <li>
-            <p><strong>Assessment and Grading System:</strong></p>
-            <br>
-            <ol type="a">
-                <li><strong>Formative assessments.</strong> These are ungraded assessments.</li>
-                <li><strong>Enabling assessments.</strong> These will comprise most of your graded assessments.</li>
-                <li><strong>No. of Attempts.</strong> All enabling assessments, if given onsite, shall have 1 attempt only. For online enabling assessment shall have a maximum of 2 attempts.</li>
-                <li><strong>Summative assessments.</strong> There shall be two summative assessments (midterm and final exams) for the entire semester.</li>
-                    <ol type="i">
-                        <li>There shall be two summative assessments (midterm and final exams) for the entire semester. These are designed to achieve the course learning outcomes.</li>
-                        <li>Summative assessment shall be given onsite.</li>
-                        <li>Output-based summative assessment shall be given to students at least fifteen days prior to scheduled Summative Exam Week.</li>
-                    </ol>
-                <li><strong>Lifeline.</strong> Only students with (1) valid reason as stated in the Student Handbook and IRR, and (2) given their proof of excuse on or before the next synchronous/F2F session, shall be given a lifeline on the enabling and summative assessments.</li>
-                <li><strong>Rubric.</strong> All online non-quiz or non-discrete types of assessment shall have a rubric or criteria for rating the students’ tasks.</li>
-                <li><strong>Grading.</strong> All online assessments should be checked and graded by the teacher before the submission of midterm and final grades.</li>
-                <li><strong>Grading system.</strong> The following shall be the basis for the computation of grades per term for traditional blended classes.</li>
-                                                <?php  
-                            // Database connection details
-                            $servername = "localhost";
-                            $username = "root";
-                            $password = "";
-                            $dbname = "syllabus";
+    <?php
 
-                            // Create connection
-                            $conn = new mysqli($servername, $username, $password, $dbname);
+    
 
-                            // Check connection
-                            if ($conn->connect_error) {
-                                die("Connection failed: " . $conn->connect_error);
-                            }
-
-                
-
-                            // Fetch module learning records
-                            $department = $_SESSION['department'];
-                            $catid = $_SESSION['catid'];
-                            
-                            // SQL query
-                            $sql = "SELECT `description`, `percents` FROM `percent` WHERE department = $department AND catid=$catid";
-
-                            // Execute query
-                            $result = $conn->query($sql);
-
-                            // Check if any rows were returned
-                            if ($result->num_rows > 0) {
-                                // Output table header
-                                
-                                // Output data of each row
-                                while ($row = $result->fetch_assoc()) {
-                                    echo "<ol type='i'>
-                                            <li style='text-align: left; padding: 8px;'>" . $row["description"] ." ". $row["percents"] ."</li>
-                                        </ol>";
-                                }
-                            }
-                            // Close connection
-                            $conn->close();
-                            ?>                
-                <li><strong>Gradebook.</strong> Students can see the breakdown of grades in their Assessment tab.</li>
-            </ol>
-        </li>
-        <br>
-        <li>
-            <p><strong>Self-Care:</strong></p>
-            <ol type="a">
-            <?php
-// Establishing a connection to your database
+    
+// Database connection details
 $servername = "localhost";
 $username = "root";
 $password = "";
-$database = "syllabus";
+$dbname = "syllabus";
 
 // Create connection
-$conn = new mysqli($servername, $username, $password, $database);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Assuming $_SESSION['department'] contains the department value
 $department = $_SESSION['department'];
 $catid = $_SESSION['catid'];
- 
 
-// Query to fetch data from the database based on the department
-$sql = "SELECT * FROM semestral WHERE department = $department AND catid=$catid ORDER BY id ASC";
+$sql = "SELECT `id`, `description` FROM `course_policies`";
+
+// Execute query
 $result = $conn->query($sql);
 
-// HTML generation
-$html = ''; // Initialize the variable to store HTML content
+// Check if any rows were returned
 if ($result->num_rows > 0) {
+    // Output table header
+    echo "<table>";
+    
+    // Output data of each row
     while ($row = $result->fetch_assoc()) {
-        $html .= '<p>a. <b>Schedule. </b>The schedule of self-care week for the ' . $row['second_call'] . ' ' . $row['year'] . ' is on ';
+        $description = $row['description'];
+    
+        // Replace 'CLO' and newline characters with <br>
+        if (strpos($description, 'CLO') !== false || strpos($description, "\n") !== false) {
+            $description = str_replace(array('CLO', "\n"), '<br>', $description);
+        }
+    
+        // Define the function to indent the text
+        function indentText($text) {
+            $lines = explode('<br>', $text); // Split the text by <br> tags
+            foreach ($lines as &$line) {
+                if (preg_match('/^\s*\d+\./', $line)) {
+                    // Add indentation if the line starts with a numeral followed by a period
+                    $line = '<div class="course_policies" style="margin-left: 10px;">' . $line . '</div>';
+                } elseif (preg_match('/^\s*[a-z]+\./', $line) && !preg_match('/^\s*(i|ii|iii|iv|v|vi|vii|viii|ix|x)\./', $line)) {
+                    // Add indentation if the line starts with a lowercase letter followed by a period
+                    // and does not start with a lowercase Roman numeral followed by a period
+                    $line = '<div class="course_policies" style="margin-left: 60px;">' . $line . '</div>';
+                } elseif (preg_match('/^\s*(i|ii|iii|iv|v|vi|vii|viii|ix|x)\./', $line)) {
+                    // Add more indentation if the line starts with a lowercase Roman numeral followed by a period
+                    $line = '<div class="course_policies" style="margin-left: 80px;">' . $line . '</div>';
+                } else {
+                    // No indentation for other lines
+                    $line = '<div class="course_policies">' . $line . '</div>';
+                }
+            }
+            return implode('<br>', $lines);
+        }
+    
+        // Apply the indentText function to the description
+        $descriptions = indentText($description);
+    
+        // Output the table row with the processed description
+        echo "<tr>
+                <td>" . $descriptions . "</td>
+              </tr>";
     }
+    
+    
+    // Close table
+    echo "</table>";
+} else {
+    echo "No Results";
 }
 
-// Close the database connection
+// Close connection
 $conn->close();
-
-// Output the generated HTML
-echo $html;
 ?>
-
- <?php
-// Establishing a connection to your database
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "syllabus";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $database);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Assuming $_SESSION['department'] contains the department value
-$department = $_SESSION['department'];
-$catid = $_SESSION['catid'];
- 
-
-// Query to fetch data from the database based on the department
-$sql = "SELECT `date` FROM module_learning_final WHERE department = '$department' ORDER BY id ASC LIMIT 1";
-$result = $conn->query($sql);
-
-// HTML generation
-$html = ''; // Initialize the variable to store HTML content
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $html .= $row['date'] . '. During this week, there shall be no asynchronous/synchronous meetings, F2F classes, new modules, new assessments, and deadlines.</p>';
-    }
-}
-
-// Close the database connection
-$conn->close();
-
-// Output the generated HTML
-echo $html;
-?></li>
-                <li><strong>Prerogative.</strong> Students may avail of the self-care program, whether online or onsite, provided by the different units of the University.</li>
-            </ol>
-        </li>
-        <br>
-        <li>
-            <p><strong>Data Privacy:</strong></p>
-            <ol type="a">
-                <li><strong>Access to the MS Teams.</strong> Only students who are officially enrolled shall be part of the MS Teams and have access to all the resources including the recording.</li>
-                <li><strong>Guests.</strong> Inviting people that are not part of the class in synchronous meetings is strictly prohibited, unless approved by the subject teacher.</li>
-            </ol>
-        </li>
-        <br>
-        <li>
-            <p><strong>Copyright and Plagiarism:</strong></p>
-            <ol type="a">
-                <li>Using of any illegally obtained software and other technology tools is strictly prohibited.</li>
-                <li>Students are encouraged to use their original photos, videos, and other resources.</li>
-                <li>Giving of password to Schoolbook and Office 365 is strictly prohibited.</li>
-                <li>This subject shall abide by the policies pertaining to intellectual property, copyright, and plagiarism as stipulated in the latest edition of the Student Handbook.</li>
-                <li>Any plagiarized work, whether in part or full, shall mean a grade of 0.0 for the assessment.</li>
-            </ol>
-        </li>
-        <br>
-        <li>This course shall abide by any institutional policies that may be released after the approval of this syllabus. Any such policy shall be posted within the e-class at the forums section, news feed. It will also be briefly discussed during the soonest synchronous meeting.</li>
-    </ol>
 </div>
 
 
@@ -1144,7 +1068,7 @@ $conn->close();
 <br><br>
 
 
-<span><b>Prepared:</b><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="padding-left:30px;" class="course"><?php echo $course_departments ?></a></b></span><br>
+<span><b>Prepared:</b><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="padding-left:30px;" class="course"><?php echo $course_departments ?></a></b></span><br>
 <?php
 // Establish connection to your database
 $servername = "localhost";
@@ -1165,7 +1089,7 @@ $catid = $_SESSION['catid'];
  
 
 // Fetch and display course learning outcomes
-$sql = "SELECT * FROM semestral WHERE department = '$department'";
+$sql = "SELECT * FROM semestral WHERE department = '$department' and catid = '$catid'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -1180,17 +1104,14 @@ if ($result->num_rows > 0) {
 $conn->close();
 ?>
 
-
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img style="padding-left:145px; padding-top:10px;" src="http://localhost/Github/SYLLABUS/HIGHER_RANKS/<?php echo $dept_head_signature ?>" class="course" alt="Department Head Signature"></p>
-
-<span><b>Approved by:</b><b>&nbsp;&nbsp;&nbsp;&nbsp;<a style="padding-left:20px;" class="course"><?php echo $dept_head ?></a></b></span><br>
-<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="padding-left:140px;" class="course"><?php echo $dept_head_position.", ".$course_initial ?></a></span><br>
+<br><br>
+<span><b><?php echo $dept_head_signature ?>:</b><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="padding-left:180px;" class="course"><?php echo $dept_head ?></a></b></span><br>
+<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="padding-left:180px;" class="course"><?php echo $dept_head_position.", ".$course_initial ?></a></span><br><br><br>
 
 
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img style="padding-left:145px; padding-top:10px;" src="http://localhost/Github/SYLLABUS/HIGHER_RANKS/<?php echo $deans_category_signature ?>" class="course" alt="Department Head Signature"></p>
 
-<span><b>Approved by:</b><b>&nbsp;&nbsp;&nbsp;&nbsp;<a style="padding-left:20px;" class="course"><?php echo $category_dean ?></a></b></span><br>
-<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="padding-left:140px;" class="course"><?php echo $category_dean_position.", ".$category_initial ?></a></span><br><br><br>
+<span><b><?php echo $deans_category_signature ?>:</b><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="padding-left:180px;" class="course"><?php echo $category_dean ?></a></b></span><br>
+<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="padding-left:180px;" class="course"><?php echo $category_dean_position.", ".$category_initial ?></a></span><br><br><br>
 
 
 
@@ -1358,218 +1279,12 @@ $conn->close();
 
 
 
-<p style="font-style:italic; margin-top: -10px; margin-left: 10px; ">NOTE: Provide a check mark on the areas in which the program learning outcome (PLO) is hit by the course
-learning outcome (CLO)</p><br><br>
-
-
-
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><img src="http://localhost/Github/SYLLABUS/HIGHER_RANKS/DLSU-D.png" alt="" width="100" height="100">
-</a>
-<img src="http://localhost/Github/SYLLABUS/ADMIN/uploads/<?php echo isset($categories_logo) ? $categories_logo : 'No_signature'; ?>" alt="" width="100" height="100">
-</a>
-
-
-<div style="text-align:center; font-weight:bold">
-<a style="text-align:center;">DE LA SALLE UNIVERSITY-DASMARINAS</a><br>
-    <a style="text-align:center';"><?php echo strtoupper($category_name);?> </a><br>
-    <a style="text-align:center;"><?php  echo strtoupper($course_departments);?> </a><br><br>
-    <a style="text-align:center; padding-top: 5rem;">GRADUATE ATTRIBUTES (DESCRIPTORS/INSTITUTIONAL LEARNING OUTCOMES) – </a>
-<a style="text-align:center;">PROGRAM LEARNING OUTCOME MAPPING TABLE FOR  <?php echo strtoupper($cname) ?> </a>
-</div><br><br>
-    
-
-    
-
-    <?php
-
-
-
-    
-// Database connection details
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "syllabus";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-
-
-// Execute query
-
-
-// Check if any rows were returned
-if ($result->num_rows > 0) {
-
-    $department = $_SESSION['department'];
-    $catid = $_SESSION['catid'];
-    
-    // SQL query
-    $sql = "SELECT `id`, `program_learn`, `rate1`, `rate2`, `rate3`, `rate4`, `rate5` FROM `decriptors` WHERE department = $department AND catid=$catid";
-
-
-    $result = $conn->query($sql);
-    // Output table header
-    echo "<table style='width: 100%;
-    border-collapse: collapse;'>
-        <tr>
-        <th style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>Program Learning Outcomes</th>
-        <th style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>1</th>
-        <th style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>2</th>
-        <th style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>3</th>
-        <th style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>4</th>
-        <th style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>5</th>
-        </tr>";
-    
-   
-    while ($row = $result->fetch_assoc()) {
-        echo "<tr>
-        <td style='border: 1px solid #dddddd;text-align: left; padding: 8px;'>" . $row["program_learn"] . "</td>
-
-        <td style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>" . $row["rate1"] . "</td>
-
-        <td style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>" . $row["rate2"] . "</td>
-
-        <td style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>" . $row["rate3"] . "</td>
-
-        <td style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>" . $row["rate4"] . "</td>
-
-        <td style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>" . $row["rate5"] . "</td>
-
-    </tr>";
-    
-    }
-
-
-
-
-    
-    
-    
-    // Close table
-    echo "</table>";
-} else {
-    echo "No Results";
-}
-
-// Close connection
-$conn->close();
-?>
-
-<br>
-
-<p style="font-style:italic; margin-top: -10px; margin-left: 10px; ">NOTE:  Provide a check mark on the areas in which the Graduate Attribute (Descriptors/Institutional Learning Outcome) is hit by the program learning outcome (PLO).  Kindly refer to the descriptors (institutional learning outcomes) to clearly understand what each attribute refers to or expects from its graduates.
-
-</p><br><br>
-
-
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><img src="http://localhost/Github/SYLLABUS/HIGHER_RANKS/DLSU-D.png" alt="" width="100" height="100">
-</a>
-<img src="http://localhost/Github/SYLLABUS/ADMIN/uploads/<?php echo isset($categories_logo) ? $categories_logo : 'No_signature'; ?>" alt="" width="100" height="100">
-</a><br><br>
-   
-    
-<div style="text-align:center; font-weight:bold">
-<a style="text-align:center;">DE LA SALLE UNIVERSITY-DASMARINAS</a><br>
-    <a style="text-align:center';"><?php echo strtoupper($category_name);?> </a><br>
-    <a style="text-align:center;"><?php  echo strtoupper($course_departments);?> </a><br><br>
-    <a style="text-align:center; padding-top: 5rem;">GRADUATES ATTRIBUTES AND INSTITUTIONAL LEARNING OUTCOMES (ILOs)</a><br>
-</div><br><br>
-    
-
-    <?php
-
-
-
-    
-// Database connection details
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "syllabus";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-
-
-// Execute query
-
-
-// Check if any rows were returned
-if ($result->num_rows > 0) {
-
-    $department = $_SESSION['department'];
-    $catid = $_SESSION['catid'];
-    
-    // SQL query
-    $sql = "SELECT `id`, `graduate_att`, `descriptors_learn_out` FROM `graduates_attributes` WHERE department = $department AND catid=$catid
-    ";
-
-
-    $result = $conn->query($sql);
-    // Output table header
-    echo "<table style='width: 100%;
-    border-collapse: collapse;'>
-        <tr>
-        <th style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>Graduate Attribute (GA)</th>
-        <th style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>Descriptors (Institutional Learning Outcome)</th>
-        </tr>";
-    
-   
-    while ($row = $result->fetch_assoc()) {
-        echo "<tr>
-        <td style='border: 1px solid #dddddd;text-align: left; padding: 8px;'>" . $row["graduate_att"] . "</td>
-
-        <td style='border: 1px solid #dddddd;text-align: left; padding: 8px;'>";
-    
-        if (strpos($row['descriptors_learn_out'], '\n') !== false || strpos($row['descriptors_learn_out'], "\n") !== false) {
-            // If 'TLO' or a line break is found, replace it with <br>
-            echo str_replace(array('<br>', "\n"), '<br><br>', $row['descriptors_learn_out']);
-        } else {
-            echo $row['descriptors_learn_out'];
-        }
-    
-        echo "</td>
-
-    </tr>";
-    
-    }
-
-
-
-
-    
-    
-    
-    // Close table
-    echo "</table>";
-} else {
-    echo "No Results";
-}
-
-// Close connection
-$conn->close();
-?>
 
 <br><br><br>
 
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img style="padding-left:15px; padding-top:-15px;" src="http://localhost/Github/SYLLABUS/HIGHER_RANKS/<?php echo $commitee_signatures ?>" class="course" alt="Department Head Signature"></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $commitee_signatures ?></p>
     <p>____________________________</p>
-<p style="font-style: italic; margin-top: -10px; margin-left: 10px;">
+<p style="font-style: italic; margin-top: -20px; margin-left: 10px;">
   Approved in <?= date("F") ." ".date("Y") ?> during a multi-sectoral committee specifically convened for the purpose of coming up with descriptions for the graduate attributes.
 </p>
 

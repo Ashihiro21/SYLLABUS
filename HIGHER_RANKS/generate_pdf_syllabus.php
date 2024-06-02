@@ -488,12 +488,14 @@ $html .= '</table>';
 
 
 
-$html .= '<h4 style="margin-top: 1rem;">GRADING SYSTEM:</h4>';
 
 $html .= '<style>';
 $html .= '.tables { border: none; }'; // Remove table border
 $html .= '.tables td, .tables th { border: none; }'; // Remove border for table cells and headers
 $html .= '</style>';
+$html .= '<h4 style="margin-top: 1rem; margin-left:20px">GRADING SYSTEM:</h4>';
+$html .= '<p style="margin-left:20px; font-weight:bold; ">Midterm</p>';
+
 
 $html .= '<table class="tables">';
 
@@ -506,24 +508,57 @@ if ($result->num_rows > 0) {
     $total_percent_query = "SELECT SUM(`percents`) AS total_percent FROM percent WHERE department = $department and catid = $catid";
     $total_percent_result = mysqli_query($conn, $total_percent_query);
     $total_percent_row = mysqli_fetch_assoc($total_percent_result);
-            
+    
     $total_percent = $total_percent_row['total_percent'];
-
+    $html .= '<tr>';
+    $html .= '</tr>';
     while ($row = $result->fetch_assoc()) {
         $html .= '<tr>';
-        $html .= '<td width="300px">'. $row['description'] . '</td>';
+        $html .= '<td width="270px">'. $row['description'] . '</td>';
         $html .= '<td style="">'. $row['percents'] . '</td>';
         $html .= '</tr>';
     }
-    $html .="<td style='border-top:1px solid black; font-weight:bold;' colspan='5'>TOTAL<a style='margin-left:15.9rem;padding-top:2rem;'>$total_percent</a>%</td>";
+    $html .= '<tr>';
+    $html .="<td style='' colspan='5'>Total<a style='margin-left:15.9rem;'>$total_percent</a>%</td>";
+    $html .= '</tr>';
 }
 
-$html .= '</table><br><br>';
+$html .= '</table>';
+
+$html .= '<p style="margin-left:20px; font-weight:bold; ">Finals</p>';
+
+
+$html .= '<table class="tables">';
+
+
+$department = $_SESSION['department'];
+$catid = $_SESSION['catid'];  
+$sql = "SELECT * FROM final_percent WHERE department = $department and catid = $catid ORDER BY  id ASC";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+    $total_final_percent_query = "SELECT SUM(`final_percents`) AS total_final_percent FROM final_percent WHERE department = $department and catid = $catid";
+    $total_final_percent_result = mysqli_query($conn, $total_final_percent_query);
+    $total_final_percent_row = mysqli_fetch_assoc($total_final_percent_result);
+    
+    $total_final_percent = $total_final_percent_row['total_final_percent'];
+    $html .= '<tr>';
+    $html .= '</tr>';
+    while ($row = $result->fetch_assoc()) {
+        $html .= '<tr>';
+        $html .= '<td width="270px">'. $row['final_description'] . '</td>';
+        $html .= '<td style="">'. $row['final_percents'] . '</td>';
+        $html .= '</tr>';
+    }
+    $html .= '<tr>';
+    $html .="<td style='' colspan='5'>Total<a style='margin-left:15.9rem;'>$total_final_percent</a>%</td>";
+    $html .= '</tr>';
+}
+
+$html .= '</table>';
 
 $html .'<div style="text-align: justify; text-justify: inter-word;">';
 
-$html .= '<span style="margin-top: 5rem;"><b style="margin-top: 1rem; margin-left: 2rem;">Overall Final Grade:</b> = <a style="border-bottom:1px solid black">Midterm + Final  <a></span><br>';
-$html .= '<span><a style="margin-left: 15rem">2 <a></span>';
+$html .= '<span style="margin-top: 5rem;"><a style="margin-top: 1rem; margin-left:20px;">Overall Final Grade = [(Midterm grade) + (Final term grade)] / 2 <a></span><br><br>';
 
 
 $html .= '<h4 style="margin-top: 1rem;margin-left: 3rem;">COURSE POLICIES AND REQUIREMENTS</h4>';
@@ -554,18 +589,11 @@ if ($result->num_rows > 0) {
                 } elseif (preg_match('/^\s*(i|ii|iii|iv|v|vi|vii|viii|x)\./', $line)) {
                     // Add more indentation if the line starts with a lowercase Roman numeral followed by a period
                     $line = '<div class="course_policies" style="padding-left: 60px;">' . $line . '</div>';
-                    // Remove bold formatting from all words following the lowercase Roman numeral
-                    $line = '<div class="course_policies" style="padding-left: 60px;">' . preg_replace('/<strong>(.*?)<\/strong>/', '$1', $line) . '</div>';
                 } else {
                     // No indentation for other lines
                     $line = '<div class="course_policies">' . $line . '</div>';
                 }
         
-                // Bold only the text before the first dot
-               // Bold only the text before the first dot, excluding 9. and 10.
-                $line = preg_replace_callback('/(<div class="course_policies"[^>]*>\s*(?:[a-z]+\.\s*|\d+\.\s*|i+\.\s*))(?!9\.|10\.)(.*?\.)\s*/i', function($matches) {
-                    return $matches[1] . '<strong>' . $matches[2] . '</strong> ';
-                }, $line);
         
             }
             return implode('<br>', $lines);
@@ -663,17 +691,14 @@ if ($result->num_rows > 0) {
 }
 
 
-$html .= '<p><img style="padding-left:145px; padding-top:10px;" src="' . $dept_head_signature . '" " class="course" alt="Department Head Signature"></p>';
 
-$html .='&nbsp;&nbsp;&nbsp;&nbsp;<span style=""><b>Approved by:</b><b><a style="padding-left:20px;" class="course">'.$dept_head.'</a></span>';
+$html .='&nbsp;&nbsp;&nbsp;&nbsp;<span style=""><b>' . $dept_head_signature . ':</b><b><a style="padding-left:20px;" class="course">'.$dept_head.'</a></span>';
 $html .='&nbsp;&nbsp;&nbsp;&nbsp;<span style=""><b><p style="padding-left:140px;" class="course">'.$dept_head_position.", ".$course_initial.'</p></b></span>';
 '</p></td>';
 
 
 
-$html .= '<p><img style="padding-left:145px; padding-top:10px;" src="' . $deans_category_signature . '" " class="course" alt="Department Head Signature"></p>';
-
-$html .='&nbsp;&nbsp;&nbsp;&nbsp;<span style=""><b>Approved by:</b><b><a style="padding-left:20px;" class="course">'.$category_dean.'</a></span>';
+$html .='&nbsp;&nbsp;&nbsp;&nbsp;<span style=""><b>' . $deans_category_signature . ':</b><b><a style="padding-left:20px;" class="course">'.$category_dean.'</a></span>';
 $html .='&nbsp;&nbsp;&nbsp;&nbsp;<span style=""><b><p style="padding-left:140px;" class="course">'.$category_dean_position.", ".$category_initial.'</p></b></span>';
 '</p></td>';
 
@@ -768,115 +793,14 @@ if ($result->num_rows > 0) {
    
 }
 
-$html .= '</table>';
-$html .= '<p style="font-style:italic; margin-top: -10px; margin-left: 10px; ">NOTE: Provide a check mark on the areas in which the program learning outcome (PLO) is hit by the course
-learning outcome (CLO)</p>';
 
 
 
 
-$html .='<span class="inline-images">
-<a><img src="../img/DLSU-D.png" style="margin-top:1rem;" width="100" class="mt-5" alt=""></a>
-<a><img class="img-inline" style="margin-left:7rem; margin-top:1rem;" src="../Admin/uploads/'. $categories_logo . '" alt="Image" width="100"></a>
-</span>';
-$html .= '<h4 style="text-align:center; margin-top: 1rem;">DE LA SALLE UNIVERSITY-DASMARINAS</h4>';
-$html .=  '<h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($category_name).'</h4>';
-$html .=   '<h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($course_departments).'</h4';
-$html .= '<h4 style="text-align:center; margin-top: 1rem;">GRADUATE ATTRIBUTES (DESCRIPTORS/INSTITUTIONAL LEARNING OUTCOMES) –</h4>';
-$html .=   '<h4 style="text-align:center; margin-top: -1rem;">PROGRAM LEARNING OUTCOME MAPPING TABLE FOR '.strtoupper($cname).'</h4';
 
-
-$html .= '<table class="teaching_guid" style="font-size: 16px"; height: 100px;>';
-$html .= '<tr>'; // Opening row tag
-$html .= '<th scope="col">Program Learning Outcomes</th>';
-$html .= '<th scope="col">1</th>';
-$html .= '<th scope="col">2</th>';
-$html .= '<th scope="col">3</th>';
-$html .= '<th scope="col">4</th>';
-$html .= '<th scope="col">5</th>';
-$html .= '</tr>'; // Closing the data row
-
-
-
-$department = $_SESSION['department'];
-$catid = $_SESSION['catid'];  
-$sql = "SELECT * FROM decriptors WHERE department = $department and catid = $catid";
-$result = $conn->query($sql);
-if ($result->num_rows > 0) {
-
-while ($row = $result->fetch_assoc()) {
-    $html .= '<tr>';
-
-    $html .= '<td style="text-align:left;" height="5px"  class="teaching_guid">'. $row['program_learn'] . '</td>';
-    $html .= '<td height="5px" class="teaching_guid">'. $row['rate1'] . '</td>';
-    $html .= '<td height="5px" class="teaching_guid">'. $row['rate2'] . '</td>';
-    $html .= '<td height="5px" class="teaching_guid">'. $row['rate3'] . '</td>';
-    $html .= '<td height="5px" class="teaching_guid">'. $row['rate4'] . '</td>';
-    $html .= '<td height="5px" class="teaching_guid">'. $row['rate5'] . '</td>';
-    $html .= '</tr>';
-}
-
-// Total row
-
-}
 
 $html .= '</table>';
-$html .= '<p style="font-style:italic; margin-top: 15px; margin-left: 10px; ">NOTE: Provide a check mark on the areas in which the Graduate Attribute (Descriptors/Institutional
-Learning Outcome) is hit by the program learning outcome (PLO). Kindly refer to the descriptors
-(institutional learning outcomes) to clearly understand what each attribute refers to or expects from its
-graduates. 
-</p>';
-
-
-
-
-$html .='<span class="inline-images">
-<a><img src="../img/DLSU-D.png" style="margin-top:1rem;" width="100" class="mt-5" alt=""></a>
-<a><img class="img-inline" style="margin-left:7rem; margin-top:1rem;" src="../Admin/uploads/'. $categories_logo . '" alt="Image" width="100"></a>
-</span>';
-$html .= '<h4 style="text-align:center; margin-top: 1rem;">DE LA SALLE UNIVERSITY-DASMARINAS</h4>';
-$html .=  '<h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($category_name).'</h4>';
-$html .=   '<h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($course_departments).'</h4';
-$html .= '<h4 style="text-align:center; margin-top: 4rem;">GRADUATES ATTRIBUTES AND INSTITUTIONAL LEARNING OUTCOMES (ILOs) </h4>';
-
-
-$html .= '<table class="teaching_guid" style="font-size: 16px"; height: 100px;>';
-$html .= '<tr>'; // Opening row tag
-$html .= '<th scope="col">Graduate Attribute (GA)</th>';
-$html .= '<th scope="col">Descriptors (Institutional Learning Outcome)</th>';
-$html .= '</tr>'; // Closing the data row
-
-
-
-
-$department = $_SESSION['department'];
-$catid = $_SESSION['catid'];  
-$sql = "SELECT * FROM graduates_attributes WHERE department = $department and catid = $catid";
-$result = $conn->query($sql);
-if ($result->num_rows > 0) {
-
-while ($row = $result->fetch_assoc()) {
-    $html .= '<tr>';
-
-    $html .= '<td height="5px" style="text-align:left;"  class="teaching_guid">'. $row['graduate_att'] . '</td>';
-    $html .= '<td height="5px" style="text-align:left;" class="teaching_guid">';
-if (strpos($row['descriptors_learn_out'], 'TLO') !== false || strpos($row['descriptors_learn_out'], "\n") !== false) {
-    // If 'TLO' or a line break is found, replace it with <br>
-    $html .= str_replace(array('TLO', "\n"), '<br>', $row['descriptors_learn_out']);
-} else {
-    $html .= $row['descriptors_learn_out'];
-}
-$html .= '</td>';
-
-    $html .= '</tr>';
-}
-
-// Total row
-
-}
-
-$html .= '</table>';
-$html .= '<p><img style="padding-left:65px; padding-top:10px;" src="' . $commitee_dept_signature . '" " class="course" alt="Department Head Signature"></p>';
+$html .='&nbsp;&nbsp;&nbsp;&nbsp;<span style=""><b></b><b><a style="padding-left:20px;" class="course">'.$commitee_dept_signature.'</a></span>';
 $html .= '<p style="border-top:1px solid black; width:235px; margin-top: 15px; margin-left: 10px;"></p>';
 $html .= '<p style="font-style:italic; margin-left: 10px; ">Approved in </a>'. date("F") ." ".date("Y").' <a>during a multi-sectoral committee specifically convened for the purpose of coming up with 
 descriptions for the graduate attributes. 

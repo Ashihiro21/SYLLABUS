@@ -2513,35 +2513,6 @@ if (strpos($description, 'CLO') !== false || strpos($description, "\n") !== fals
     $description = str_replace(array('CLO', "\n"), '<br>', $description);
 }
 
-function indentText($text) {    
-    $lines = explode('<br>', $text); // Split the text by <br> tags
-    foreach ($lines as &$line) {
-        if (preg_match('/^\s*\d+\./', $line)) {
-            // Add indentation if the line starts with a numeral followed by a period
-            $line = '<div class="course_policies" style="padding-left: 10px;">' . $line . '</div>';
-        } elseif (preg_match('/^\s*[a-z]+\./', $line) && !preg_match('/^\s*(i|ii|iii|iv|v|vi|vii|viii|ix|x)\./', $line)) {
-            // Add indentation if the line starts with a lowercase letter followed by a period
-            // and does not start with a lowercase Roman numeral followed by a period
-            $line = '<div class="course_policies" style="padding-left: 60px;">' . $line . '</div>';
-        } elseif (preg_match('/^\s*(i|ii|iii|iv|v|vi|vii|viii|x)\./', $line)) {
-            // Add more indentation if the line starts with a lowercase Roman numeral followed by a period
-            $line = '<div class="course_policies" style="padding-left: 80px;">' . $line . '</div>';
-            // Remove bold formatting from all words following the lowercase Roman numeral
-            $line = '<div class="course_policies" style="padding-left: 80px;">' . preg_replace('/<strong>(.*?)<\/strong>/', '$1', $line) . '</div>';
-        } else {
-            // No indentation for other lines
-            $line = '<div class="course_policies">' . $line . '</div>';
-        }
-
-        // Bold only the text before the first dot
-       // Bold only the text before the first dot, excluding 9. and 10.
-        $line = preg_replace_callback('/(<div class="course_policies"[^>]*>\s*(?:[a-z]+\.\s*|\d+\.\s*|i+\.\s*))(?!9\.|10\.)(.*?\.)\s*/i', function($matches) {
-            return $matches[1] . '<strong>' . $matches[2] . '</strong> ';
-        }, $line);
-
-    }
-    return implode('<br>', $lines);
-}
 
 
 
@@ -3100,7 +3071,7 @@ $position = $_SESSION['position'];
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Online References</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">ADD SEMESTER</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

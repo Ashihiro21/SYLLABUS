@@ -542,3 +542,335 @@ echo "No Record Found";
 </div>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$html .='<span class="inline-images">
+<a><img src="../img/DLSU-D.png" style="margin-top:1rem;" width="100" class="mt-5" alt=""></a>
+<a><img class="img-inline" style="margin-left:7rem; margin-top:1rem;" src="../Admin/uploads/'. $categories_logo . '" alt="Image" width="100"></a>
+</span>';
+$html .= '<h4 style="text-align:center; margin-top: 1rem;">DE LA SALLE UNIVERSITY-DASMARINAS</h4>';
+$html .=  '<h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($category_name).'</h4>';
+$html .=   '<h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($course_departments).'</h4';
+$html .= '<h4 style="text-align:center; margin-top: 1rem;">GRADUATE ATTRIBUTES (DESCRIPTORS/INSTITUTIONAL LEARNING OUTCOMES) –</h4>';
+$html .=   '<h4 style="text-align:center; margin-top: -1rem;">PROGRAM LEARNING OUTCOME MAPPING TABLE FOR '.strtoupper($cname).'</h4';
+
+
+$html .= '<table class="teaching_guid" style="font-size: 16px"; height: 100px;>';
+$html .= '<tr>'; // Opening row tag
+$html .= '<th scope="col">Program Learning Outcomes</th>';
+$html .= '<th scope="col">1</th>';
+$html .= '<th scope="col">2</th>';
+$html .= '<th scope="col">3</th>';
+$html .= '<th scope="col">4</th>';
+$html .= '<th scope="col">5</th>';
+$html .= '</tr>'; // Closing the data row
+
+
+
+$department = $_SESSION['department'];
+$catid = $_SESSION['catid'];  
+$sql = "SELECT * FROM decriptors WHERE department = $department and catid = $catid";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+
+while ($row = $result->fetch_assoc()) {
+    $html .= '<tr>';
+
+    $html .= '<td style="text-align:left;" height="5px"  class="teaching_guid">'. $row['program_learn'] . '</td>';
+    $html .= '<td height="5px" class="teaching_guid">'. $row['rate1'] . '</td>';
+    $html .= '<td height="5px" class="teaching_guid">'. $row['rate2'] . '</td>';
+    $html .= '<td height="5px" class="teaching_guid">'. $row['rate3'] . '</td>';
+    $html .= '<td height="5px" class="teaching_guid">'. $row['rate4'] . '</td>';
+    $html .= '<td height="5px" class="teaching_guid">'. $row['rate5'] . '</td>';
+    $html .= '</tr>';
+}
+
+// Total row
+
+}
+
+$html .= '</table>';
+$html .= '<p style="font-style:italic; margin-top: 15px; margin-left: 10px; ">NOTE: Provide a check mark on the areas in which the Graduate Attribute (Descriptors/Institutional
+Learning Outcome) is hit by the program learning outcome (PLO). Kindly refer to the descriptors
+(institutional learning outcomes) to clearly understand what each attribute refers to or expects from its
+graduates. 
+</p>';
+
+
+
+
+$html .='<span class="inline-images">
+<a><img src="../img/DLSU-D.png" style="margin-top:1rem;" width="100" class="mt-5" alt=""></a>
+<a><img class="img-inline" style="margin-left:7rem; margin-top:1rem;" src="../Admin/uploads/'. $categories_logo . '" alt="Image" width="100"></a>
+</span>';
+$html .= '<h4 style="text-align:center; margin-top: 1rem;">DE LA SALLE UNIVERSITY-DASMARINAS</h4>';
+$html .=  '<h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($category_name).'</h4>';
+$html .=   '<h4 style="text-align:center; margin-top: -1rem;">'.strtoupper($course_departments).'</h4';
+$html .= '<h4 style="text-align:center; margin-top: 4rem;">GRADUATES ATTRIBUTES AND INSTITUTIONAL LEARNING OUTCOMES (ILOs) </h4>';
+
+
+$html .= '<table class="teaching_guid" style="font-size: 16px"; height: 100px;>';
+$html .= '<tr>'; // Opening row tag
+$html .= '<th scope="col">Graduate Attribute (GA)</th>';
+$html .= '<th scope="col">Descriptors (Institutional Learning Outcome)</th>';
+$html .= '</tr>'; // Closing the data row
+
+
+<!-- kay generate pdf -->
+
+$html .= '</table>';
+$html .= '<p style="font-style:italic; margin-top: -10px; margin-left: 10px; ">NOTE: Provide a check mark on the areas in which the program learning outcome (PLO) is hit by the course
+learning outcome (CLO)</p>';
+
+$department = $_SESSION['department'];
+$catid = $_SESSION['catid'];  
+$sql = "SELECT * FROM graduates_attributes WHERE department = $department and catid = $catid";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+
+while ($row = $result->fetch_assoc()) {
+    $html .= '<tr>';
+
+    $html .= '<td height="5px" style="text-align:left;"  class="teaching_guid">'. $row['graduate_att'] . '</td>';
+    $html .= '<td height="5px" style="text-align:left;" class="teaching_guid">';
+if (strpos($row['descriptors_learn_out'], 'TLO') !== false || strpos($row['descriptors_learn_out'], "\n") !== false) {
+    // If 'TLO' or a line break is found, replace it with <br>
+    $html .= str_replace(array('TLO', "\n"), '<br>', $row['descriptors_learn_out']);
+} else {
+    $html .= $row['descriptors_learn_out'];
+}
+$html .= '</td>';
+
+    $html .= '</tr>';
+}
+
+// Total row
+
+}
+
+
+<!-- GENERATE WORDS  -->
+
+
+<p style="font-style:italic; margin-top: -10px; margin-left: 10px; ">NOTE: Provide a check mark on the areas in which the program learning outcome (PLO) is hit by the course
+learning outcome (CLO)</p><br><br>
+
+
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><img src="http://localhost/Github/SYLLABUS/HIGHER_RANKS/DLSU-D.png" alt="" width="100" height="100">
+</a>
+<img src="http://localhost/Github/SYLLABUS/ADMIN/uploads/<?php echo isset($categories_logo) ? $categories_logo : 'No_signature'; ?>" alt="" width="100" height="100">
+</a>
+
+
+<div style="text-align:center; font-weight:bold">
+<a style="text-align:center;">DE LA SALLE UNIVERSITY-DASMARINAS</a><br>
+    <a style="text-align:center';"><?php echo strtoupper($category_name);?> </a><br>
+    <a style="text-align:center;"><?php  echo strtoupper($course_departments);?> </a><br><br>
+    <a style="text-align:center; padding-top: 5rem;">GRADUATE ATTRIBUTES (DESCRIPTORS/INSTITUTIONAL LEARNING OUTCOMES) – </a>
+<a style="text-align:center;">PROGRAM LEARNING OUTCOME MAPPING TABLE FOR  <?php echo strtoupper($cname) ?> </a>
+</div><br><br>
+    
+
+    
+
+    <?php
+
+
+
+    
+// Database connection details
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "syllabus";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+
+
+// Execute query
+
+
+// Check if any rows were returned
+if ($result->num_rows > 0) {
+
+    $department = $_SESSION['department'];
+    $catid = $_SESSION['catid'];
+    
+    // SQL query
+    $sql = "SELECT `id`, `program_learn`, `rate1`, `rate2`, `rate3`, `rate4`, `rate5` FROM `decriptors` WHERE department = $department AND catid=$catid";
+
+
+    $result = $conn->query($sql);
+    // Output table header
+    echo "<table style='width: 100%;
+    border-collapse: collapse;'>
+        <tr>
+        <th style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>Program Learning Outcomes</th>
+        <th style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>1</th>
+        <th style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>2</th>
+        <th style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>3</th>
+        <th style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>4</th>
+        <th style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>5</th>
+        </tr>";
+    
+   
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>
+        <td style='border: 1px solid #dddddd;text-align: left; padding: 8px;'>" . $row["program_learn"] . "</td>
+
+        <td style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>" . $row["rate1"] . "</td>
+
+        <td style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>" . $row["rate2"] . "</td>
+
+        <td style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>" . $row["rate3"] . "</td>
+
+        <td style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>" . $row["rate4"] . "</td>
+
+        <td style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>" . $row["rate5"] . "</td>
+
+    </tr>";
+    
+    }
+
+
+
+
+    
+    
+    
+    // Close table
+    echo "</table>";
+} else {
+    echo "No Results";
+}
+
+// Close connection
+$conn->close();
+?>
+
+<br>
+
+<p style="font-style:italic; margin-top: -10px; margin-left: 10px; ">NOTE:  Provide a check mark on the areas in which the Graduate Attribute (Descriptors/Institutional Learning Outcome) is hit by the program learning outcome (PLO).  Kindly refer to the descriptors (institutional learning outcomes) to clearly understand what each attribute refers to or expects from its graduates.
+
+</p><br><br>
+
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a><img src="http://localhost/Github/SYLLABUS/HIGHER_RANKS/DLSU-D.png" alt="" width="100" height="100">
+</a>
+<img src="http://localhost/Github/SYLLABUS/ADMIN/uploads/<?php echo isset($categories_logo) ? $categories_logo : 'No_signature'; ?>" alt="" width="100" height="100">
+</a><br><br>
+   
+    
+<div style="text-align:center; font-weight:bold">
+<a style="text-align:center;">DE LA SALLE UNIVERSITY-DASMARINAS</a><br>
+    <a style="text-align:center';"><?php echo strtoupper($category_name);?> </a><br>
+    <a style="text-align:center;"><?php  echo strtoupper($course_departments);?> </a><br><br>
+    <a style="text-align:center; padding-top: 5rem;">GRADUATES ATTRIBUTES AND INSTITUTIONAL LEARNING OUTCOMES (ILOs)</a><br>
+</div><br><br>
+    
+
+    <?php
+
+
+
+    
+// Database connection details
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "syllabus";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+
+
+// Execute query
+
+
+// Check if any rows were returned
+if ($result->num_rows > 0) {
+
+    $department = $_SESSION['department'];
+    $catid = $_SESSION['catid'];
+    
+    // SQL query
+    $sql = "SELECT `id`, `graduate_att`, `descriptors_learn_out` FROM `graduates_attributes` WHERE department = $department AND catid=$catid
+    ";
+
+
+    $result = $conn->query($sql);
+    // Output table header
+    echo "<table style='width: 100%;
+    border-collapse: collapse;'>
+        <tr>
+        <th style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>Graduate Attribute (GA)</th>
+        <th style='border: 1px solid #dddddd;text-align: center; padding: 8px;'>Descriptors (Institutional Learning Outcome)</th>
+        </tr>";
+    
+   
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>
+        <td style='border: 1px solid #dddddd;text-align: left; padding: 8px;'>" . $row["graduate_att"] . "</td>
+
+        <td style='border: 1px solid #dddddd;text-align: left; padding: 8px;'>";
+    
+        if (strpos($row['descriptors_learn_out'], '\n') !== false || strpos($row['descriptors_learn_out'], "\n") !== false) {
+            // If 'TLO' or a line break is found, replace it with <br>
+            echo str_replace(array('<br>', "\n"), '<br><br>', $row['descriptors_learn_out']);
+        } else {
+            echo $row['descriptors_learn_out'];
+        }
+    
+        echo "</td>
+
+    </tr>";
+    
+    }
+
+
+
+
+    
+    
+    
+    // Close table
+    echo "</table>";
+} else {
+    echo "No Results";
+}
+
+// Close connection
+$conn->close();
+?>
+
+
+

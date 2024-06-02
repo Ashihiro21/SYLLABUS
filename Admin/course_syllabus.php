@@ -139,17 +139,12 @@ function indentText($text) {
             // Add more indentation if the line starts with a lowercase Roman numeral followed by a period
             $line = '<div class="course_policies" style="padding-left: 80px;">' . $line . '</div>';
             // Remove bold formatting from all words following the lowercase Roman numeral
-            $line = '<div class="course_policies" style="padding-left: 80px;">' . preg_replace('/<strong>(.*?)<\/strong>/', '$1', $line) . '</div>';
         } else {
             // No indentation for other lines
             $line = '<div class="course_policies">' . $line . '</div>';
         }
 
-        // Bold only the text before the first dot
-       // Bold only the text before the first dot, excluding 9. and 10.
-        $line = preg_replace_callback('/(<div class="course_policies"[^>]*>\s*(?:[a-z]+\.\s*|\d+\.\s*|i+\.\s*))(?!9\.|10\.)(.*?\.)\s*/i', function($matches) {
-            return $matches[1] . '<strong>' . $matches[2] . '</strong> ';
-        }, $line);
+       
 
     }
     return implode('<br>', $lines);
