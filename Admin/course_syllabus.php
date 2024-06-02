@@ -12,7 +12,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel1">Category</h5>
+                <h5 class="modal-title" id="exampleModalLabel1">COURSE SYLLABUS</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -45,7 +45,7 @@
  <!-- DELETE POP UP FORM  FOR LEARNING MODULE(Bootstrap MODAL) -->
  <div class="modal fade" id="deletemodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel"> Delete Data </h5>
@@ -74,14 +74,55 @@
 
 
 
+<!--     
+        <button type="button" class="btn btn-primary add_databtn_final mb-2" data-toggle="modal" data-target="#addmodal">
+                            ADD DATA
+                        </button> -->
+
+
+          <!-- Modal module_learning-->
+          <div class="modal fade" id="addmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add COURSE SYLLABUS</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="Admin_Crud/insert_course_policies.php" method="POST">
+
+                    <div class="modal-body">
+                    <div class="form-group">
+                        <label for="description">COURSE POLICIES</label>
+                        <textarea name="description" id="description1" cols="10"  rows="30" class="form-control" placeholder="Enter Course Policies"></textarea>
+                    </div>
+
+                
+                     
 
 
 
-<div class="card custom-policy">
-<div class="card-body">
-<div class="mt-5 text-wrap container-fluid">
-<a><b>COURSE POLICIES AND REQUIREMENTS </b></a><br><br><br>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="insertdata" class="btn btn-primary">Save Data</button>
+                    </div>
 
+                </form>
+
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="card custom-policy">
+        <div class="card-body">
+            <div class="mt-5 text-wrap container-fluid">
+                <a><b>COURSE POLICIES AND REQUIREMENTS </b></a><br><br><br>
+                
 
 <?php
                      

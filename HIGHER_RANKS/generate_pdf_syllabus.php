@@ -581,14 +581,11 @@ if ($result->num_rows > 0) {
             foreach ($lines as &$line) {
                 if (preg_match('/^\s*\d+\./', $line)) {
                     // Add indentation if the line starts with a numeral followed by a period
-                    $line = '<div class="course_policies" style="padding-left: -10px;">' . $line . '</div>';
-                } elseif (preg_match('/^\s*[a-z]+\./', $line) && !preg_match('/^\s*(i|ii|iii|iv|v|vi|vii|viii|ix|x)\./', $line)) {
+                    $line = '<div class="course_policies" style="padding-left: -1px;">' . $line . '</div>';
+                } elseif (preg_match('/^\s*[a-z]+\./', $line)) {
                     // Add indentation if the line starts with a lowercase letter followed by a period
                     // and does not start with a lowercase Roman numeral followed by a period
                     $line = '<div class="course_policies" style="padding-left: 40px;">' . $line . '</div>';
-                } elseif (preg_match('/^\s*(i|ii|iii|iv|v|vi|vii|viii|x)\./', $line)) {
-                    // Add more indentation if the line starts with a lowercase Roman numeral followed by a period
-                    $line = '<div class="course_policies" style="padding-left: 60px;">' . $line . '</div>';
                 } else {
                     // No indentation for other lines
                     $line = '<div class="course_policies">' . $line . '</div>';

@@ -906,17 +906,11 @@ if ($result->num_rows > 0) {
             foreach ($lines as &$line) {
                 if (preg_match('/^\s*\d+\./', $line)) {
                     // Add indentation if the line starts with a numeral followed by a period
-                    $line = '<div class="course_policies" style="margin-left: 10px;">' . $line . '</div>';
-                } elseif (preg_match('/^\s*[a-z]+\./', $line) && !preg_match('/^\s*(i|ii|iii|iv|v|vi|vii|viii|ix|x)\./', $line)) {
+                    $line = '<div class="course_policies" style="margin-left: -1px;">' . $line . '</div>';
+                } elseif (preg_match('/^\s*[a-z]+\./', $line)) {
                     // Add indentation if the line starts with a lowercase letter followed by a period
                     // and does not start with a lowercase Roman numeral followed by a period
-                    $line = '<div class="course_policies" style="margin-left: 60px;">' . $line . '</div>';
-                } elseif (preg_match('/^\s*(i|ii|iii|iv|v|vi|vii|viii|ix|x)\./', $line)) {
-                    // Add more indentation if the line starts with a lowercase Roman numeral followed by a period
-                    $line = '<div class="course_policies" style="margin-left: 80px;">' . $line . '</div>';
-                } else {
-                    // No indentation for other lines
-                    $line = '<div class="course_policies">' . $line . '</div>';
+                    $line = '<div class="course_policies" style="margin-left: 40px;">' . $line . '</div>';
                 }
             }
             return implode('<br>', $lines);
@@ -1284,7 +1278,7 @@ $conn->close();
 
 <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $commitee_signatures ?></p>
     <p>____________________________</p>
-<p style="font-style: italic; margin-top: -20px; margin-left: 10px;">
+<p style="font-style: italic; margin-top: -10px; margin-left: 10px;">
   Approved in <?= date("F") ." ".date("Y") ?> during a multi-sectoral committee specifically convened for the purpose of coming up with descriptions for the graduate attributes.
 </p>
 

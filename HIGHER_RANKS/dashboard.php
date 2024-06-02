@@ -2334,6 +2334,12 @@ $position = $_SESSION['position'];
                
             </tr>
 
+            <?php if ($total_percent > 100) { ?>
+                <tr>
+                    <td colspan="5" style="color: red; font-weight: bold;">Please ensure the total percentage is below 100%.</td>
+                </tr>
+            <?php } ?>
+
             
         </tbody>
     </table>
@@ -2433,10 +2439,16 @@ $position = $_SESSION['position'];
 
             
             <tr>
-                <td colspan="5">TOTAL <a style="margin-left:8rem;"><?php echo  $final_total_percent; ?></a>%</td>
+                <td colspan="5">TOTAL <a style="margin-left:9rem;"><?php echo  $final_total_percent; ?></a>%</td>
                 
                
             </tr>
+
+            <?php if ($final_total_percent > 100) { ?>
+                <tr>
+                    <td colspan="5" style="color: red; font-weight: bold;">Please ensure the total percentage is below or exactly 100%.</td>
+                </tr>
+            <?php } ?>
 
             
         </tbody>
@@ -2445,9 +2457,8 @@ $position = $_SESSION['position'];
 </div>   
 </div>
 </div>
-<span style="margin-left:4rem;"><b>Overall Final Grade</b><a> = Midterm + Final</a></span>
-<a style="margin-left:22rem;">2</a>
-
+<span style="margin-left:4rem;"><a>Overall Final Grade = [(Midterm grade) + (Final term grade)] / 2</a></span>
+<br><br>
 </div>
 </div>
 
