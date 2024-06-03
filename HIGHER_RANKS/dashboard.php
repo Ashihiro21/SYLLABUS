@@ -2336,7 +2336,7 @@ $position = $_SESSION['position'];
 
             <?php if ($total_percent > 100) { ?>
                 <tr>
-                    <td colspan="5" style="color: red; font-weight: bold;">Please ensure the total percentage is below 100%.</td>
+                    <td colspan="5" style="color: red; font-weight: bold;">Please ensure the total percentage is Exactly 100%.</td>
                 </tr>
             <?php } ?>
 
@@ -2446,7 +2446,7 @@ $position = $_SESSION['position'];
 
             <?php if ($final_total_percent > 100) { ?>
                 <tr>
-                    <td colspan="5" style="color: red; font-weight: bold;">Please ensure the total percentage is below or exactly 100%.</td>
+                    <td colspan="5" style="color: red; font-weight: bold;">Please ensure the total percentage is Exactly 100%.</td>
                 </tr>
             <?php } ?>
 
