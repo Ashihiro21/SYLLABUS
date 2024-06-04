@@ -313,9 +313,6 @@ function populateCetegoryDropdown() {
             <th>Course Department</th>
             <th>Department Chair</th>
             <th>Department Position</th>
-            <th>Department Chair Signature</th>
-            <th>College Dean Signature</th>
-            <th>Commitee Signature</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -332,28 +329,6 @@ function populateCetegoryDropdown() {
             <td> <?= $row['course_department'];  ?> </td>
             <td> <?= $row['department_name'];  ?> </td>
             <td> <?= $row['department_position'];  ?> </td>
-                    <td>
-            <?php if (isset($row['dept_signature']) && !empty($row['dept_signature'])) : ?>
-                <img src="../HIGHER_RANKS/<?php echo $row['dept_signature']; ?>" class="img-fluid" alt="Department Signature">
-            <?php else : ?>
-                No signature available
-            <?php endif; ?>
-        </td>
-                    <td>
-            <?php if (isset($row['dean_signature']) && !empty($row['dean_signature'])) : ?>
-                <img src="../HIGHER_RANKS/<?php echo $row['dean_signature']; ?>" class="img-fluid" alt="Department Signature">
-            <?php else : ?>
-                No signature available
-            <?php endif; ?>
-        </td>
-
-        <td>
-            <?php if (isset($row['commitee_signature']) && !empty($row['commitee_signature'])) : ?>
-                <img src="../HIGHER_RANKS/<?php echo $row['commitee_signature']; ?>" class="img-fluid" alt="Department Signature">
-            <?php else : ?>
-                No signature available
-            <?php endif; ?>
-        </td>
 
 
 
