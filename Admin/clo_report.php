@@ -107,16 +107,11 @@ list($finalLowerResults, $finalLowerPercent) = filterLearningOutcomes($conn, $lo
 $conn->close();
 ?>
 
-<H1>HIGHER AND LOWER FOR DEPARTMENT AND COURSE</H1>
+<H1>HIGHER AND LOWER FOR DEPARTMENT AND COURSE</H1><br><br>
 
-
-<H2>LEARNING OUTCOMES FOR MIDTERM PERIOD</H2>
+<H2>LEARNING OUTCOMES FOR MIDTERM PERIOD</H2><br><br>
 <div class="center">
     <?php foreach ($midtermHigherResults as $department => $results): ?>
-        <div class="department-logo">
-            <a><img src="../img/DLSU-D.png" width="150" alt=""></a>    
-            <img src="../Admin/uploads/<?php echo isset($results[0]['logo']) ? $results[0]['logo'] : 'No_signature'; ?>" alt="College Logo">
-        </div>
         <h3>DE LA SALLE UNIVERSITY-DASMARINAS</h3>
         <h3><?php echo strtoupper($department); ?></h3>
         <?php if (!empty($midtermHigherResults[$department])): ?>
@@ -146,7 +141,7 @@ $conn->close();
                             ?>
                         </td>
                     </tr>
-                </table>
+                </table><br><br>
             <?php endforeach; ?>
         <?php else: ?>
             <p>No Higher Level found.</p>
@@ -154,13 +149,10 @@ $conn->close();
     <?php endforeach; ?>
 </div>
 
-<H2>LEARNING OUTCOMES FOR FINAL PERIOD</H2>
+<br><br><br><br>
+<H2>LEARNING OUTCOMES FOR FINAL PERIOD</H2><br><br>
 <div class="center">
     <?php foreach ($finalHigherResults as $department => $results): ?>
-        <div class="department-logo">
-            <a><img src="../img/DLSU-D.png" width="150" alt=""></a>    
-            <img src="../Admin/uploads/<?php echo isset($results[0]['logo']) ? $results[0]['logo'] : 'No_signature'; ?>" alt="College Logo">
-        </div>
         <h3>DE LA SALLE UNIVERSITY-DASMARINAS</h3>
         <h3><?php echo strtoupper($department); ?></h3>
         <?php if (!empty($finalHigherResults[$department])): ?>
@@ -190,7 +182,7 @@ $conn->close();
                             ?>
                         </td>
                     </tr>
-                </table>
+                </table><br><br>
             <?php endforeach; ?>
         <?php else: ?>
             <p>No Higher Level found.</p>
