@@ -1,55 +1,59 @@
-<?php include_once 'index.php'; ?>
+<?php
+// Database connection
+$connection = mysqli_connect("localhost", "root", "", "syllabus");
+if (mysqli_connect_errno()) {
+    echo "Failed to connect to MySQL: " . mysqli_connect_error();
+    die();
+}
 
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+// Retrieve search and pagination parameters
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+$limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
 
-<style>
-    .hide-id {
-        display: none;
-    }
-</style>
+// Modify the query to support search and pagination
+$query = "SELECT course.id, course.cname, course.commitee_signature, category.name as category_name
+          FROM course
+          INNER JOIN category ON course.catid = category.id
+          WHERE course.cname LIKE '%$search%'
+          ORDER BY category.name, course.cname
+          LIMIT $limit OFFSET $offset";
+$query_run = mysqli_query($connection, $query);
 
+// Count total records for pagination
+$count_query = "SELECT COUNT(*) as total
+                FROM course
+                INNER JOIN category ON course.catid = category.id
+                WHERE course.cname LIKE '%$search%'";
+$count_result = mysqli_query($connection, $count_query);
+$total_records = mysqli_fetch_assoc($count_result)['total'];
+$total_pages = ceil($total_records / $limit);
+
+// Group courses by category
+$courses_by_category = [];
+while ($row = mysqli_fetch_assoc($query_run)) {
+    $courses_by_category[$row['category_name']][] = $row;
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Status</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <style>
+        .hide-id {
+            display: none;
+        }
+    </style>
+</head>
+<body>
 <div class="container-fluid">
     <h1>Status</h1>
-
-    <?php
-    // Database connection
-    $connection = mysqli_connect("localhost", "root", "", "syllabus");
-    if (mysqli_connect_errno()) {
-        echo "Failed to connect to MySQL: " . mysqli_connect_error();
-        die();
-    }
-
-    // Retrieve search and pagination parameters
-    $search = isset($_GET['search']) ? $_GET['search'] : '';
-    $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
-    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-    $offset = ($page - 1) * $limit;
-
-    // Modify the query to support search and pagination
-    $query = "SELECT course.id, course.cname, course.commitee_signature, category.name as category_name
-              FROM course
-              INNER JOIN category ON course.catid = category.id
-              WHERE course.cname LIKE '%$search%'
-              ORDER BY category.name, course.cname
-              LIMIT $limit OFFSET $offset";
-    $query_run = mysqli_query($connection, $query);
-
-    // Count total records for pagination
-    $count_query = "SELECT COUNT(*) as total
-                    FROM course
-                    INNER JOIN category ON course.catid = category.id
-                    WHERE course.cname LIKE '%$search%'";
-    $count_result = mysqli_query($connection, $count_query);
-    $total_records = mysqli_fetch_assoc($count_result)['total'];
-    $total_pages = ceil($total_records / $limit);
-
-    // Group courses by category
-    $courses_by_category = [];
-    while ($row = mysqli_fetch_assoc($query_run)) {
-        $courses_by_category[$row['category_name']][] = $row;
-    }
-    ?>
 
     <form method="get" action="">
         <div class="form-row">
@@ -114,3 +118,5 @@ $(document).ready(function() {
     });
 });
 </script>
+</body>
+</html>

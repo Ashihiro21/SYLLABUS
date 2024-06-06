@@ -106,14 +106,14 @@ require_once '../Database/connection.php';
                     </a>
                 </li>
 
-                <li>
+                <!-- <li>
                     <a href="tlo_report.php">
                         <span class="icon">
                         <ion-icon name="folder-outline"></ion-icon>
                         </span>
                         <span class="title">TLO Reports</span>
                     </a>
-                </li>
+                </li> -->
 
                 <li>
                     <a href="course_syllabus.php">
